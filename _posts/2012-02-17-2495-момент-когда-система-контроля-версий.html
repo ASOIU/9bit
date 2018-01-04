@@ -1,0 +1,56 @@
+---
+layout: post
+wp_id:  2495
+title:  'Момент, когда система контроля версий бессильна'
+author: ZKyl
+date:             2012-02-17 05:10:06 +0000
+last_modified_at: 2013-11-19 13:53:16 +0000
+redirect_from: 
+  - /excerpt/2495.html
+  - /2012/2495/
+  - /2012/2495/момент-когда-система-контроля-версий/
+authors: 
+  - Васильев Евгений
+issues: 
+  - (к изданию)
+  - №9 июнь 2012
+categories: 
+  - Hardware
+  - Software
+tags: 
+  - AnkhSVN
+  - APFC
+  - NTFS
+  - vcs
+  - Visual Studio
+  - VisualHG
+  - WinHEX
+wp_comments: 
+  - 
+    id:     236
+    date:   2012-04-11 13:11:45 +0000
+    author: ZKyl
+    content: | 
+             <p>А это интересно, на этой неделе вышло обновление kb2679255:<br />
+             Data corruption occurs when a memory range is accessed by the SetFileIoOverlappedRange function and an I/O operation in SQL Server in Windows Vista, in Windows Server 2008, in Windows 7, or in Windows Server 2008 R2<br />
+             <a href="http://support.microsoft.com/kb/2679255" rel="nofollow">http://support.microsoft.com/kb/2679255</a></p>
+             <p>Про SetFileIoOverlappedRange: <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/aa365540(v=VS.85)" rel="nofollow">http://msdn.microsoft.com/en-us/library/windows/desktop/aa365540(v=VS.85)</a>.aspx</p>
+             <p>И, кстати, в Windows 8 появилась новая функция CreateFile: CreateFile2 <a href="http://msdn.microsoft.com/en-us/library/windows/desktop/hh449422(v=vs.85)" rel="nofollow">http://msdn.microsoft.com/en-us/library/windows/desktop/hh449422(v=vs.85)</a>.aspx</p>
+---
+<p><a href="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2012/02/subversion.png %}"><img class="alignright size-full wp-image-2501" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2012/02/subversion.png %}" alt="SVN" width="100" height="75" /></a>(Альтернативное название:<em> Система контроля версий!? только на устройстве с автономным питанием</em>.)</p>
+<p>Представьте ситуацию: вы пишете диплом/диссертацию, и вдруг компьютер вырубается...<!--more--></p>
+<p>Недавно, работая в Visual Studio над частью диссертации в доме "моргнул" свет. Причем <em>моргнул</em> так, что от этого не спасла система активной коррекции мощности (<a href="http://www.nix.ru/support/faq/show_articles.php?number=616&amp;faq_topics=PFC" target="_blank">APFC</a>) в БП, и компьютер выключился. Стоит заметить, что в этот момент проект (в VS) сохранялся, и уже начинал собираться.</p>
+<p>Далее комп нормально включился, Visual Studio нормально открылась, но контроль версий отвалился. Решив разобраться с контролем версий позже, открыл самый главный файл проекта "confidential.cpp", и <strong>он оказался пуст!</strong></p>
+<p><a href="http://nooooooooooooooo.com"><img class="aligncenter size-full wp-image-2496" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2012/02/noooooo.jpg %}" alt="Noooooo!" width="476" height="212" /></a></p>
+<p><del>Спустя неделю пребывания в состоянии аффекта (вспомнив, что <a href="http://forum.ubuntu.ru/index.php?topic=98428.msg867060#msg867060" target="_blank">XFS раньше при сбое питания обнулял открытые файлы</a>)  <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/mrgreen.gif %}" alt=":mrgreen:" class="wp-smiley" />  </del> открыл файл в FAR (HEX вид), оказалось, что файл не пуст, а состоит из нулей.<br />
+Это могло означать, что испортилась файловая запись в MFT, поэтому решил поискать файл по содержимому (благо, в начале всех исходников есть текст NDA) в режиме прямого доступа к разделу диска.</p>
+<p>Скачав <a href="http://www.winhex.com/winhex">WinHEX Eval.</a> и открыв раздел диска в режиме RO (только чтение), решил вначале не искать файл по содержимому, а посмотреть на него через менеджер файлов WinHEX'а. И кликнув на "confidential.cpp" в менеджере файлов, он <strong>открылся</strong> (в HEX виде) <strong>целым и невредимым</strong>!<br />
+Оказалось, что у всех файлов, которые сохранялись в момент отключения питания, появился атрибут 'разряженный файл' (<a href="http://habrahabr.ru/blogs/windows/78018">sparse</a>) и несколько <em>других</em> атрибутов.</p>
+<p>Переводить WinHEX в режим RW (чтение и запись) не хотелось, поэтому вместо правки файловой записи в MFT, просто сохранил "confidential.cpp" на другой диск:</p>
+<div id="attachment_2500" style="width: 234px" class="wp-caption aligncenter"><a href="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2012/02/WinHEX_Save.png %}"><img class="size-full wp-image-2500" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2012/02/WinHEX_Save.png %}" alt="Recover/Copy..." width="234" height="213" /></a><p class="wp-caption-text">Нажать Recover/Copy...</p></div>
+<p>На скриншоте видны атрибуты файлов, вот что про них написано в справке WinHEX:</p>
+<blockquote>
+<p style="text-align: justify; font-size: small;">"Partial initialization" means that according to the NTFS file system the so-called valid data length is smaller than the logical file size, i.e. the data at the end of the file is undefined, similar to file slack has nothing to do with the file, and was stored on the disk at that location before. You can see the valid data length of the file in File mode in the Info Pane, and the undefined area is highlighted in a different color.</p>
+</blockquote>
+<p class="note">Хорошо, что действие происходило на обычных HDD дисках, если бы это был <a href="http://ru.wikipedia.org/wiki/TRIM_(команда_SSD)" target="_blank">SSD</a> с включенным <a href="http://www.nix.ru/support/faq/show_articles.php?number=745&amp;faq_topics=TRIM" target="_blank">TRIM</a>, то шансы на успешное восстановление данных уменьшились бы.</p>
+

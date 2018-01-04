@@ -1,0 +1,27 @@
+---
+layout: post
+wp_id:  829
+title:  'Робокопирка'
+author: ZKyl
+date:             2009-05-26 17:15:32 +0000
+last_modified_at: 2009-06-04 06:25:29 +0000
+redirect_from: 
+  - /excerpt/829.html
+  - /2009/829/
+  - /2009/829/робокопирка/
+authors: 
+  - Васильев Евгений
+issues: 
+  - №6 ноябрь 2009
+categories: 
+  - ITштуки
+  - Software
+tags: 
+  - сисадмин
+---
+<p>Если вы счастливый обладатель Win7 и <span style="text-decoration: line-through;">не</span>счастливый обладатель Vist'ы, то это для вас (<a href="http://www.microsoft.com/downloads/details.aspx?familyid=9d467a69-57ff-4ae7-96ee-b18c4790cffd&amp;displaylang=en" target="_blank">остальным сюда</a>):</p>
+<p><strong>Robust File Copy Utility</strong> &ndash; "менеджер копирования файлов".</p>
+<p><!--more-->Имеет множество параметров. Например,  при использовании ключа <strong>/Z</strong>, реализует “<strong><em>докачку</em></strong>” с файловых шар. То есть если в процессе копирования разрывается соединение, и связь с сервером теряется, то после восстановления канала связи копирование файла продолжается с точки разрыва, а не начинается заново. Ключ <strong>/E </strong>- копирование вложенных папок, включая пустые. С этими ключами применение утилиты может выглядеть так:</p>
+<p><strong>robocopy 192.168.0.1\tra-la-lala-la Z:tra /E /Z</strong></p>
+<p>P.S. Юзайте <strong>robocopy /?</strong></p>
+

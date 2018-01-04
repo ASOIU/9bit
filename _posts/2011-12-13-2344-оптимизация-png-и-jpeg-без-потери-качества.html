@@ -1,0 +1,70 @@
+---
+layout: post
+wp_id:  2344
+title:  'Оптимизация PNG и JPEG без потери качества'
+author: ZKyl
+date:             2011-12-13 04:41:18 +0000
+last_modified_at: 2011-12-13 04:41:18 +0000
+redirect_from: 
+  - /excerpt/2344.html
+  - /2011/2344/
+  - /2011/2344/оптимизация-png-и-jpeg-без-потери-качества/
+authors: 
+  - Васильев Евгений
+issues: 
+  - (к изданию)
+categories: 
+  - Software
+tags: 
+  - Freeware
+  - JPEG
+  - PNG
+  - интернет
+  - собственный тест
+  - фото
+wp_comments: 
+  - 
+    id:     222
+    date:   2011-12-28 20:29:09 +0000
+    author: ZKyl
+    content: | 
+             <p>Вышел новый Image Catalyst:<br />
+             <a href="http://habrahabr.ru/blogs/client_side_optimization/135109/" rel="nofollow">http://habrahabr.ru/blogs/client_side_optimization/135109/</a></p>
+---
+<p><img class="alignright size-full wp-image-2435" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2011/11/Catalyst.png %}" alt="Image Catalyst" width="128" height="133" /><strong>Image Catalyst </strong>— сборник программ для комплексной оптимизации/сжатии изображений формата PNG и JPEG без потери качества в рамках того же формата.</p>
+<p>Скачать, узнать подробнее о ней и способах оптимизации можно из следующих статей:</p>
+<ul>
+<li><a href="http://habrahabr.ru/blogs/web_design/121096" target="_blank">Оптимизация PNG и JPEG без потери качества. Часть 2</a></li>
+<li><a href="http://forum.ru-board.com/topic.cgi?forum=4&amp;topic=4263&amp;start=0" target="_blank">Image Catalyst Ru-Board</a></li>
+</ul>
+<p>Под катом находится тест с участием первой фотки из<a href="{{ site.url }}{{ site.baseurl }}{% post_url 2011-11-06-2387-лето-лето %}" target="_blank"> записи про лето</a>.<!--more--></p>
+<h2>Тест</h2>
+<div id="attachment_2388" style="width: 310px" class="wp-caption aligncenter"><a href="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2011/11/P1010612.jpg %}"><img class="size-medium wp-image-2388" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2011/11/P1010612-300x225.jpg %}" alt="подопытный" width="300" height="225" /></a><p class="wp-caption-text">Подопытный JPEG</p></div>
+<p>Его размер 3 559 829 байт, разрешение 4000 x 3000 px @ 24 bitpp.<br />
+Сокращенный EXIF:</p>
+<div style="width: 210px" class="wp-caption alignright"><img src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2011/12/Panasonic-Lumix-DMC-F3.jpg %}" data-src-old="http://mdata.yandex.net/i?path=b0111012350_img_id3885949190681596687.jpg" alt="Panasonic Lumix DMC-F3" width="200" height="120" /><p class="wp-caption-text">Panasonic Lumix DMC-F3</p></div>
+<p><strong>Файл изменён</strong>:  2011:08:24 18:23:44<br />
+<strong>Оборудование для съёмки</strong>:  Panasonic<br />
+<strong>Модель оборудования</strong>:  DMC-F3<br />
+<strong>Выдержка</strong>:  0,04<br />
+<strong>Диафрагма</strong>:  2,8<br />
+<strong>Светочувствительность (ISO)</strong>:  200<br />
+<strong>Скорость затвора</strong>:  4,6<br />
+<strong>Диафрагма</strong>:  3<br />
+<strong>Яркость</strong>:  2<br />
+<strong>Фокусное расстояние</strong>:  5<br />
+<strong>Индекс экспозиции</strong>:  200<br />
+<strong>Фокальное расстояние в представлении 35-мм плёнки</strong>:  28<br />
+<strong>Подавление шума</strong>:  2</p>
+<p>Пользоваться  Image Catalyst легко: достаточно Drag'n Drop'нуть фотки на "Image Catalyst.bat", и выбрать режим обработки. Подопытную JPEG фотку обработаем в режиме 3 - <em>Maximum</em>.</p>
+<p class="note"><strong>Maximum</strong> — сравниваются по размеру изображения, полученные Optimize и Progressive методами оптимизации, и выбирается файл с наименьшим размером, имеет смысл использовать, если размер изображений меньше 10 кбайт, в остальных случаях метод оптимизации Progressive практически всегда превосходит метод Optimize.</p>
+<p>Дабы не плодить многометровые фотки, просто скажу, что вместо 3 559 829 байт после оптимизации стало 3 397 331 байт (-162 498 байт, либо 95% от оригинала).</p>
+<p>Можно сказать, что  Image Catalyst стоит использовать для финального сжатия фото перед отправкой в сеть. Но я на этом не остановился...</p>
+<h2>Только вперед...</h2>
+<p>Если посмотреть на подопытную фотку в масштабе 1:1, то сразу становится видно, что такое разрешение ей не к чему. Поэтому уменьшаем фотку до 1600 x 1200 px + шаманим. В итоге получаем такой PNG, сжатый  Image Catalyst в режиме 6 - <em>Default Xtreme</em> с 3 028 963 байт до 2 869 604 байт (-159 359 байт, либо 94% от оригинала):</p>
+<div id="attachment_2441" style="width: 310px" class="wp-caption aligncenter"><a href="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2011/11/P1010612.png %}"><img class="size-medium wp-image-2441" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2011/11/P1010612-300x225.png %}" alt="Обработанный подопытный в PNG" width="300" height="225" /></a><p class="wp-caption-text">Обработанный подопытный в PNG</p></div>
+<p>PNG является очень плохим форматом для хранения фоток, поэтому переделаем в JPEG:</p>
+<div id="attachment_2442" style="width: 310px" class="wp-caption aligncenter"><a href="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2011/11/P10106122.jpg %}"><img class="size-medium wp-image-2442" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2011/11/P10106122-300x225.jpg %}" alt="Обработанный подопытный в JPEG" width="300" height="225" /></a><p class="wp-caption-text">Обработанный подопытный в JPEG</p></div>
+<p>Это фото, после обработки в Image Catalyst с режимом 3 - <em>Maximum,</em> уменьшилось с 608 334 байт до 586 169 байт (-22 165 байт, либо 96% от оригинала).</p>
+<p class="note">P.S. <a href="http://habrahabr.ru/blogs/webdev/79325" target="_blank">другие 7+ превосходных инструментов для оптимизации изображений</a></p>
+

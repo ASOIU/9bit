@@ -1,0 +1,127 @@
+---
+layout: post
+wp_id:  1991
+title:  'Форсируем виндовую защиту'
+author: ZKyl
+date:             2011-05-02 05:54:56 +0000
+last_modified_at: 2013-11-19 14:00:10 +0000
+redirect_from: 
+  - /excerpt/1991.html
+  - /2011/1991/
+  - /2011/1991/форсируем-виндовую-защиту/
+authors: 
+  - Васильев Евгений
+issues: 
+  - (к изданию)
+  - №9 июнь 2012
+categories: 
+  - ITштуки
+  - Software
+tags: 
+  - 1st olymp
+  - hack
+  - Microsoft
+  - сисадмин
+wp_comments: 
+  - 
+    id:     162
+    date:   2012-02-26 15:42:44 +0000
+    author: ZKyl
+    content: | 
+             <p>Новый EMET 2.1 – обзор технологий DEP, ASLR, SEHOP, EAT/EAF, HSA, NPA, BUR:<br />
+             <a href="http://kb.atraining.ru/new-emet-2-1" rel="nofollow">http://kb.atraining.ru/new-emet-2-1</a></p>
+             <p>So How Good is Pseudo-ASLR?<br />
+             <a href="http://blog.didierstevens.com/2011/08/16/so-how-good-is-pseudo-aslr" rel="nofollow">http://blog.didierstevens.com/2011/08/16/so-how-good-is-pseudo-aslr</a></p>
+             <p>Bottom Up Randomization Saves Mandatory ASLR<br />
+             <a href="http://blog.didierstevens.com/2011/09/01/bottom-up-randomization-saves-mandatory-aslr" rel="nofollow">http://blog.didierstevens.com/2011/09/01/bottom-up-randomization-saves-mandatory-aslr</a></p>
+  - 
+    id:     163
+    date:   2012-12-14 16:43:36 +0000
+    author: ZKyl
+    content: | 
+             <p>Внутреннее устройство ASLR в Windows 8:<br />
+             <a href="http://habrahabr.ru/company/pt/blog/162617" rel="nofollow">http://habrahabr.ru/company/pt/blog/162617</a></p>
+  - 
+    id:     164
+    date:   2013-06-08 17:54:00 +0000
+    author: ZKyl
+    content: | 
+             <p>EMET v4 вышел: habrahabr.ru/company/eset/blog/177265<br />
+             <a href="http://www.trustedsec.com/may-2013/emet-4-0-tutorial-and-overview" rel="nofollow">http://www.trustedsec.com/may-2013/emet-4-0-tutorial-and-overview</a></p>
+             <p>EMET 4.0's Certificate Trust Feature: blogs.technet.com/b/srd/archive/2013/05/08/emet-4-0-s-certificate-trust-feature.aspx</p>
+             <p>A few more days before EMET 4... blogs.technet.com/b/srd/archive/2013/05/28/a-few-more-days-before-emet-4.aspx</p>
+  - 
+    id:     165
+    date:   2013-07-08 15:02:39 +0000
+    author: ZKyl
+    content: | 
+             <p>EMET v4 Release: <a href="http://habrahabr.ru/company/eset/blog/184428/" rel="nofollow">http://habrahabr.ru/company/eset/blog/184428/</a></p>
+  - 
+    id:     166
+    date:   2013-10-11 16:35:06 +0000
+    author: ZKyl
+    content: | 
+             <p>Еще одна интересная статья про EMET: EMET 4.0 и Windows Server 2012 R2 <a href="http://www.atraining.ru/emet-4-0-windows-server-2012-r2" rel="nofollow">http://www.atraining.ru/emet-4-0-windows-server-2012-r2</a></p>
+  - 
+    id:     167
+    date:   2013-12-16 18:15:47 +0000
+    author: ZKyl
+    content: | 
+             <p>ASLR в новейших выпусках Windows: <a href="http://habrahabr.ru/company/eset/blog/206244" rel="nofollow">http://habrahabr.ru/company/eset/blog/206244</a></p>
+---
+<p>Этим постом я открываю цикл статей, который закончится постом "взять первое место на олимпиаде по программированию за 10 минут".</p>
+<p>Большинство людей поставив винду и не думают, что ее нужно допиливать<del>, да что уж там когда им всучивают ноут с предустановленной форточкой они и не думают снести ее и собрать Gentoo</del>. Так почему же защита работает не в полную силу? Ответ прост: чтоб работала сделанная на коленке поделка, при включенной защите прога будет выдавать кучу ошибок (вспоминая скайп...).</p>
+<p>Напильников существует много, но в данном цикле статей нас будет интересовать только напильник №8.</p>
+<p><!--more--></p>
+<h2><del>ВУЗ</del> DEP (Data Execution Protection)</h2>
+<p>После установки винды и до первой перезагрузки я всегда полностью включаю DEP. Сделать это можно следующим образом:</p>
+<ol>
+<li>открываем свойства системы (можно нажать Win+R и набрать sysdm.cpl )</li>
+<li>во вкладке "Дополнительно" в группе "быстродействие" нажать кнопку "параметры"</li>
+<li>во вкладке "предотвращение выполнения данных" выбрать пункт "включить DEP для всех программ и служб, кроме выбранных ниже"</li>
+</ol>
+<p>Подробнее о DEP, NX/XD-bit, и о том что мы сделали выше приведенной последовательностью команд описано в <a href="http://www.insidepro.com/kk/063/063r.shtml">этой статье</a>.</p>
+<h2>SEHOP (Structured Exception Handler Overwrite Protection), ECV (Exception Chain Validation)</h2>
+<p>Вначале поговорим о SEH  - структурная обработка исключений. Чтоб было понятнее откройте С++ проект в Visual Studio, нажмите Alt+F7, зайдите в Configurations Properties - С/С++ - Code Generation, здесь нас интересует <a href="http://netcode.ru/cpp/?artID=241">Enable C++ exception</a>. Кстати и SEHOP тут неподалеку, поднимаемся на уровень выше до опций линкера Linker - Advanced, и в конце будет Image Has Safe Exception Handlers.</p>
+<p>Я рекомендую пока не читать тот материал из ссылки "<a href="http://netcode.ru/cpp/?artID=241">Enable C++ exception</a>" - неподготовленный ум этого не поймет, лучше следовать этому плану:</p>
+<ol>
+<li>закуска: "<a href="http://www.firststeps.ru/mfc/msdn/r.php?46">Шаг 46 - Структурная обработка исключений</a>" </li>
+<li>первое: "<a href="http://ru.wikipedia.org/wiki/SEH">Структурная обработка исключений — Википедия</a>" </li>
+<li>второе: "<a href="http://netcode.ru/cpp/?artID=241">Enable C++ exception</a>" </li>
+<li>десерт: "<a href="http://www.rsdn.ru/article/baseserv/except.xml">Централизованная обработка исключений - RSDN</a>" </li>
+</ol>
+<p>А теперь как SEHOP включить (<a href="http://blog.not-a-kernel-guy.com/2009/10/10/647">копи-паст</a>):</p>
+<ol>
+<li>В меню Пуск выберите пункт Выполнить, введите команду regedit и нажмите клавишу ВВОД.</li>
+<li>Найдите следующий раздел реестра: HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\kernel\DisableExceptionChainValidation
+<ol>
+<li> Примечание: Если не удалось найти параметр DisableExceptionChainValidation в разделе реестра HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\kernel\ выполните действия, описанные ниже, чтобы создать его.</li>
+<li>Щелкните правой кнопкой мыши раздел kernel, выберите команду Создать, а затем — Параметр DWORD.<br />
+Введите DisableExceptionChainValidation и нажмите клавишу ВВОД.</li>
+</ol>
+</li>
+<li>Дважды щелкните элемент DisableExceptionChainValidation.</li>
+<li>Присвойте параметру DisableExceptionChainValidation значение 0, чтобы включить его, а затем нажмите кнопку ОК.<br />
+Примечание: Значение 1 отключает этот параметр реестра. Значение 0 включает его.</li>
+<li>Перезагрузите комп.</li>
+</ol>
+<p>Дополнительно замечу, что ECV защищает только 32-х битные приложения, включая те, что выполняются под Wow64 на 64-х битных системах. 64-х битный код не подвержен этому типу атаки.</p>
+<p>А теперь погрузимся в дзен:</p>
+<ol>
+<li><a href="http://www.insidepro.com/kk/014/014r.shtml">SEH на службе контрреволюции</a></li>
+<li><a href="http://www.insidepro.com/kk/398/398r.shtml">Full disclose: Небезопасный SafeSEH</a> (он находится примерно посередине статьи)</li>
+<li><del><a href="http://www.insidepro.com/kk/027/027r.shtml">Могущество кодов Рида-Соломона или информация, воскресшая из пепла</a></del> (даже не знаю как это сюда попало, можно не читать)</li>
+</ol>
+<h2>EAF (Export address table Address Filter)</h2>
+<p>Тут уже без полного дзена не получится. Вначале надо понять что такое Export address table. Для этого окунемся в структуру PE (Portable Executable, исполняемые файлы) файла: <a href="http://www.emanual.ru/download/1298.html#part050">откроем секцию экспорта</a> и перейдем к <a href="http://www.emanual.ru/download/1298.html#part052">address table</a>: "Данная структура данных содержит адреса экспортируемых функций (их точки входа) экпортируемых данных и т.п.".</p>
+<p>Погрузимся еще ниже и читаем статью "Путь воина - внедрение в pe/coff файлы" , здесь нам нужен раздел про Экспорт, он находится сразу под надписью "Листинг 7 " .<br />
+Надеюсь после прочтения всего этого мозг еще не вскипел. Все это должно было ответить на вопрос: от чего же мы защищаемся, хотя нет, не так, правильный вопрос: при помощи чего мы защищаемся. А ответ <a href="http://skypher.com/index.php/2010/11/17/bypassing-eaf/">здесь</a>.<br />
+Кратко: при помощи "навешивания" на Export address table аппаратных точек останова у стандартных библиотек можно определить подмену функций этих стандартных библиотек.</p>
+<p>И напоследок <a href="http://www.honeynet.org/node/571">пища для размышлений</a>.</p>
+<h3>Enhanced Mitigation Experience Toolkit</h3>
+<p>Если заметили, то в обоих последних статьях упоминается про EMET - Enhanced Mitigation Experience Toolkit, это можно сказать центр управления параметрами безопасности, описанных в этой статье.  Он контролирует DEP, SEHOP, EAF, и не описанные в статье: ASLR, NullPage, HeapSpray.<br />
+<a href="http://microgeek.ru/blogs/windows/588">Описание EMET и ссылка на загрузку</a>.</p>
+<p>Рекомендую в ней выставить следующие глобальные параметры:</p>
+<div id="attachment_1994" style="width: 507px" class="wp-caption aligncenter"><a href="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2011/05/Снимок.png %}"><img class="size-full wp-image-1994" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2011/05/Снимок.png %}" alt="EMET 2.0" width="497" height="124" /></a><p class="wp-caption-text">EMET 2.0</p></div>
+<p>Также рекомендую к прочтению эту заметку: "<a href="https://blogs.technet.com/b/srd/archive/2010/09/10/use-emet-2-0-to-block-the-adobe-0-day-exploit.aspx">Use EMET 2.0 to block Adobe Reader and Acrobat 0-day exploit</a>" .</p>
+

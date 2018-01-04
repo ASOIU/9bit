@@ -1,0 +1,49 @@
+---
+layout: post
+wp_id:  2467
+title:  'Process Monitor спешит на помощь NetBeans&#39;у'
+author: ZKyl
+date:             2012-02-03 07:50:34 +0000
+last_modified_at: 2013-11-19 13:54:15 +0000
+redirect_from: 
+  - /excerpt/2467.html
+  - /2012/2467/
+  - /2012/2467/process-monitor-спешит-на-помощь-netbeansу/
+authors: 
+  - Васильев Евгений
+issues: 
+  - (к изданию)
+  - №9 июнь 2012
+categories: 
+  - Software
+tags: 
+  - NetBeans
+  - Process Monitor
+  - сисадмин
+  - уязвимость
+wp_comments: 
+  - 
+    id:     234
+    date:   2013-03-30 05:01:42 +0000
+    author: ZKyl
+    content: | 
+             <p>Проблема с загрузкой dll из PATH при CWDIllegalInDllSearch установленном в 0xFFFFFFFF<br />
+             &gt;This is an FYI for administrators who have installed or who are considering installing KB2264107 and using the 0xFFFFFFFF option for CWDIllegalInDllSearch.<br />
+             <a href="http://harryjohnston.wordpress.com/2010/10/10/kb2264107-and-cwdillegalindllsearch/" rel="nofollow">http://harryjohnston.wordpress.com/2010/10/10/kb2264107-and-cwdillegalindllsearch/</a></p>
+---
+<p>Сегодня ставил NetBeans 7.1, установка как всегда прошла нормально, а вот с первым запуском - проблемы:</p>
+<div id="attachment_2468" style="width: 362px" class="wp-caption aligncenter"><a href="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2012/01/nbexec.dll_.png %}"><img class="size-full wp-image-2468" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2012/01/nbexec.dll_.png %}" alt="platform\lib\nbexec.dll" width="362" height="51" /></a><p class="wp-caption-text">nbexec.dll</p></div>
+<p class="note">Под катом описание уязвимости в NetBeans и Happy End.</p>
+<p><!--more--><br />
+Первым делом находим, где же лежит "nbexec.dll". Смотрим на свойства ярлыка, которым запускаем NetBeans:<a href="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2012/01/NB-ярлык.png %}"><img class="aligncenter size-full wp-image-2469" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2012/01/NB-ярлык.png %}" alt="" width="384" height="525" /></a> Так-с, рабочая директория отличается от места положения "netbeans.exe", поэтому "nbexec.dll" надо искать в "C:\Program Files\NetBeans 7.1\platform\lib\nbexec.dll", и он там есть.</p>
+<h2>Так где же  'netbeans.exe' ищет 'nbexec.dll'?</h2>
+<p>Сейчас нам как раз и поможет <a href="http://technet.microsoft.com/en-us/sysinternals/bb896645.aspx" target="_blank">Process Monitor</a>.<br />
+Запускаем его, останавливаем трассировку (Ctrl+E), и создаем фильтр (Ctrl+L) для "netbeans.exe" : <a href="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2012/01/PMF.png %}"><img class="aligncenter size-medium wp-image-2470" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2012/01/PMF-300x97.png %}" alt="" width="300" height="97" /></a></p>
+<p>Нам нужны только события файловой системы, запись остальных - отключаем:<a href="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2012/01/FS-rec.png %}"><img class="aligncenter size-full wp-image-2474" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2012/01/FS-rec.png %}" alt="" width="127" height="41" /></a>Теперь включаем трассировку (Ctrl+E), и запускаем NetBeans. В момент появления ошибки - останавливаем трассировку, и ищем "nbexec.dll":<a href="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2012/01/PM.png %}"><img class="aligncenter size-medium wp-image-2475" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2012/01/PM-300x120.png %}" alt="" width="300" height="120" /></a>Вот и ответ: "C:\Program Files\NetBeans 7.1\bin\platform\lib\nbexec.dll", "C:\Windows\SysWOW64\platform\lib\nbexec.dll", ...</p>
+<p>Получается, что NetBeans <a href="http://habrahabr.ru/company/eset/blog/102549" target="_blank">уязвим (описание уязвимости в механизме динамической загрузки DLL - MSA2269637)</a>, а в используемой системе <a href="http://support.microsoft.com/kb/2264107" target="_blank">эксплуатация этой уязвимости закрыта</a>. Вот по этому (из-за исключения поиска dll в текущей директории) "nbexec.dll" и не был найден.</p>
+<h2>Что же делать?</h2>
+<p>Можно для "netbeans.exe" в <a href="http://support.microsoft.com/kb/2264107" target="_blank">реестре</a> "HKEY_LOCAL_MACHINE\Software\Microsoft\Windows NT\CurrentVersion\Image File Execution Options\netbeans.exe" включить поиск dll в текущей директории. Однако, это откроет доступ к эксплуатации уязвимости в NetBeans.</p>
+<p>Другой вариант - создать <a href="http://ru.wikipedia.org/wiki/Символьная_ссылка" target="_blank">символьную ссылку</a> "platform" на  "C:\Program Files\NetBeans 7.1\platform\" в "C:\Program Files\NetBeans 7.1\bin\" командой:</p>
+<p><code>MKLINK /d "C:\Program Files\NetBeans 7.1\bin\platform" "C:\Program Files\NetBeans 7.1\platform"</code></p>
+<p>После создания символьной ссылки, NetBeans наконец запустился <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/smile.gif %}" alt=":-)" class="wp-smiley" /> </p>
+

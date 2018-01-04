@@ -1,0 +1,301 @@
+---
+layout: post
+wp_id:  1853
+title:  'Знакомьтесь: Node.JS'
+author: ZKyl
+date:             2010-12-17 03:56:17 +0000
+last_modified_at: 2011-05-03 04:08:01 +0000
+redirect_from: 
+  - /excerpt/1853.html
+  - /2010/1853/
+  - /2010/1853/знакомьтесь-node-js/
+authors: 
+  - Васильев Евгений
+issues: 
+  - №8 январь 2011
+categories: 
+  - web-инструменты
+tags: 
+  - ASP.NET
+  - Google
+  - JavaScript
+  - JSON
+  - Node.JS
+  - NoSQL
+  - PHP
+  - XML
+wp_comments: 
+  - 
+    id:     122
+    date:   2010-12-17 04:14:12 +0000
+    author: bogatov
+    content: | 
+             <p>ZKyl, ты маньяк! Тебе нужно энциклопедии писать! (Это я по-дружески подкалываю :о) Слушай, может мы сделаем для тебя отдельное приложение к Девятому биту? :о)</p>
+             <p>Если кто-то прочитает весь материал по ссылкам, приведённым в статье, хотя бы в глубине одного клика, найдите меня, я хочу на вас посмотреть...</p>
+  - 
+    id:     123
+    date:   2010-12-22 11:23:53 +0000
+    author: Tier
+    content: | 
+             <p>А я вот советую прочитать этот пост - <a href="http://mr-aleph.livejournal.com/304008.html" rel="nofollow">http://mr-aleph.livejournal.com/304008.html</a>, и этот - <a href="http://mr-aleph.livejournal.com/307525.html" rel="nofollow">http://mr-aleph.livejournal.com/307525.html</a>.<br />
+             Автор этого блога работает в гугле, в Архусе, он один из разработчиков V8, на котором этот node.js и крутится.</p>
+  - 
+    id:     124
+    date:   2011-01-07 21:49:55 +0000
+    author: kurokikaze
+    content: | 
+             <p>@Tier: Вообще автор позже указал что результаты этих замеров следует считать недействительными - <a href="http://mr-aleph.livejournal.com/311908.html" rel="nofollow">http://mr-aleph.livejournal.com/311908.html</a> .</p>
+  - 
+    id:     125
+    date:   2011-01-21 18:26:18 +0000
+    author: ZKyl
+    content: | 
+             <p>Если нравится использовать пакетные менеджеры, то быстро развернуть node.js на Linux:<br />
+             - репозиторий + пакеты + npm (Node.js Package Manager) <a href="http://forum.nodejs.ru/index.php?topic=54.0" rel="nofollow">http://forum.nodejs.ru/index.php?topic=54.0</a></p>
+             <p>- npm <a href="http://web.onassar.com/blog/2010/11/10/installing-npm-node-package-manage-on-ubuntu-10-10" rel="nofollow">http://web.onassar.com/blog/2010/11/10/installing-npm-node-package-manage-on-ubuntu-10-10</a><br />
+             - npm <a href="http://www.mikecantelon.com/npm" rel="nofollow">http://www.mikecantelon.com/npm</a></p>
+             <p>- установка одной командой <a href="http://node-js.ru/1-install-nodejs" rel="nofollow">http://node-js.ru/1-install-nodejs</a></p>
+  - 
+    id:     126
+    date:   2011-02-07 11:01:48 +0000
+    author: Tier
+    content: | 
+             <p>kurokikaze, при чём тут замеры? По первой ссылке автор предъявляет претензии к качеству кода и намекает, что это в общем-то свойственно коду с использованием node.js, который кичится своей "скоростью". Вот и не понятно: зачем эта "скорость", если всё сводится на нет сложными алгоритмами.<br />
+             По второй ссылке претензии к концепции и дизайну самого node.js и к языку JavaScript. Опять же, при чём тут замеры?</p>
+  - 
+    id:     127
+    date:   2011-02-07 19:44:17 +0000
+    author: ZKyl
+    content: | 
+             <p>&gt;А я вот советую прочитать этот пост – <a href="http://mr-aleph.livejournal.com/304008.html" rel="nofollow">http://mr-aleph.livejournal.com/304008.html</a>, и этот – <a href="http://mr-aleph.livejournal.com/307525.html" rel="nofollow">http://mr-aleph.livejournal.com/307525.html</a>.<br />
+             Да это же нытик с претензиями вида: почему здесь используется ".", я непременно желаю видеть ";"!<br />
+             Для него написание сервиса наподобие этого (<a href="http://habrahabr.ru/blogs/startup/113287/" rel="nofollow">http://habrahabr.ru/blogs/startup/113287/</a>) на JavaScript просто непостижимо!<br />
+             ==========</p>
+             <p>&gt;А я вот советую прочитать этот пост – <a href="http://mr-aleph.livejournal.com/304008.html" rel="nofollow">http://mr-aleph.livejournal.com/304008.html</a>, и этот – <a href="http://mr-aleph.livejournal.com/307525.html" rel="nofollow">http://mr-aleph.livejournal.com/307525.html</a>.<br />
+             Да он верно говорит, в топку этот JavaScript с его автоматическими ";" и жуткими конструкциями обратных вызовов!<br />
+             Вот например сервис, практически целиком написанный на JavaScript (<a href="http://habrahabr.ru/blogs/startup/113287/" rel="nofollow">http://habrahabr.ru/blogs/startup/113287/</a>), так в нем и XSS уже нашелся и проблемы с одновременным доступом.<br />
+             ==========<br />
+             "А какую 'пилюлю' выберешь ты?"<br />
+             Каждый выбирает свое и это хорошо! А сайт (сервис) "Smthngs" действительно достойный.</p>
+  - 
+    id:     128
+    date:   2011-02-07 19:48:43 +0000
+    author: ZKyl
+    content: | 
+             <p>Ух уж этот парсер...<br />
+             &lt;красная пилюля&lt;<br />
+             ...<br />
+             ==========<br />
+             &lt;синяя пилюля&lt;<br />
+             ...<br />
+             ==========</p>
+  - 
+    id:     129
+    date:   2011-02-08 04:08:13 +0000
+    author: Tier
+    content: | 
+             <p>Ну, вот я альтернативные пилюли и предоставил <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/smile.gif %}" alt=":)" class="wp-smiley" /> </p>
+  - 
+    id:     130
+    date:   2011-03-03 17:37:49 +0000
+    author: ZKyl
+    content: | 
+             <p>Появился удобный помощник в отладке Node.js приложений<br />
+             <a href="http://habrahabr.ru/blogs/javascript/114825" rel="nofollow">http://habrahabr.ru/blogs/javascript/114825</a></p>
+  - 
+    id:     131
+    date:   2011-09-05 14:34:40 +0000
+    author: ZKyl
+    content: | 
+             <p>NodObjC — мост между Objective-C и Node.JS</p>
+             <p><a href="http://habrahabr.ru/blogs/nodejs/127736" rel="nofollow">http://habrahabr.ru/blogs/nodejs/127736</a></p>
+  - 
+    id:     132
+    date:   2011-09-07 14:36:28 +0000
+    author: ZKyl
+    content: | 
+             <p>90 модулей Node.js в общественное пользование<br />
+             <a href="http://habrahabr.ru/blogs/nodejs/127876" rel="nofollow">http://habrahabr.ru/blogs/nodejs/127876</a></p>
+  - 
+    id:     133
+    date:   2011-09-07 16:33:52 +0000
+    author: ZKyl
+    content: | 
+             <p>У Node.js новый логотип <a href="http://nodejs.org/logos" rel="nofollow">http://nodejs.org/logos</a></p>
+  - 
+    id:     134
+    date:   2011-09-21 16:59:51 +0000
+    author: ZKyl
+    content: | 
+             <p>Что такое «асинхронная событийная модель», и почему сейчас она «в моде»<br />
+             <a href="http://habrahabr.ru/blogs/nodejs/128772" rel="nofollow">http://habrahabr.ru/blogs/nodejs/128772</a></p>
+  - 
+    id:     135
+    date:   2011-10-03 18:56:36 +0000
+    author: ZKyl
+    content: | 
+             <p>Надо всё переписать <a href="http://softwaremaniacs.org/blog/2009/11/30/gotta-rewrite-everything" rel="nofollow">http://softwaremaniacs.org/blog/2009/11/30/gotta-rewrite-everything</a></p>
+  - 
+    id:     136
+    date:   2011-10-04 18:18:32 +0000
+    author: ZKyl
+    content: | 
+             <p>Understanding node.js<br />
+             <a href="http://habrahabr.ru/blogs/nodejs/104171" rel="nofollow">http://habrahabr.ru/blogs/nodejs/104171</a></p>
+             <p>Node.js — раковая опухоль =-O<br />
+             <a href="http://habrahabr.ru/blogs/nodejs/129640/#comment_4294369" rel="nofollow">http://habrahabr.ru/blogs/nodejs/129640/#comment_4294369</a></p>
+  - 
+    id:     137
+    date:   2011-11-23 08:03:23 +0000
+    author: ZKyl
+    content: | 
+             <p>Node.js на Windows (с тестами производительности) + WebMatrix<br />
+             <a href="http://habrahabr.ru/blogs/nodejs/132745" rel="nofollow">http://habrahabr.ru/blogs/nodejs/132745</a></p>
+  - 
+    id:     138
+    date:   2012-02-22 06:19:19 +0000
+    author: ZKyl
+    content: | 
+             <p>Разработка WEB-проекта на Node.JS: Часть 2</p>
+             <p><a href="http://habrahabr.ru/blogs/nodejs/138629" rel="nofollow">http://habrahabr.ru/blogs/nodejs/138629</a></p>
+  - 
+    id:     139
+    date:   2012-04-04 08:53:22 +0000
+    author: ZKyl
+    content: | 
+             <p>Рельсы сошли с рельс: Почему я переписываю Archaeopteryx на CoffeeScript<br />
+             <a href="http://habrahabr.ru/post/141295" rel="nofollow">http://habrahabr.ru/post/141295</a></p>
+             <p>"Я думаю, что сейчас проще найти хорошую работу с Node.js, чем хорошую работу с Rails. Но лично мне интереснее работать над собственными проектами, на которых я точно так же получаю удовольствие от Ноды."</p>
+             <p>"Если вы хотите работать с тем, что будет приносить удовольствие, попробуйте Clojure, Scala или Node.js. Clojure и Scala работают на основе Java, воспоминания о которой до сих пор не дают мне спокойно спать ночами"</p>
+  - 
+    id:     140
+    date:   2012-04-07 08:10:00 +0000
+    author: ZKyl
+    content: | 
+             <p>Node.js для начинающих:<br />
+             <a href="http://nodebeginner.ru" rel="nofollow">http://nodebeginner.ru</a><br />
+             <a href="http://nodeguide.ru/doc" rel="nofollow">http://nodeguide.ru/doc</a></p>
+  - 
+    id:     141
+    date:   2012-04-11 15:11:33 +0000
+    author: ZKyl
+    content: | 
+             <p>Meteor — Новый способ создания приложений<br />
+             Пишите всё приложение полностью на чистом JavaScript. Все API, доступны на клиенте и на сервере — в том числе API базы данных! — Так что один код может легко работать на клиенте и на сервере.<br />
+             <a href="http://habrahabr.ru/post/141834" rel="nofollow">http://habrahabr.ru/post/141834</a></p>
+  - 
+    id:     142
+    date:   2012-04-16 19:34:41 +0000
+    author: ZKyl
+    content: | 
+             <p>Как правильно ненавидеть PHP:<br />
+             (PHP: фрактал плохого дизайна) <a href="http://habrahabr.ru/post/142140" rel="nofollow">http://habrahabr.ru/post/142140</a></p>
+  - 
+    id:     143
+    date:   2012-07-11 17:50:28 +0000
+    author: ZKyl
+    content: | 
+             <p>Как организовать node.js приложения на сервере ( <a href="http://habrahabr.ru/qa/21477/#answer_87808" rel="nofollow">http://habrahabr.ru/qa/21477/#answer_87808</a> ) :<br />
+             Есть сервер, внутри Linux Containers, в каждом контейнере отдельное node.js приложение. На самом сервере вне контейнеров стоит nginx, который проксирует запросы к контрейнерам.<br />
+              Дальше, внутри контейнера nvm с node.js и supervisor. Node.js работает под nobody внутри контейнера.<br />
+              Куски того как это все настраивается можно глянуть у меня здесь express(node.js) + capistrano + supervisord, здесь Install LXC (Linux Containers) и здесь Install hubot on ubuntu. Записям год, что-то немного могло измениться.<br />
+              Создание нового приложения максимально просто, у меня заранее лежит контейнер sample, в котором уже стоит и supervisor и node.js в nvm. Просто делаю lxc-clone контейнеру и прописываю ip с mac адресом.<br />
+             там сверху еще прикручен Hubot, который по коммандам через джаббер рулит capistrano, т.е. умеет рестартовать приложение, дергать новые версии с github'а, откатываться и т.д.</p>
+  - 
+    id:     144
+    date:   2012-09-10 16:21:58 +0000
+    author: ZKyl
+    content: | 
+             <p>node.js и CUDA: вместе мощней.<br />
+             <a href="http://habrahabr.ru/post/151117" rel="nofollow">http://habrahabr.ru/post/151117</a></p>
+  - 
+    id:     145
+    date:   2012-10-15 04:18:53 +0000
+    author: ZKyl
+    content: | 
+             <p>Изучение Node.js от начала до конца на практике. Часть 1<br />
+             <a href="http://habrahabr.ru/post/154755" rel="nofollow">http://habrahabr.ru/post/154755</a></p>
+  - 
+    id:     146
+    date:   2012-11-10 11:38:13 +0000
+    author: ZKyl
+    content: | 
+             <p>Node.js + Chromium = AppJS: один из перспективных вариантов второго шага эволюции веборазработчика<br />
+             <a href="http://habrahabr.ru/post/153013" rel="nofollow">http://habrahabr.ru/post/153013</a></p>
+             <p>Node.js + Chromium = node-webkit: ещё более перспективный вариант второго шага эволюции веборазработчика<br />
+             <a href="http://habrahabr.ru/post/153095" rel="nofollow">http://habrahabr.ru/post/153095</a></p>
+  - 
+    id:     147
+    date:   2012-11-17 12:42:05 +0000
+    author: ZKyl
+    content: | 
+             <p>Миллион одновременных соединений на Node.js<br />
+             <a href="http://habrahabr.ru/post/123154" rel="nofollow">http://habrahabr.ru/post/123154</a></p>
+             <p>&gt;если вам интересно работать на Node.js в реальных проектах — напишите автору на <a href="mailto:ashtuchkin@gmail.com">ashtuchkin@gmail.com</a>, он как раз ищет людей в команду.</p>
+  - 
+    id:     148
+    date:   2013-03-11 04:43:26 +0000
+    author: ZKyl
+    content: | 
+             <p>Отладка Node.js в Visual Studio<br />
+             <a href="http://habrahabr.ru/post/172107" rel="nofollow">http://habrahabr.ru/post/172107</a></p>
+  - 
+    id:     149
+    date:   2013-08-28 15:43:49 +0000
+    author: ZKyl
+    content: | 
+             <p>Как Node.js подходит для типовых веб-проектов <a href="http://habrahabr.ru/post/191646" rel="nofollow">http://habrahabr.ru/post/191646</a></p>
+  - 
+    id:     150
+    date:   2013-12-08 10:33:19 +0000
+    author: ZKyl
+    content: | 
+             <p>Почему Meteor погубит Ruby on Rails<br />
+             <a href="http://habrahabr.ru/post/204902/" rel="nofollow">http://habrahabr.ru/post/204902/</a></p>
+---
+<div style="width: 212px" class="wp-caption alignright"><img src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2010/12/NodeJS.png %}" alt="" width="202" height="54" /><p class="wp-caption-text">node.js</p></div>
+<blockquote><p><span style="font-size: small"><em>Посторонись, пресловутый PHP! Долой Java! Старичок Perl, тебе так вообще давно пора на пенсию. И как же вы уже достали, попсовые Ruby и Python! Все эти давно знакомые технологии уже не торкают. Зато сегодня мы посмотрим на чрезвычайно прогрессивный подход, когда для написания серверного кода используется… JavaScript.</em></span></p></blockquote>
+<p>Именно так и начинается <a href="http://www.xakep.ru/post/53583/" target="_blank">статья на xakep.ru, которую я советую прочитать</a>.  <!--more--><img class="aligncenter" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2010/12/WTF-is-Node.js.png %}" data-src-old="http://habreffect.ru/files/c7e/5873b9e40/1.png" alt="" width="377" height="211" /></p>
+<p class="note"><strong>Node.JS</strong> — событийно-ориентированный (асинхронный) I/O фреймворк на движке V8 JavaScript от Google, дополненный системными библиотеками и прочими вкусностями. И очень, очень быстрый.</p>
+<p>Современный публичный Web-сервис при ответе на запрос клиента можно представить в следующем виде:</p>
+<pre><span style="font-size: small">БД <span style="font-size: xx-small">&lt;-&gt;</span> обработчик запросов <span style="font-size: xx-small">--</span><span style="font-size: small"><span style="font-size: xx-small">(</span></span>контейнер<span style="font-size: xx-small">)--&gt;</span> генератор страницы</span></pre>
+<p style="text-align: justify">Причем основная задача <em>обработчика запросов</em> – выбрать из БД нужные данные и обвернуть их в <em>контейнер</em>, далее на клиенте эти данные "облагораживаются", принимают человеческий вид <em>генератором страницы</em>. А теперь разберемся с языком на котором это все будет работать, и начнем с<em> генератора страниц</em>.</p>
+<p style="text-align: justify">Представим себе типичного Юзера со стандартным браузерам и системой, в которой каждой твари по одной (Flash, Silverlight, Java). Да, какой простор для действий: банеры у нас будут на Flash, сам сайт на Silverlight, а через Java мы будем подгружать трояны. Юзеру-то какая разница: он их не заметит. А для тех, у кого антивирус, сделаем пошаговую инструкцию по его отключению: мол, если вы его не отключите, сайт будет работать некорректно (так же поступают и установщики программ, когда выводят "Перед началом установки закройте все приложения и отключите антивирус").</p>
+<p style="text-align: justify">Теперь Юзер поумнел – поставил н<span style="color: #ff6600"><a href="http://www.opera.com/"><strong><span style="color: #ff0000;">о</span></strong></a></span>рмальный браузер  и отключил в нем плагины. У нас остался JavaScript. Ну, что ж, отлично: не надо ничего выбирать. Теперь выбираем один из стандартных <em>контейнеров</em>. Может XML (ведь даже XMLHttpRequest начинается с XML)? Или всетаки JSON? Не буду долго философствовать на эту тему и скажу сразу – однозначно, JSON. Если дорогой читатель не доверяет моему выбору, то милости прошу читать эти две статьи: <a href="http://www.linkexchanger.su/2008/40.html" target="_blank">Что такое JSON?</a> и <a href="http://habrahabr.ru/blogs/webdev/31225/" target="_blank">JSON и XML. Что лучше?</a>.  С <em>контейнером</em> разобрались, теперь переходим к <em>обработчику запросов</em>, а тут опять целый зоопарк: и PHP и ASP.NET, который лучше бы смотрелся в паре с Silverlight, и еще куча всего. Опять муки выбора.</p>
+<p style="text-align: justify">А тем временем нашего Юзера совсем запугали: "все скрипты на страницах – зло и одна большая дыра", и после этого он решает отключить JavaScript. Что же нам делать? Ведь мы уже столько классных вещей написали, даже не забыли про WOW-эффекты, и это все на JavaScript, а наш Юзер увидит только белую страницу с надписью "Включите JavaScript". Но после предыдущей просьбы отключить антивирус он ничего не будет делать и просто уйдет на другой сайт. Вы думаете, все плохо и пора бить об стенку некогда любимого нами Юзера? Но постойте, он на самом деле дал нам подсказку: помните, выше мы не могли выбрать <em>обработчика запросов</em>? Теперь у нас есть отличный кандидат – Node.JS. Смотрите сами: для клиента JavaScript уже написан, и на сервере у нас опять же JavaScript, так почему бы не перенести для таких Юзеров часть кода на сервер с минимальными изменениями? Сказано – сделано, и Юзер счастлив, и нам работы было мало.<img class="aligncenter" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2010/12/Server-with-async-IO.png %}" data-src-old="http://habreffect.ru/files/ed5/726e72b62/4.png" alt="" width="396" height="269" />Причем использование одного языка на сервере и клиенте и возможность обмена кода сервера и клиента – не основные фишки Node.JS. Основной по праву должна считаться его скорость и его неблокирующая (асинхронная) природа, так хорошо подходящая для облачных вычислений. Про это как раз написано в этой замечательной статье: <a href="http://habrahabr.ru/blogs/webdev/108241/" target="_blank">Вы наверное шутите, мистер Дал, или почему Node.js — это венец эволюции веб-серверов</a>.</p>
+<p>До этого мы говорили только о динамичном контенте. А что делать со статикой? И тут ответ прост: статику – легковесным lightppd, nginx, или 0W-httpd.</p>
+<p>Теперь, уважаемый читатель, ты готов к прочтению полной версии статьи, о которой упоминалось в самом начале (<a href="http://www.xakep.ru/post/53583/" target="_blank">xakep.ru</a>) – <a href="http://abrdev.com/?p=1161" target="_blank">Атака на другой мир или серверный JavaScript</a>.</p>
+<h5>Далее советую почитать следующее:</h5>
+<ul>
+<li><a href="http://habrahabr.ru/blogs/development/97042/" target="_blank">Как избавиться от пристрастия к синхронности</a></li>
+<li><a href="http://habrahabr.ru/blogs/development/99792/" target="_blank">Асинхронность: почему это никак не сделают правильно?</a></li>
+<li><a href="http://abrdev.com/?p=1092" target="_blank">Веб-приложения реального времени: jSocket,Node.JS, Redis, MQ. Часть 1.</a></li>
+<li><a href="http://abrdev.com/?p=1121" target="_blank">Веб-приложения реального времени: jSocket,Node.JS, Redis, MQ. Часть 2.</a></li>
+<li><a href="http://habrahabr.ru/blogs/javascript/102717/" target="_blank">Node.JS — Основы асинхронного программирования, часть 1</a></li>
+<li><a href="http://habrahabr.ru/blogs/webdev/95972/" target="_blank">Node.JS: Пример HTTP-сервера в режиме prefork с использованием Web Workers</a></li>
+<li><a href="http://nodejs.ru" target="_blank">http://nodejs.ru</a></li>
+<li><a href="http://nodejs.ru/385" target="_blank">Использование нескольких ядер/процессоров в Node.js: порождаем воркеры</a></li>
+<li><a href="http://kuroikaze85.wordpress.com/all-node-js-entries/" target="_blank">Записи о Node.JS от kuroikaze85</a></li>
+</ul>
+<p>Не стоит ограничиваться только этими статьями, хорошей идеей было бы порыться на этих сайтах, там много чего еще есть интересного.</p>
+<h5>Если хотите поставить Node.JS на Винду, то:</h5>
+<ul>
+<li><a href="http://kuroikaze85.wordpress.com/2009/12/20/installing-node-js-on-windows/" target="_blank">Ставим Node.js в Windows</a></li>
+<li><a href="http://habrahabr.ru/blogs/javascript/107232/" target="_blank">Пошаговая установка Node.js на Windows без виртуалок</a></li>
+</ul>
+<h5>Бесплатные хостинги для Node.JS:</h5>
+<ul>
+<li><a href="http://habrahabr.ru/blogs/hosting/92404/" target="_blank">Heroku — Экспериментальная поддержка Node.js</a></li>
+<li><a href="http://habrahabr.ru/blogs/javascript/108346/" target="_blank">Переход Node.js под крыло Joyent</a></li>
+<li><a href="http://nodejs.ru/411" target="_blank">Хостинг Node.js на Joyent</a></li>
+</ul>
+<p style="text-align: left">Один вопрос остался неосвещенным, а именно: какую же СУБД выбрать под это дело? Ответ очевиден – любую из NoSQL, <a href="http://l-o-n-g.livejournal.com/153756.html" target="_blank">либо MySQL, переделанную под NoSQL</a>.<img class="aligncenter" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2010/12/Node.js-architecture.png %}" data-src-old="http://habreffect.ru/files/f3c/b613a5fae/5.png" alt="" width="402" height="202" /></p>
+<p style="text-align: left">Если, уважаемый читатель, тебе до сих пор не понятно, что такое Node.JS, можно попробовать <a href="http://ziyoumin.livejournal.com/3956.html" target="_blank">прочитать ещё и эту заметку</a>.</p>
+<h5>И в конце я хотел бы привести еще несколько статей, напрямую не относящихся к Node.JS:</h5>
+<ul>
+<li><a href="http://habrahabr.ru/blogs/javascript/109762/" target="_blank">Nano — миниатюрный JavaScript фреймворк</a></li>
+<li><a href="http://habrahabr.ru/blogs/gae/109913/" target="_blank">Бесплатная open-source CMS под Google App Engine for Java</a></li>
+<li><a href="http://habrahabr.ru/blogs/webdev/110029/" target="_blank">CSS трюки — пишем сайт без html</a></li>
+<li><a href="http://habrahabr.ru/blogs/web_security/109974/" target="_blank">Анализ проникновения бота через эксплоит в старых версиях phpmyadmin и рекомендации по настройкам безопасности php-хостинга</a><a href="/." target="_blank"></a></li>
+</ul>
+

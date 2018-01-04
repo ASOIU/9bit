@@ -1,0 +1,63 @@
+---
+layout: post
+wp_id:  2734
+title:  'Уязвимости формата файлов .doc'
+author: naghtarr
+date:             2013-02-21 03:01:12 +0000
+last_modified_at: 2013-02-22 13:12:19 +0000
+redirect_from: 
+  - /excerpt/2734.html
+  - /2013/2734/
+  - /2013/2734/уязвимости-формата-файлов-doc/
+authors: 
+  - Бояршинов Кирилл
+issues: 
+  - (к изданию)
+categories: 
+  - Software
+tags: 
+  - doc
+  - docx
+  - exploit
+  - malware
+  - Microsoft Word
+  - уязвимость
+  - эксплойт
+---
+<p style="text-align: justify;"><img class="alignright noborder" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2013/02/11.png %}" data-src-old="http://www.czhouxue.com/images/11.png" alt="docm" width="78" height="77" />С начала создания формата .docx (Office Open XML) прошло уже 7 лет, но до сих пор некоторые люди используют старый формат .doc . И мне стало интересно, с какими угрозами безопасности своего компьютера могут столкнутся пользователи, работающие с ".doc".</p>
+<p style="text-align: justify;">Приведу ряд уязвимостей формата .doc, обнаруженных за 2004-2012 года. В основном, они эксплуатируют такие известные техники взлома, как переполнение буфера и неверный ввод параметров.<!--more--></p>
+<ul>
+<li>Переполнение буфера при считывании JPEG в компоненте Microsoft Graphic Device Interface Plus (GDIPlus.dll) позволяет удаленно запускать исполняемый код, через COM-поле JPEG файла, которое имеет малую длину, а затем нормализуется до размера large integer перед осуществлением операции копирования в память.<br />
+<a href="http://www.cvedetails.com/cve/CVE-2004-0200/">http://www.cvedetails.com/cve/CVE-2004-0200</a></li>
+<li>Переполнение буфера в конвертере Microsoft WordPerfect 5.x из Office 2000, Office XP, Office 2003, и Works Suites 2001 позволяет удаленно запускать исполняемый код через зараженный файл или веб-сайт.<br />
+<a href="http://www.cvedetails.com/cve/CVE-2004-0573/">http://www.cvedetails.com/cve/CVE-2004-0573</a></li>
+<li>Переполнение буфера в Microsoft Office XP позволяет удаленно запускать исполняемый код посредством ссылки на URL-адрес файла, содержащей много данных после нулевого байта (%00) в .doc и возврата каретки (%0a) в .rtf.<br />
+<a href="http://www.cvedetails.com/cve/CVE-2004-0848/">http://www.cvedetails.com/cve/CVE-2004-0848</a></li>
+<li>Переполнение буфера в Microsoft Word 2002 (10.6612.6714) SP3, и возможно в других версиях, позволяет вызвать падение приложения, и возможно запускать исполняемый код в winword.exe посредством некоторых недопустимых значений в .doc файле (например, смещение, вызывающее ошибку указания на недоступный раздел памяти, или ошибка конвертирования integer, вызывающее процесс копирования в память данных большого объема).<br />
+<a href="http://www.cvedetails.com/cve/CVE-2004-0963/">http://www.cvedetails.com/cve/CVE-2004-0963</a></li>
+<li>Уязвимость в Microsoft Word 2000 и 2002, Office Word и Word Viewer 2003, Word 2004 позволяет удаленно запускать исполняемый код посредством .doc файла с искаженной строкой, которая вызывает повреждение памяти.<br />
+<a href="http://www.cvedetails.com/cve/CVE-2006-5994/">http://www.cvedetails.com/cve/CVE-2006-5994</a></li>
+<li>Уязвимость Microsoft Office 2000 SP3, XP SP3, Office 2003 SP2, и Office Word Viewer 2003 позволяет удаленно запускать исполняемый код через внедренные поля в File Information Block (FIB) .doc файла, который вызывает ошибку вычисление длины и повреждение памяти.<br />
+<a href="http://www.cvedetails.com/cve/CVE-2008-0109/">http://www.cvedetails.com/cve/CVE-2008-0109</a></li>
+<li>Переполнение буфера в msjet40.dll в Microsoft Jet Database Engine позволяет удаленно запускать исполняемый код через изменный .doc файл.<br />
+<a href="http://www.cvedetails.com/cve/CVE-2008-1092/"> http://www.cvedetails.com/cve/CVE-2008-1092</a></li>
+<li>Microsoft Office Word 2002 SP3, 2003 SP3, и 2007 SP2; Office Word Viewer; Office Compatibility Pack для Word, Excel, и PowerPoint 2007 File Formats SP2; и Works 9 неверно интерпретирует искаженные записи в Word файле, что позволяет удаленно запускать исполняемый код или вызывает повреждение памяти (Word Record Parsing Vulnerability).<br />
+<a href="http://www.cvedetails.com/cve/CVE-2010-1900/">http://www.cvedetails.com/cve/CVE-2010-1900</a></li>
+<li>Microsoft Word 2002 SP3 и Office 2004 для Mac неверно оперирует с возвращаемыми значениями, что позволяет удаленно запускать исполняемый код или вызывает повреждение памяти (Word Return Value Vulnerability).<br />
+<a href="http://www.cvedetails.com/cve/CVE-2010-3215/">http://www.cvedetails.com/cve/CVE-2010-3215</a></li>
+<li>Microsoft Word 2007 SP2 и SP3 неправильно работает с памятью при считывании .doc-файла, что позволяет удаленно запускать исполняемый код через зараженный файл (Word PAPX Section Corruption Vulnerability).<br />
+<a href="http://www.cvedetails.com/cve/CVE-2012-0182/">http://www.cvedetails.com/cve/CVE-2012-0182</a></li>
+</ul>
+<p class="note">Весь список уязвимостей доступен тут: <a href="http://www.cvedetails.com/vulnerability-list/vendor_id-26/product_id-529/Microsoft-Word.html">http://www.cvedetails.com/vulnerability-list/vendor_id-26/product_id-529/Microsoft-Word.html</a>.</p>
+<h2>Эксплойты</h2>
+<div style="margin: 0 0 0 -10px;">
+<p><iframe width="500" height="375" src="http://www.youtube.com/embed/7kmGgzDvgyQ?feature=oembed" frameborder="0" allowfullscreen></iframe></p>
+<p><iframe width="500" height="375" src="http://www.youtube.com/embed/moCQWvmmuZg?feature=oembed" frameborder="0" allowfullscreen></iframe></p>
+<p><iframe width="500" height="375" src="http://www.youtube.com/embed/BPaCuqUkMv8?feature=oembed" frameborder="0" allowfullscreen></iframe></p>
+<p><iframe width="500" height="375" src="http://www.youtube.com/embed/EzwUJvdUqvs?feature=oembed" frameborder="0" allowfullscreen></iframe></p>
+</div>
+<h2>.docx и .docm</h2>
+<p style="text-align: justify;">С выходом Microsoft Office 2007 формат .doc был признан устаревшим и разделен на два формата .docx и .docm. В первом не поддерживаются встраиваемые макросы, во втором поддерживаются. Это позволило решить многие проблемы с безопасностью, так как макросы являются одним из узких мест в безопасности предыдущего формата. Они позволяли запускать пользовательские скрипты на языке Visual Basic, благодаря чему энтузиасты смогли проникнуть через них в ОС. Теперь же основным используемым форматов стал .docx, не поддерживающий макросов.</p>
+<p style="text-align: center;"><a href="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2013/02/docxs1.png %}"><img class="size-full wp-image-36 aligncenter noborder" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2013/02/docxs1.png %}" alt="docxs" width="426" height="132" /></a></p>
+<p style="text-align: justify;">Microsoft даже иконки файлов документов сделала с учетом требований безопасности. Как видно из скриншота, потенциально вредоносный .docm имеет на иконке предупреждающий знак. Тем не менее, файл .doc такого знака не имеет, но все же является небезопасным. Однако, многие все еще пользуются форматом .doc, что на сегодняшний день является <strong>пренебрежением</strong> требованиями как безопасности сохранности данных, так и безопасности работоспособности оборудования.</p>
+

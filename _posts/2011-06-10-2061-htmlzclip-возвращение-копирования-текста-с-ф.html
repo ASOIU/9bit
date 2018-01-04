@@ -1,0 +1,533 @@
+---
+layout: post
+wp_id:  2061
+title:  'htmlZclip: Возвращение копирования текста с форматированием в Оперу'
+author: ZKyl
+date:             2011-06-10 09:06:35 +0000
+last_modified_at: 2013-11-19 13:58:49 +0000
+redirect_from: 
+  - /excerpt/2061.html
+  - /2011/2061/
+  - /2011/2061/htmlzclip-возвращение-копирования-текста-с-ф/
+authors: 
+  - Васильев Евгений
+issues: 
+  - (к изданию)
+  - №9 июнь 2012
+categories: 
+  - Software
+tags: 
+  - C
+  - JavaScript
+  - Opera
+  - скачать
+wp_comments: 
+  - 
+    id:     169
+    date:   2011-06-11 07:53:43 +0000
+    author: ZKyl
+    content: | 
+             <p>Кто бы еще перевел эту статью на EN. Есть желающие?</p>
+  - 
+    id:     170
+    date:   2011-06-18 12:47:20 +0000
+    author: ZKyl
+    content: | 
+             <p>Обновление:<br />
+             'htmlZclip.exe' теперь минимально подписан, и весит 4 КБ</p>
+  - 
+    id:     171
+    date:   2011-09-26 17:07:47 +0000
+    author: qwe
+    content: | 
+             <p>спасибо за программу, пытался настроить, но пока не получилось.<br />
+             Обьясните попроще работает ли она на 11.51, как пользоваться копированием в клипборд, и копирует она рисунки в word или куда то в другое место?</p>
+  - 
+    id:     172
+    date:   2011-09-26 17:58:56 +0000
+    author: -User-
+    content: | 
+             <p>&gt; Вы можете на досуге сами сравнить мою реализацию</p>
+             <p>Похоже это зависит от того как измерять ^_^ <a href="http://rghost.ru/23168061" rel="nofollow">http://rghost.ru/23168061</a></p>
+             <p>"convertStringToBase64: 24 ms<br />
+             encodeBase64: 16 ms<br />
+             Base64.encode: 24 ms<br />
+             encodeBase64full: 194 ms<br />
+             encodeBtoa: 12 ms"</p>
+             <p>&gt; Здесь видно, что добавленный только что объект сразу удаляется.</p>
+             <p>Примерчик на эту тему:<br />
+             javascript:<br />
+             var fr=document.createElement('iframe');<br />
+             fr.src="javascript:alert('')";<br />
+             document.documentElement.appendChild(fr);<br />
+             fr.parentNode.removeChild(fr);<br />
+             void(0);</p>
+             <p>Не работает в фоксе, работает в остальных браузерах.</p>
+  - 
+    id:     173
+    date:   2011-09-26 18:18:49 +0000
+    author: -User-
+    content: | 
+             <p>Пардон это было в фоксе. В опере:<br />
+             convertStringToBase64: 71 ms<br />
+             encodeBase64: 30 ms<br />
+             Base64.encode: 58 ms<br />
+             encodeBase64full: 58 ms<br />
+             encodeBtoa: 31 ms</p>
+  - 
+    id:     174
+    date:   2011-09-28 13:02:05 +0000
+    author: ZKyl
+    content: | 
+             <p>2qwe:<br />
+             &gt; работает ли она на 11.51<br />
+             Да</p>
+             <p>&gt; как пользоваться копированием в клипборд<br />
+             Выделяешь нужное место, жмешь правую кнопку мыши, жмешь "Copy with format"</p>
+             <p>&gt; копирует она рисунки в word<br />
+             Да. При выделении, рисунок должен попасть в выделенную область</p>
+  - 
+    id:     175
+    date:   2011-09-28 14:48:45 +0000
+    author: ZKyl
+    content: | 
+             <p>&gt;&gt; Здесь видно, что добавленный только что объект сразу удаляется.</p>
+             <p>&gt;Примерчик на эту тему:<br />
+              javascript:<br />
+              var fr=document.createElement(‘iframe’);<br />
+              fr.src=»javascript:alert(»)»;<br />
+             ...<br />
+             естественно, это же алерт<br />
+             &gt;&gt; Вы можете на досуге сами сравнить мою реализацию<br />
+             &gt;Похоже это зависит от того как измерять ^_^<br />
+             точнее на чем измерять: <a href="http://jsperf.com/encodebase64full" rel="nofollow">http://jsperf.com/encodebase64full</a><br />
+             Opera 11.51:<br />
+             encodeBase64full	173	±2.01% fastest<br />
+             encodeBase64		134	±1.00% 23% slower<br />
+             convertStringToBase64	66.50	±0.90% 62% slower<br />
+             Base64.encode		73.87	±1.11% 57% slower<br />
+             encodeBtoa		152	±1.26% 12% slower<br />
+             У сейчас Оперы проблемы с отправкой результатов.</p>
+  - 
+    id:     176
+    date:   2011-09-28 15:16:50 +0000
+    author: -User-
+    content: | 
+             <p>Воткнул в старую тестовую страницу вашу строку и encodeBase64full победил и там:<br />
+             convertStringToBase64: 14 ms<br />
+             encodeBase64: 6 ms<br />
+             Base64.encode: 11 ms<br />
+             encodeBase64full: 4 ms<br />
+             encodeBtoa: 5 ms</p>
+             <p>Но вот после учетверения строки, результаты изменились:<br />
+             convertStringToBase64: 51 ms<br />
+             encodeBase64: 22 ms<br />
+             Base64.encode: 40 ms<br />
+             encodeBase64full: 42 ms<br />
+             encodeBtoa: 21 ms</p>
+             <p>Любопытный эффект.</p>
+             <p>&gt; естественно, это же алерт</p>
+             <p>Но фрейм таки создаётся. И подход при котором javascript: выполняется, а data: - нет, выглядит не слишком логичным.</p>
+  - 
+    id:     177
+    date:   2011-09-30 06:58:18 +0000
+    author: ZKyl
+    content: | 
+             <p>&gt; Любопытный эффект.<br />
+             Да. Я приводил тест зависимости скорости от объема текста <a href="http://my.opera.com/Lex1/blog/fast-base64-encoding-and-test-results#comment63283502" rel="nofollow">http://my.opera.com/Lex1/blog/fast-base64-encoding-and-test-results#comment63283502</a></p>
+             <p>(encodeBase64full|encodeBase64|chars number)<br />
+             (5 ms|7 ms|22437)<br />
+             (12 ms|16 ms|60416)<br />
+             (18 ms|22 ms|92904)<br />
+             (44 ms|30 ms|112185)<br />
+             Обычно копируемая область небольшая (содержит мало текста + весь css), поэтому для htmlZclip такой вариант хорошо подходит.</p>
+             <p>&gt; И подход при котором javascript: выполняется, а data: – нет, выглядит не слишком логичным<br />
+             Особенности реализации, для data с особым MIME нужно вызвать внешнюю программу (долго), а JavaScript всегда под рукой.</p>
+  - 
+    id:     178
+    date:   2011-10-02 20:29:36 +0000
+    author: qwe
+    content: | 
+             <p>ZKyl<br />
+             у меня не копирует ничего даже в блокнот, вы не могли бы залить готовый вариант с использованием opera-usb.com/operausben.htm? тогда будет проще затестить, спасибо.</p>
+  - 
+    id:     179
+    date:   2011-10-04 17:02:43 +0000
+    author: ZKyl
+    content: | 
+             <p>&gt;у меня не копирует ничего даже в блокнот<br />
+             Да, в блокнот он не копирует, ибо незачем.<br />
+             Копирует в Microsoft Word, LibreOffice Writer...<br />
+             а также в WYSIWYG-HTML редакторы ( <a href="http://www.tinymce.com/tryit/full.php" rel="nofollow">http://www.tinymce.com/tryit/full.php</a> ), открытые в других браузерах.<br />
+             &gt;вы не могли бы залить готовый вариант<br />
+             <a href="http://narod.ru/disk/27304862001/Opera%2BhtmlZclip.7z.html" rel="nofollow">http://narod.ru/disk/27304862001/Opera%2BhtmlZclip.7z.html</a><br />
+             &gt;opera-usb.com/operausben.htm<br />
+             Стандартный установщик оперы уже несколько версий как поддерживает создание Portable версии.</p>
+  - 
+    id:     180
+    date:   2011-10-16 19:12:10 +0000
+    author: qwe
+    content: | 
+             <p>спасибо, если будет норм. работать в новой версии, то будет включен в сборку my.opera.com/recheck</p>
+  - 
+    id:     181
+    date:   2011-10-17 23:11:03 +0000
+    author: qwe
+    content: | 
+             <p>и ещё вопрос:<br />
+             есть скрипт, он тоже копирует в word с картинками<br />
+             <a href="http://paste.pocoo.org/show/494137/" rel="nofollow">http://paste.pocoo.org/show/494137/</a><br />
+             вопрос:  у вас получше будет?</p>
+  - 
+    id:     182
+    date:   2011-10-21 18:31:52 +0000
+    author: ZKyl
+    content: | 
+             <p>&gt;<a href="http://paste.pocoo.org/show/494137/" rel="nofollow">http://paste.pocoo.org/show/494137/</a><br />
+             &gt;вопрос: у вас получше будет?<br />
+             Да, htmlZclip может скопировать целый кусок страницы (сохраняя фон элементов, структуру...), а "document.designMode='on'" копирует меньше (без фона, без структуры...).</p>
+  - 
+    id:     183
+    date:   2011-10-25 17:19:41 +0000
+    author: Tarnakko
+    content: | 
+             <p>Всё заработало. Но большое огорчение. Не работает (не вставляется) в WinOrganizer, который у меня лицензилонный и который для меня незаменимая вещь. А старый htm2clip прекрасно работал (((</p>
+  - 
+    id:     184
+    date:   2011-10-25 17:38:14 +0000
+    author: Tarnakko
+    content: | 
+             <p>И ещё в старой версии оперы работал autocopy.js из той же сборки. Теперь нет. Снова печаль.</p>
+  - 
+    id:     185
+    date:   2011-10-25 19:25:56 +0000
+    author: ZKyl
+    content: | 
+             <p>&gt; Не работает (не вставляется) в WinOrganizer...<br />
+             &gt; А старый htm2clip прекрасно работал<br />
+             Вставлял с форматированием?<br />
+             В одной папке с htm2clip.exe находился htmltortf.dll ?<br />
+             &gt; И ещё в старой версии оперы работал autocopy.js<br />
+             Если надо, то это можно устроить. IMHO назначить горячие клавиши на копирование с форматированием лучше, чем на каждую страницу повесить UserJS (autocopy.js)</p>
+  - 
+    id:     186
+    date:   2011-10-27 21:01:08 +0000
+    author: Tarnakko
+    content: | 
+             <p>Да, естесственно, вставляла с форматированием. Первый раз слышу об htmltortf.dll. В архиве с прогой нету.<br />
+             С autocopy.js мне было удобно, т.к. приходится очень много копировать. Придется искать любиомй Опере замену. могли же, наконец, разработчики и сделать эту мелочь.</p>
+  - 
+    id:     187
+    date:   2011-10-27 21:14:24 +0000
+    author: Tarnakko
+    content: | 
+             <p>P.S. Нашла на просторах инета данную dll. Всё равно в WinOrganizer не вставляет. Просто не активен НИКАКОЙ пункт вставки - ни обычная, ни спец, ни чистый текст. Как будто буфер обмена пустой. (В Ворд вставляет).</p>
+  - 
+    id:     188
+    date:   2011-10-27 21:40:34 +0000
+    author: Tarnakko
+    content: | 
+             <p>Дальнейшие поиски проблемы копирования с форматированием привели к расширению "Edit the Page". С его помощью можно это делать. Но приходится включать/выкючать его даже для масштабирования страницы, т.е. вместо масштабирования начинают писаться ---+++.</p>
+  - 
+    id:     189
+    date:   2011-10-31 08:38:01 +0000
+    author: ZKyl
+    content: | 
+             <p>Обновление:<br />
+             Теперь работает вставка в любую программу, качество вставленного фрагмента зависит от самой программы (в Word... вставляет как и раньше, в notepad - просто текст).</p>
+             <p>Точнее в него добавилось копирование из <a href="http://paste.pocoo.org/show/494137" rel="nofollow">http://paste.pocoo.org/show/494137</a> (и «Edit the Page») для программ, в которых раньше ничего не вставлялось.</p>
+             <p>2Tarnakko: могу исправить autocopy.js, чтоб он работал с htmlZclip, но копировать в WinOrganizer он не сможет (только Word...). Такой autocopy.js нужен?</p>
+  - 
+    id:     190
+    date:   2011-10-31 14:36:02 +0000
+    author: Tarnakko
+    content: | 
+             <p>Наверное такой autocopy.js будет неполноценным. И лично для меня не совсем нужным. Остальное протестируем.</p>
+  - 
+    id:     191
+    date:   2011-12-06 18:06:15 +0000
+    author: ZKyl
+    content: | 
+             <p>Проверенно на версии 11.60 - работает, можно спокойно обновлять.</p>
+  - 
+    id:     192
+    date:   2011-12-08 15:26:53 +0000
+    author: hermit
+    content: | 
+             <p>&gt;&gt; могу исправить autocopy.js, чтоб он работал с htmlZclip</p>
+             <p>Можно ли сделать это?<br />
+             В Опере очень не хватает простого автокопирования выделенного текста!<br />
+             Спасибо.</p>
+  - 
+    id:     193
+    date:   2011-12-11 16:37:28 +0000
+    author: ZKyl
+    content: | 
+             <p>2 hermit, готово:<br />
+             <a href="https://docs.google.com/open?id=0B-s94DZ_XsZJMWJhZDg0YzYtMTlmYy00ZjU1LWJhYWYtN2QxODFlYWYzNzZh" rel="nofollow">https://docs.google.com/open?id=0B-s94DZ_XsZJMWJhZDg0YzYtMTlmYy00ZjU1LWJhYWYtN2QxODFlYWYzNzZh</a></p>
+  - 
+    id:     194
+    date:   2011-12-12 10:12:02 +0000
+    author: hermit
+    content: | 
+             <p>ZKyl<br />
+             Большое спасибо за оперативность.<br />
+             скрипт скачал, программу настроил.<br />
+             К сожалению, не работает <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/sad.gif %}" alt=":(" class="wp-smiley" /> </p>
+             <p>Проверял на 11.01, 11.52 и 11.60<br />
+             После выделения текста на неск. секунд появляется прогресс-бар (явно что-то происходит), но текст в буфере не появляется.</p>
+             <p>Тип файла: text/htmlZclip<br />
+             Расширение: нет<br />
+             Действие: открыть в программе "E:\Opera\program\htmlZclip\htmlZclip.exe" (галка "передавать адрес" не установлена).<br />
+             Путь к папке userjs: e:\Opera\profile\userjs\</p>
+  - 
+    id:     195
+    date:   2011-12-13 17:49:59 +0000
+    author: ZKyl
+    content: | 
+             <p>2hermit,<br />
+             В Word надо вставлять "с сохранением исходного форматирования": <a href="http://office.microsoft.com/ru-ru/word-help/HA010215708.aspx" rel="nofollow">http://office.microsoft.com/ru-ru/word-help/HA010215708.aspx</a></p>
+             <p>Еще можно попробовать прописать точный путь к userjs: e:\Opera\profile\userjs\autocopy.js</p>
+  - 
+    id:     196
+    date:   2011-12-13 18:40:50 +0000
+    author: hermit
+    content: | 
+             <p>ZKyl,<br />
+             ещё раз спасибо.</p>
+             <p>Я имел ввиду простое автокопирование выделенного текста в буфер обмена, без сохранения форматирования для Word etc.</p>
+             <p>Прописать полный путь к скрипту невозможно; указывается ведь путь к папке ujs-скриптов.</p>
+             <p>Видимо, придётся просто отвыкнуть от этой удобной фичи.</p>
+             <p>Кстати, частичный workaround для сохранения форматирования: есть скрипт view-selection-source.js<br />
+             (показывает выделенный фрагмент в html-формате).</p>
+  - 
+    id:     197
+    date:   2012-03-21 07:52:21 +0000
+    author: Kiril__777
+    content: | 
+             <p>использование утилиты от 31.10.2011 и нового пункта меню, взятого отсюда htmlZclip.7z\copy\standard_menu.ini, выдает вот такой результат<br />
+             [URL=http://s2.ipicture.ru/Gallery/Viewfull/9381332.html][IMG]http://s2.ipicture.ru/uploads/20120321/thumbs/0BAZthTM.jpg[/IMG][/URL]<br />
+             при возврате прежнего пункта меню баг пропадает, пробовал на разных версиях оперы. что можете посоветовать?</p>
+  - 
+    id:     198
+    date:   2012-03-21 12:00:01 +0000
+    author: ZKyl
+    content: | 
+             <p>Kiril__777,<br />
+             Скорее всего Вы ранее следуя совету из раздела "Допиливаем установку" сменили MIME "text/htmlZclip" на свой.<br />
+             В новом standard_menu.ini MIME - стандартный ("text/htmlZclip"), поэтому Вам опять надо заменить его на свой вариант.</p>
+  - 
+    id:     199
+    date:   2012-03-21 12:44:39 +0000
+    author: Kiril__777
+    content: | 
+             <p>ZKyl, спасибо за наводку</p>
+  - 
+    id:     200
+    date:   2012-04-24 22:13:13 +0000
+    author: ILija
+    content: | 
+             <p>Kiril__777<br />
+             спасибо работает отлично и что очень приятно быстро! Правда замена standard_menu.ini - не очень хороший вариант, файл хранит огромное кол-во настроек (100 Кб), в описании, наверное, лучше указать, мол найти в собственном standard_menu.ini строку [Hotclick Popup Menu] и в ниже опций copy вставить ваш блок.</p>
+             <p>Хотел поинтересоваться, а можете сделать кнопку "Копировать в Evernote"? Его стандартное приложение копирует из оперы есесно без форматирования.</p>
+  - 
+    id:     201
+    date:   2012-06-14 11:27:56 +0000
+    author: Kiril__777
+    content: | 
+             <p>ZKyl, совсем недавно появился вопросец:<br />
+             нельзя ли научить htmlZclip.exe копировать текст при выделении так, чтобы потом можно было вставить его в блокнот?</p>
+             <p>все остальное отлично работает <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/smile.gif %}" alt=":)" class="wp-smiley" /> </p>
+  - 
+    id:     202
+    date:   2012-07-09 17:34:09 +0000
+    author: ZKyl
+    content: | 
+             <p>Извините за задержку, готовился к защите диссертации.</p>
+             <p>ILija,<br />
+             &gt; Правда замена standard_menu.ini – не очень хороший вариант, файл хранит огромное кол-во настроек (100 Кб)<br />
+             - он (на 100 Кб) находится в "C:\Program Files\Opera\ui", а в инструкции заменяется пользовательское меню в "C:\Users\\AppData\Roaming\Opera\Opera\menu\".<br />
+             &gt;в описании, наверное, лучше указать, мол найти в собственном standard_menu.ini строку [Hotclick Popup Menu] и в ниже опций copy вставить ваш блок.<br />
+             Это написано в начале раздела "Допиливаем установку".</p>
+             <p>&gt;Хотел поинтересоваться, а можете сделать кнопку «Копировать в Evernote»? Его стандартное приложение копирует из оперы есесно без форматирования.<br />
+             Не пользовался Evernote, всегда хватало встроенного "Копировать в заметки". Лучше обратитесь к разработчикам Evernote со ссылкой на htmlZclip.</p>
+             <p>Kiril__777&gt; нельзя ли научить htmlZclip.exe копировать текст при выделении так, чтобы потом можно было вставить его в блокнот?<br />
+             Это появится в следующей версии. Думаю достаточно будет в htmlZclip.с заменить RegisterClipboardFormatW(L"HTML Format") на CF_UNICODETEXT, а в autocopy.js заменить outerHTML на outerText</p>
+  - 
+    id:     203
+    date:   2012-11-08 14:39:41 +0000
+    author: ILija
+    content: | 
+             <p>Уважаемый ZKyl, на днях вышла Опера 12.1 и в ней больше не работает ваша чудесная примочка :`(</p>
+  - 
+    id:     204
+    date:   2012-11-29 09:41:23 +0000
+    author: ILija
+    content: | 
+             <p>Извините за беспокойство, решения так и не нашлось?</p>
+  - 
+    id:     205
+    date:   2012-12-04 17:07:24 +0000
+    author: ZKyl
+    content: | 
+             <p>Починил, только теперь пропала возможность вставки в любую программу, т.е. вставляет только в Word и в несколько других программ.</p>
+  - 
+    id:     206
+    date:   2012-12-05 20:49:59 +0000
+    author: ILija
+    content: | 
+             <p>Огромное вам спасибо! Работает приотлично! У меня вставляет ваш скрипт во все используемые мною программы и в частности в evernote с урлом источника с картинками в самом тексте и форматированием! Ура!</p>
+             <p>А может вы опубликуете эту тему на Хабре? Есть отдельная тема по Опере и в комментах люди часто задаются вопросом копирования с форматированием.</p>
+  - 
+    id:     207
+    date:   2013-01-11 18:08:29 +0000
+    author: ZKyl
+    content: | 
+             <p>К сожалению я на Хабре не зареген.</p>
+  - 
+    id:     208
+    date:   2013-01-30 04:46:10 +0000
+    author: vinch91122
+    content: | 
+             <p>Здравствуйте! Не ругайте слишком. Есть вопрос. Точнее может ли кто то обьяснить доступно этот абзац:<br />
+             Чтоб этого не случилось, достаточно заменить MIME на какую-нибудь ерунду, например text/trali-vali;eli;sandali. MIME следует заменить в браузере и в скрипте (он прописан в начале скрипта, можно найти поиском; ваш К.О.) в ‘standard_menu.ini’.<br />
+             Не понял что такое К.О. и какую строчку менять, искал пару часов. Обьясните пожалуйста, что и где менять. Спс</p>
+  - 
+    id:     209
+    date:   2013-01-30 04:49:32 +0000
+    author: vinch91122
+    content: | 
+             <p>А работает четко автор молодец!!! Жду ответа на вопрос выше!</p>
+  - 
+    id:     210
+    date:   2013-02-14 15:28:24 +0000
+    author: ZKyl
+    content: | 
+             <p>К сожалению Opera, которую мы знаем скоро перестанет существовать: <a href="http://habrahabr.ru/company/opera/blog/169239/" rel="nofollow">http://habrahabr.ru/company/opera/blog/169239/</a></p>
+             <p>&gt;какую строчку менять<br />
+             MIME надо изменить в copy\autocopy.js<br />
+             в самом начале файла: document.addEventListener('mouseup', function(){(function(){var b=function(t,q,s){var B='text/htmlZclip';var<br />
+             htmlZclip - надо заменить на что-то своё.</p>
+             <p>в copy\standard_menu.ini<br />
+             чуть ниже начала: Platform Windows, Item, "Copy with format"=Go to Page, "javascript:(function(){var b=function(t,q,s){var B='text/htmlZclip';var<br />
+             опять же htmlZclip - надо заменить на своё значение.</p>
+             <p>И в 4-ом пункте установки:<br />
+             нажмем Ctrl+F12 , откроем вкладку ‘Расширенные‘, зайдем в ’Загрузки‘ (слева), нажмем кнопку ‘Добавить…‘,<br />
+              в появившемся окне указываем в поле MIME-тип text/htmlZclip...<br />
+             опять htmlZclip - заменить на своё значение.</p>
+             <p>&gt;Не понял что такое К.О.<br />
+             <a href="http://zhgun.ru/cap/saying/13717745.png" rel="nofollow">http://zhgun.ru/cap/saying/13717745.png</a></p>
+  - 
+    id:     211
+    date:   2013-02-22 05:14:46 +0000
+    author: vinch91122
+    content: | 
+             <p>Спасибо огромное ZKyl. Все помогло.</p>
+---
+<p><img class="alignright noborder" style="margin: -10px -20px 0 0;" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2011/06/opera-icon-red.png %}" alt="" width="200" height="225" />Ранее я на нашем <a href="http://forum.asoiu.com/index.php?topic=621.msg10314#msg10314">форуме</a> <a href="http://forum.asoiu.com/index.php?topic=621.msg10314#msg10314">писал</a> про расширение (htm2clip) для <strong><span style="color: #ff0000;">О</span></strong>перы, позволяющее копировать фрагмент страницы с сохранением его оформления.  С того момента я почти им не пользовался, пока недавно мне не понадобилось быстро скопировать кусок сайта, сохранив его форматирование...</p>
+<p>И тогда обнаружил, что оно не работает с новой версией <strong><span style="color: #ff0000;">О</span></strong>перы <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/cry.gif %}" alt=":cry:" class="wp-smiley" /> </p>
+<p>Зайдя на <a href="http://my.opera.com/Lex1/blog/copying-text-with-formatting-to-clipboard-and-autocopy-js" target="_blank">страничку</a> автора (A.Ruzanov - Lex1), и прочитав комментарии к htm2clip, понял, что новую версию ждать придется долго (похоже автор ее забросил).</p>
+<p>Так и родился <strong>htmlZclip</strong>.<br />
+Основные его преимущества перед  htm2clip:</p>
+<ul>
+<li>работает на новых версиях <strong><span style="color: #ff0000;">О</span></strong>перы</li>
+<li>делает это в 1,7 раз быстрее</li>
+</ul>
+<p><!--more--></p>
+<p class="note">Мне от htm2clip нужна была только функция копирования (вставкой не пользовался), поэтому htmlZclip может только копировать (форматированной вставки нет).</p>
+<p style="text-align: center;"><a href="https://docs.google.com/leaf?id=0B-s94DZ_XsZJOWRmMjJmODgtYWNhOC00YjcxLThhNzEtNTJmZDQ0OWZlY2Rj&amp;hl=ru" target="_blank"><span style="font-size: large;">скачать\</span> <img class="noborder" style="vertical-align: middle;" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2011/06/downloads-icon.png %}" alt="Download" width="64" height="64" /> <span style="font-size: large;">/download</span></a></p>
+<h1>Установка</h1>
+<p>Ставится он практически также, как и htm2clip. Нужно скопировать 2 файла, и прописать в браузере MIME тип.</p>
+<ol>
+<li>скачиваем</li>
+<li>копируем из архива файл '<strong>copy\htmlZclip.exe</strong>' в<br />
+'<strong>&lt;путь к папке с установленной оперой&gt;\program\</strong>'<br />
+(обычно 'htmlZclip.exe' нужно копировать в<br />
+'<strong>C:\Program Files (x86)\Opera\program\</strong>' – для 64bit систем, либо,<br />
+если такого пути нет, то в '<strong>C:\Program Files\Opera\program\</strong>' – для 32bit)</li>
+<li>теперь выделим следующую строку:<br />
+<strong>opera:config#UserPrefs|MenuConfiguration</strong><br />
+нажмем Ctrl+C затем Ctrl+Shift+V<br />
+и получим путь (в первой строчке) к месту, куда надо скопировать из архива файл '<strong>copy\standard_menu.ini</strong>'<br />
+обычно 'standard_menu.ini' нужно копировать в<br />
+'<strong>C:\Users\&lt;имя пользователя&gt;\AppData\Roaming\Opera\Opera\menu\</strong>' предварительно создав отсутствующую папку <em>menu</em></li>
+<li>нажмем <strong>Ctrl+F12</strong> , откроем вкладку '<strong>Расширенные</strong>', зайдем в '<strong>Загрузки</strong>' (слева), нажмем кнопку '<strong>Добавить...</strong>',<br />
+в появившемся окне указываем в поле MIME-тип <strong>text/htmlZclip</strong><br />
+выбираем Действие <strong>Открыть в другой программе:</strong>, и вписываем в поле строку <strong>program\htmlZclip.exe</strong><br />
+далее жмем кнопку <strong>OK</strong>, и снова <strong>OK</strong></li>
+</ol>
+<p>Всё, теперь нужно перезагрузить <strong><span style="color: #ff0000;">О</span></strong>перу, и можно копировать текст с форматированием (в контекстном меню выделенного текста появится пункт '<strong>Copy with format</strong>').</p>
+<p class="note">На этом <em>обычный пользователь</em> может пойти и заняться своими делами, но, если вы себя таковым не считаете, и излишняя подробность в мелочах и недосказанность в сути происходящего приведенной выше инструкции вам не по нутру, то смело изучайте статью до конца.</p>
+<h1>Допиливаем установку</h1>
+<p>Я не буду здесь говорить, что копируя мой 'standard_menu.ini' вы могли затереть свою менюшку, и что лучше вместо этого вставить новый элемент в свое меню. Раз вы это читаете, вам это должно быть известно.</p>
+<p>В этом разделе я бы хотел сказать, например, то, что кидая к себе 'htmlZclip.exe' и прописывая к нему MIME, вы проделываете в своем браузере приличную дырку отбойным молотком. Если оставить все как есть, то браузер, встретив на <span style="text-decoration: underline;">любом</span> сайте объект с MIME <strong>text/htmlZclip</strong>, сразу отошлет его в 'htmlZclip.exe', а тот, в свою очередь, поместит его в буфер обмена...</p>
+<p>Чтоб этого не случилось, достаточно заменить MIME на какую-нибудь ерунду, например <strong>text/trali-vali;eli;sandali</strong>. MIME следует заменить в браузере и в скрипте (он прописан в начале скрипта, <em>можно найти поиском; ваш К.О.</em>) в 'standard_menu.ini'.</p>
+<p>Можно прописать клавиатурное сокращение в секцию Application своего 'standard_keyboard.ini', например для сочетания <strong>Ctrl+Alt+C</strong>:</p>
+<pre>...
+[Application]
+...
+c ctrl alt="Go to page, "javascript:(function(){...
+...</pre>
+<p>Либо прописать то же самое в GUI: Расширенные настройки -&gt; Управление. Только не забудьте удалить внешние кавычки.</p>
+<h1>Исходники</h1>
+<p>В директории '<strong>src\</strong>' архива находятся все исходники. Исходники содержат шапку, в которой указана их версия<br />
+(формат - 'htmlZclip v&lt;версия оперы&gt;.&lt;номер версии htmlZclip для данной версии оперы&gt;'), а также даны все необходимые ссылки:</p>
+<p>Вначале стоит посмотреть, что именно заносится в буфер обмена при копировании, например в IE:</p>
+<ul>
+<li><strong>.NET C#</strong> - <a href="http://habrahabr.ru/blogs/net/24712">Работа с буфером обмена</a></li>
+<li><a href="http://operafan.net/forum/index.php?topic=1151.0">Исследование Оперного (9) копирования форматированного текста</a></li>
+</ul>
+<p>Затем лучше почитать описание на MSDN точное описание формата заголовка <a href="http://msdn.microsoft.com/en-us/library/aa767917(VS.85).aspx">HTML Clipboard Format (CF_HTML)</a>.</p>
+<p>Далее можно посмотреть несколько реализаций копирования в буфер обмена CF_HTML:</p>
+<ul>
+<li><strong>C++</strong> <a href="http://support.microsoft.com/kb/274308">Как добавить HTML-код в буфер обмена с помощью Visual C++</a> (официально, от MS)</li>
+<li><strong>.NET C#</strong> <a href="http://blogs.msdn.com/b/jmstall/archive/2007/01/21/html-clipboard.aspx">Copying HTML on the clipboard</a></li>
+<li><strong>.NET C#</strong> <a href="http://blogs.msdn.com/b/jmstall/archive/2007/01/21/sample-code-html-clipboard.aspx">Sample code for copying Html to Clipboard</a></li>
+</ul>
+<p>И в конце следует взглянуть на некоторые WinAPI для работы с буфером обмена (там особенно ценны комментарии):</p>
+<ul>
+<li><a href="http://msdn.microsoft.com/en-us/library/ms649048.aspx">OpenClipboard</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/library/ms649037.aspx">EmptyClipboard</a></li>
+<li><a href="http://msdn.microsoft.com/en-us/library/ms649051.aspx">SetClipboardData</a></li>
+</ul>
+<h2>htmlZclp.js</h2>
+<p>Этот код, после упаковки в <a href="http://compressorrater.thruhere.net">YUI Compressor</a> переносится в 'standard_menu.ini'.</p>
+<p>Все основные действия происходят в нем, и, в отличии от htm2clip, здесь же, на JavaScript, формируется полный заголовок для CF_HTML. Что касается всего остального, то смотрите исходники, понять их несложно.</p>
+<h3>encodeBase64full</h3>
+<p>В исходнике спрятано (закомментировано) пасхальное яйцо - самая быстрая реализация кодирования в Base64 на JavaScript в <strong><span style="color: #ff0000;">О</span></strong>пере. Вы можете на досуге сами сравнить мою реализацию с <a href="http://my.opera.com/Lex1/blog/fast-base64-encoding-and-test-results">предыдущей самой быстрой реализацией</a>, которая, кстати от того же автора (A.Ruzanov).</p>
+<h2>htmlZclip.exe</h2>
+<p>Здесь делается как раз то, что нельзя сделать в браузере на JavaScript, - скопировать в буфер обмена с указанием формата CF_HTML. Вот и все, больше ничего оно не делает, так как формирование заголовка CF_HTML было перенесено на JavaScript.</p>
+<p>Оно написано на <strong>C</strong>,  и в собранном виде занимает <strong>3 072</strong> байа, в отличии от htm2clip - <strong>Delphi</strong> и <strong>14 336</strong> байт.</p>
+<p>В архиве находится целиком весь проект, созданный в Visual Studio 2010 с использованием <a href="http://www.microsoft.com/downloads/en/details.aspx?FamilyID=35aeda01-421d-4ba5-b44b-543dc8c33a20&amp;displaylang=en">Windows SDK 7.1</a> (задается в свойствах проекта - 'Platform Toolset').</p>
+<p>Если загляните в файл 'htmlZclip.c', то в середине функции <strong>wWMain</strong> увидите забавную конструкцию, начинающеюся с '<strong>(hText =</strong>'. Предлагаю самостоятельно разобраться с тем, как она работает, и лишь скажу, что это очень удобный способ проверки отработки WinAPI функций.</p>
+<p>Надо только помолиться перед компиляцией: некоторые компиляторы при оптимизации кода могут переставить вызовы функций так, что они будут вызываться не в нужном нам порядке (!!!), и программа работать не будет!</p>
+<p>Если же вы считаете себя параноиком, то смело переписывайте нормально этот участок кода, дополнив его недостающими проверками, дополнительными циклами и сообщениями пользователю, что проге стало плохо. Ах да, чуть не забыл, еще можете для успокоения души убрать <strong>_GS_CHECK_OFF</strong>.</p>
+<h2 id="hiw">Как это работает</h2>
+<p>После формирования CF_HTML (данных согласно этому формату), он передается в виде DataURL в качестве <strong>src</strong> новому <strong>iframe</strong>.</p>
+<p>Далее браузер, видя появление нового объекта, по MIME определяет что ему делать. В нашем случае браузер создает в директории для временных файлов новый файл и записывает в него наш CF_HTML. Затем путь к временному файлу передается в 'htmlZclip.exe' в качестве опции запуска.</p>
+<p>И, в конце, 'htmlZclip.exe' переписывает содержимое временного файла в буфер обмена с указанием формата '<strong>HTML Format</strong>'.</p>
+<h1>За кадром</h1>
+<h2>Google &amp; сжатие JS</h2>
+<p>JavaScript я пробовал сжимать разными оптимизаторами/компрессорами, в этом помог <a href="http://compressorrater.thruhere.net">compressorrater.thruhere.net</a>, но особенно мне запомнился <a href="http://closure-compiler.appspot.com/home" target="_blank">Google Closure Compiler</a>. Попробуем в нем 'сжать' следующий код в режиме Simple или Advanced:</p>
+<p><code>alert(function(){var z="мая любить копировать ::-)";return z[1]+z[1]+z[3]+z[4]+z[6]+z[10]+z[1]+z[8]+z[2]+z[5]})</code></p>
+<p>И вот что получим :lol: :</p>
+<pre><strong>Original Size:	</strong>130 bytes (121 bytes gzipped)
+<strong>Compiled Size:</strong>	1.27KB (135 bytes gzipped)
+		Saved <strong>-898.46%</strong> off the original size</pre>
+<h2>Пути JIT-компиляции неисповедимы</h2>
+<p>Вначале я не планировал переносить формирование заголовка CF_HTML на JavaScript, боясь увеличить время выполнения. Это коренным образом изменилось после того, как сравнил скорость работы готового 'htmlZclip.js' с htm2clip, и получил, что JavaScript htmlZclip'а работает в 1,6 раз быстрее, чем JavaScript htm2clip'а.</p>
+<p>Решив, что изменение кода для формирования заголовка CF_HTML не сделает htmlZclip медленнее, чем htm2clip, стал менять код. Каково же было мое удивление, когда новый 'htmlZclip.js' стал работать на 8% быстрее, чем старый  8-O. Видать, не зря, когда его модифицировал, постоянно думал о производительности.</p>
+<h2>Подпись файла размером с сам файл</h2>
+<p>Обычно в релизы своих проектов я добавляю цифровую подпись.</p>
+<p>В этот раз мне этого делать не захотелось. Посудите сами, файл 'htmlZclip.exe' размером 3 КБ, после подписывания со штампом времени стал весить 8 КБ.</p>
+<h2>Из-за чего htm2clip перестал работать</h2>
+<p>Чтоб лучше это понять, вначале нужно прочитать эту статью: <a href="http://habrahabr.ru/blogs/browsers/108705/" target="_blank">Исследуем скорость выполнения JS и алгоритм отображения страниц</a>, а также <a href="http://habrahabr.ru/blogs/browsers/108705/#comment_3444406" target="_blank">этот</a> комментарий.</p>
+<p>Часто ради оптимизации пользуются определенными особенностями, пологая, что эти особенности далее останутся неизменными. Вот наглядный пример такой особенности: посмотрим на конец JavaScript'а оригинального htm2clip:</p>
+<p class="error">doc.documentElement.appendChild(f);f.parentNode.removeChild(f)}})();</p>
+<p>Здесь видно, что добавленный только что объект сразу удаляется. В старой <strong><span style="color: #ff0000;">О</span></strong>пере выполнение данной конструкции было реализовано не очень эффективно и приводило к перерисовке. В новой версии <strong><span style="color: #ff0000;">О</span></strong>перы убрали этот недостаток.</p>
+<p>Но постойте, отсутствие отрисовки означает, что не появится новый объект, и дальше ничего работать не будет (см. выше <a href="#hiw">Как это работает</a>). Поэтому в htmlZclip предположение об обязательной отрисовки я заменил на предположение о том, что отрисовка точно должна произойти за 5 секунд:</p>
+<pre>setTimeout(function(){
+object.parentNode.removeChild(object);
+object=null;},5000);</pre>
+<p>Вообще, работать будет даже если поставить 0 мс, я просто даю небольшую передышку. Кстати, теперь если несколько раз использовать это копирование, то можно наблюдать в определенной части страницы некое подобие прогресс-бара из небольших iframe'ов  <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/wink.gif %}" alt=";-)" class="wp-smiley" />  , каждый из которых будет исчезать через 5 сек.</p>
+

@@ -29,7 +29,6 @@ tags:
   - sync
   - TCP
   - VHD
-comments_plus_canonical_uri: 'https://floaternet.com/gcomments'
 wp_comments: 
   - 
     id:     251
@@ -39,7 +38,7 @@ wp_comments:
              <p><del datetime="2017-12-12">Комментарии можно оставлять здесь -&gt; <a href="https://plus.google.com/+ZiroKyl/posts/DuhWqH9CwDG" rel="nofollow">https://plus.google.com/+ZiroKyl/posts/DuhWqH9CwDG</a></del></p>
 ---
 <p><img class="noborder aligncenter wp-image-3748 size-full" style="margin: -10px -20px 8px -20px;" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2016/09/sync-party.jpg %}" alt="RingSync demo party" width="520" height="215" /></p>
-<p>В комментарии к статье про <a title="Заморозка системы: история перехода с EWF на dVHD" href="{{ site.url }}{{ site.baseurl }}/2013/2793/%d0%b7%d0%b0%d0%bc%d0%be%d1%80%d0%be%d0%b7%d0%ba%d0%b0-%d1%81%d0%b8%d1%81%d1%82%d0%b5%d0%bc%d1%8b-%d0%b8%d1%81%d1%82%d0%be%d1%80%d0%b8%d1%8f-%d0%bf%d0%b5%d1%80%d0%b5%d1%85%d0%be%d0%b4%d0%b0-%d1%81-ew/" target="_blank">dVHD заморозку системы</a> я намекнул на быстрый способ распространения/синхронизации больших файлов по локальной сети.</p>
+<p>В комментарии к статье про <a title="Заморозка системы: история перехода с EWF на dVHD" href="{{ site.url }}{{ site.baseurl }}{% post_url 2013-09-19-2793-заморозка-системы-история-перехода-с-ew %}" target="_blank">dVHD заморозку системы</a> я намекнул на быстрый способ распространения/синхронизации больших файлов по локальной сети.</p>
 <p>Конкретно, в моем случае VHD файл весил примерно 120 GiB, и его нужно было залить на 30 PC. При каждом обновлении VHD он перезаливался. Под катом читайте историю, про то, как с таким большим файлом <del>не</del> справлялся <a title="BitTorrent Sync: скорость до 90 мегабайт/с и открытые API" href="https://habrahabr.ru/post/201072" target="_blank">BTSync</a>, и про создание <strong>RingSync</strong>. <!--more--></p>
 <p>Начну с небольшого <strong>QA</strong> (Вопрос-Ответа), сравнивая различные схемы обмена данными.</p>
 <h1 id="h-1-klassika-server-client">Классика: Server → Client</h1>
