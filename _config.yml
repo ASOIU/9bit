@@ -41,6 +41,9 @@ canonical_domain: 9b.asoiu.com #to save canonical links in GitHub forks https://
 # if  change permalink format  then  fix Liquid and JavaScript (RegExp) for "taxonomy" layout
 # "taxonomy_title" used in ".pagetitle" (_layouts/taxonomy.html) in this format: "Статьи/записи <taxonomy_title>"
 collections:
+  my_test_cat:
+    output: true
+    permalink: /:collection/:name/ #see "_layouts/test.html"
   authors_:
     output: true
     permalink: /author/:name/
