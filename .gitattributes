@@ -3,12 +3,40 @@
 # https://git-scm.com/book/ru/ch7-2.html
 # https://git-scm.com/docs/gitignore#_pattern_format
 #
+# See also `.gitattributes` in subdirectories.
+# Find it all `find . -type f -name ".gitattributes"`
+#
 
 
 ###############################################################################
 # Auto detect text files and perform LF normalization
 ###############################################################################
 * text=auto
+
+
+###############################################################################
+# Set custom file attributes
+#
+# https://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
+###############################################################################
+*.html  diff=html
+*.css   diff=css
+
+*.ico   binary
+*.gif   binary
+*.png   binary
+*.jpg   binary
+*.jpeg  binary
+
+# Language override for Linguist (GitHub.com)
+# https://github.com/github/linguist#overrides
+# - Liquid https://github.com/github/linguist/blob/v5.3.3/lib/linguist/languages.yml#L2374
+/_layouts/*.html  linguist-language=Liquid
+/_includes/*.html linguist-language=Liquid
+
+# Git LFS
+# Run `git lfs track` to see all tracked patterns (from `.gitattributes` in subdirectories)
+/LICENSE.png  filter=lfs diff=lfs merge=lfs -text
 
 
 ###############################################################################
@@ -20,5 +48,6 @@
 ###############################################################################
 .gitignore      export-ignore
 .gitattributes  export-ignore
+LICENSE.png     export-ignore
 
 

@@ -1,0 +1,93 @@
+.paginator {
+	font-size:1em;
+	padding-top:4px;
+	width:485px;
+	height:45px;
+	background:url(main-body.png) no-repeat;
+}
+.paginator table {
+	border-collapse:collapse;
+	table-layout:fixed;
+	width:100%;
+}
+.paginator table td {
+	padding:0;
+	white-space:nowrap;
+	text-align:center;
+	font-size:14px;
+}
+.paginator .left{
+    text-align:right;	
+}
+.paginator .right{
+    text-align:left;	
+}
+.paginator .left, .paginator .right{
+   width:21%;
+}
+.paginator .bottom, .paginator .bottom a{
+	color:#004a79;
+	font-size:12px;
+}
+.paginator .spaser{
+    width:20px;	
+}
+.paginator span {
+	display:block;
+	padding:3px 0;
+	color:#fff;
+}
+.paginator span strong,
+.paginator span a {
+	padding:0px 2px;
+}
+.paginator span a {
+    color:#888;
+}
+.paginator .left a:hover,
+.paginator .right a:hover  {
+    text-decoration:underline;
+}
+.paginator span strong {
+	background:#009000;
+	font-style:normal;
+	font-weight:normal; 
+}
+.paginator .scroll_bar {
+	width:100%;	height:5px;
+	position:relative;
+	margin-top:5px; 
+}
+.paginator .scroll_trough {
+	width:100%;	height:3px;
+	background:#ccc;
+	overflow:hidden;
+}
+.paginator .scroll_thumb {
+	position:absolute;
+	z-index:1;
+	width:0; height:3px;
+	top:0; left:0;
+	font-size:1px;
+	background:#777;
+}
+.paginator .scroll_knob {
+	position:absolute;
+	top:-5px; left:50%;
+	margin-left:-10px;
+	width:20px; height:20px;
+	overflow:hidden;
+	background:url(slider_knob.gif) no-repeat 50% 50%;
+	cursor:pointer;
+}
+.paginator .current_page_mark {
+	position:absolute;
+	z-index:1;
+	top:0; left:0;
+	width:0; height:3px;
+	overflow:hidden;
+	background:#22dc22;
+}
+.fullsize .scroll_thumb {
+	display:none;
+}

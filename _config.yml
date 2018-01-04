@@ -1,0 +1,127 @@
+# http://jekyllrb.com/docs/configuration/#default-configuration
+# https://help.github.com/articles/configuring-jekyll/
+
+# Useful constants
+empty_array: []
+new_line:  "\n"
+zero_char: "\0"
+
+# Handling Reading
+safe:                true
+encoding:            "utf-8"
+strict_front_matter: true
+
+# Conversion
+excerpt_separator: "<!--more-->"
+incremental: false
+profile:     true
+
+# Outputting
+permalink:     /:year/:title/
+paginate_path: /page/:num/
+paginate:      10
+timezone:      Etc/UTC
+
+# Uncomment for browser caching test
+#webrick:
+#  headers:
+#    Cache-Control: public
+
+
+name:             Девятый бит
+title:            Девятый бит
+description:      Архив блога кафедры АСОИУ ОмГТУ
+lang:             ru
+#url:             http://9b.asoiu.com # check Atom content on GitHub https://github.com/jekyll/jekyll-feed#optional-configuration-options
+                                      # + https://jekyllrb.com/news/#3-siteurl-is-set-by-the-development-server
+                                      # + https://jekyllrb.com/docs/usage/#override-default-development-settings
+#url:             //192.168.0.10      # for local tests https://github.com/jekyll/jekyll/issues/5743#issuecomment-351799034
+canonical_domain: 9b.asoiu.com #to save canonical links in GitHub forks https://support.google.com/webmasters/answer/139066
+
+# if  change permalink format  then  fix Liquid and JavaScript (RegExp) for "taxonomy" layout
+# "taxonomy_title" used in ".pagetitle" (_layouts/taxonomy.html) in this format: "Статьи/записи <taxonomy_title>"
+collections:
+  authors_:
+    output: true
+    permalink: /author/:name/
+    taxonomy_title: "автора"
+  issues_:
+    output: true
+    permalink: /issue/:name/
+    taxonomy_title: "из выпуска"
+  categories_:
+    output: true
+    permalink: /category/:name/
+    taxonomy_title: "из рубрики"
+  tags_:
+    output: true
+    permalink: /tag/:name/
+    taxonomy_title: "с меткой"
+
+defaults:
+  - scope:
+      type: authors_
+    values:
+      layout: term
+      sitemap: false
+  - scope:
+      type: issues_
+    values:
+      layout: term
+      sitemap: false
+  - scope:
+      type: categories_
+    values:
+      layout: term_build-in
+      sitemap: false
+  - scope:
+      type: tags_
+    values:
+      layout: term_build-in
+      sitemap: false
+
+include: 
+  - ".*.html" #for "_tags_/.NET Framework.html" https://help.github.com/articles/files-that-start-with-an-underscore-are-missing/
+
+
+# "/assets/javascript/anchor-js", "/assets//css/style.css":
+# https://github.com/jekyll/jekyll/issues/6358 ->
+# -> https://github.com/github/pages-gem/issues/482#issuecomment-328985983 ->
+# -> https://github.com/jekyll/jekyll/issues/6361#issuecomment-335147959
+theme: []
+
+# Plugins
+# https://help.github.com/articles/configuring-jekyll-plugins/#default-plugins
+# https://github.com/github/pages-gem/blob/v157/lib/github-pages/plugins.rb#L19-L38
+# https://pages.github.com/versions/
+# bug: jekyll-include-cache (no: pages.github.com/versions/,https://github.com/github/pages-gem/blob/v157/lib/github-pages/dependencies.rb; yes:https://github.com/github/pages-gem/blob/v157/lib/github-pages/plugins.rb#L37, https://help.github.com/articles/configuring-jekyll-plugins/#default-plugins )
+# -->  https://github.com/github/pages-gem/issues
+plugins:
+  #- jemoji
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-redirect-from
+  - jekyll-include-cache
+
+# https://github.com/jekyll/jekyll-redirect-from#installation
+# not need for GitHub Pages, see https://github.com/github/pages-gem/blob/v157/lib/github-pages/configuration.rb#L48
+#whitelist:
+#  - jemoji
+# https://github.com/jekyll/jekyll-sitemap#note-on-use-with-github-pages-gem
+# "bundle exec jekyll serve" -> Deprecation: The 'gems' configuration option has been renamed to 'plugins'.
+#gems:
+#  - jemoji
+
+exclude:
+  - CNAME
+  - '**readme'
+  - '**readme.txt'
+  - '**readme.md'
+  - 'ReadMe.md'
+  - 'LICENSE.png'
+  - 'test.key' # `openssl req -newkey rsa:512 -nodes -keyout test.key -new -x509 -days 365 -subj /CN=localhost -out test.crt`
+  - 'test.crt' # `bundle exec jekyll serve` + `bundle exec jekyll serve --skip-initial-build --no-watch --port 443 --ssl-key test.key --ssl-cert test.crt` ; setcap CAP_NET_BIND_SERVICE for ruby (`which ruby2.4`)
+  - 'Gemfile'
+  - 'Gemfile.lock'
+
+

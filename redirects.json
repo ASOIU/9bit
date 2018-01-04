@@ -1,0 +1,8 @@
+---
+published: false
+---
+{%- comment -%}
+ Prevent 'redirects.json' file generation:
+  - https://github.com/jekyll/jekyll-redirect-from/pull/147
+  - https://github.com/jekyll/jekyll-redirect-from/pull/147/files#diff-d13410cca19d7c7fb47ce3524cb8a6b1R45
+{%- endcomment -%}

@@ -1,0 +1,17 @@
+<svg width="700px" height="700px" viewBox="0 0 700 700" buffered-rendering="auto" image-rendering="optimizeSpeed" color-interpolation="linearRGB" color-rendering="optimizeSpeed" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs xmlns="http://www.w3.org/2000/svg">
+    <filter id="MyFilter">
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="12.75" intercept="-5.9">
+	<animate attributeName="slope" attributeType="XML" calcMode="paced" values="12.75;6.75;12.75" begin="pic.mouseover" end="pic.mouseout" dur="0.5s" repeatCount="indefinite"/>
+	<!--<animate attributeName="slope" attributeType="XML" calcMode="discrete" values="12.75;10.75;8.75;6.75;6.75;8.75;10.75;12.75" begin="pic.mouseover" end="pic.mouseout" dur="0.5s" repeatCount="indefinite"/>-->
+	</feFuncA>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+      </feMerge>
+    </filter>
+</defs>
+	<image id="pic" xlink:href="shadow.png" x="50" y="50" width="650px" height="650px" filter="url(#MyFilter)"></image>
+	<!--<script>"use strict";document.documentElement.targetFps=15;</script> использование calcMode="discrete" и values="...;..." дает больший контроль над выводимыми кадрами -->
+</svg>

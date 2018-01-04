@@ -1,0 +1,196 @@
+---
+layout: default
+---
+{%- if page.layout == "post" -%}
+	{%- comment %} General Solution
+		{%- comment %} weak check for `^/excerpt/` (RegExp) match {% endcomment -%}
+		{%- assign excerpt_file_path_isSet = page.redirect_from | where_exp: "path", "path contains '/excerpt/'" | first -%}
+		{%- unless excerpt_file_path_isSet -%}
+			Can't find proper excerpt file path in "redirect_from" (YAML Front Matter variable). Plz add proper path. {{ 0 | divided_by:0 }}
+		{%- endunless -%}
+	{% endcomment -%}
+
+	{%- comment %} Specific Solution + mitigation for https://github.com/jekyll/jekyll-redirect-from/issues/164 issue     {% endcomment -%}
+	{%- comment %}                   -`jekyll doctor` https://github.com/jekyll/jekyll/issues/6207#issuecomment-320147147 {% endcomment -%}
+	{%- comment %}                                    https://jekyllrb.com/news/2013/11/04/jekyll-1-3-0-released/         {% endcomment -%}
+	{%- assign correct_excerpt_file_path = page.wp_id | to_integer | prepend: "/excerpt/" | append: ".html" -%}
+	{%- unless page.redirect_from contains correct_excerpt_file_path -%}
+		Can't find the correct excerpt file path in "redirect_from" (YAML Front Matter variable). Plz add the correct path. {{ 0 | divided_by:0 }}
+	{%- endunless -%}
+
+{%- endif -%}
+<!--------------------------- POST --------------------------->
+{%- comment %}<!--
+ HTML5:
+ - <article> (for post & comments):
+   - http://rawgit.com/w3c/aria/master/aria/aria.html#article
+   - https://www.w3.org/TR/html51/sections.html#example-3a4f5b40 (schema.org: BlogPosting, UserComments)
+   - https://www.w3.org/WAI/GL/wiki/Using_HTML5_article_element#Example_1:_Using_.3Carticle.3E_to_Add_a_Blog_Post (comments inside footer)
+ - <footer> (for meta & comments):
+   - https://www.w3.org/TR/html51/sections.html#the-footer-element
+     (contains information about its section; footer -> meta; footers don’t necessarily have to appear at the end of a section)
+   - http://html5doctor.com/the-footer-element/ (Other Thoughts)
+ - <header> (for title):
+   - https://www.w3.org/TR/html51/sections.html#the-header-element
+   - header or footer?
+     - https://www.w3.org/TR/html51/sections.html#the-footer-element
+       (The primary purpose of these elements is merely to help the author write 
+        self-explanatory markup that is easy to maintain and style; 
+        they are not intended to impose specific structures on authors.)
+     - https://stackoverflow.com/questions/12643608/in-which-element-should-i-enclose-an-article-s-comments#comment17114727_12648918
+ - <aside> (not used):
+   - https://www.w3.org/TR/html51/sections.html#the-aside-element
+   - https://www.w3.org/WAI/GL/wiki/Using_HTML5_aside_element#Description
+   - https://github.com/jekyll/jekyll/issues/6414#issuecomment-334871003
+ - WAI-ARIA Landmark Roles <-> HTML5 Sectioning Elements:
+   - https://developer.paciellogroup.com/blog/2013/02/using-wai-aria-landmarks-2013/#tablex
+ - html5 post layout (and <nav>):
+   - http://www.brucelawson.co.uk/2009/marking-up-a-blog-with-html-5-part-2/ (Anatomy of a blog post)
+
+ Schema.org (Microdata):
+ - http://schema.org/BlogPosting ( ru: http://ruschema.org/BlogPosting )
+ - http://schema.org/TechArticle (TODO: prefer for some posts)
+   - Google: https://productforums.google.com/forum/#!topic/webmasters/7qjcX_EnmHg
+             https://developers.google.com/search/docs/data-types/articles#type_definitions
+ - Немного о Microdata
+   - https://habrahabr.ru/post/141216
+   - https://habrahabr.ru/company/yandex/blog/221881 (словарь Schema.org; RDFa; JSON-LD)
+ - Using multiple properties in the same itemprop ("headline" and "name")
+   https://webmasters.stackexchange.com/questions/98430/schema-org-name-and-headline/98469#98469
+ - https://www.w3.org/TR/microdata/
+ - Документация
+   http://ruschema.org/docs
+ - BlogPosting, Blog, Article and TechArticle Markup (Google)
+   https://thecustomizewindows.com/blogposting-blog-article-and-techarticle-markup-of-schema-org.html
+ - Testing Tool
+   https://search.google.com/structured-data/testing-tool
+ - BlogPosting and image required (Microdata parser)
+   https://webmasters.stackexchange.com/a/83303
+   https://softwarerecs.stackexchange.com/questions/13674/online-microdata-parser
+
+-->{% endcomment %}
+<div id="intro"><p><a href="//{{ site.canonical_domain }}/"><b>{{ site.name }}</b></a>: {{ site.description }}</p></div>
+
+<article class="postWrapper" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+
+	{%- include post_metadata.html page=page L10n=site.data.L10n_ru_RU alone=true %}
+
+	<div class="post" id="post-{{ page.wp_id | to_integer }}">
+		<header itemprop="headline">
+			<h1 itemprop="name">{{ page.title | strip_html | escape_once }}</h1>
+			<link itemprop="url" href="{{ page.url | absolute_url }}">
+		</header>
+		<div class="entry" itemprop="articleBody">
+			<!--------------------------- ---- --------------------------->
+			{{ content | replace:'<!--more-->','<span id="more-cut"></span>' }}{% comment %} http://jekyllrb.com/tutorials/convert-site-to-jekyll/#how-layouts-work {% endcomment %}
+			<!--------------------------- ---- end ----------------------->
+		</div>
+	</div>
+	<footer class="postbottom">
+		<nav class="nav nav-padding">
+			<div class="alignleft" {% unless page.previous.url %} aria-hidden="true"{% endunless %}><a       href="{{ page.previous.url | absolute_url }}" title="{{ page.previous.title | strip_html | normalize_whitespace | escape_once }}">&laquo; Предыдущая статья</a>&nbsp;</div>
+			<div class="alignright"{% unless page.next.url     %} aria-hidden="true"{% endunless %}>&nbsp;<a href="{{ page.next.url     | absolute_url }}" title="{{ page.next.title     | strip_html | normalize_whitespace | escape_once }}">Следующая статья &raquo;</a></div>
+			<a href="https://github.com/ASOIU/9bit/blob/master/{{ page.path }}" title="Улучшить эту статью на GitHub">
+				<svg class="octicon-mark-github" width="19" height="19" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" version="1.1" aria-hidden="true">
+					<path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+				</svg>
+			</a>
+		</nav>
+		<section class="commentlist">
+			<h3 class="left-sidebar" id="comments">
+				{%- case page.wp_comments.size -%}
+					{%- when 0 or nil -%} Без комментов
+					{%- else          -%} Комментарии <span>{{ page.wp_comments.size }}</span>+
+				{%- endcase -%}
+			</h3>
+			{%- for comment in page.wp_comments %}
+				<article class="comment{% if comment.author == page.author %} bypostauthor{% endif %}" itemprop="comment" itemscope itemtype="http://schema.org/UserComments" id="comment-{{ comment.id }}">
+					<link itemprop="url" href="#comment-{{ comment.id }}">
+					<footer class="left-sidebar">
+						{%- assign commentator = site.data.authors[comment.author] %}
+						{%- comment %}
+							Gravatar API: http://en.gravatar.com/site/implement/images 
+							Server rnd:   https://core.trac.wordpress.org/changeset/31107  ($gravatar_server)
+						{%- endcomment %}
+						<img class="avatar" src="//{{ commentator.gravatar_server_rnd | modulo:3 }}.gravatar.com/avatar/{{ commentator.gravatar_email_hash }}?s=32&d=retro&r=G" alt="{{ comment.author }} avatar" height="32" width="32">
+						<p>
+							<span itemprop="creator" itemscope itemtype="http://schema.org/Person">
+								<b itemprop="name">{{ commentator.name | escape }}</b>
+							</span>
+							<br>
+							<time itemprop="commentTime" datetime="{{ comment.date | date_to_xmlschema }}">
+								{%- assign month = comment.date | date: "%-m" | to_integer %}
+								{{ comment.date | date: "%-d" }} {{ site.data.L10n_ru_RU.month_abbr[month] }}, {{ comment.date | date: "%Y" }}
+							</time>
+						</p>
+					</footer>
+					<div class="comment-content" itemprop="commentText">
+					{%- if comment.content contains '{{ site.baseurl }}' %}{%- comment %}{% raw %} comment.content contains '{% link ' or comment.content contains '{% post_url ' {% endraw %}{% endcomment %}
+						<div class="jekyll-issue-6414_ruby-lang-man-wanted"></div>
+					{% endif %}
+						{{ comment.content }}
+					</div>
+				</article>
+			{%- endfor %}
+			<section id="comments-plus" class="not-https">
+				<div class="left-sidebar">
+					<svg class="octicon octicon-comment-discussion-plus" width="30px" height="22px" viewBox="0 0 30 22" xmlns="http://www.w3.org/2000/svg" version="1.1" aria-hidden="true">
+						<path fill-rule="evenodd" d="M25 14h-4v3l-3-3H8V2h17v1h2V2c0-1.1-.9-2-2-2H9C6 0 5 1 5 3v10c0 2 1 3 4 3h8l6 6v-6h2c1.1 0 2-.9 2-2v-1h-2V14zM27 7V4h-2v3h-3v2h3v3h2V9h3V7H27zM2 4v8c0 1.1 .9 2 2 2V2C2.9 2 2 2.9 2 4zM0 5v6c0 .55 .45 1 1 1V4C.45 4 0 4.45 0 5z"/>
+					</svg>
+					<h3>посмотреть<br> и написать</h3>
+					<svg width="0" height="0" style="display:none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1">
+						{%- comment %}<!--
+							https://css-tricks.com/svg-symbol-good-choice-icons/
+							https://ru.stackoverflow.com/questions/615562/Как-взаимодействуют-между-собой-viewport-и-viewbox/618156#618156
+							https://css-tricks.com/svg-use-with-external-reference-take-2/
+
+							http://prgssr.ru/development/oformlenie-soderzhimogo-use-v-svg-s-pomoshyu-css.html
+							https://gist.github.com/davidhund/564331193e1085208d7e (aria)
+
+							https://github.com/emilbjorklund/svg-weirdness/issues/12 (Gradients in <use> are invisible if symbol svg is display: none)
+						-->{% endcomment %}
+						<symbol id="svg-octicon-pencil" viewBox="0 0 14 16"><path fill-rule="evenodd" d="M0 12v3h3l8-8-3-3-8 8zm3 2H1v-2h1v1h1v1zm10.3-9.3L12 6 9 3l1.3-1.3a.996.996 0 0 1 1.41 0l1.59 1.59c.39.39.39 1.02 0 1.41z"/></symbol>
+						<symbol id="svg-octicon-eye" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z"/></symbol>
+					</svg>
+				</div>
+				<div class="comments-plus-intro not-https">
+					<a id="comments-plus_not-https_open-https" href="#comments-plus">
+						<span title="И надеть заземленную шапочку-шлем из свинцовой фольги">Открыть</span> <span class="secure">шифрованный канал связи</span>, чтобы<br>
+						<svg class="octicon octicon-pencil" width="14" height="16" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><use xlink:href="#svg-octicon-pencil"/></svg>
+						Написать комментарий и
+						<svg class="octicon octicon-eye" width="16" height="16" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><use xlink:href="#svg-octicon-eye"/></svg>
+						Посмотреть остальные комментарии
+					</a><br>
+					или<br>
+					<a id="comments-plus_not-https_open" href="#comments-plus">жить проще</a>
+					<noscript><br>
+						или<br>
+						<a href="ссылка на iframe" target="_blank">жать сюда</a>, т.к. у тебя отключен JavaScript.
+					</noscript>
+				</div>
+				<div class="comments-plus-intro https">
+					<button id="comments-plus_https_open">
+						<span class="pseudo-btn">
+							<svg class="octicon octicon-pencil" width="26" height="24" xmlns="http://www.w3.org/2000/svg" version="1.1" aria-hidden="true"><use xlink:href="#svg-octicon-pencil"/></svg>
+							написать&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- NOTE: nbsp for Chrome... --><br> комментарий
+						</span>
+						или
+						<span class="pseudo-btn">
+							<svg class="octicon octicon-eye" width="32" height="26" xmlns="http://www.w3.org/2000/svg" version="1.1" aria-hidden="true"><use xlink:href="#svg-octicon-eye"/></svg>
+							посмотреть новые<br> комментарии
+						</span>
+					</button>
+				</div>
+				<div class="comment-content comments-g-plus-wrapper-1">
+					<div class="comments-g-plus-wrapper-0">
+						<div id="comments-g-plus"></div>
+					</div>
+				</div>
+
+				<div class="clear"></div>
+			</section>
+		</section>
+	</footer>
+	<div class="clear"></div>
+</article>
+<!--------------------------- POST end ----------------------->

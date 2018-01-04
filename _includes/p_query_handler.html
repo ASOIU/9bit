@@ -1,0 +1,44 @@
+{%- comment %}
+	Cache friendly "/?p=<wp_id>" query handler.
+
+	Steps:
+	1. load "/excerpt/<wp_id>.html", parse and get link to post
+	2. open post
+
+	See: "_layouts/redirect.html" ("/excerpt/*.html" generator)
+
+{% endcomment %}
+
+	<script>
+		(function(){
+			"use strict";
+
+			var request = (function(){
+				var XHR = (XMLHttpRequest && ("onload" in new XMLHttpRequest()) && XMLHttpRequest) || XDomainRequest;
+
+				if(XHR) return function(url, callback, context){
+					var xhr = new XHR();
+
+					xhr.open("GET", url, true);
+					xhr.onload = callback;
+					xhr.send();
+				}
+			})();
+
+			var wp_id;
+			if(window.location.search && (wp_id = (/^\?p=(\d+)/.exec(window.location.search) || [])[1]) >= 0){
+				request("{{ site.baseurl }}/excerpt/" + wp_id + ".html", function(){
+					if(this.status == 200){
+						var domEl = document.createElement("div");
+						domEl.innerHTML = this.responseText;
+
+						var _a_ = domEl.querySelectorAll("header h1 a")[0]; //{%- comment %} see "_layouts/redirect.html" {% endcomment %}
+						if(_a_) window.location.replace(_a_.href + window.location.hash);
+						else    document.title = "Кто-то изменил структуру 'excerpt' страниц (422 Unprocessable Entity) « " + document.title;
+					}else{ // stay on my home page :)
+						document.title = "Страница не найдена (" + this.status + " " + this.statusText + ") « " + document.title;
+					}
+				});
+			}
+		})();
+	</script>

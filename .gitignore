@@ -25,6 +25,49 @@ $RECYCLE.BIN/
 
 
 ###############################################################################
+# Jekyll generated files
+#
+# https://github.com/github/gitignore/blob/master/Jekyll.gitignore
+# https://github.com/jekyll/jekyll/blob/master/.gitignore
+
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+Gemfile.lock
+
+#
+###############################################################################
+
+
+###############################################################################
+# Test key for local HTTPS testing
+#
+# Generate your own .key and .crt:
+#   openssl req -newkey rsa:512 -nodes -keyout test.key -new -x509 -days 365 -subj /CN=localhost -out test.crt
+# Run Jekyll:
+#   1. [once] setcap CAP_NET_BIND_SERVICE for ruby (`which ruby2.4`)
+#   2. [in terminal 1] bundle exec jekyll serve
+#   3. [in terminal 2] bundle exec jekyll serve --skip-initial-build --no-watch --port 443 --ssl-key test.key --ssl-cert test.crt
+
+/test.key
+/test.crt
+
+#
+###############################################################################
+
+
+###############################################################################
+# TOP SECRET private folder :)
+#
+
+/private/
+
+#
+###############################################################################
+
+
+###############################################################################
 # Include Git files
 #
 

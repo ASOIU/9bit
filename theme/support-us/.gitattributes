@@ -1,0 +1,11 @@
+*.svg  text
+
+# Git LFS
+# https://stackoverflow.com/questions/35769330/git-lfs-track-folder-recursively/35769868#35769868
+# .gitattributes needs to be in the repository root folder? https://github.com/git-lfs/git-lfs/issues/1654
+# +
+# https://github.com/git-lfs/git-lfs/issues/791  (GitHub pages won’t load files tracked using git-lfs)
+# https://github.com/git-lfs/git-lfs/issues/1342 (GitHub pages serving the reference file instead of the actual binary)
+# https://github.com/github/pages-gem/issues     (Show warning if repository uses Git LFS) https://help.github.com/articles/viewing-jekyll-build-error-messages/#viewing-jekyll-build-error-messages-in-the-command-line
+# !Remove spaces around "=" when uncomment        https://github.com/git-lfs/git-lfs/issues/2413
+# *.png  filter = lfs diff = lfs merge = lfs -text

@@ -1,0 +1,58 @@
+---
+layout: default
+---
+<!--------------------------- INDEX -------------------------->
+{%- comment -%}<!--
+ See "_layouts/post.html"
+
+ Schema.org (Microdata):
+ - Микроразметка главной страницы блога
+   http://wexplorer.ru/site/delaem-mikrorazmetku-bloga-pravilno
+ - http://schema.org/Blog (in "_layouts/default.html")
+ - https://stackoverflow.com/questions/8866021/what-microdata-should-i-use-for-a-blog/10003102#10003102
+ - url & mainEntityOfPage:
+   - http://schema.org/docs/datamodel.html#bgnotes
+   - https://developers.google.com/search/docs/data-types/articles#article_types (mainEntityOfPage)
+ - For Author, Issue, Category, Tag pages:
+   - 'CollectionPage' for list of blog posts by specific author
+     https://webmasters.stackexchange.com/a/99106
+     https://webmasters.stackexchange.com/a/99027
+   - http://bib.schema.org/Collection#examples
+   - http://schema.org/CollectionPage
+
+-->{%- endcomment -%}
+<div id="intro"><p><a href="//{{ site.canonical_domain }}/"><b>{{ site.name }}</b></a>: {{ site.description }}</p></div>
+
+{%- for post in paginator.posts %}
+	{%- comment %} used in "_layouts/redirect.html" {% endcomment %}
+	<article class="postWrapper" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+
+		{%- include post_metadata.html page=post L10n=site.data.L10n_ru_RU alone=false %}
+
+		<div class="post">
+			<header itemprop="headline" id="post-{{ post.wp_id | to_integer }}">
+				<h1 itemprop="name"><a href="{{ post.url | absolute_url }}" rel="bookmark" itemprop="url mainEntityOfPage" title="Постоянная ссылка на &ldquo;{{ post.title | strip_html | normalize_whitespace | escape_once }}&rdquo;">{{ post.title | strip_html | escape_once }}</a></h1>
+			</header>
+			<div class="entry" itemprop="description">
+				{%- if post.content contains site.excerpt_separator %}{% comment %}or: post.content.size > post.excerpt.size ; https://jekyllrb.com/docs/posts/#post-excerpts {% endcomment %}
+					{{ post.excerpt }}
+					{%- comment %}
+					<!-- aria-describedby: https://bitsofco.de/html-for-screen-readers-labelling-elements/#providecontextforcontinuereadinglinks
+					                       http://rianrietveld.com/2015/04/04/the-screen-reader-text-class-why-and-how/ -->
+					{%- endcomment %}
+					<div class="more-link"><a href="{{ post.url | absolute_url }}#more" aria-describedby="post-{{ post.wp_id | to_integer }}">Читать дальше &raquo;</a></div>
+				{%- else %}
+					{{ post.content }}
+				{%- endif %}
+			</div>
+		</div>
+	</article>
+{%- endfor %}
+
+<nav class="nav nav-border-bottom">
+	<div class="paginator" id="paginator1">
+		<div class="alignleft" >{% if paginator.previous_page_path %}<a       href="{{ paginator.previous_page_path }}">&laquo; Позднее</a>{% endif %}&nbsp;</div>
+		<div class="alignright">{% if paginator.next_page_path     %}&nbsp;<a href="{{ paginator.next_page_path     }}">Ранее &raquo;</a  >{% endif %}</div>
+	</div>
+</nav>
+<!--------------------------- INDEX end ---------------------->

@@ -1,0 +1,18 @@
+{% comment %}
+ Test this file name: "киРи лЛ.ица (+) heRe.html"
+ see  https://github.com/ASOIU/9bit/tree/my_test_cat
+{% endcomment %}
+{% comment %}
+ `slug: slugified "slug" attribute, if available, otherwise file name (missing date prefix, missing extension)`
+ https://github.com/cobalt-org/cobalt.rs/issues/198
+ https://github.com/jekyll/jekyll/pull/4100
+{% endcomment %}
+<pre>
+{% for item in page %}
+  {{ item }}: {{ page[item] }}
+{% endfor %}
+
+{{ page | inspect }}
+
+{{ site.exclude | inspect }}
+

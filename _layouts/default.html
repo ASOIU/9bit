@@ -1,0 +1,209 @@
+{%- comment -%}<!--
+ See "_layouts/post.html"
+
+ HTML5:
+ - <footer>
+   http://rawgit.com/w3c/aria/master/aria/aria.html#contentinfo
+ - <header>
+   http://rawgit.com/w3c/aria/master/aria/aria.html#banner
+ - <main> (for content)
+   - https://www.w3.org/TR/html51/grouping-content.html#elementdef-main
+     (includes content that is unique to that document)
+ - <nav> (for Authors, Issues, Categories)
+   - https://www.w3.org/TR/html51/sections.html#the-nav-element
+   - https://www.w3.org/WAI/GL/wiki/Using_HTML5_nav_element
+   - http://html5doctor.com/nav-element/
+     (Not all groups of links on a page need to be in a nav element 
+      only sections that consist of major navigation blocks 
+      are appropriate for the nav element)
+     (see in html5doctor.com src: '<nav class="ui-tabs mod">')
+
+ Schema.org (Microdata):
+ - Микроразметка главной страницы блога
+   http://wexplorer.ru/site/delaem-mikrorazmetku-bloga-pravilno
+ - http://schema.org/Blog
+ - see "_layouts/index.html"
+
+-->{%- endcomment -%}
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="{{ site.encoding | upcase }}">
+	<title>{% if page.title %}{{ page.title | strip_html | escape_once }} &laquo; {% endif %}{{ site.name }}</title>
+	<meta name="viewport" content="width=968, initial-scale=0.796, maximum-scale=0.796">
+	<!-- Optimal "mobile" scale: double tap on ".post h1" (selector) element -->
+	<meta name="MobileOptimized" content="968">
+	{%- comment %} TODO or not TODO: include content_security_policy.html {% endcomment %}
+	<link rel="stylesheet" href="{{ '/theme/main.css' | relative_url }}" media="screen">
+	<noscript><link rel="stylesheet" href="{{ '/theme/crypto-currency/crdon_no-js.css' | relative_url }}"></noscript>
+	<noscript><link rel="stylesheet" href="{{ '/theme/github-button/gh-btn.css' | relative_url }}"></noscript>
+	<link rel="alternate" type="application/atom+xml" href="{{ '/feed.xml' | relative_url }}" title="{{ site.name }} Atom Feed">{% comment %}{% feed_meta %}{% endcomment %}
+	<link rel="icon" type="image/x-icon" href="{{ '/favicon.ico' | relative_url }}">
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+	{%- case page.layout -%}
+		{%- when "post" or "page" %}
+			<link rel="edit" href="https://github.com/ASOIU/9bit/blob/master/{{ page.path }}" title="Улучшить эту статью">{% comment %}<!-- http://microformats.org/wiki/existing-rel-values#HTML5_link_type_extensions  http://universaleditbutton.org/Registered_MIME_type#Alternate_Linking_Scheme -->{% endcomment %}
+			<link rel="canonical" href="http://{{ site.canonical_domain }}{{ page.url }}">{% comment %}<!-- https://support.google.com/webmasters/answer/139066 -->{% endcomment %}
+		{%- when "index" %}
+			{%- if paginator.previous_page_path %}<link rel="prev" href="{{ paginator.previous_page_path }}">{% endif %}{% comment %}<!-- https://support.google.com/webmasters/answer/1663744 -->{% endcomment %}
+			{%- if paginator.next_page_path     %}<link rel="next" href="{{ paginator.next_page_path     }}">{% endif %}{% comment %}<!-- Fast forward http://help.opera.com/Linux/9.50/en/toolbars.html -->{% endcomment %}
+	{%- endcase %}
+	<meta name="generator" content="Jekyll v{{ jekyll.version }}">
+
+	{%- comment %}<!-- Saved for history --> {% include_cached ie6.html %}{% endcomment %}
+
+	{%- case page.layout -%}
+		{%- when "post" %}
+
+			{% comment %}<!--
+				For minimize: 
+				- resources Start load time (DevTools > Net)
+				- page main Reflow start time (DevTools > Profiler [see delta])
+				- overall page load time
+				Place inline <script> after external scripts. (see bellow)
+
+				For execute inline <script> as soon as possible:
+				Place inline <script> before external scripts.
+
+				NOTE: for testing use "Go" (go to url; Shift+Enter) instead of "Reload"
+			-->{% endcomment -%}
+			<script id="comments-plus-script" src="{{ '/theme/comments.plus.js' | relative_url }}" data-canonical-uri="
+				{%- if page.comments_plus_canonical_uri -%}
+					{{ page.comments_plus_canonical_uri }}
+				{%- else -%}
+					https://{{ site.canonical_domain }}{{ page.url }}
+				{%- endif -%}
+			" async></script>
+			<script>
+				"use strict";
+				document.addEventListener("DOMContentLoaded", function(){
+					window.isDOMContentLoadedHelper = true; // need for async comments.plus.js
+					if(window.location.hash == "#more") document.querySelectorAll("#more-cut")[0].style.display = "block";
+				}, false);
+			</script>
+		{%- when "index" %}
+			{%- comment %} "/?p=<wp_id>" query handler {% endcomment -%}
+			{%- if paginator.page == 1 %}
+				{%- comment %}{%- include p_query_handler_alt.html %}{% endcomment %}
+				{%- include p_query_handler.html %}
+			{%- endif %}
+
+			<link rel="stylesheet" href="{{ '/theme/megapaginator/paginator.css' | relative_url }}">
+			<!--
+			jQuery 1.4.4 little and fastest:
+			  https://jsperf.com/jquery-vs-sizzle-vs-midori-vs-mootools-selectors-test/64
+			  https://jsperf.com/speed-comparison-of-jquery-versions/31
+			{%- comment %}
+			  https://cdnjs.com/libraries/jquery/1.4.4
+			  SRI (Subresource Integrity): - https://github.com/cdnjs/cdnjs/issues/4599
+			                               - https://stackoverflow.com/questions/32039568/what-are-the-integrity-and-crossorigin-attribute
+			                               - bug in Opera 12.18: won't load if "crossorigin" is set
+			{% endcomment %}-->
+			<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.4.4/jquery.min.js"{% comment %} integrity="sha256-UXNk8tRRYvtQN0N7W2y5U9ANmys7ebqH2f5X6m7mBww=" crossorigin="anonymous"{% endcomment %} defer></script>
+			<script src="{{ '/theme/megapaginator/jquery.paginator.js' | relative_url }}" defer></script>
+			<script>
+				"use strict";
+				document.addEventListener("DOMContentLoaded", function(){
+				    $('#paginator1').paginator({
+				        pagesTotal  : {{ paginator.total_pages }}, //all pages count
+				        pagesSpan   : 10,                          //display pages count
+				        pageCurrent : {{ paginator.page }},        //current page number
+				        baseUrl     : "{{ site.baseurl }}/page/%page%/", //page uri
+				        returnOrder : false, //if true display return order pages false display normal order pages
+				        lang        : { next  : 'Следующая', //language next
+				                        last  : 'Последняя', //language last
+				                        prior : 'Предыдущая',//language prior
+				                        first : 'Первая',    //language first
+				                        arrowRight : String.fromCharCode(8594), //language left arrow 
+				                        arrowLeft  : String.fromCharCode(8592)  //language right arrow
+						}
+				    });
+				}, false);
+			</script>
+		{%- when "taxonomy" %}
+
+			{%- include taxonomy-js_header.html -%}
+	{%- endcase %}
+</head>
+<body id="top" itemscope itemtype="http://schema.org/Blog">
+<div id="wrapper">
+    <header id="header">
+        <nav id="logo"><a class="logo" href="{{ '/' | absolute_url }}" title="Домой"></a></nav>
+        <ul id="navAdmin">
+            <li><a href="https://github.com/ASOIU/9bit">Fork me on GitHub</a></li>
+            <li><a href="//web.archive.org/web/*/{{ site.canonical_domain }}">Archive</a></li>{%- comment %}<!-- always open the site root -- don't navigate to "//web.archive.org/web/*/{{ site.canonical_domain }}/{{ post.url }}" directly -- if post.url is changed... -->{% endcomment %}
+		</ul>         
+        <a id="rss" href="{{ '/feed.xml' | relative_url }}" title="Syndicate this site using Atom... Atom!">SUBSCRIBE TO <b>RSS</b></a>
+    </header>
+    <div id="pageWrapper">
+		<main id="content">
+
+			{{ content }}{% comment %} http://jekyllrb.com/tutorials/convert-site-to-jekyll/#how-layouts-work {% endcomment %}
+
+			<div class="clear"></div>
+		</main>
+		<aside id="sidebar">
+			<section class="nobackground" aria-label="Поиск по сайту">
+				<form id="searchform" method="get" action="https://www.google.com/search">
+					{%- comment %}<!--
+						http://www.commitstrip.com/en/2015/11/26/search-engines/ :)
+						https://developers.google.com/custom-search/docs/element#supported_attributes
+						https://www.google.com/support/enterprise/static/gsa/docs/admin/74/gsa_doc_set/xml_reference/request_format.html
+						... https://raw.githubusercontent.com/rayzru/GoogleSearchParamsList/master/README.md
+					-->{% endcomment %}
+					<input  class="search-field"  name="q" type="search" maxlength="2048" placeholder="Поиск по сайту...">
+					<button class="search-submit" name="btnG" value="Search"></button>
+					<input name="as_sitesearch" value="{{ '/' | absolute_url }}" type="hidden">{% comment %}<!-- don't set "value" to site.host,  site.host == "127.0.0.1" on GitHub -->{% endcomment %}
+					<input name="sourceid"      value="vivaldi" type="hidden">
+				</form>
+			</section>
+			<section class="links"     >{% include_cached widget_links.html      %}</section>
+			<section class="tag-cloud" >{% include_cached widget_tag_cloud.html  %}</section>
+			<nav     class="taxonomies">{% include_cached widget_taxonomies.html %}</nav>
+			<section class="support-us" aria-label="поддержать нас">{% include widget_donate.html %}</section>
+		</aside>
+		<div class="clear"></div>
+    </div>
+    <footer id="footer">
+		<a href="#top" id="toTop">&nbsp;</a>
+		<p>
+			{%- comment %}<!-- accessible svg icons https://gist.github.com/davidhund/564331193e1085208d7e#gistcomment-1583864 -->{% endcomment %}
+			Написано с <svg class="octicon octicon-heart" viewBox="0 0 12 16" version="1.1" width="12" height="16" role="img" aria-label="любовью" xmlns="http://www.w3.org/2000/svg">
+				<path aria-hidden="true" fill-rule="evenodd" d="M11.2 3c-.52-.63-1.25-.95-2.2-1-.97 0-1.69.42-2.2 1-.51.58-.78.92-.8 1-.02-.08-.28-.42-.8-1-.52-.58-1.17-1-2.2-1-.95.05-1.69.38-2.2 1-.52.61-.78 1.28-.8 2 0 .52.09 1.52.67 2.67C1.25 8.82 3.01 10.61 6 13c2.98-2.39 4.77-4.17 5.34-5.33C11.91 6.51 12 5.5 12 5c-.02-.72-.28-1.39-.8-2.02V3z"/>
+			</svg> к мозгу. <svg class="octicon octicon-eye" viewBox="0 0 16 16" version="1.1" width="16" height="16" role="img" aria-label="Внимание" xmlns="http://www.w3.org/2000/svg">
+				<path aria-hidden="true" fill-rule="evenodd" d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z"/>
+			</svg> опасность: Можно стать умным <svg class="octicon octicon-telescope" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" d="M8 9l3 6h-1l-2-4v5H7v-6l-2 5H4l2-5 2-1zM7 0H6v1h1V0zM5 3H4v1h1V3zM2 1H1v1h1V1zM.63 9a.52.52 0 0 0-.16.67l.55.92c.13.23.41.31.64.2l1.39-.66-1.16-2-1.27.86.01.01zm7.89-5.39l-5.8 3.95L3.95 9.7l6.33-3.03-1.77-3.06h.01zm4.22 1.28l-1.47-2.52a.51.51 0 0 0-.72-.17l-1.2.83 1.84 3.2 1.33-.64c.27-.13.36-.44.22-.7z"/>
+			</svg>
+		</p>
+		<p>
+        	Some contents copyrigbt &copy; <a href="//{{ site.canonical_domain }}/">{{ site.name }}</a>. All rights are forbidden.
+
+			<!-- License: http://web-kreation.com/demos/oneroom/index.php/license/ -->
+			<!-- If you want to remove this copyright notice, please contact me at info {at} web-kreation {dot} com -->
+			Theme design by <a href="http://web.archive.org/web/20151020142204/http://web-kreation.com">Web-Kreation</a>.
+			<!-- / END -->
+        </p>
+    </footer>
+</div>
+</body>
+</html>
+{% comment %}
+<!--
+	site.github.url :
+	  http://jekyllrb.com/docs/github-pages/#project-page-url-structure
+	  https://help.github.com/articles/repository-metadata-on-github-pages/
+	  https://github.com/jekyll/github-metadata#what-it-does
+	is broken:
+	  https://github.com/jekyll/github-metadata/issues/47#issuecomment-253870915
+	  https://stackoverflow.com/questions/38133562/cant-preview-github-pages  site.github.url == site.url + site.baseurl
+	  https://github.com/github/pages-gem/issues/350#issuecomment-319222176   site.url + site.baseurl == absolute_url
+	  and http://ben.balter.com/jekyll-style-guide/config/#url
+	  and https://github.com/jekyll/jekyll/issues/5070  ( history in #issuecomment-231502898 comment )
+	HTTP(S):
+	  https://github.com/github/pages-gem/issues/238#issuecomment-206964532 ("/" and "//" useful for layouts*)
+	  Cloudflare (Automatic HTTPS Rewrites) (useful for content: post/page/comments): 
+	    https://support.cloudflare.com/hc/en-us/articles/227227647-How-do-I-use-Automatic-HTTPS-Rewrites-
+	    https://blog.cloudflare.com/fixing-the-mixed-content-problem-with-automatic-https-rewrites/
+-->
+{% endcomment -%}

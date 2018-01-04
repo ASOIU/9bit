@@ -1,0 +1,493 @@
+@charset "utf-8";
+/******:History:*****************\
+ * 2013 http://coinwidget.com   *
+ * 2013 http://scotty.cc        *
+ * 2014 http://www.alvinhkh.com *
+ * 2017 https:/9b.asoiu.com     *
+\********************************/
+
+
+/* == Define ==
+ * crdon - Crypto(currency) Donate
+ * cc    - CryptoCurrency
+ * btn   - Button
+ * mpo   - Modal PopOver:
+ **         http://getbootstrap.com/2.3.2/javascript#popovers
+ **         http://scruffles.github.io/BootstrapModalPopover/
+ **         https://web.archive.org/web/20170711101113/https://developer.apple.com/ios/human-interface-guidelines/ui-views/popovers/
+ **        Alignment:
+ ***        bc = Bottom Center
+ ***        bl = Bottom Left
+ ***        br = Bottom Right
+ ***        tc =    Top Center
+ ***        tl =    Top Left
+ ***        tr =    Top Right
+/*/
+
+#Full_version_of_this_FILE{content:' See full version and comments: https://github.com/ASOIU/9bit/blob/master/theme/crypto-currency/crdon.css '}
+
+
+/* ============================= Button ============================= */
+span.crdon-here {
+	display: inline-block;
+	margin-right: 5px;
+	font-family: arial, sans-serif;
+}
+
+span.crdon-here > .crdon_holder {
+	position: relative;
+}
+
+span.crdon-here > .crdon_holder > button,
+span.crdon-here > .crdon_holder > button > img,
+span.crdon-here > .crdon_holder > button > span,
+span.crdon-here > .crdon_btn-total-received {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+span.crdon-here > .crdon_holder > button {
+	border: 1px solid #ccc;
+	border-radius: 2px 2px 2px 2px;
+	padding: 3px 4px;
+	font-size: 11px;
+	box-shadow: 1px 1px 4px rgba(0,0,0,0.075),inset 1px 1px 0px rgba(255,255,255,0.8);
+	
+	background: #fafafa;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fafafa), color-stop(100%,#eeeeee));
+	background: -webkit-linear-gradient(top,  #fafafa 0%,#eeeeee 100%);
+	background: -moz-linear-gradient(top,  #fafafa 0%, #eeeeee 100%);
+	background: -ms-linear-gradient(top,  #fafafa 0%,#eeeeee 100%);
+	background: -o-linear-gradient(top,  #fafafa 0%,#eeeeee 100%);
+	background: linear-gradient(to bottom,  #fafafa 0%,#eeeeee 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fafafa', endColorstr='#eeeeee',GradientType=0 );
+}
+span.crdon-here > .crdon_holder > button:hover {
+	background: #f5f5f5;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f5f5f5), color-stop(100%,#e6e6e6));
+	background: -webkit-linear-gradient(top,  #f5f5f5 0%,#e6e6e6 100%);
+	background: -moz-linear-gradient(top,  #f5f5f5 0%, #e6e6e6 100%);
+	background: -ms-linear-gradient(top,  #f5f5f5 0%,#e6e6e6 100%);
+	background: -o-linear-gradient(top,  #f5f5f5 0%,#e6e6e6 100%);
+	background: linear-gradient(to bottom,  #f5f5f5 0%,#e6e6e6 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#e6e6e6',GradientType=0 );
+}
+span.crdon-here > .crdon_holder > button:active {
+	transform: translate(0,0);
+}
+span.crdon-here > .crdon_holder > button:active, span.crdon-here > .crdon_holder > button[aria-pressed="true"] {
+	background: #eeeeee;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#fafafa));
+	background: -webkit-linear-gradient(top,  #eeeeee 0%,#fafafa 100%);
+	background: -moz-linear-gradient(top,  #eeeeee 0%, #fafafa 100%);
+	background: -ms-linear-gradient(top,  #eeeeee 0%,#fafafa 100%);
+	background: -o-linear-gradient(top,  #eeeeee 0%,#fafafa 100%);
+	background: linear-gradient(to bottom,  #eeeeee 0%,#fafafa 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#fafafa',GradientType=0 );
+}
+span.crdon-here > .crdon_holder > button[aria-pressed="true"]:hover {
+	background: #e6e6e6;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#e6e6e6), color-stop(100%,#f5f5f5));
+	background: -webkit-linear-gradient(top,  #e6e6e6 0%,#f5f5f5 100%);
+	background: -moz-linear-gradient(top,  #e6e6e6 0%, #f5f5f5 100%);
+	background: -ms-linear-gradient(top,  #e6e6e6 0%,#f5f5f5 100%);
+	background: -o-linear-gradient(top,  #e6e6e6 0%,#f5f5f5 100%);
+	background: linear-gradient(to bottom,  #e6e6e6 0%,#f5f5f5 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#e6e6e6', endColorstr='#f5f5f5',GradientType=0 );
+}
+
+span.crdon-here > .crdon_holder > button > img {
+	margin: 0;
+	border: none;
+	padding: 0;
+}
+
+span.crdon-here > .crdon_holder > button > span {
+	margin: 0px 3px;
+	color: #444;
+	font-family: arial, sans-serif;
+	font-weight: bold;
+	text-shadow: 0px 1px 0px #fff;
+}
+span.crdon-here > .crdon_holder > button:active > span, span.crdon-here > .crdon_holder > button[aria-pressed="true"] > span {
+	text-shadow: 0px -1px 0px #fff;
+}
+
+span.crdon-here > .crdon_btn-total-received {
+	position: relative;
+	margin-left: 7px;
+	border: 1px solid #ddd;
+	border-radius: 3px 3px 3px 3px;
+	padding: 3px;
+	min-width: 14px;
+	height: 14px;
+	line-height: 14px;
+	font-size: 11px;
+	text-align: center;
+	color: #666;
+	background: #fff;
+	box-shadow: 1px 1px 2px rgba(0,0,0,0.05);
+}
+span.crdon-here > .crdon_btn-total-received:after, span.crdon-here > .crdon_btn-total-received:before {
+	content: '';
+	position: absolute;
+	right: 100%;
+	border: solid transparent;
+	width: 0;
+	height: 0;
+	pointer-events: none;
+}
+span.crdon-here > .crdon_btn-total-received:after {
+	top: 50%;
+	margin-top: -5px;
+	border-width: 5px;
+	border-color: rgba(255,255,255, 0);
+	border-right-color: rgba(255,255,255, 1);
+}
+span.crdon-here > .crdon_btn-total-received:before {
+	top: 50%;
+	margin-top: -6px;
+	border-width: 6px;
+	border-color: rgba(221,221,221, 0);
+	border-right-color: rgba(221,221,221, 1);
+}
+
+/* ============================= Modal Popover ============================= */
+#_crdon__mpo_ {
+	position: relative;
+	border: 1px solid #ccc;
+	border-radius: 2px 2px 2px 2px;
+	padding: 5px 5px 20px 5px;
+	min-width: 262px;
+	font-family: arial, sans-serif;
+	
+	background: #fafafa;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fafafa), color-stop(100%,#eeeeee));
+	background: -webkit-linear-gradient(top,  #fafafa 0%,#eeeeee 100%);
+	background: -moz-linear-gradient(top,  #fafafa 0%, #eeeeee 100%);
+	background: -ms-linear-gradient(top,  #fafafa 0%,#eeeeee 100%);
+	background: -o-linear-gradient(top,  #fafafa 0%,#eeeeee 100%);
+	background: linear-gradient(to bottom,  #fafafa 0%,#eeeeee 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fafafa', endColorstr='#eeeeee',GradientType=0 );
+}
+.crdon_mpo-a[aria-hidden="true"] {
+	visibility: hidden;
+}
+
+/* ============================= Popover Alignments ============================= */
+.crdon_mpo-a-bc > .crdon_holder > .crdon_mpo-a,
+.crdon_mpo-a-bl > .crdon_holder > .crdon_mpo-a,
+.crdon_mpo-a-br > .crdon_holder > .crdon_mpo-a,
+.crdon_mpo-a-tc > .crdon_holder > .crdon_mpo-a,
+.crdon_mpo-a-tl > .crdon_holder > .crdon_mpo-a,
+.crdon_mpo-a-tr > .crdon_holder > .crdon_mpo-a {
+	position: absolute;
+	z-index: 1;
+}
+
+.crdon_mpo-a-bc > .crdon_holder > .crdon_mpo-a,
+.crdon_mpo-a-tc > .crdon_holder > .crdon_mpo-a {
+	right: 50%; /*relative to parent (button)*/
+	/*take child (#_crdon__mpo_) width*/
+}
+.crdon_mpo-a-bc > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_,
+.crdon_mpo-a-tc > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_ {
+	left: 50%; /*  relative to parent (.crdon_mpo-a-bc > .crdon_holder > .crdon_mpo-a), 
+	            *  i.e. 50% of self width (
+				*       need set "min-width"/"width" in "#_crdon__mpo_" AND/OR set "margin-left: -???px" in parent (.crdon_mpo-a-bc > .crdon_holder > .crdon_mpo-a), 
+	            *       i.e "max-width:auto" limited by relative-parent (button) width
+	            *  ). 
+	            *  Or just use "right: 50%" + "transform: translateX(50%)" (not for old Browsers; odd width -> blur)
+	            */
+}
+
+.crdon_mpo-a-bc > .crdon_holder > .crdon_mpo-a,
+.crdon_mpo-a-tc > .crdon_holder > .crdon_mpo-a,
+.crdon_mpo-a-br > .crdon_holder > .crdon_mpo-a,
+.crdon_mpo-a-tr > .crdon_holder > .crdon_mpo-a {
+	margin-left: -450px; /* increase width (limited by relative-parent [button]) for child */
+}
+
+.crdon_mpo-a-bl > .crdon_holder > .crdon_mpo-a,
+.crdon_mpo-a-tl > .crdon_holder > .crdon_mpo-a {
+	margin-right: -450px; /* increase width (limited by relative-parent [button]) for child */
+}
+
+.crdon_mpo-a-bl > .crdon_holder > .crdon_mpo-a,
+.crdon_mpo-a-tl > .crdon_holder > .crdon_mpo-a {
+	left: 0;
+}
+
+.crdon_mpo-a-br > .crdon_holder > .crdon_mpo-a,
+.crdon_mpo-a-tr > .crdon_holder > .crdon_mpo-a {
+	right: 0;
+}
+
+.crdon_mpo-a-bc > .crdon_holder > .crdon_mpo-a,
+.crdon_mpo-a-bl > .crdon_holder > .crdon_mpo-a,
+.crdon_mpo-a-br > .crdon_holder > .crdon_mpo-a {
+	margin-top: 10px;
+}
+
+.crdon_mpo-a-tc > .crdon_holder > .crdon_mpo-a,
+.crdon_mpo-a-tl > .crdon_holder > .crdon_mpo-a,
+.crdon_mpo-a-tr > .crdon_holder > .crdon_mpo-a {
+	margin-bottom: 10px;
+	bottom: 100%;
+}
+
+.crdon_mpo-a-bc > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_,
+.crdon_mpo-a-tc > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_ {
+	box-shadow: 0px 3px 4px rgba(0,0,0,0.1),inset 1px 1px 0px #fff;
+}
+.crdon_mpo-a-bl > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_,
+.crdon_mpo-a-tl > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_ {
+	box-shadow: 3px 3px 4px rgba(0,0,0,0.1),inset 1px 1px 0px #fff;
+}
+.crdon_mpo-a-br > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_,
+.crdon_mpo-a-tr > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_ {
+	box-shadow:-3px 3px 4px rgba(0,0,0,0.1),inset -1px 1px 0px #fff;
+}
+
+
+.crdon_mpo-a-bc > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after, .crdon_mpo-a-bc > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before,
+.crdon_mpo-a-bl > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after, .crdon_mpo-a-bl > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before,
+.crdon_mpo-a-br > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after, .crdon_mpo-a-br > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before,
+.crdon_mpo-a-tc > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after, .crdon_mpo-a-tc > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before,
+.crdon_mpo-a-tl > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after, .crdon_mpo-a-tl > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before,
+.crdon_mpo-a-tr > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after, .crdon_mpo-a-tr > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before {
+	content: '';
+	position: absolute;
+	border: solid transparent;
+	border-width: 6px;
+	margin-left: -6px;
+	height: 0;
+	width: 0;
+	pointer-events: none;
+}
+
+.crdon_mpo-a-bc > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after, .crdon_mpo-a-bc > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before,
+.crdon_mpo-a-bl > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after, .crdon_mpo-a-bl > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before,
+.crdon_mpo-a-br > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after, .crdon_mpo-a-br > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before {
+	bottom: 100%;
+}
+.crdon_mpo-a-tc > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after, .crdon_mpo-a-tc > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before,
+.crdon_mpo-a-tl > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after, .crdon_mpo-a-tl > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before,
+.crdon_mpo-a-tr > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after, .crdon_mpo-a-tr > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before {
+	top: 100%;
+}
+
+.crdon_mpo-a-bc > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after, .crdon_mpo-a-bc > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before,
+.crdon_mpo-a-tc > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after, .crdon_mpo-a-tc > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before {
+	left: 50%;
+}
+.crdon_mpo-a-bl > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after, .crdon_mpo-a-bl > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before,
+.crdon_mpo-a-tl > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after, .crdon_mpo-a-tl > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before {
+	left: 10%;
+}
+.crdon_mpo-a-br > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after, .crdon_mpo-a-br > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before,
+.crdon_mpo-a-tr > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after, .crdon_mpo-a-tr > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before {
+	left: 90%;
+}
+
+.crdon_mpo-a-bc > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after,
+.crdon_mpo-a-bl > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after,
+.crdon_mpo-a-br > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after {
+	border-color:        rgba(250,250,250, 0);
+	border-bottom-color: rgba(250,250,250, 1);
+	margin-bottom: -1px; /* + overlaps "inset 1px 1px 0px #fff" box-shadow */
+}
+.crdon_mpo-a-tc > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after,
+.crdon_mpo-a-tl > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after,
+.crdon_mpo-a-tr > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:after {
+	border-color:     rgba(238,238,238, 0);
+	border-top-color: rgba(238,238,238, 1);
+	margin-top: -1px;
+}
+
+.crdon_mpo-a-bc > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before,
+.crdon_mpo-a-bl > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before,
+.crdon_mpo-a-br > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before {
+	border-color:        rgba(204,204,204, 0);
+	border-bottom-color: rgba(204,204,204, 1);
+}
+.crdon_mpo-a-tc > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before,
+.crdon_mpo-a-tl > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before,
+.crdon_mpo-a-tr > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_:before {
+	border-color:     rgba(204,204,204, 0);
+	border-top-color: rgba(204,204,204, 1);
+}
+
+/* ============================= Modal Popover Elements ============================= */
+#_crdon__mpo_ > div {
+	position: relative;
+	margin-bottom: 5px;
+}
+
+
+#_crdon__mpo_ > label {
+	display: block;
+	padding: 0px 20px 4px;
+	font-size: 12px;
+	font-weight: bold;
+	color: #444;
+	text-align: center;
+	text-shadow: 0px 1px 0px #fff;
+}
+#_crdon__mpo_ > label::before { content: '᚜ '; }
+#_crdon__mpo_ > label::after  { content: ' ᚛'; }
+
+
+input#_crdon__mpo_wallet_address_ {
+	padding: 4px 3px 4px 20px;
+	border: 1px solid #ccc;
+	border-radius: 1em 3px 3px 1em;
+	font-size: 10px;
+}
+span.crdon-here[data-cc-uri-scheme="bitcoin"] > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_ > #_crdon__mpo_line_wallet_address_ > input#_crdon__mpo_wallet_address_ {
+	background-image: url(icons_cc/-bitcoin.png);
+	background-position: 3px center;
+	background-repeat: no-repeat;
+}
+#_crdon__mpo_line_wallet_address_ > a > img {
+	margin: 0;
+	border: none;
+	padding: 0;
+}
+
+/* See "crdon_alt-wallet-address-line.css" file for alt solutions. */
+#_crdon__mpo_line_wallet_address_ {
+	display: table;
+	width: 100%;
+}
+input#_crdon__mpo_wallet_address_ {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: left;
+	box-sizing: border-box;
+	width: 100%;
+    min-height: 23px;
+}
+#_crdon__mpo_line_wallet_address_ > a  {
+	display: table-cell;
+	vertical-align: middle;
+	padding-left: 4px;
+	width: 16px;
+	line-height: 0;
+	font-size: 0;
+}
+#_crdon__mpo_line_wallet_address_ > a > img {
+	display: block;
+}
+
+
+#_crdon__mpo_line_wallet_stat_ {
+	overflow-y: hidden; /* don't use ":after{clear:both}" https://habrahabr.ru/post/48383 !
+	                       OR use http://css-live.ru/articles-css/ravnomernoe-vyravnivanie-blokov-po-shirine.html
+	                            + https://stackoverflow.com/questions/11589590/text-align-justify-inline-block-elements-properly
+	                     */
+}
+#_crdon__mpo_line_wallet_stat_ > span {
+	float: left;
+	margin-right: 2%;
+	border: 1px solid #ffeeb3;
+	padding: 5px;
+	box-sizing: border-box;
+	min-width: 121px;
+	width: 49%;
+	font-size: 12px;
+	font-weight: bold;
+	text-align: left;
+	color: #444;
+	background: #fff8ef;
+	text-shadow: 0px -1px 0px #fffefa;
+	box-shadow: inset 1px 1px 0px #fff;
+	
+}
+.crdon_mpo-a-br > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_ > #_crdon__mpo_line_wallet_stat_ > span,
+.crdon_mpo-a-tr > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_ > #_crdon__mpo_line_wallet_stat_ > span {
+	box-shadow: inset -1px 1px 0px #fff;
+}
+#_crdon__mpo_line_wallet_stat_ > .crdon_mpo-line-wallet-stat-end {
+	margin-right: 0;
+}
+#_crdon__mpo_line_wallet_stat_ > span > small {
+	display: block;
+	font-size: 11px;
+	font-weight: normal;
+}
+span.crdon-here[data-cc-uri-scheme="bitcoin"] > .crdon_holder > .crdon_mpo-a > #_crdon__mpo_ > #_crdon__mpo_line_wallet_stat_ > #_crdon__mpo_wallet_total_received_ > small {
+	content: 'BTC';
+}
+/* Only Opera Presto support it. Solution for other engines: replace <small> to ::after */
+
+/* It is really cool! [CSS Generated Content Module Level 3]:
+ ** Inserting and replacing content with the ‘content’ property ------ https://www.w3.org/TR/css-content-3/#example-1a710936
+ **                                                                    https://drafts.csswg.org/css-content-3/#example-1a710936
+ ** Running headers and footers | Footnotes | Selecting Pages | ... -- https://www.w3.org/TR/css-gcpm-3/
+ ** Named strings ---------------------------------------------------- https://www.w3.org/TR/css-content-3/#named-strings
+ *
+ * CSS2 vs CSS3 ['content' property]:
+ ** CSS2 - Applies to: ':before' and ':after' pseudo-elements ----------------------- https://www.w3.org/TR/CSS22/generate.html#content
+ ** CSS3 - Applies to: 	'::before', '::after', '::marker', and page margin boxes.
+ **                     Image and url values can apply to all elements. ------------- https://www.w3.org/TR/css-content-3/#content-property
+/*/
+
+
+#_crdon__mpo_qr_code_ {
+	position: absolute;
+	left: 6px;
+	bottom: 5px;
+	width: 16px;
+	height: 16px;
+	line-height: 0;
+}
+#_crdon__mpo_qr_code_ > img {
+	content: url(icon_qrcode.png);
+	width: 16px;
+	height: 16px;
+}
+#_crdon__mpo_qr_code_:hover, #_crdon__mpo_qr_code_:focus {
+	background: url(icon_qrcode.png) no-repeat;
+}
+#_crdon__mpo_qr_code_:focus {
+	pointer-events: none;
+}
+#_crdon__mpo_qr_code_:hover > img, #_crdon__mpo_qr_code_:focus > img {
+	content: normal;
+	position: absolute;
+	left: 24px;
+	bottom: 0;
+	border: 1px solid #333;
+	border-radius: 4px;
+	width: 111px;
+	height: 111px;
+	box-shadow: 0px 0px 8px rgba(0,0,0,0.5);
+	z-index: 1;
+}
+#_crdon__mpo_qr_code_:focus > img {
+	pointer-events: auto;
+}
+
+#_crdon__mpo_close_ {
+	position: absolute;
+	top: 5px;
+	right: 5px;
+	margin: 0;
+	border: none;
+	padding: 2px 1px 0px;
+	line-height: 13px;
+	font-size: 23px;
+	font-family: arial, sans-serif;
+	color: #666;
+	background: transparent;
+	overflow: hidden; /* for Blink/WebKit/?? - hit-test fail (comment this line, turn off "click" handler, press to button and see increased outline size) */
+}
+#_crdon__mpo_close_:hover {
+	color: #aaa;
+}
+
+/*
+check-list: https://habrahabr.ru/post/163429
+            https://habrahabr.ru/post/9476
+*/

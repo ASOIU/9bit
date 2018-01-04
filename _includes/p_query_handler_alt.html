@@ -1,0 +1,38 @@
+{%- comment %}
+	Alternative "/?p=<wp_id>" query handler.
+
+	Steps:
+	1. wp_id -> year
+	2. open "/<year>/<wp_id>/" --[jekyll-redirect-from]--> post
+
+	Jumps:
+	"/index.html?p=<wp_id>" --> redirect:"/<year>/<wp_id>/" --> post:"/<year>/<wp_id>-<slug>/"
+
+{% endcomment -%}
+
+{%- capture id_to_year -%}
+{%- assign wp_posts = site.posts | where_exp: "p", "p.wp_id != nil" -%}
+{%- for post in wp_posts -%},
+{{ post.wp_id | to_integer -}}: {{ post.date | date: "%Y" | to_integer -}}
+{%- endfor -%}
+{%- endcapture -%}
+{%- assign id_to_year = id_to_year | slice: 1, id_to_year.size %}
+
+	<script>
+		(function(){
+			"use strict";
+
+			var wp_id;
+			if(window.location.search && (wp_id = (/^\?p=(\d+)/.exec(window.location.search) || [])[1]) >= 0){
+				var year = {
+					{{- id_to_year }}
+				}[wp_id];
+
+				if(typeof year === "number"){ // or (year || year === 0)
+					window.location.replace("{{ site.baseurl }}/" + year + "/" + wp_id + "/" + window.location.hash);
+				}else{ // stay on my home page :)
+					document.title = "Страница не найдена « " + document.title;
+				}
+			}
+		})();
+	</script>

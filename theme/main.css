@@ -1,0 +1,265 @@
+---
+---
+/*
+Theme Name: OneRoom
+Theme URI: http://web-kreation.com/demos/oneroom/
+Description: A 3 columns layout Designed by Web-Kreation
+Author: Jeremie Tisseau
+Author URI: http://web-kreation.com/
+Version: 1.0
+Tags: Green, fixed width, three columns, widget-ready
+
+    OneRoom v1.0
+    Preview: http://web-kreation.com/demos/oneroom/
+
+    Date: Feb 4, 2009
+
+    This theme was designed and built by Jeremie Tisseau, whose blog you will find at
+    http://web-kreation.com/index.php/blog/
+
+    License: Read about it at http://web-kreation.com/demos/oneroom/index.php/license/
+*/
+
+/*Begin Typography &Colors  */
+html,body{border:0;margin:0;padding:0}
+html{background:#3E4035 url('img/bg.png')}
+body{background:url('img/header-bg.png') repeat-x 0 0;color:#333;font-family:"Helvetica Neue",Arial,Helvetica,sans-serif;font-size:80%;text-align:center}
+body:before{content:'';position:fixed;top:0;left:0;height:20px;width:100%;background:url('img/top-tip.png') repeat-x;z-index:10;pointer-events:none;} /*or https://ru.stackoverflow.com/a/236714 */
+
+/* Links */
+a{color:#3D7283;text-decoration:none}
+a:hover{color:#000;text-decoration:underline}
+
+/* Common Formatting */
+h1,h2,h3,h4,h5,h6{font-weight:400;margin:0;padding:0;text-shadow: 1px 1px 0px #E9E9E9}
+h1{background:#F4F5F3 url(img/content-sep.gif) repeat-x 0 0;border-bottom:#E2E4E0 1px solid;clear:both;font-size:1.8em;margin:10px -20px;padding:5px 20px}
+h1 a{color:#33352C !important}
+h2{font-size:1.8em}
+h3{font-size:1.6em}
+h4{font-size:1.4em}
+h5{font-size:1.3em}
+
+p{margin:10px 0;padding:0}
+ul{list-style:none;margin:0;padding:0}
+blockquote{border-left:1px solid #D0D0CE;color:#444;display:block;font-family:Georgia,"Times New Roman",Times,serif;font-size:1.4em;font-style:italic;margin:10px 20px;padding-left:10px}
+code,pre{color:#444;font-size:1.2em}
+pre{background-color:#F4F5F3;border:#E2E4E0 1px dotted;clear:both;display:block;margin:15px 0;padding:0.2em 0.5em;text-shadow: 1px 1px 0px #FFF}
+small{font-size:0.8em}
+big{font-size:1.2em;font-weight:700}
+sup{bottom:0.3em;position:relative;vertical-align:baseline}
+sub{bottom:-0.2em;position:relative;vertical-align:baseline}
+acronym,abbr{border-bottom:1px dashed;cursor:help;letter-spacing:1px}
+hr{border-bottom:1px solid #FFF;border-left:none;border-right:none;border-top:1px dotted #BEC1B5;clear:both;display:block;margin:5px 0}
+
+/* custom Classes */
+.note,.error{border-bottom:#EBE8D7 1px solid;border-top:#EBE8D7 1px solid;display:block;line-height:normal;margin:20px 0;padding:5px 10px;width:460px}
+.note{background-color:#F4F5F3;border-bottom:#E2E4E0 1px solid;border-top:#E2E4E0 1px solid;text-shadow: 1px 1px 0px #FFF}
+.error{background-color:#FF9D9D;border-bottom:#F30 1px solid;border-top:#F30 1px solid}
+.nobullet{background:transparent !important;list-style:none !important;margin:0;padding:0}
+
+/* Tables */
+table{border:0;margin:0 0 18px;padding:0}
+table tr td{padding:2px}
+
+/* clear */
+.clear{ clear:both; width:100%; height:0; line-height:0; font-size:0; padding:0; margin:0; border:0}
+.clearfix:after{content:"."; display:block; height:0; clear:both; visibility:hidden}
+.clearfix{display:inline-block}
+/* Hides from IE-mac \*/
+* html .clearfix{ height:1% }
+.clearfix{display:block}
+/* End hide from IE-mac */            
+
+/* Global Classes */
+.alignleft{display:block;float:left}
+.alignright{display:block;float:right}
+.aligncenter{display:block;margin:0 auto;text-align:center}
+
+/* images border */
+img.alignleft,img.alignright,img.aligncenter{background:#EFEFED;border:1px solid #D0D0CE;display:block;padding:3px}
+img.alignleft{float:left;margin:0 10px 2px 0}
+img.alignright{float:right;margin:0 0 2px 10px}
+img.aligncenter{margin:5px auto}
+img.noborder{background:transparent;border:none;padding:0}
+a:hover img.alignleft,a:hover img.alignright,a:hover img.aligncenter{background:#FFF;display:block;padding:3px}
+
+/* Image Captions */
+.wp-caption{background-color:#EFEFED;border:1px solid #D0D0CE;margin-bottom:15px;margin-top:15px;padding:3px;text-align:center;max-width:470px!important}
+    /* optional rounded corners for browsers that support it
+    This code is disabled by default because it is not valid CSS but you are free to enable it if you wish.
+    .wp-caption{-moz-border-radius: 3px;-khtml-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;}  */
+.wp-caption img{border:none;margin:0;padding:0;width:100%!important;height:auto!important}
+.wp-caption-text{color:#676F51;font-size:0.85em;margin:0;padding:2px 0}
+
+/* */
+a img,img{border:none}
+h6,#intro h2{font-size:1.2em}
+.nopadding,.commentlist{margin:0 !important;padding:0 !important}
+.nobackground{background:transparent !important}
+.grey,#intro,#intro a,#intro h2 span{color:#676F51}
+#intro a/*,#wp-calendar tr a*/{text-decoration:underline}
+
+/***** Main Layout *****/
+#wrapper{margin:0 auto;text-align:left;width:968px}
+#header{background:url(img/content-top.png) no-repeat 0 bottom;font-size:0.9em;height:106px;position:relative}
+#logo{display:block;float:left;height:85px;padding:9px 0 0 20px;width:294px}
+
+/***** LOGO *****/
+/* Text option */
+#logo h1,#logo h1 a{background:transparent;border:none;clear:both;color:white!important;font:normal 1.6em Georgia,"Times New Roman",Times,serif;line-height:34px;margin:0 auto;padding:12px 0 0;text-align:center;text-decoration:none;width:210px}
+/* logo option  */
+.logo{background:url(img/mlogo.png) no-repeat center bottom;display:block;height:85px;margin:0 auto;padding-top:12px;width:294px}
+
+{% comment %}
+/* Main Navigation *//*
+.menu{display:block;float:right;height:24px;list-style:none;margin:8px 0 0 30px;padding:0;text-align:center}
+.menu li{display:block;float:left;height:24px;margin:0 6px 0 0;padding:0;position:relative;text-align:center;width:auto}
+.menu li a{border:1px solid #2F3028;color:#BDC1AF;display:block;float:left;font-size:1.1em;font-weight:400;height:24px;line-height:24px;padding:0 8px;position:relative;text-decoration:none}
+.menu li a:hover{background:#252620;border:1px solid #5A5C4D;color:#FFF;text-decoration:none;}
+.menu li.current_page_item a,.menu li.current_page_item a:hover{background:#6C9339;border:1px solid #B5BBA6;color:#FFF;font-weight:700;margin:-1px;text-shadow: 1px 1px 1px #000}
+*/{% endcomment -%}
+
+/* Admin Navigation */
+#navAdmin{border-left:1px solid #464A3B;clear:right;color:#BDC1AF;display:block;float:right;height:14px;list-style:none;margin:14px 0 0 30px;padding:0;text-align:center}
+#navAdmin li{border-right:1px solid #464A3B;display:block;float:left;height:14px;margin:0;padding:0;position:relative;text-align:center;width:auto}
+#navAdmin li a{color:#BDC1AF;display:block;float:left;font-size:0.9em;height:14px;line-height:14px;padding:0 8px;position:relative}
+#navAdmin li a:hover{color:#FFF}
+#rss{background:url(img/atom-rss-bg.jpg) no-repeat right 0;clear:right;color:#FFF;display:block;float:right;font-size:1.4em;height:31px;line-height:32px;padding-right:20px;position:absolute;right:35px;text-align:center;text-transform:uppercase;top:60px;width:220px;z-index:999}
+
+/***** Content *****/
+#pageWrapper{background:#FFF url(img/content-bg.png) repeat-y 0 0}
+#content{display:block;float:left;overflow:hidden;padding-left:4px;width:680px}
+#content h1,#content h2,#content h3,#content h4,#content h5,#content h6{color:#33352C;font-family:Georgia,"Times New Roman",Times,serif}
+#intro{clear:both;display:block;float:right;font-family:Georgia,"Times New Roman",Times,serif;font-size:1.4em;font-style:italic;padding:10px 20px 0;width:480px}
+#intro h2 span{font-size:0.9em}
+
+/*  POST */
+.postWrapper{clear:both;display:block}
+.postmetadata{clear:left;display:block;float:left;font-size:0.85em;padding:5px 0 20px;width:160px}
+.postmetadata a{color:#615F58}
+.meta-date{background:url(img/date.jpg) no-repeat 0 0;clear:both;color:#FFF;display:block;height:29px;padding-top:7px;width:160px}
+.date-day{border-right:1px solid #FFF;display:block;float:left;font-size:2.2em;font-weight:700;height:20px;line-height:18px;padding-left:10px;padding-right:5px;text-align:right}
+.date-month{display:block;float:left;font-size:1.2em;font-weight:700;height:12px;line-height:10px;padding-left:8px;width:90px}
+.date-year{display:block;float:left;font-size:0.8em;height:10px;line-height:10px;padding-left:8px;width:90px}
+.meta-author,.meta-authors,.meta-improve,.meta-comments,.meta-issues,.meta-categories,.meta-tags{clear:both;display:block;margin-left:10px;padding:2px 0 2px 20px;width:120px}
+.meta-author{background:url(img/icon-author.png) no-repeat 0 0}
+.meta-authors{background:url(img/icon-authors.png) no-repeat 0 0}
+.meta-improve{background:url(img/icon-improve.png) no-repeat 0 0}
+.meta-comments{background:url(img/icon-comment.jpg) no-repeat 0 0}
+.meta-issues{background:url(img/icon-issue.png) no-repeat 0 0}
+.meta-categories{background:url(img/icon-category.jpg) no-repeat 0 0}
+.meta-tags{background:url(img/icon-tag.jpg) no-repeat 0 0}
+.post{clear:right;display:block;float:right;padding:0px 20px 0px;width:480px}
+.post h2{margin:25px 0 15px}
+.post h3,.post h4,.post h5,.post h6{margin:15px 0}
+.post ul li{background:url(img/ul-post-arrow.jpg) no-repeat 0 9px;margin:0;padding:5px 0 5px 10px}
+.entry{width:480px}
+.more-link{clear:both;display:block;font-size:0.8em;font-weight:700;margin:20px 0 10px !important;white-space:nowrap}
+.more-link>a{display:inline-block;background-color:#33352C;color:#FFF;padding:4px 7px}
+.more-link>a:hover{background-color:#6C9339;color:#FFF;text-decoration:none}
+#more-cut{display:none/*block*/;margin-top:1px;height:3px;margin-bottom:10px}
+.post{position:relative}
+#more-cut:after{content:'';position:absolute;left:0;right:0;height:11px;background:url(img/zig-zag-more.png) repeat-x 0 0}
+
+/* Post bottom */
+.postbottom{clear:both;}
+
+/* bottom Navigation */
+.nav{float:right;font-family:"Times New Roman",Times,serif;font-weight:700;overflow:hidden;padding:7px 20px;width:480px;text-align:center;}
+.nav-border-bottom{border-bottom:#E2E4E0 1px solid}
+.nav-padding{padding:14px 20px !important;}
+.nav > .alignleft[aria-hidden="true"],.nav > .alignright[aria-hidden="true"]{visibility:hidden;}
+.nav > a > .octicon-mark-github{fill:#333333;vertical-align:middle;}
+.nav > a > .octicon-mark-github:hover{fill:#3D7283;}
+
+/* Left sidebar + Navigation */
+.left-sidebar{background:url(img/sidebar-l-sep.png) no-repeat 0 0;clear:left !important;display:block;float:left;font-size:0.85em;font-weight:400;margin:0;padding:15px 0 0 10px;width:150px}
+.left-sidebar p{background:url(img/comment-arrow.jpg) no-repeat right 5px;line-height:1.5em;margin:0;padding-right:10px}
+h3.left-sidebar,.nav{font-size:1.3em}
+.left-sidebar>.avatar{background:#EFEFED;border:1px solid #D0D0CE;display:block;float:left;margin:0 5px 0 0;padding:3px}
+.bypostauthor>.left-sidebar>.avatar{border-radius: 8px;border-bottom-color:rgba(0,0,0,0.47);box-shadow:-1px 1px 2px rgba(0,0,0,0.07)}
+
+/* Comments + Navigation */
+#comments{font-size:1.1em;font-weight:700;}
+#comments > span{color:#3D7283;font-size:1.18em;font-weight:400;}
+.reply{font-size:90%;text-align:right}
+.commentlist article.comment{clear:both;display:block;font-weight:700;margin:0 !important;padding:0 !important;}
+.comment-content,.comments-plus-intro{clear:right;display:block;float:left;width:480px;font-weight:normal;margin:0;padding:15px 20px;min-height:50px}
+.comment-content,.comments-plus-intro,.nav{background:#F4F5F3 url(img/content-sep.gif) repeat-x 0 0}
+.comment-content>p:first-child,.comments-plus-intro>p:first-child{margin-top:0;}
+.comment-content>p:last-child,.comments-plus-intro>p:first-child{margin-bottom:0;}
+.comment-content>.jekyll-issue-6414_ruby-lang-man-wanted:before{display:block;padding:1px 3px;border-top:1px solid #E2E4E0;border-bottom:1px solid #E2E4E0;margin-bottom:-5px;background:#FFFFFE;color:#919B9C;font-family:"Verdana",sans-serif;font-size:0.8em;overflow:hidden;text-overflow:ellipsis;white-space: nowrap;content:'Если вы видите эту надпись, то это может означать только одно: \aв Jekyll до сих пор не был принят Pull Request, закрывающий этот Issue ( https://github.com/jekyll/jekyll/issues/6414 ) ➞ некоторые ссылки в этом комментарии - сломаны. \aПодробнее (TODO: вставить ссылку на G+ запись). В общем, нужен Рубист! \aP.S. этот текст невозможно выделить ;)';}
+.comment-content>.jekyll-issue-6414_ruby-lang-man-wanted:hover:before{white-space:pre-wrap;margin-bottom:10px;padding-bottom:3px;}
+#comments-plus{clear:both;display:block;min-height:1px;padding:0 !important;overflow:hidden;}
+#comments-plus h3{padding-bottom:20px}
+#comments-plus>.left-sidebar>.octicon-comment-discussion-plus{float:left;padding:3px 4px;margin:0 3px 28px 0;}
+#comments-plus>.comments-plus-intro,
+#comments-plus>.comment-content{display:none;}
+#comments-plus.not-https>.not-https{display:block;}
+#comments-plus .secure{color:#008800;font-weight:bold;}
+#comments-plus.https>.https{display:block;}
+.comments-plus-intro{text-align:center;font-family:Verdana,sans-serif;}
+.comments-plus-intro.https>button{margin:0;border:none;padding:0;background:transparent;color:inherit;font:inherit;font-family:inherit;}
+.comments-plus-intro.https>button:active{transform:translate(0,0);}
+.comments-plus-intro.https>button>.pseudo-btn{display:inline-block;text-align:left;vertical-align:middle;margin:5px;padding:2px 5px;background-color:#F9FAF7;color:#3D7283;border:1px solid #E5E5E5;border-radius:3px;font-family:"Helvetica Neue", Arial, Helvetica, sans-serif;}
+.comments-plus-intro.https>button:hover>.pseudo-btn{background-color:#F6F7F5;color:#274A54;border: 1px solid #D8D8D8}
+.comments-plus-intro.https>button>.pseudo-btn>.octicon{float:left;margin-right:5px;}
+.comments-plus-intro.https>button>.pseudo-btn>.octicon-pencil{padding:4px 0;}
+.comments-plus-intro.https>button>.pseudo-btn>.octicon-eye{padding:3px 0;}
+#comments-plus.comments-plus-content>.comment-content{display:block;}
+.comments-g-plus-wrapper-1{border-top:1px solid #FFFFFF;padding:0;width:520px;overflow:hidden;}
+.comments-g-plus-wrapper-0{margin:-1px -4px 0 -3px;}
+iframe#comments-g-plus{margin:0;border:none;width:527px;height:252px;overflow:hidden;resize:vertical;} /* https://developer.mozilla.org/en-US/docs/Web/CSS/resize */
+
+/***** RIGHT SIDEBAR *****/
+#sidebar{clear:right;display:block;float:left;/*overflow:hidden;*/padding-bottom:40px;width:280px} /* overflow not hidden for CrDon (Crypto(currency) Donate) */
+#sidebar h2{color:#33352C;font-family:Georgia,"Times New Roman",Times,serif;font-size:1.6em;margin:0 0 15px;padding:0}
+#sidebar section,            #sidebar nav{background:url(img/sidebar-r-sep.png) no-repeat 0 0;margin:0;padding:15px 10px;width:260px}
+#sidebar section ul,         #sidebar nav ul{margin:0 0 0 5px;width:245px}
+#sidebar section ul li,      #sidebar nav ul li{background:url(img/ul-sidebar-arrow.jpg) no-repeat 0 9px;margin:0;padding:5px 0 5px 10px;width:230px !important}
+#sidebar section ul li ul,   #sidebar nav ul li ul{margin:0 !important;padding:0 !important;width:230px !important}
+#sidebar section ul li ul li,#sidebar nav ul li ul li{margin:0 !important;padding:5px 0 5px 10px;width:190px !important}
+
+/* Search Box */
+#searchform{background:transparent url(img/search-bar.jpg) no-repeat;height:37px;width:260px}
+.search-field{background:transparent;border:none;display:block;float:left;padding:10px;width:200px;-webkit-appearance:textfield;box-sizing:content-box;height:16px}
+.search-submit{background:transparent;border:none;cursor:pointer;display:block;float:left;height:37px;width:40px}
+.search-field:focus{outline:none !important}
+
+/* Tag Cloud */
+.tag-cloud{word-wrap:break-word;overflow-wrap:break-word/*;word-break:break-all*/}
+
+{% comment %}
+/* Banners *//*
+.ads{clear:both;display:block;margin:20px 0;padding:0;width:264px}
+.ads img{background:transparent;border:none;display:block;height:125px;padding:0;width:125px}
+.ads .ad-left{float:left;margin:0 0 10px}
+.ads .ad-right{float:right;margin:0 0 10px}
+*/{% endcomment -%}
+
+{% comment %}
+/* Calendar *//*
+#calendar_wrap{display:block;margin:0 auto;width:240px}
+#wp-calendar{ background:#EFEFED;border:1px solid #D0D0CE;padding:3px;width:90% }
+#wp-calendar #prev a,#wp-calendar #next a{font-size:9pt}
+#wp-calendar a{text-decoration:none}
+#wp-calendar caption{font-size:1.2em;font-weight:700;padding:5px;text-align:center;text-transform:uppercase}
+#wp-calendar thead{margin-top:5px}
+#wp-calendar th{background:#ddd;border:1px solid #D0D0CE;font-size:0.9em;font-style:normal;text-align:center;text-transform:capitalize}
+#wp-calendar #next a{display:block;float:right}
+*/{% endcomment -%}
+
+/* Donate / Support us */
+#sidebar > .support-us { text-align:center; color:#7C7C7C; }
+#sidebar > .support-us > .ambient-occlusion-shadow-effect_demo-pics { margin-top:-20px; }
+
+/***** FOOTER *****/
+#footer{background:url(img/footer-l.png) no-repeat left top,url(img/footer-r.png) no-repeat right top, url(img/footer-bg.gif) repeat-x 0 0 #21221C;clear:both;color:#A9B095;font-size:0.85em;height:46px;margin:0 auto 80px;padding:10px 8px 5px;width:944px}
+#footer ul li{display:inline}
+#footer a:hover{color:#A9B095;text-decoration:none}
+#footer p{line-height:20px;margin:0;padding:0;width:800px}
+.octicon {display:inline-block;fill:currentColor;vertical-align:text-top;}
+#footer .octicon {vertical-align:text-bottom;}
+
+/* Back to top button */
+#toTop{background:url(img/top.jpg) no-repeat 0 0;clear:none;display:block;float:right;height:25px;margin-right:40px;margin-top:-10px;width:50px}

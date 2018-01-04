@@ -1,0 +1,94 @@
+{%- comment %}
+Parameters for include: page= L10n= alone=
+	- include.alone (bool): I'm alone on this page? Hint: where I am: on page/post {alone} OR on list (index) of pages/posts {not alone}.
+{%- endcomment %}
+{%- assign page = include.page %}
+<!--------------------------- META --------------------------->
+{%- comment %}<!--
+ HTML5:
+ - <footer>:
+   - https://www.w3.org/TR/html51/sections.html#the-footer-element
+     (contains information about its section; footer -> meta; footers don’t necessarily have to appear at the end of a section)
+   - http://html5doctor.com/the-footer-element/ (Other Thoughts)
+
+ Schema.org (Microdata):
+ - http://schema.org/BlogPosting ( ru: http://ruschema.org/BlogPosting )
+ - see "_layouts/post.html"
+ - PublicationIssue (TODO for "meta-issues" ?)
+   http://schema.org/PublicationIssue#bib-2
+
+-->{% endcomment %}
+<footer class="postmetadata">
+	<p class="meta-date">
+		<time itemprop="datePublished" datetime="{{ page.date | date_to_xmlschema }}">
+			{%- assign month = page.date | date: "%-m" | to_integer %}
+			<span class="date-day">{{ page.date | date: "%-d" }}</span>
+			<span class="date-month">{{ include.L10n.month_abbr[month] }}</span>
+			<span class="date-year">{{ page.date | date: "%Y" }}</span>
+		</time>
+	</p>
+	<p class="meta-author" itemprop="creator" itemscope itemtype="http://schema.org/Person">by <span itemprop="name">{{ site.data.authors[page.author].name | escape }}</span></p>{% comment %}<!--| creator <- text writer |-->{% endcomment %}
+	{%- if page.authors %}
+		<p class="meta-authors">
+		{%- for author in page.authors %}
+			{%- assign author_data = site.authors_ | where: "slug", author | first -%}
+			{%- if author_data -%}
+				{%- unless forloop.first %}, {% endunless %}
+				<a href="{{ author_data.url | prepend: '/taxonomy/#' | absolute_url }}" title="Просмотреть все {% if include.alone %}статьи{% else %}записи{% endif %} автора &ldquo;{{ author | escape_once }}&rdquo;" rel="category" itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">{{ author | escape_once }}</span></a>{% comment %}<!--| author <- author of idea |-->{% endcomment %}
+			{%- else %}Can't find the author file. Plz add missing file.{{ 0 | divided_by:0 }}{% endif -%}
+		{%- endfor %}
+		</p>
+	{%- endif %}
+	<p class="meta-improve"><a href="https://github.com/ASOIU/9bit/blob/master/{{ page.path }}" class="post-edit-link" title="Улучшить {% if include.alone %}эту статью{% else %}запись &ldquo;{{ page.title | strip_html | normalize_whitespace | escape_once }}&rdquo;{% endif %}">Улучшить &raquo;</a></p>
+	<p class="meta-comments"><a rel="discussion" itemprop="discussionUrl" {% if include.alone %}href="#comments"{% else %}href="{{ page.url | absolute_url | replace_first: 'http:','https:' }}#comments"{% comment %} don't use "https://{{ site.host }}{{ site.baseurl }}{{ page.url }}#comments", site.host == "127.0.0.1" on GitHub {% endcomment %} title="Прокомментировать запись &ldquo;{{ page.title | strip_html | normalize_whitespace | escape_once }}&rdquo;"{% endif %}>
+		{%- case page.wp_comments.size -%}
+			{%- when 0 or nil -%} Без комментов
+			{%- when 1        -%} <span itemprop="commentCount">1</span> Комментарий &raquo;
+			{%- else          -%} <span itemprop="commentCount">{{ page.wp_comments.size }}</span> Комментариев &raquo;
+		{%- endcase -%}
+	</a></p>
+	{%- if page.issues %}
+		<p class="meta-issues">
+		{%- for issue in page.issues %}
+			{%- assign issue_data = site.issues_ | where: "slug", issue | first -%}
+			{%- if issue_data -%}
+				{%- unless forloop.first %}, {% endunless %}
+				<a href="{{ issue_data.url | prepend: '/taxonomy/#' | absolute_url }}" title="Просмотреть все {% if include.alone %}статьи{% else %}записи{% endif %}, попавшие в выпуск &ldquo;{{ issue | escape_once }}&rdquo;" rel="category">{{ issue | escape_once }}</a>
+			{%- else %}Can't find the issue file. Plz add missing file.{{ 0 | divided_by:0 }}{% endif -%}
+		{%- endfor %}
+		</p>
+	{%- endif %}
+	{%- if page.categories and page.categories != empty %}{% comment %}<!-- https://github.com/jekyll/jekyll/issues/5215#issuecomment-238431817 -->{% endcomment %}
+		<p class="meta-categories">
+		{%- for category in page.categories %}
+			{%- assign category_data = site.categories_ | where: "slug", category | first -%}
+			{%- if category_data -%}
+				{%- unless forloop.first %}, {% endunless %}
+				<a href="{{ category_data.url | prepend: '/taxonomy/#' | absolute_url }}" title="Просмотреть все {% if include.alone %}статьи{% else %}записи{% endif %} в рубрике &ldquo;{{ category | escape_once }}&rdquo;" rel="category"><span itemprop="articleSection">{{ category | escape_once }}</span></a>
+			{%- elsif category != "private" %}{% comment %}"private" dir - https://jekyllrb.com/docs/variables/#page-variables (see "page.categories"); NOTE: the comma will remain!{% endcomment -%}
+				Can't find the category file. Plz add missing file.{{ 0 | divided_by:0 }}{% endif -%}
+		{%- endfor %}
+		</p>
+	{%- endif %}
+	{%- if page.tags and page.tags != empty %}{% comment %}<!-- https://github.com/jekyll/jekyll/issues/5215#issuecomment-238431817 -->{% endcomment %}
+		<p class="meta-tags" itemprop="keywords">
+		{%- comment %}{%- assign tags_collection = site.collections | where: "label", "tags_" | first -%}{% endcomment -%}
+		{%- for tag in page.tags %}
+			{%- assign tag_data = site.tags_ | where: "slug", tag | first -%}
+			{%- comment %}<!-- сделать валидацию ссылки -->{{ site.url }}{{ site.baseurl }}{% link '{{ tags_collection.relative_directory }}/{{ tag }}.html' %}{% endcomment -%}
+			{%- if tag_data -%}
+				{%- unless forloop.first %}, {% endunless %}
+				<a href="{{ tag_data.url | prepend: '/taxonomy/#' | absolute_url }}" rel="tag">{{ tag | escape_once }}</a>
+			{%- else %}Can't find the tag file. Plz add missing file.{{ 0 | divided_by:0 }}{% endif -%}
+		{%- endfor %}
+		</p>
+	{%- endif %}
+	{%- comment %}<!--
+		Boolean:
+		https://www.w3.org/2011/webschema/track/issues/14
+		https://docs.google.com/a/google.com/document/pub?id=1Kx63gW9DBky1j97Jpwl3dU9k0pKPSgCT3EntTVvGjX4#h.v5td9ah9ilup
+		https://github.com/schemaorg/schemaorg/issues/130
+	-->{% endcomment %}
+	<meta itemprop="isFamilyFriendly" content="true">
+</footer>
+<!--------------------------- META end ----------------------->

@@ -1,0 +1,287 @@
+{%- comment -%}
+	Old solution: generate "taxonomies" for pathname checker (RegExp) /^\/({{ taxonomies }})\/[^/]+\/?$/.test(termPathname);
+
+	{%- capture taxonomies -%}
+	{%- assign links = site.collections | where_exp: "c", "c.label != 'posts'" | map: "permalink" -%}
+	{%- for link in links -%}
+		|{{- link | remove: "/:name/" | remove: "/" -}}
+	{%- endfor -%}
+	{%- endcapture -%}
+	{%- assign taxonomies = taxonomies | slice: 1, taxonomies.size %}
+{%- endcomment -%}
+
+{%- capture taxonomies -%}
+{%- assign tcs = site.collections | where_exp: "c", "c.taxonomy_title != nil" -%}
+{%- for tc in tcs -%},
+					{{ tc.permalink | remove: "/:name/" | remove: "/" | jsonify -}}: {{ tc.taxonomy_title | jsonify -}}
+{%- endfor -%}
+{%- endcapture -%}
+{%- assign taxonomies = taxonomies | slice: 1, taxonomies.size %}
+
+{%- comment -%}
+<!--
+	Accept URI in format:
+	 - main (cache friendly): "/taxonomy/#/<taxonomy_name>/<term_name>/"
+	                          "/taxonomy/#/<taxonomy_name>/<term_name>"
+	 - user anchor friendly:  "/taxonomy/?/<taxonomy_name>/<term_name>/#<scroll_to_anchor>"
+	                          "/taxonomy/?/<taxonomy_name>/<term_name>#<scroll_to_anchor>"
+
+	NOTE: don't use "#!" + https://developers.google.com/webmasters/ajax-crawling/docs/getting-started#2-set-up-your-server-to-handle-requests-for-urls-that-contain-_escaped_fragment_
+	           "shebang" + https://webmasters.googleblog.com/2015/10/deprecating-our-ajax-crawling-scheme.html
+	NOTE: We Tested How Googlebot Crawls Javascript And Here’s What We Learned 
+	      https://searchengineland.com/tested-googlebot-crawls-javascript-heres-learned-220157
+	      [it works but it's useless for taxonomy pages <- duplicate content]
+--> See:
+	 - "_layouts/taxonomy.html"
+	 - "_layouts/term_build-in.html"
+	 - "_layouts/term.html"
+	 - "_layouts/redirect.html" ("/excerpt/*.html" generator)
+
+{%- endcomment %}
+
+	<script>
+		(function(){
+			"use strict";
+
+			var _pathnamePrefix = "{{ site.baseurl }}";
+			var _taxonomyTitle = "";
+			var _onDomLoad;
+
+
+			var request = (function(){
+				var XHR = (XMLHttpRequest && ("onload" in new XMLHttpRequest()) && XMLHttpRequest) || XDomainRequest;
+
+				if(XHR) return function(url, callback, context){
+					var xhr = new XHR();
+
+					xhr.open("GET", url, true);
+					xhr.onload     = callback;
+					xhr.my_context = context;
+					xhr.my_url     = url;
+					xhr.send();
+				}
+			})();
+
+			var adoptPostExcerpt = (function(){
+				var _errorsCount = 0;
+
+				return function(){
+					var postPlace = this.my_context;
+
+					if(this.status == 200){
+						//this.my_context.outerHTML = this.responseText; // doesn't work inside DocumentFragment
+						postPlace.innerHTML = this.responseText;
+						postPlace.parentNode.replaceChild(postPlace.firstChild, postPlace);
+					}else{
+						_errorsCount++;
+						console.log("Can't GET ["+ this.status + " " + this.statusText +"] post excerpt: " + this.my_url);
+						postPlace.parentNode.removeChild(postPlace);
+						// https://developer.mozilla.org/en-US/docs/Web/API/Window/status
+						window.status = "Не смог загрузить " + _errorsCount + " [записей] (см. консоль JS)"; // "old school", useful for debug
+					}
+
+					this.my_context = null; //:-)
+				}
+			})();
+
+			var termPathname;
+			var checkTermPathname = function(pathname){ // set termPathname and _taxonomyTitle
+				termPathname = pathname = pathname.substring(1); //remove leading "?" or "#"
+
+				var matches = /^[/]([^/]+)[/]([^/]+)[/]?$/.exec(pathname);
+				if( matches && (matches[2] != "." && matches[2] != "..") && (_taxonomyTitle = {
+					{{- taxonomies }}
+				}[matches[1]]) ) return true;
+				else             return false;
+			};
+
+			//TODO: replace switch to if, &&, ||
+			switch(( window.location.search && checkTermPathname(window.location.search) ||
+			         window.location.hash   && checkTermPathname(window.location.hash)    )                                                                                   && 2 ||
+			       window.sessionStorage.getItem("9b.taxonomy.term.hash") && checkTermPathname(window.location.hash = window.sessionStorage.getItem("9b.taxonomy.term.hash")) && 1 ){
+			case 1:
+				window.sessionStorage.removeItem("9b.taxonomy.term.hash");
+			// w/o break!
+			case 2:
+				termPathname = termPathname[termPathname.length-1] != "/" ? termPathname + "/" : termPathname;
+
+				// send request as soon as possible
+				request(_pathnamePrefix + termPathname, function(){
+					var addToDocumentDom;
+
+					if(this.status == 200){
+						var _postsDom = document.createDocumentFragment();
+						var spaceLine = /^\s*$/;
+
+						var data = this.responseText.split("\n"); //array structure: 0:term_name, 1:term_description, ...:posts_ids
+						var _termName        = data[0];
+						var _termDescription = data[1];
+
+						for(var i = 2, l = data.length; i<l; i++){
+							if(data[i].search(spaceLine) != -1) continue;
+
+							var postPlace = document.createElement("div");
+							_postsDom.appendChild(postPlace);
+							request(_pathnamePrefix + "/excerpt/" + (data[i]|0) + ".html", adoptPostExcerpt, postPlace);
+						}
+
+						addToDocumentDom = function(){
+							var _intro_                 = document.querySelectorAll("#intro")[0];
+							var _intro_pagetitle_       = _intro_.querySelectorAll(".pagetitle")[0];
+							var _intro_pagetitle_quote_ = _intro_pagetitle_.querySelectorAll("span")[0];
+
+							_intro_pagetitle_.firstChild.data += _taxonomyTitle + " ";
+							_intro_pagetitle_quote_.appendChild(document.createTextNode("‘" + _termName + "’"));
+							document.title = _termName + " « " + document.title;
+							if(_termDescription){
+								var _intro_description_ = _intro_.querySelectorAll("p")[0];
+								_intro_description_.appendChild(document.createTextNode(_termDescription));
+								_intro_description_.hidden = false;
+							}
+
+							_intro_.parentNode.insertBefore(_postsDom, _intro_.nextSibling);
+
+							_taxonomyTitle = _onDomLoad = _postsDom = _termName = _termDescription = null; //:-)
+						};
+
+						data = spaceLine = i = l = postPlace = null; //:-)
+					}else{
+						var respStatus = this.status + " " + this.statusText;
+
+						addToDocumentDom = function(){
+							var _in_   = document.querySelectorAll("#intro")[0];
+							var _inT_  = _in_.querySelectorAll(".pagetitle")[0];
+							var _inD_  = _in_.querySelectorAll("p")[0];
+							var _inTQ_ = _inT_.querySelectorAll("span")[0];
+
+							document.title = "Страница не найдена (" + respStatus + ") « " + document.title;
+
+							_inT_.firstChild.data = "Удивительно, ";
+							_inTQ_.appendChild(document.createTextNode("но Вы таки смогли сделать это…"));
+
+							var picNames = ["anyone-can-be-wrong-sometimes", "butterfly-effect", "the-best-excuse-you-can-give-where-there-is-a-bug"];
+							// "%" (mod) for (len >= 1<<53) :-) https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random#Examples
+							var picName  = picNames[((Math.random()*picNames.length)|0)%picNames.length];
+							// https://developer.mozilla.org/en-US/docs/Web/API/Web_Storage_API/Using_the_Web_Storage_API#Testing_for_availability
+							try{if(window.localStorage && window.localStorage.getItem("9b.taxonomy.term.error.404") == null){
+								picName = picNames[0];
+								window.localStorage.setItem("9b.taxonomy.term.error.404", "0")
+							}}catch(e){};
+
+							var pic = document.createElement("img");
+							pic.src       = _pathnamePrefix + "/theme/img/lfs/" + picName + ".png";
+							pic.className = "aligncenter noborder";
+							_inD_.appendChild(pic);
+							_inD_.hidden = false;
+
+							_onDomLoad = null; //:-)
+						}
+					}
+
+					if  (_onDomLoad)  addToDocumentDom();
+					else _onDomLoad = addToDocumentDom;
+
+					addToDocumentDom = null; //:-)
+				});
+			break;
+			default:
+				_onDomLoad = function(){
+					var _in_   = document.querySelectorAll("#intro")[0];
+					var _nav_  = document.querySelectorAll("#content > .nav")[0];
+					var _inT_  = _in_.querySelectorAll(".pagetitle")[0];
+					var _inD_  = _in_.querySelectorAll("p")[0];
+					var _inTQ_ = _inT_.querySelectorAll("span")[0];
+
+					document.title = "HTTP 400 (Very Bad Request) « " + document.title;
+
+					if(Math.random() < Math.LN2){
+						_inT_.firstChild.data = "DOWN! ";
+						_inTQ_.appendChild(document.createTextNode("THE SITE IS DOWN! WE'VE BEEN "));
+						_inTQ_.appendChild((function(a){
+							a.href = _pathnamePrefix + "{% post_url 2010-03-01-1379-hacked-by-behemoth %}";
+							a.appendChild(document.createTextNode("HACKED"));
+							return a;
+						})(document.createElement("a")));
+						_inTQ_.appendChild(document.createTextNode("!"));
+					}else{
+						_inT_.firstChild.data = "Наша любимая команда: ";
+						_inTQ_.appendChild(document.createTextNode("dd if=/dev/urandom of=private/_posts/new_secret_post.html"));
+					}
+
+					var pic = document.createElement("img");
+					pic.src       = _pathnamePrefix + "/theme/img/lfs/security-too-expensive-try-a-hack.png";
+					pic.className = "aligncenter noborder";
+					_inD_.appendChild(pic);
+					_inD_.hidden = false;
+
+					_nav_.innerHTML = '<div class="alignleft">&laquo; Предыдущая ошибка&nbsp;</div>'+
+					                  '<div class="alignright">&nbsp;Следящая ошибка &raquo;</div>';
+
+					_onDomLoad = null; //:-)
+				};
+			}
+
+			document.addEventListener("DOMContentLoaded", function H(){
+				(_onDomLoad||function(){_onDomLoad = true})(); ///magic line
+				document.removeEventListener("DOMContentLoaded", H, false);
+
+				var _currLoc = document.URL;
+				window.addEventListener("hashchange", function(e){
+					//   document.URL is e.newURL https://developer.mozilla.org/en-US/docs/Web/API/WindowEventHandlers/onhashchange#The_hashchange_event
+					if( !document.getElementById(window.location.hash.substring(1)) && //remove leading "#"
+					     document.URL != _currLoc ){ // if User used Back/Forward (button) 
+					                                 // then Browser has already open the target page (e.newURL == _currLoc)
+					                                 // --> do nothing! If you "replace" location, you prevent fast Back/Forward AND "scrollTop" value will be set to 0!
+						//setTimeout(function(){ // for debug
+						window.sessionStorage.setItem("9b.taxonomy.term.hash", window.location.hash);
+						window.location.replace(".");
+						//}, 1000); // for debug
+						//console.log("## ", e.oldURL, e.newURL, _currLoc); // for debug, see in JS error console (Ctrl+Shift+O), not in DevTools!
+
+
+						{%- comment %}
+						//window.location.reload(false); // Parameter ignored! All browsers always reload from server!
+
+						//to reload from cache:
+						//Opera Presto: - window.location.assign("#");window.location.replace(""); // add any hash then replace to ""
+						//                feature: reload from server if location.search != ""
+						//              - window.location.assign("#");window.location.replace("."); // add any hash then replace to "." (current dir)
+						//WebKit/Blink: window.location.replace("");
+
+						//to reload from cache AND save hash:
+						//WebKit/Blink: window.location.replace(".#"); // first load - from server
+						//              window.location.replace("?#"); // first load - from server
+						//              window.location.replace(".#"); // from cache
+						//              window.location.replace("?#"); // from cache
+						//Opera Presto: window.location.replace(window.location.pathname+"#");  // "/path/#"  first load - from server
+						//              window.location.replace(window.location.pathname+"/#"); // "/path//#" first load - from server
+						//              window.location.replace(window.location.pathname+"#");  // "/path/#"  from cache
+						//              window.location.replace(window.location.pathname+"/#"); // "/path//#" from cache
+						//              cons: depends on HTTP server realisation (may be broken in the future)
+						//For all:      window.location.replace(".#");          // first load - from server
+						//              window.location.replace("index.html#"); // first load - from server
+						//              window.location.replace(".#");          // from cache
+						//              window.location.replace("index.html#"); // from cache
+						//if(window.location.pathname[window.location.pathname.length-1] == "/"){
+						//      window.location.replace("index.html" + window.location.hash);
+						//}else window.location.replace("."          + window.location.hash); // isn't need for (navigation):
+						//                                                                    // - click to link
+						//                                                                    // - Back/Forward buttons 
+						//                                                                    //  (+ if DevTools [Opera Dragonfly] is open then prevent fast Back/Forward)
+						//                                                                    // need for:
+						//                                                                    // - direct modify hash in the address bar
+
+						//to reload from cache, save hash AND do it better:
+						// window.location.assign("#");window.sessionStorage.setItem("hash", window.location.hash);window.location.replace("."); //...
+						// window.location.replace(window.sessionStorage.getItem("hash"));window.sessionStorage.removeItem("hash");
+						//(if DevTools [Opera Dragonfly] is open then prevent fast Back/Forward)
+						{% endcomment %}
+					}
+					//TODO: else for !document.getElementById(window.location.hash.substring(1))
+					//      change URI format to "/taxonomy/?/<taxonomy_name>/<term_name>/#<scroll_to_anchor>" by using History API
+				}, false);
+			}, false);
+
+			termPathname = checkTermPathname = null; //:-)
+		})();
+	</script>

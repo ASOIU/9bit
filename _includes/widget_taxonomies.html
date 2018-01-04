@@ -1,0 +1,28 @@
+
+<h2>Таксономии</h2>
+<ul>
+	<li>
+		Рубрики
+		<ul>
+		{%- for term in site.categories_ %}
+			{%- capture echo %}
+			<li><a href="{{ term.url | prepend: '/taxonomy/#' | relative_url }}">{{ term.slug | escape_once }}</a></li>
+			{%- endcapture %}
+			{%- if term.slug != 'Без рубрики' %}{{ echo }}{% else %}{% assign uncat = echo %}{% endif %}
+		{%- endfor %}
+		{{- uncat }}
+		</ul>
+	</li>
+	<li>
+		Выпуски
+		<ul>{% for term in site.issues_ %}
+			<li><a href="{{ term.url | prepend: '/taxonomy/#' | relative_url }}">{{ term.slug | escape_once }}</a></li>
+		{%- endfor %}</ul>
+	</li>
+	<li>
+		Авторы
+		<ul>{% for term in site.authors_ %}
+			<li><a href="{{ term.url | prepend: '/taxonomy/#' | relative_url }}">{{ term.slug | escape_once }}</a></li>
+		{%- endfor %}</ul>
+	</li>
+</ul>

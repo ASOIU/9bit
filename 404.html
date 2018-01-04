@@ -1,0 +1,98 @@
+---
+permalink: /404.html
+---
+<!DOCTYPE html>
+<html lang="ru" Full-version-of-this-FILE="See full version and comments: https://github.com/ASOIU/9bit/blob/master/{{ page.path }}">
+	<meta charset="{{ site.encoding | upcase }}">
+	<title>Страница не найдена (404), запускаем ~(Телепатический Искусственный Интеллект)&hellip;</title>
+	<script>
+		"use strict";
+		var i = 0;
+
+		var p = location.pathname;
+		i = p.lastIndexOf("/", p.length-2) + 1;
+		var pa = p.substring(0,i);
+		var pb = p.substring(i,p.length);
+		var pbe = "";
+
+		if(p.length <= {{ "/" | relative_url | size }} ) throw "Infinite redirect loop prevented!";
+
+		var s = location.search;
+		var sr = "redirected-from=";
+		i = s.indexOf(sr);
+		if(i != -1){
+			i += sr.length;
+			var sa = s.substring(0,i);
+			var sb = s.substring(i,s.length);
+			if(pb[pb.length-1] != "/") pbe = "/";
+		}else{
+			sa = s + (s ? "&":"?")+sr;
+			sb = "";
+		}
+
+		window.location =
+			location.protocol +"//"+ location.host +  {%- comment %}// comment line and try to open http://localhost:4000//woops.hack.759//  ;) {% endcomment %}
+			pa.replace(/[?#]/g, function(v){return v=="?" ? "%3f":"%23"}) + 
+			sa + 
+			pb.replace(/[&#]/g, function(v){return v=="&" ? "%26":"%23"})+pbe +  {%- comment %}// encodeURIComponent("&") == "%26" == "%"+"&".charCodeAt(0).toString(16) == "%"+"&".charCodeAt().toString(16) {% endcomment %}
+			sb + 
+			location.hash;
+	</script>
+	<h1>Страница не найдена (404)&hellip;</h1>
+	<p>Увы, но это действительно так. Возможно, она переехала на новый адрес.
+	<p>И, Да, в исходниках этой страницы есть ~(Телепатический Искусственный Интеллект), который мог бы Вам помочь, но он не работает без включенного JavaScript&hellip; ;)
+</html>
+{%- comment %}<!--
+в 404.html можно сделать автоматическое перенаправление (
+	https://habrahabr.ru/post/316790
+	http://jekyllrb.com/tutorials/custom-404-page/
+) на уровень выше, т.е. + сохранять старый путь в "#!" (
+	https://habrahabr.ru/post/316790/#comment_9945764 ;
+	не использовать "!" https://developers.google.com/webmasters/ajax-crawling/docs/getting-started#2-set-up-your-server-to-handle-requests-for-urls-that-contain-_escaped_fragment_
+):
+- было /a/b/c
+- станет /a/b/#!c , а если и его нет, то /a/#!b/c , а затем /#!a/b/c
+
+Но лучше сделать так:
+- было /a/b/c/
+- станет:
+  - /a/b/?redirected-from=c/
+  - /a/?redirected-from=b/c/
+  - /?redirected-from=a/b/c/
+Это поможет в случае:
+- было /a/b/c#h1-tra-la-la
+- станет:
+  - /a/b/?redirected-from=c#h1-tra-la-la
+  - /a/?redirected-from=b/c#h1-tra-la-la
+  - /?redirected-from=a/b/c#h1-tra-la-la
+т.е. якорь сохранится, что будет полезно, если страница просто переехала с /a/b/c#h1-tra-la-la на /a/b#h1-tra-la-la
+
+P.S:
+
+- Не применять encodeURIComponent(), иначе вместо легко читаемого "a/b/c" будет "a%2Fb%2Fc", но кодировать "&"
+  - нужно ли кодировать "#", чтобы избежать "/a/?redirected-from=b#/c/#true_hash"?
+    Если текущая страница "/a/b#/c/#true_hash", то не нужно (см. window.location.pathname и window.location.hash),
+    но если открыли страницу "/a/b%23/c/#true_hash", то - нужно! (Presto заботливо декодирует части URI)
+  - нужно ли кодировать "?" и "#", полученные из window.location.pathname,
+    перед использованием в window.location.href (или .assign(), или .replace())?
+    Да, пример, для страницы "a/%3Fb/%23c?sss#hhh":
+        window.location.pathname == "a/?b/#c". (
+          TODO: исправить баг в Presto - вместо "a/?b/#c" сейчас pathname == "a/";
+                также исправить "a/b%2fb/c" -> pathname == "a/b/b/c";
+                грань безопасного декодирования:
+                      декодировать только те разделители (/?=&# ...),
+                      которые не являются разделитялями внутри текущей части (hostname, pathname, search, ...) URI
+                      NOTE: hash часть имеет произвольный внутренний формат,
+                            поэтому максимум, что можно безобасно декодировать - это "%23"
+    )
+
+- Чем отличается "/a/b/?redirected-from=c" от "/a/b?redirected-from=/c", если "/a/b/index.html" - существует?
+  Тем, что при "/a/b?redirected-from=/c" будет дополнительный редирект на "/a/b/?redirected-from=/c",
+  и "/c" выглядит не совсем корректно в этом контексте - кажется, что он находится в корне сайта, но это не так.
+
+
+В Cloudflare тоже можно сделать редиректы:
+- https://support.cloudflare.com/hc/en-us/articles/200172286-How-do-I-perform-URL-forwarding-or-redirects-with-Cloudflare-
+
+-->{% endcomment %}
+

@@ -1,0 +1,99 @@
+
+<h2>Облако тэгов</h2>
+{%- assign max_digits_count = site.posts.size | append:'' | size -%}
+{%- capture zeros -%}{%- for i in (1..max_digits_count) -%}0{%- endfor -%}{%- endcapture -%}
+
+{%- assign delimiter_2d = site.zero_char | append: site.zero_char -%}
+{%- assign delimiter_1d = site.zero_char | append: site.new_line  -%}
+{%- comment %}
+	"\n" (site.new_line) for empty item in 2d array:
+	- w/o "\n": [[a,b,empty],[A,B,C]] -> "a\0b\0\0\0A\0B\0C"         -> ["a\0b","\0A\0B\0C"]         -> [[a,b],[empty,A,B,C]]
+	- w   "\n": [[a,b,empty],[A,B,C]] -> "a\0\nb\0\n\0\0A\0\nB\0\nC" -> ["a\0\nb\0\n","A\0\nB\0\nC"] -> [[a,b,empty],[A,B,C]]
+{% endcomment -%}
+
+{%- capture cCountUrlNames -%}
+{%- for tag in site.tags_ -%}
+	{%- assign posts_count_r = site.posts.size | minus: site.tags[tag.slug].size -%}
+
+	{%- if posts_count_r < site.posts.size -%}
+		{%- assign       digits_count = posts_count_r | append:'' | size -%}
+		{%- assign append_zeros_count = max_digits_count | minus: digits_count -%}
+
+		{{- zeros | slice: 0, append_zeros_count -}}{{- posts_count_r -}} {{- delimiter_1d -}}
+		{{- tag.url -}}                                                   {{- delimiter_1d -}}
+		{{- tag.slug -}}                                                  {{- delimiter_2d -}}
+	{%- endif -%}
+{%- endfor -%}
+{%- endcapture %}
+{%- assign cCountUrlNames = cCountUrlNames | split: delimiter_2d | sort -%}
+
+
+{%- assign limit   = 45 -%}{%- if cCountUrlNames.size < limit -%}{%- assign limit = cCountUrlNames.size -%}{%- endif -%}{%- comment %} `| at_most: cCountUrlNames.size` https://help.shopify.com/themes/liquid/filters/math-filters#at_most {% endcomment -%}
+{%- assign limit_i = limit | minus: 1 -%}
+
+{%- assign count_max = cCountUrlNames.first    | split: delimiter_1d -%}{%- assign count_max = count_max[0] | to_integer | minus: site.posts.size | abs -%}
+{%- assign count_min = cCountUrlNames[limit_i] | split: delimiter_1d -%}{%- assign count_min = count_min[0] | to_integer | minus: site.posts.size | abs -%}
+
+{%- assign count_times_linear_k = 0.240253073352 -%}
+{%- comment %}
+	// "count_times_linear_k" pre calc for count_min = 2, count_max = 20 :
+
+	times_max = count_max / count_min;
+//	times_min = count_min / count_min; // == 1
+	
+//	count_times_linear_k = (sqrt(times_max) - sqrt(times_min)) / (times_max - times_min);
+	count_times_linear_k = (sqrt(times_max) - 1)               / (times_max - 1);
+{% endcomment -%}
+
+{%- comment %}
+	:: SQRT on Liquid ::
+	- https://habrahabr.ru/company/infopulse/blog/336110/  0x5f3759df 0x1fbd1df5
+	  https://habrahabr.ru/company/infopulse/blog/336110/#comment_10377174
+	  https://habrahabr.ru/company/infopulse/blog/336110/#comment_10396638
+	- https://www.codeproject.com/Articles/69941/Best-Square-Root-Method-Algorithm-Function-Precisi
+	- https://en.wikipedia.org/wiki/Methods_of_computing_square_roots#Babylonian_method
+	- https://en.wikipedia.org/wiki/Nth_root_algorithm
+{% endcomment -%}
+
+{%- assign count_min_inverse = 100 | divided_by: count_min | times: 0.01 -%}
+
+{%- assign count_max_times       = count_max | times: count_min_inverse %}
+{%- assign count_max_sqrt_linear = count_max_times | minus: 1 | times: count_times_linear_k | plus: 1 %}
+{%- assign count_max_sqrt        = count_max_times | times: 1000 | divided_by: count_max_sqrt_linear | times: 0.001 | plus: count_max_sqrt_linear | times: 0.5 %}
+{%- assign count_max = count_max_sqrt | times: count_min -%}
+
+{%- assign count_delta = count_max | minus: count_min -%}
+{%- if count_delta <= 0 -%}
+	{%- comment %} to calc middle font size {% endcomment -%}
+	{%- assign count_min   = count_min | minus: 1 -%}
+	{%- assign count_delta = 2 -%}
+{%- endif -%}
+
+{%- assign font_max = 22 -%}
+{%- assign font_min = 8 -%}
+{%- assign font_delta = font_max | minus: font_min -%}
+
+{%- assign count2font = font_delta | times: 100 | divided_by: count_delta | times: 0.01 -%}{%- comment %} https://help.shopify.com/themes/liquid/filters/math-filters#divided_by {% endcomment -%}
+
+
+{%- capture cUrlNameCounts -%}
+{%- for cCountUrlName in cCountUrlNames limit:limit -%}
+	{%- assign CountUrlName = cCountUrlName | split: delimiter_1d -%}
+
+	{{- CountUrlName[1] -}} {{- delimiter_1d -}}
+	{{- CountUrlName[2] -}} {{- delimiter_1d -}}
+	{{- CountUrlName[0] -}} {{- delimiter_2d -}}
+{%- endfor -%}
+{%- endcapture -%}
+{%- assign cUrlNameCounts = cUrlNameCounts | split: delimiter_2d | sort -%}
+
+{%- comment %}NOTE: see comments in (TODO: вставить ссылку на запись в G+) {% endcomment -%}
+
+{%- for cUrlNameCount in cUrlNameCounts %}
+	{%- assign UrlNameCount = cUrlNameCount | split: delimiter_1d %}
+
+	{%- assign count_times       = UrlNameCount[2] | to_integer | minus: site.posts.size | abs | times: count_min_inverse %}
+	{%- assign count_sqrt_linear = count_times | minus: 1 | times: count_times_linear_k | plus: 1 %}
+	{%- assign count_sqrt        = count_times | times: 1000 | divided_by: count_sqrt_linear | times: 0.001 | plus: count_sqrt_linear | times: 0.5 %}
+	<a href="{{ UrlNameCount[0] | prepend: '/taxonomy/#' | relative_url }}" style="font-size:{{ count_sqrt | times: count_min | minus: count_min | times: count2font | plus: font_min | round: 2 }}pt">{{ UrlNameCount[1] | escape_once }}</a>
+{%- endfor %}

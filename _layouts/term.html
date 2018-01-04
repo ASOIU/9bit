@@ -1,0 +1,30 @@
+---
+new_line: "\n"
+---
+{%- comment %} For not build-in taxonomy (Authors, Issues, ...) terms {% endcomment -%}
+{%- comment %}
+	Currently all data stored in "*/index.html" files (MIME: text/html).
+	This can be easily broken by:
+	- https://sohabr.net/habr/post/230921/
+	- https://sohabr.net/habr/post/263429/
+	Workaround: change permalink format in "_config.yaml" from "/<taxonomy_name>/:name/" to "/<taxonomy_name>/:name.txt" (MIME: text/plain).
+	Workaround Cons:
+	- less beautiful URIs. Current:                [data] /<taxonomy_name>/<term_name>/,    [page] /taxonomy/#/<taxonomy_name>/<term_name>/
+	                       After apply workaround: [data] /<taxonomy_name>/<term_name>.txt, [page] /taxonomy/#/<taxonomy_name>/<term_name>.txt
+{%  endcomment -%}
+
+
+{%- assign len = page.collection.size | minus: 1 -%}
+{%- assign taxonomy_name = page.collection | slice: 0, len -%}
+
+{%- assign term_name        = page.slug -%}
+{%- assign term_description = content | strip | replace: layout.new_line, " " -%}
+
+
+{{- term_name        }}
+{{  term_description }}
+{% for post in site.posts -%}
+{%- if post[taxonomy_name] contains page.slug -%}
+	{{ post.wp_id }}
+{% endif -%}
+{%- endfor -%}

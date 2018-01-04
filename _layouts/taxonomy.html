@@ -1,0 +1,25 @@
+---
+layout: default
+---
+{%- comment -%}
+	Works like (but...):
+	 - https://www.alexeykopytko.com/2017/jekyll-tags/  (for "slug" see "_layouts/test.html")
+	   http://jekyllrb.com/docs/posts/#displaying-post-categories-or-tags
+	 - https://www.siteleaf.com/blog/tag-pages-in-jekyll-and-siteleaf/#the-collection-approach
+	   https://www.siteleaf.com/blog/author-pages-in-jekyll-and-siteleaf/
+	 - http://www.minddust.com/post/tags-and-categories-on-github-pages/
+	   http://www.minddust.com/post/alternative-tags-and-categories-on-github-pages/
+	...But do it better (totally less gen files size, cache friendly)
+
+	See:
+	 - "_includes/taxonomy-js_header.html"
+	 - "_layouts/term_build-in.html"
+	 - "_layouts/term.html"
+	 - "_layouts/redirect.html" ("/excerpt/*.html" generator)
+
+{%- endcomment -%}
+<!------------------------ TAXONOMY -------------------------->
+<div id="intro"><h2 class="pagetitle">Записи <span></span><noscript>&hellip;</noscript></h2><p hidden></p></div>
+
+<nav class="nav nav-border-bottom"><noscript>Для работы этой части блога нужен JavaScript</noscript></nav>
+<!------------------------ TAXONOMY end ---------------------->

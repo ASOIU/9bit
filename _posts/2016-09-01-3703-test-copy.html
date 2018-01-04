@@ -1,0 +1,247 @@
+---
+layout: post
+wp_id:  3703
+title:  'RingSync: test-copy'
+author: ZKyl
+date:             2016-09-20 13:37:32 +0000
+last_modified_at: 2016-11-10 08:25:58 +0000
+redirect_from: 
+  - /excerpt/3703.html
+authors: 
+  - Васильев Евгений
+issues: 
+  - (к изданию)
+categories: 
+  - ITштуки
+  - Software
+  - чтиво
+tags: 
+  - GitHub
+  - Golang
+  - HDD
+  - p2p
+  - RingSync
+  - switch
+  - sync
+wp_comments: 
+  - 
+    id:     251
+    date:   2016-09-20 14:08:37 +0000
+    author: ZKyl
+    content: | 
+             <p>Комментарии можно оставлять здесь -&gt; <a href="https://plus.google.com/+ZiroKyl/posts/DuhWqH9CwDG" rel="nofollow">https://plus.google.com/+ZiroKyl/posts/DuhWqH9CwDG</a></p>
+---
+<p><img class="noborder aligncenter wp-image-3748 size-full" style="margin: -10px -20px 8px -20px;" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2016/09/sync-party.jpg %}" alt="RingSync demo party" width="520" height="215" /></p>
+<p>В комментарии к статье про <a title="Заморозка системы: история перехода с EWF на dVHD" href="{{ site.url }}{{ site.baseurl }}/2013/2793/%d0%b7%d0%b0%d0%bc%d0%be%d1%80%d0%be%d0%b7%d0%ba%d0%b0-%d1%81%d0%b8%d1%81%d1%82%d0%b5%d0%bc%d1%8b-%d0%b8%d1%81%d1%82%d0%be%d1%80%d0%b8%d1%8f-%d0%bf%d0%b5%d1%80%d0%b5%d1%85%d0%be%d0%b4%d0%b0-%d1%81-ew/" target="_blank">dVHD заморозку системы</a> я намекнул на быстрый способ распространения/синхронизации больших файлов по локальной сети.</p>
+<p>Конкретно, в моем случае VHD файл весил примерно 120 GiB, и его нужно было залить на 30 PC. При каждом обновлении VHD он перезаливался. Под катом читайте историю, про то, как с таким большим файлом <del>не</del> справлялся <a title="BitTorrent Sync: скорость до 90 мегабайт/с и открытые API" href="https://habrahabr.ru/post/201072" target="_blank">BTSync</a>, и про создание <strong>RingSync</strong>. <!--more--></p>
+<p>Начну с небольшого <strong>QA</strong> (Вопрос-Ответа), сравнивая различные схемы обмена данными.</p>
+<h1 id="h-1-klassika-server-client">Классика: Server → Client</h1>
+<p><strong>Q:</strong> Что происходит в классическом варианте, когда один сервер раздает файл множеству клиентов?</p>
+<p><strong>A:</strong> Допустим, что и на сервере и на клиентах установлены обычные HDD <span class="grey">(<a title="Последовательный и произвольный доступ к носителю данных" href="https://ru.wikipedia.org/wiki/IOPS#.D0.A5.D0.B0.D1.80.D0.B0.D0.BA.D1.82.D0.B5.D1.80.D0.B8.D1.81.D1.82.D0.B8.D0.BA.D0.B8_.D0.BF.D1.80.D0.BE.D0.B8.D0.B7.D0.B2.D0.BE.D0.B4.D0.B8.D1.82.D0.B5.D0.BB.D1.8C.D0.BD.D0.BE.D1.81.D1.82.D0.B8" target="_blank">последовательное</a> чтение/запись выполняется быстро, <a title="Последовательный и произвольный доступ к носителю данных" href="https://ru.wikipedia.org/wiki/IOPS#.D0.A5.D0.B0.D1.80.D0.B0.D0.BA.D1.82.D0.B5.D1.80.D0.B8.D1.81.D1.82.D0.B8.D0.BA.D0.B8_.D0.BF.D1.80.D0.BE.D0.B8.D0.B7.D0.B2.D0.BE.D0.B4.D0.B8.D1.82.D0.B5.D0.BB.D1.8C.D0.BD.D0.BE.D1.81.D1.82.D0.B8" target="_blank">произвольное</a> - медленно)</span>.</p>
+<p><a href="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2016/09/server-client.png %}"><img class="aligncenter wp-image-3711" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2016/09/server-client.png %}" alt="1 x Server - switch - N x Clients" width="464" height="319" /></a></p>
+<p>У нас есть:</p>
+<ul>
+<li><strong>1</strong> сервер <span class="grey">(файловое хранилище)</span>;</li>
+<li><strong>4</strong> клиента <span class="grey">(загружающие с файлового хранилища один и тот же файл)</span>;</li>
+<li><strong>1</strong> switch <span class="grey">(все порты работают в <a title="Дуплекс (телекоммуникации)" href="https://ru.wikipedia.org/w/index.php?title=Дуплекс_(телекоммуникации)&amp;stable=1" target="_blank">дуплексном</a> режиме; скорость соединения на всех портах одинаковая)</span>.</li>
+</ul>
+<p>Еще один важный момент - скорость используемых HDD <span class="grey">(при последовательных операциях доступа к данным)</span> выше скорости сетевого подключения.</p>
+<p style="text-align: justify;">В этом случае узким местом будет сетевое соединение между сервером и switch'ом. Сервер инициирует 4 потока <span class="grey">(по потоку для каждого клиента)</span> передачи данных, которые разделят общую пропускную способность сетевого соединения сервера.</p>
+<p style="text-align: justify;"><strong>В итоге скорость загрузки упадет в 4 раза</strong>, по сравнению со случаем, когда только 1 клиент загружает файл. Чем больше клиентов, тем меньше скорость загрузки у каждого из этих клиентов. Для 30 клиентов и 100 Mbps сети 120 GiB файл будет загружаться минимум 3 дня 13 часов и 54 минуты, т.е. для клиента 100 Mbps превратятся в 3 Mbps <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/sad.gif %}" alt=":(" class="wp-smiley" />  .</p>
+<p style="text-align: justify;">При этом сервер вынужден несколько раз <span class="grey">(по количеству клиентов)</span> отправлять одну и ту же часть файла в сеть. Последствия этого можно увидеть, сравнив две ситуации <span class="grey">(два граничных условия)</span>:</p>
+<ol>
+<li>Все клиенты запустили загрузку файла в одно и то же время.</li>
+<li>Запуск загрузки не был синхронизирован, например, получился разброс ±10 минут.</li>
+</ol>
+<p class="note">Вспомним, что у нас обычные HDD, которым трудно дается произвольный доступ к данным...</p>
+<p><strong>В первом</strong> случае система сможет кешировать считанную один раз из HDD часть файла <span class="grey">(для одного клиента)</span>, и будет раздавать оставшимся клиентам эту часть файла уже из кеша <span class="grey">(без обращения к HDD)</span>. Для HDD это будет выглядеть, как последовательное чтение данных, которое ему легко дается.</p>
+<p><strong>Во втором</strong> случае клиенты станут обращаться к разным частям, и у системы будет меньше шансов повторно воспользоваться кешированными частями файла. Для HDD это будет выглядеть как произвольный доступ к данным. Например, второй клиент запустил загрузку с 10 минутным отставанием от первого клиента, значит, первый клиент уже успел загрузить 7 GiB, и чтобы система смогла отдавать части файла для второго клиента без повторного обращения к HDD, ей нужен кеш размером в 7 GiB.</p>
+<p class="note">В реальности 100% “<a title="What is a cache hit and a cache miss?" href="http://stackoverflow.com/q/18559342" target="_blank">попадание</a>” в файловый кеш не требуется, например, в кеш можно помещать не только текущую часть файла, но и несколько следующих частей...</p>
+<h1 id="h-2-p2p-btsync">P2P: BTSync</h1>
+<p><strong>Q:</strong> В чем заключается польза от использования p2p в локальной сети?</p>
+<p><strong>A:</strong> Если p2p клиенты используют следующую схему передачи данных:</p>
+<ol>
+<li><em><a title="Терминология" href="https://ru.wikipedia.org/wiki/BitTorrent_(протокол)#.D0.A2.D0.B5.D1.80.D0.BC.D0.B8.D0.BD.D0.BE.D0.BB.D0.BE.D0.B3.D0.B8.D1.8F" target="_blank">сид</a></em> отправляет каждому <em><a title="Терминология" href="https://ru.wikipedia.org/wiki/BitTorrent_(протокол)#.D0.A2.D0.B5.D1.80.D0.BC.D0.B8.D0.BD.D0.BE.D0.BB.D0.BE.D0.B3.D0.B8.D1.8F" target="_blank">пиру</a></em> разную часть файла,</li>
+<li>каждый <em>пир</em> пересылает полученную часть файла другому <em>пиру</em>,</li>
+<li><em>сид</em> отправляет каждому <em>пиру</em> разную часть файла, которую <em>сид</em> не отправлял никому ранее,</li>
+<li>одновременно с предыдущим пунктом, <em>пиры</em> продолжают обмениваться частями файла,</li>
+<li>пункты 3-4 повторяются, пока <em>сид</em> не раздаст все части файла, и все <em>пиры</em> получат эти части</li>
+</ol>
+<p style="text-align: justify;">, и все они подключены к одному switch'у, то, теоретически, скорость получения данных пиром не будет уменьшаться с увеличением числа <em>пиров</em> <span class="grey">(в классическом варианте Server → Client скорость уменьшалась)</span>. Это работает благодаря возможности switch “соединять” любые 2 своих порта, и <strong>данные</strong> между этими портами <strong>смогут передаваться на полной скорости соединения</strong>.</p>
+<p class="note">Похожий режим работы в BitTorrent клиентах называется <a title="Суперсид" href="https://ru.wikipedia.org/wiki/Суперсид" target="_blank">Super-seeding</a>.</p>
+<p><strong>Q:</strong> Какой может быть негативный эффект от использования этой схемы?</p>
+<p><strong>A:</strong> Так как теперь части файла передаются не последовательно <span class="grey">(от начала до конца)</span>, а в разброс, то скорость чтения(для <em>сида</em>)/записи(для <em>пира</em>) с/на HDD упадет <span class="grey">(последствия произвольного доступа к данным)</span>. Поэтому клиенты должны выбирать оптимальный размер части файла, и использовать адаптированный под эту схему работы алгоритм кеширования.</p>
+<h2 id="h-2-1-istoriya-pro-btsync-i-bolshoj-fajl">История про BTSync и большой файл</h2>
+<p><img class="noborder alignright wp-image-3729 size-full" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2016/09/BTSync.png %}" alt="BitTorrent Sync" width="64" height="320" />Про <a href="https://ru.wikipedia.org/wiki/BitTorrent_Sync" target="_blank">BTSync</a> написано уже много статьей (<a href="https://habrahabr.ru/search/?q=syncapp" target="_blank"> 1 </a> <a href="https://habrahabr.ru/search/?q=bittorrent+sync" target="_blank"> 2 </a> <a href="https://www.youtube.com/watch?v=83D26IsAfT0" target="_blank"> 3 </a>), но самое интересное можно было найти на <a title="forum" href="http://forum.bittorrent.com/forum/107-bittorrent-sync/" target="_blank">официальном форуме</a> <span class="grey">(он переехал <a href="https://forum.resilio.com/forum/108-sync-troubleshooting/" target="_blank">сюда</a>)</span>. Вкратце, баги были, и с ними приходилось бороться, например, в некоторых версиях были проблемы с<a href="https://ru.wikipedia.org/wiki/Local_Peer_Discovery" target="_blank"> Local Peer Discovery</a> <span class="grey">(не всегда работал)</span> - обходилась проблема прописыванием IP одного из пиров в сети. У него есть еще тележка интересных “особенностей”, но сейчас речь пойдет про его работу с большими файлами...</p>
+<p>Для развертывания системы на VHD, был собран минимальный WinPE, содержащий:</p>
+<ul>
+<li>BTSync - запускался через “<strong>BTSync.exe /config config.json</strong>”;</li>
+<li>программу ShowWindow, которая используя <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms633499.aspx" target="_blank">FindWindow</a>, <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms644950.aspx" target="_blank">SendMessage</a> (WinAPI), и переданное ей имя класса окна “BTSync4823DF041B09”, открывает скрытое окно BTSync <span class="grey">(он запускается “свернутым в трей”, а трея у нас нет...)</span>;</li>
+<li>драйверы <span class="grey">(в основном для <a href="https://en.wikipedia.org/wiki/Network_interface_controller" target="_blank">NIC</a>)</span>;</li>
+<li>скрипты <span class="grey">(<strong>startnet.cmd</strong>: тюнинг сетевого стека, вызов пред и пост разверточных скриптов)</span>.</li>
+</ul>
+<p class="note"><small>Всё это происходило в середине 2014 года (или 2013...), и пишется по <a title="4) Память хранится в мозгу так же, как вещи в ящиках" href="https://geektimes.ru/post/280440/" target="_blank">памяти<sup>4</sup></a>.</small></p>
+<p>На <em>сиде</em> BTSync запускался с RW <em>секретом</em>, а на <em>пирах</em> - с RO <em>секретом</em> (с включенной опцией <strong>принудительной синхронизации</strong>, если файл существует, и отличается от файла у <em>сида</em>).</p>
+<p style="text-align: justify;">После трех “разворачиваний” системы по 8-10 PC за раз <span class="grey">(скорость сетевого соединения 100 Mbps; PC подключены к одному switch; максимальная скорость HDD была в районе 110 MiBps; размер файла тот же - 120 GiB)</span>, собралась следующая “статистика”:</p>
+<ul>
+<li>после запуска BTSync на всех PC, и начала синхронизации, в районе часа сетевая активность была минимальна, т.е. файл не передавался;</li>
+<li>на некоторых (1-2) <em>пирах</em> процесс синхронизации прерывался, и приходилась вручную перезапускать BTSync;</li>
+<li>при подключении через нормальный switch средняя скорость загрузки была <strong>8 MiBps</strong> <span class="grey">(падала до 6, поднималась до 9)</span> - при отключенном шифровании трафика;</li>
+<li>при подключении через устройство, очень похожее на <a href="https://zyxel.ru/es-116s/" target="_blank">ZyXEL ES-116S</a>, средняя скорость загрузки была <strong>3.4 MiBps</strong> <span class="grey">(иногда поднималась до 6)</span> - шифрование трафика также было отключено.</li>
+</ul>
+<h3 id="h-2-1-1-eksperiment-1">Эксперимент 1</h3>
+<p style="text-align: justify;">После этого было решено провести эксперимент: взять <strong>2-3 PC</strong>, нормальный  switch, и добавить <a href="https://ru.wikipedia.org/wiki/Process_Explorer" target="_blank"><strong>Process Explorer</strong></a> в WinPE для наблюдения за активностью  BTSync. Судя по описанию проблем на <a href="http://forum.bittorrent.com/forum/107-bittorrent-sync/" target="_blank">форуме</a> - у каждой версии имелся свой набор “особенностей” <span class="grey">(новая версия не значит более лучшая версия)</span>, поэтому в эксперименте участвовало несколько версий BTSync (<strong>1.0.134</strong> - <strong>1.3.106</strong>). После каждого опыта, скаченный <em>пирами</em> файл стирался, и все PC перезагружались.</p>
+<ul>
+<li>И так, запускаем BTSync на <em>сиде</em>, запускаем на одном <em>пире</em>, и вуаля: сетевая активность появляется сразу же, и файл синхронизируется со скоростью <strong>11 MiBps</strong>.</li>
+<li>Теперь сделаем то же самое, но запустим два <em>пира</em> одновременно: сетевая активность минимальна, у <em>сида</em> наблюдается высокая дисковая активность <span class="grey">(BTSync запустил подсчет контрольных сумм частей файла?)</span>, и только после уменьшения дисковой активности начинается синхронизация с некоторыми “<strong>особенностями</strong>” (про них - ниже).</li>
+<li>А если взять первый вариант, и запустить второго пира посередине синхронизации: синхронизация приостанавливается, и возрастает дисковая активность у <em>сида</em> <span class="grey">(вычисляет контрольные суммы?)</span>, затем <span class="grey">(когда вычислит все контрольные суммы?)</span> синхронизация продолжается (опять же с “<strong>особенностями</strong>”).</li>
+</ul>
+<p><strong>Особенности</strong> синхронизации заключались в том, что при каждом новом запуске, <em>схема работы</em> отличалась от предыдущего запуска. Всего получилось 3 <em>схемы работы</em> <span class="grey">(сокращения: <em>сид</em> - s, <em>пир</em>1 - p1, <em>пир</em>2 - p2)</span>:</p>
+<pre style="overflow-x: scroll;">1. s --{7 MiBps}--&gt; p1; s --{4.5 MiBps}--&gt; p2; p1 --{7 MiBps}--&gt; p2; p2 --{4.5 MiBps}--&gt; p1; через определенный промежуток времени p1 и p2 меняются местами:
+   s --{7 MiBps}--&gt; p2; s --{4.5 MiBps}--&gt; p1; p2 --{7 MiBps}--&gt; p1; p1 --{4.5 MiBps}--&gt; p2; смена происходит с определенным периодом времени;
+
+2. s --{10 MiBps}--&gt; p1; после того, как p1 все загрузит:
+   s --{10 MiBps}--&gt; p2;
+
+3. s --{7.5 MiBps}--&gt; p1; s --{3.5 MiBps}--&gt; p2; p1 --{7.5 MiBps}--&gt; p2; p2 --{3.5 MiBps}--&gt; p1; затем:
+   s --{4.5 MiBps}--&gt; p2;                        p2 --{4.5 MiBps}--&gt; p1; и возвращение:
+   s --{7.5 MiBps}--&gt; p1; s --{3.5 MiBps}--&gt; p2; p1 --{7.5 MiBps}--&gt; p2; p2 --{3.5 MiBps}--&gt; p1; смена происходит с определенным периодом времени.</pre>
+<p>Причем первая <em>схема работы</em> <span class="grey">(самая лучшая)</span> включалась, когда BTSync на обоих пира запускался одновременно. Если же была задержка между запусками, то чаще встречалась <em>схема</em> 3 или 2.</p>
+<p>Что касается различий в версиях BTSync, то в опытах с более новыми версиями второй вариант <em>схемы</em> встречался реже. Но это ничего не значит, т.к. испытания каждой версией повторялись всего 4 раза, что очень мало. Версии 1.0.134 и 1.3.106 испытывались большее число раз.</p>
+<p style="text-align: justify;">Однако в новых версиях <span class="grey">(предположительно начиная с 1.3. x)</span>, появилась еще одна “<strong>особенность</strong>”: когда размер загружаемого файла <span class="grey">(можно посмотреть командой dir в консоли)</span> на <em>пире</em> достигает 70% <span class="grey">(или около того)</span>, рост размера файла приостанавливается на некоторое время.</p>
+<h3 id="h-2-1-2-eksperiment-2">Эксперимент 2</h3>
+<p>За основу брался первый эксперимент, с отличиями:</p>
+<ol>
+<li>использовалась только последняя версия BTSync;</li>
+<li>загруженный пирами файл не удалялся, а изменялось его содержимое.</li>
+</ol>
+<p class="error">Эти испытания BTSync провалил - синхронизация с сидом так и не начиналась (опция <strong>принудительной синхронизации</strong> была включена).</p>
+<p> <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/sad.gif %}" alt=":-(" class="wp-smiley" />  <span style="float: right;"> <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/sad.gif %}" alt=":-(" class="wp-smiley" />  </span></p>
+<p class="note">В повседневном использовании с 1 GiB файлами мне помогала "легкая приостановка" - через контекстное меню “иконки в трее” <em>пира</em> поставить BTSync на паузу, а затем убрать паузу.</p>
+<h1 id="h-3-ringsync">RingSync</h1>
+<p>Во время борьбы с “<strong>особенностями</strong>” BTSync появились несколько мыслей:</p>
+<ul>
+<li>большинство проблем с BTSync связаны с теми возможностями, которые в данном случае не нужны;</li>
+<li>нам не нужно отслеживание изменений в файле, т.к. каждый раз его все равно приходится передавать целиком, и источник всегда один - <em>сид</em>;</li>
+<li>следовательно, нет необходимости в отдельном этапе подсчитывания контрольных сумм, и определения “кто из <em>пиров</em> обладает более новой версией файла”;</li>
+<li>у нас всего один файл;</li>
+<li>HDD попросил сделать последовательное чтение/запись файла <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/eek.gif %}" alt="8-O" class="wp-smiley" />  .</li>
+</ul>
+<p>С этими мыслями родилась следующая схема:</p>
+<p><a href="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2016/09/RingSync.png %}"><img class="aligncenter wp-image-3718" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2016/09/RingSync.png %}" alt="1 x Seed - switch - N-1 x Peers + 1 x Leech" width="464" height="370" /></a></p>
+<ol>
+<li><em>сид</em> передает часть файла пиру;</li>
+<li><em>пир</em> сохраняет ее на HDD, и параллельно передает следующему <em>пиру</em> <span class="grey">(то же самое делают остальные <em>пиры</em> в цепочке)</span>;</li>
+<li><em><a title="Терминология" href="https://ru.wikipedia.org/wiki/BitTorrent_(протокол)#.D0.A2.D0.B5.D1.80.D0.BC.D0.B8.D0.BD.D0.BE.D0.BB.D0.BE.D0.B3.D0.B8.D1.8F" target="_blank">лич</a></em> <span class="grey">(последний <em>пир</em>)</span> просто сохраняет часть файла на HDD.</li>
+</ol>
+<p style="text-align: justify;">Причем это все происходит параллельно <span class="grey">(в потоковом режиме)</span> - когда первый <em>пир</em> отправляет часть файла следующему <em>пиру</em>, он уже получает следующую часть файла от <em>сида</em>. А сам файл передается от начала до конца, что очень хорошо для HDD <span class="grey">(последовательный доступ к данным)</span>.</p>
+<p>От switch здесь требуется всего лишь “соединить” <strong><span style="color: #ff9900;">Rx</span></strong> одного порта с <strong><span style="color: #3366ff;">Tx</span></strong> другого порта на полной скорости (см. схему), с чем он отлично справляется.</p>
+<h2 id="h-3-1-programma-na-golang">Программа на Golang</h2>
+<p><img class="alignright size-full wp-image-3727" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2016/09/gobot-gopher-96px.png %}" alt="go, golang, gobot-gopher" width="96" height="110" />На современном языке сделать <a title="Proof of Concept" href="https://en.wikipedia.org/wiki/Proof_of_concept" target="_blank">PoC</a> этой схемы не составит никакого труда. На <a title="Go" href="https://golang.org/" target="_blank">Golang</a> основную часть программы <em>пира</em> можно записать всего в одну строчку:</p>
+<p><code>io.<a href="https://golang.org/pkg/io/#Copy" target="_blank">Copy</a>(io.<a href="https://golang.org/pkg/io/#MultiWriter" target="_blank">MultiWriter</a>(outFile, peerConn), seedConn)</code></p>
+<p>, все остальное - обвязка.</p>
+<h3 id="h-3-1-1-posledovatelnost-zapuska">Последовательность запуска</h3>
+<p style="text-align: justify;">Код RingSync написан максимально <a title="Эффект Даннинга-Крюгера" href="https://habrahabr.ru/post/310026/#comment_9807834" target="_blank">просто</a>, и при этом в нем предусмотрена возможность запуска <em>сида</em> и <em>пиров</em> в произвольном порядке. Что это означает? Можно одновременно запустить всех <em>пиров</em> и <em>сида</em>, дождаться пока они включатся, а затем запустить <em>лича</em>. Именно <em>лич</em> запускает процесс синхронизации.</p>
+<p>Под капотом это выглядит так:</p>
+<ol>
+<li>запускаются <em>пиры</em> и <em>лич</em>, и начинают слушать входящие соединения;</li>
+<li>запускается <em>лич</em>, и устанавливает соединение с последним <em>пиром</em>;</li>
+<li>каждый <em>пир</em> устанавливают соединение с предыдущим <em>пиром</em> <span class="grey">(по цепочке)</span>;</li>
+<li>первый <em>пир</em> устанавливают соединение с <em>сидом</em>, и <em>сид</em> начинает отправку данных.</li>
+</ol>
+<p>Если немного пожертвовать простотой, и добавить возможность переподключения при неудачной “установке соединения”, то можно будет и лича, и сида, и пиров запускать в любой последовательности.</p>
+<h3 id="h-3-1-2-repozitorij">Репозиторий</h3>
+<p><img class="noborder alignright wp-image-3728 size-full" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2016/09/labtocat.png %}" alt="the Labtocat" width="184" height="196" />RingSync можно <a title="Fork me on GitHub" href="https://github.com/ZiroKyl/RingSync" target="_blank"><strong>форкнуть здесь</strong></a>.<br />
+<a href="https://github.com/ZiroKyl/RingSync/releases" target="_blank">Там же</a> можно скачать уже собранный для Windows 32bit бинарник.</p>
+<p><strong>Q:</strong> Почему именно Windows 32bit?<br />
+<strong>A:</strong> Потому, что я его использовал с WinPE 32bit. К тому же, вместе с RingSync лежит специальный launcher, который облегчает конфигурирование после сетевой загрузки. Launcher считывает конфиг из файла <span class="grey">(одного и того же для всех PC)</span>, и в зависимости от MAC-адреса первого сетевого интерфейса PC, настраивает этот сетевой интерфейс, и запускает RingSync с нужными параметрами. Сейчас launcher завязан на использование <a href="https://ru.wikipedia.org/wiki/Netsh.exe" target="_blank">netsh</a>, поэтому результат кросс-компиляции под <a href="https://golang.org/doc/install/source#environment" target="_blank">не Windows</a> работать не будет. В отличие от launcher, у самого RingSync таких проблем нет <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/smile.gif %}" alt=":-)" class="wp-smiley" /> </p>
+<p style="text-align: justify;">Опции запуска RingSync приводить не буду - их можно увидеть, просто запустив его без опций. А вот примеры для разных режимов (<em>сид</em>, <em>пир</em>, <em>лич</em>) будут полезны.</p>
+<p><strong>Сид</strong> (слушает порт 5001, ожидает подключения от <em>лича</em>/<em>пира</em> с IP “192.168.0.2”, рассылает содержимое файла “big_file.vhd”):</p>
+<pre>RingSync -mode=seed -port=5001 ^
+         -leech=192.168.0.2 -if=big_file.vhd</pre>
+<p><strong>Пир</strong> (слушает порт 5001, ожидает подключения от <em>лича</em>/<em>пира</em> с IP “192.168.0.3”, подключается к порту 5001 <em>сида</em>/<em>пира</em> с IP “194.168.0.1”, записывает полученные данные в файл “big_file.vhd”):</p>
+<pre>RingSync -mode=peer -port=5001 ^
+         -leech=194.168.0.3 ^
+         -seed=194.168.0.1:5001 -of=big_file.vhd</pre>
+<p><strong>Лич</strong> (подключается к порту 5001 <em>сида</em>/<em>пира</em> с IP “194.168.0.1”, записывает полученные данные в файл “big_file.vhd”):</p>
+<pre>RingSync -mode=leech ^
+         -seed=194.168.0.2:5001 -of=big_file.vhd</pre>
+<p>Сборку этих же строк можно увидеть в исходниках launcher'а.</p>
+<h2 id="h-3-2-tcp-congestion-control">TCP Congestion Control</h2>
+<p>До написания кода RingSync была идея собрать свой <em>TCP-велосипед</em>, в котором данные передавались бы по цепочке от <em>сида</em> -&gt; через <em>пиров</em> -&gt; к <em>личу</em>, а ответ (ACK), подтверждающий получение данных, отправлял бы <em>лич</em> к <em>сиду</em>. Причем, если <em>сида</em> переименовать в “сервер”, <em>лича</em> - в “клиент”, а <em>пиров</em> в “маршрутизаторы”, то получится типичная схема передачи данных в Интернете. Вот только маршрутизаторы не сохраняют переданные через себя данные. В этот <em>TCP-велосипед</em>, можно было бы включить наиболее подходящий для данных условий передачи данных TCP Congestion Avoidance Algorithm (<a href="https://habrahabr.ru/post/168407/" target="_blank"> 1 </a> <a href="https://habrahabr.ru/post/161499/" target="_blank"> 2 </a> <a href="https://networklessons.com/ip-routing/tcp-window-size-scaling/" target="_blank"> 3 </a>), а не полагаться на системный TCP Congestion Control и его настройки. А в будущем можно было бы получить больший контроль над передачей данных, например, добавив возможность отправки сообщений о “заторах” в сети или HDD.</p>
+<p style="text-align: justify;">Но был и более легкий путь - использовать стандартный системный TCP. В этом случае <em>пир</em>, получивший данные, сам отправляет подтверждение <span class="grey">(об успешной доставке данных)</span> <em>пиру</em>, отправившему эти данные. И информация о случившимся “заторе” автоматически передается через цепочку <em>пиров</em> к <em>сиду</em>:</p>
+<ol>
+<li>вначале ближайший к “затору” <em>пир</em>, не получив вовремя подтверждение, сбрасывает скорость, и его буфер на прием данных <span class="grey">(входной буфер)</span> начинает наполняться;</li>
+<li>при переполнении буфера, предыдущий в цепочке <em>пир</em> также перестает получать подтверждения вовремя, и начнет сбрасывать скорость;</li>
+<li>то же самое делают остальные <em>пиры</em>, вплоть до <em>сида</em>.</li>
+</ol>
+<p style="text-align: justify;">Это напоминает <a href="https://www.kinopoisk.ru/film/195460/" title="Unstoppable 2010" target="_blank">движение длинного состава</a> <span class="grey">(локомотив-<em>сид</em> тянет спереди)</span> с большим числом вагонов <span class="grey">(<em>пиров</em>)</span>, и пружиной <span class="grey">(буфером)</span> вместо сцепки.</p>
+<p style="text-align: justify;">На самом деле второй вариант даже лучше, т.к. для некоторых алгоритмов TCP Congestion Avoidance <span class="grey">(косвенно это влияет и на остальных)</span> чем меньше <a title="round-trip time -- Определение времени возврата" href="http://opds.sut.ru/old/electronic_manuals/RStevens_TCP_IP/glava21.html" target="_blank">RTT</a> - тем лучше. А в первом варианте мы заведомо создаем более неблагоприятные условия...</p>
+<p>В итоге, второй вариант, даже в сети с двумя switch:</p>
+<pre>switch{1 Gbps}[<em>сид</em> -&gt; <em>пир</em> -&gt; <em>пир</em>]
+└─{100 Mbps}—↓
+switch{100 Mbps}[<em>пир</em> -&gt; <em>пир</em> -&gt; <em>пир</em> -&gt; <em>лич</em>]</pre>
+<p>показал стабильные <strong>11.8 MiBps</strong>.</p>
+<h2 id="h-3-3-pc-podklyucheny-k-raznym-switch">PC подключены к разным switch</h2>
+<p style="text-align: justify;">В сети с несколькими switch узким местом может стать соединение между ними. Например, если строить цепочку пиров в произвольном порядке, то при сети:</p>
+<pre>switch1{1 Gbps}[<em>сид</em>, <em>пир</em>2, <em>пир</em>4, <em>пир</em>6]
+└─{1 Gbps}─┐
+switch2{1 Gbps}[<em>пир</em>1, <em>лич</em>, <em>пир</em>3, <em>пир</em>5]</pre>
+<p>, и цепочке:</p>
+<pre><em>сид</em>-&gt;<em>пир</em>1-&gt;<em>пир</em>2-&gt;<em>пир</em>3-&gt;<em>пир</em>4-&gt;<em>пир</em>5-&gt;<em>пир</em>6-&gt;<em>лич</em></pre>
+<p>, скорость упадет в <strong>4 раза</strong>.</p>
+<p><strong>Q:</strong> Почему скорость падает в <strong>4 раза</strong>? Как получилось это число “<strong>4</strong>”?<br />
+<strong>A:</strong> Если возьмем все потоки данных в направлении от switch1 к switch2, то получим:</p>
+<ol>
+<li><code><em>сид</em>  -&gt; <em>пир</em>1</code></li>
+<li><code><em>пир</em>2 -&gt; <em>пир</em>3</code></li>
+<li><code><em>пир</em>4 -&gt; <em>пир</em>5</code></li>
+<li><code><em>пир</em>6 -&gt; <em>лич</em></code></li>
+</ol>
+<p>Теперь посмотрим на потоки данных в обратном направлении (от switch2 к switch1):</p>
+<ol>
+<li><code><em>пир</em>2 &lt;- <em>пир</em>1</code></li>
+<li><code><em>пир</em>4 &lt;- <em>пир</em>3</code></li>
+<li><code><em>пир</em>6 &lt;- <em>пир</em>5</code></li>
+</ol>
+<p style="text-align: justify;">В направлении от switch1 к switch2, общий канал в 1 Gbps делили <strong>4</strong> потока, получая максимум 0.25 Gbps на поток. В обратном направлении получилось 3 потока, соответственно максимум 0.33 Gbps на поток. Самым узким местом стал канал от switch1 к switch2 <span class="grey">(максимальная скорость потока 0.25 Gbps)</span>. В самом узком месте скорость потока в <strong>4 раза</strong> меньше, по сравнению с максимальной скорости в “самом широком месте” (1 Gbps).</p>
+<p><strong>Q:</strong> Как исправить ситуацию?<br />
+<strong>A:</strong> Достаточно строить цепочку примерно так (можно сразу перейти к <strong>TL;DR</strong>) <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/cool.gif %}" alt="8-)" class="wp-smiley" />  :</p>
+<ol>
+<li>добавить в цепочку <em>сида</em>;</li>
+<li>взять switch, к которому подключен <em>сид</em>, и добавить в цепочку всех <em>пиров</em> <span class="grey">(в любом порядке)</span>, подключенных к этому switch;</li>
+<li>взять следующий, ранее не взятый, switch <span class="grey">(к которому подключены <em>пиры</em>)</span>, подключенный к предыдущему switch <span class="grey">(возможно не прямое подключение, а подключение через несколько промежуточных switch, к которым не подключен ни один <em>пир</em>)</span>, и добавить в цепочку всех <em>пиров</em> <span class="grey">(в любом порядке)</span>, подключенных к этому switch;</li>
+<li>повторять предыдущий пункт, пока он будет выполним <span class="grey">(“следующий switch” будет существовать)</span>;</li>
+<li>если можно вернуться к предыдущему switch, то вернуться к нему, и выполнить предыдущий пункт;</li>
+<li>последнего <em>пира</em> в цепочке назвать <em>личем</em>.</li>
+</ol>
+<p><strong>TL;DR</strong>: используем <a title="Поиск в глубину" href="https://ru.wikipedia.org/wiki/Поиск_в_глубину" target="_blank">обход графа в глубину</a>, при этом:</p>
+<ul>
+<li>вершины - это switch;</li>
+<li>в вершине хранится список <em>пиров</em>, подключенных к этому switch/вершине;</li>
+<li>начинаем со switch/вершины, к которому подключен <em>сид</em>;</li>
+<li>при входе в вершину, добавляем в цепочку всех пиров из списка этой вершины.</li>
+</ul>
+<p class="note">Для использования этого способа нужна информация о <a title="Сетевая топология" href="https://ru.wikipedia.org/wiki/Сетевая_топология" target="_blank">топологии сети</a> на <a title="L2" href="https://ru.wikipedia.org/wiki/Канальный_уровень" target="_blank">канальном уровне</a>.</p>
+<h1 id="h-4-ssylki-v-temu">Ссылки «в тему»</h1>
+<ul>
+<li><a href="http://iris.karalabe.com/book/run_forrest_run" target="_blank">Project Iris</a> - Completely decentralized cloud messaging</li>
+<li><a href="https://github.com/elgs/filesync" target="_blank">Filesync</a> ( Golang : (</li>
+<li><a href="https://habrahabr.ru/post/230863" target="_blank">Недостатки TCP и новые протоколы транспортного уровня</a></li>
+<li><a href="http://www.catapultsoft.com" target="_blank">Catapult</a> - Fast Data Transfers</li>
+<li><a href="https://ind.ie/labs/" target="_blank">Pulse</a> - free (as in freedom), secure, and distributed file synchronization engine</li>
+<li>Фильм <a href="https://www.kinopoisk.ru/film/195460/" target="_blank">Unstoppable 2010</a> + <a href="https://ru.wikipedia.org/wiki/Буфер_(железнодорожный)#.D0.98.D0.BD.D1.82.D0.B5.D1.80.D0.B5.D1.81.D0.BD.D1.8B.D0.B9_.D1.84.D0.B0.D0.BA.D1.82" target="_blank">сдвинуть тяжелый состав</a> ("Интересный факт" про сцепку; <a href="http://www.bolshoyvopros.ru/questions/1188489-pochemu-mashinist-gruzovogo-poezda-prezhde-chem-poehat-vpered-sdaet-nazad.html" target="_blank">подробнее</a>)</li>
+</ul>
+<h1 id="h-5-kak-obojtis-bez-kopirovaniya-bolshogo-vhd-fajla-po-seti">Как обойтись без копирования большого VHD файла по сети?</h1>
+<p>На самом деле можно не копировать каждый раз полный VHD при обновлении системы, а распространять только dVHD с обновлением. Такая схема обновления работает следующим образом <span class="grey">(система обновляется на одном Master-PC, и копируется на множество Slave-PC)</span>:</p>
+<ul>
+<li>На Master-PC все изменения, в ходе обновления системы, сохраняются в новый dVHD файл.</li>
+<li>Все Slave-PC должны хранить оригинальный VHD файл с Master-PC, поэтому на них нужно создавать <em>дополнительный dVHD файл</em>, в котором будут сохранены все отличия Slave-PC от Master-PC. Без этого следующий пункт работать не будет.</li>
+<li>На Slave-PC копируется dVHD файл с обновлением, и, затем, объединяется с VHD файлом <span class="grey">(если бы VHD файл на Master-PC и Slave-PC отличался, то объединение завершилось бы с ошибкой)</span>.</li>
+<li>На каждом Slave-PC заново создается тот <em>дополнительный dVHD файл</em>, хранящий отличия каждого Slave-PC от Master-PC.</li>
+<li>На Master-PC dVHD файл с обновлением системы также объединяется с VHD файлом.</li>
+</ul>
+<p style="text-align: justify;">При этом время распространения обновления будет включать в себя время копирования обновления на Slave-PC + время объединения VHD с dVHD. Здесь важно, чтобы объединение выполнялось быстро, иначе суммарное время <span class="grey">(копирование dVHD + объединение)</span> может превысить время простого копирования цельного VHD файла. Еще один минус – из-за появления на Slave-PC <em>дополнительного dVHD файла</em>, система будет работать медленней.</p>
+<p>   </p>
+
+

@@ -1,0 +1,31 @@
+<svg width="500px" height="700px" viewBox="0 0 500 700" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs xmlns="http://www.w3.org/2000/svg">
+    <filter id="MyFilter">
+<animat-e attributeName="filterRes" attributeType="XML" 
+         to="100 150" from="400 600" begin="pic.mouseover" dur="0.5s" fill="freeze"/>
+<animat-e attributeName="filterRes" attributeType="XML" 
+         to="400 600" begin="pic.mouseout" dur="0.5s" fill="freeze"/>
+<!-- set https://www.w3.org/TR/2005/REC-SMIL2-20051213/animation.html#edef-set -->
+  <feComponentTransfer in="SourceAlpha">
+    <feFuncA type="linear" slope="0.2">
+	<animate attributeName="slope" attributeType="XML" calcMode="paced" to="0.15" begin="pic.mouseover" dur="0.25s" fill="freeze"/>
+	<animate attributeName="slope" attributeType="XML" calcMode="paced" to="0.2" begin="pic.mouseout" dur="0.25s" fill="freeze"/>
+	</feFuncA>
+  </feComponentTransfer>
+      <feGaussianBlur stdDeviation="5">
+	<animate attributeName="stdDeviation" attributeType="XML" calcMode="paced" to="12" begin="pic.mouseover" dur="0.25s" fill="freeze"/>
+	<animate attributeName="stdDeviation" attributeType="XML" calcMode="paced" to="5" begin="pic.mouseout" dur="0.25s" fill="freeze"/>
+	</feGaussianBlur>
+      <feOffset dx="2" dy="12" result="sh"/>
+      <feOffset in="SourceGraphic" dx="0" dy="0" result="sg">
+	<animate attributeName="dy" attributeType="XML" calcMode="paced" to="-20" begin="pic.mouseover" dur="0.25s" fill="freeze"/>
+	<animate attributeName="dy" attributeType="XML" calcMode="paced" to="0" begin="pic.mouseout" dur="0.25s" fill="freeze"/>
+	</feOffset>
+      <feMerge>
+        <feMergeNode in="sh"/>
+        <feMergeNode in="sg"/>
+      </feMerge>
+    </filter>
+</defs>
+	<image id="pic" xlink:href="please_donate_by_mishierru-d6k2qvu.png" x="50" y="50" width="400px" height="600px" filter="url(#MyFilter)"><title>title</title></image>
+</svg>

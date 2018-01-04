@@ -1,0 +1,212 @@
+---
+---
+{%- comment %}<!--
+	Подключать как: <object data="..." role="document" type="image/svg+xml" typemustmatch></object><noscript id="_support-us_content_">...</noscript>
+
+	TODO, заметки и еще больше ссылок - см. в конце файла.
+	
+	WAI-ARIA:
+	- http://prgssr.ru/development/dostupnye-svg.html#heading-svg-1
+	- https://www.w3.org/TR/SVG2/struct.html#WAIARIAAttributes
+	  https://www.w3.org/TR/SVG2/struct.html#implicit-aria-semantics (список присвоенных елементам SVG2 ролей по умолчанию)
+	
+	focusable/tabindex:
+	- https://stackoverflow.com/questions/22671799/svg-focusable-attribute-is-not-working
+	- https://www.w3.org/TR/SVG2/interact.html#Focus
+	- pic.focusin & pic.focusout ( https://www.w3.org/TR/2001/REC-smil-animation-20010904/#Timing-SyncbaseValueSyntax )
+	- http://davidmacd.com/test/tabindex-1-on-iframe.html (tabindex for elements inside iframe/object/embed)
+	- https://allyjs.io/tutorials/focusing-in-svg.html
+-->{% endcomment -%}
+
+<?xml version="1.0" encoding="UTF-8"?>
+<?FullVersionOfThisFILE description="See-full-version-and-comments" uri="https://github.com/ASOIU/9bit/blob/master/{{ page.path }}"?>
+<svg width="194px" height="278px" viewBox="0 0 194 278" role="group" buffered-rendering="auto" image-rendering="optimizeSpeed" color-rendering="optimizeSpeed" color-interpolation-filters="sRGB" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+	<filter id="AmbientOcclusionShadow" x="0" y="0" filterUnits="userSpaceOnUse">
+		<feImage id="pic-shadow" xlink:href="by-mishierru-at-deviantart-dot-com_shadow.png" width="194px" height="278px"/>
+		{%- comment %}
+		<!-- Быть осторожным при переносе x="0" y="0" из <feImage> в <filter> (уже перенесен) (для улучшения точности позиционирования с включенным filter и без него)
+		     может увеличится размер перерисовываемой области (снизится производительность), если разиер svg.viewBox в разы превышает размер image
+		-->{% endcomment %}
+		<feComponentTransfer>
+			<feFuncA type="linear" slope="0.48" intercept="-.14">
+				<animate attributeName="slope"     to="0.48" begin="down.begin"  dur="0.25s" calcMode="paced" fill="freeze"/>
+				<animate attributeName="intercept" to="-.14" begin="down.begin"  dur="0.25s" calcMode="paced" fill="freeze"/>
+				{%- comment %}
+				<!-- чтобы визуально скрыть ускорении анимации в конце (см. диаграмму в calc: https://goo.gl/U82iPJ [Google Spreadsheets]; 
+				                                                                      в репозитории на GitHub, относительно текущего файла: SVG/contrast.ipynb , SVG/calc.ipynb [IPython/Jupyter Notebook] ),
+				     и скрыть переход к более гладкому краю градиента (в конце),
+				     длительность анимации для mouseover была сокращена:
+				-->{% endcomment %}
+				<animate attributeName="slope"     to="0.15" begin="up.begin" dur="0.12s" calcMode="paced" fill="freeze"/>
+				<animate attributeName="intercept" to="0"    begin="up.begin" dur="0.12s" calcMode="paced" fill="freeze"/>
+			</feFuncA>
+		</feComponentTransfer>
+		{%- comment %}
+		<!-- Прозрачность тени: <feComponentTransfer><feFuncA type="linear" slope="0.2"/></feComponentTransfer>
+		     это преобразование (коэффициенты 0.2 и 0.15; см. "don.svg") было объеденено с предыдущим feComponentTransfer,
+		     что увеличело скорость,
+		     но отразилось на результате (в положении "mouseout"), т.к. изночально было:
+		     с1 = max(min((c0*slope0 + intercept0), 0.0), 1.0);
+		     c2 = max(min((c1*slope1 + intercept1), 0.0), 1.0);
+		     стало:
+		     c2 = max(min((c0*slope0 + intercept0)*slope1, 0.0), 1.0);
+		     это не отразилось на нижнюю границу (min; ноль остался нулем), но т.к. верхушка (max) в c1 больше не срезается,
+		     то получаем продолжение градиента и более темную область в центре тени.
+		     Однако, вся эта "отличающаяся" область скрыта основной картинкй (pic), поэтому отличий невидно.
+		-->{% endcomment %}
+		<feOffset dx="1" dy="5" result="shadow"/>
+		<feOffset in="SourceGraphic" dx="0" dy="0" result="pic">
+			<animate id="up"   attributeName="dy" to="-14" begin="pic.mouseover; pic.focusin"  dur="0.25s" calcMode="paced" fill="freeze"/>
+			<animate id="down" attributeName="dy" to="0"   begin="pic.mouseout;  pic.focusout" dur="0.25s" calcMode="paced" fill="freeze"/>
+		</feOffset>
+		<feMerge>
+			<feMergeNode in="shadow"/>
+			<feMergeNode in="pic"/>
+		</feMerge>
+	</filter>
+</defs>
+	<image id="pic" xlink:href="by-mishierru-at-deviantart-dot-com.png" x="12" y="12" width="170px" height="254px" filter="url(#AmbientOcclusionShadow)" role="button" cursor="pointer" focusable="true" tabindex="0"><title>Нажми на меня</title></image>
+<script>//<![CDATA[
+"use strict";
+(function(){
+	var imgs = [
+		{ offset:12, width:170, height:254, name:"by-mishierru-at-deviantart-dot-com" },
+		{ offset:13, width:200, height:157, name:"cookies" },
+		{ offset:14, width:225, height:275, name:"wanted_bitcoin-grant-at-freepik-dot-com" },
+		{ offset:14, width:210, height:125, name:"books" },
+		{ offset:14, width:225, height:292, name:"you-at-the-library-of-congress" }
+	];
+	var img = imgs[((Math.random()*imgs.length)|0)%imgs.length];
+
+	var _root_       = document.documentElement;
+	var _pic_        = document.querySelectorAll("#pic")[0];
+	var _pic_shadow_ = document.querySelectorAll("#pic-shadow")[0];
+
+	_pic_.href.baseVal = img.name + ".png";
+	_pic_.width .baseVal.valueInSpecifiedUnits = img.width;
+	_pic_.height.baseVal.valueInSpecifiedUnits = img.height;
+	_pic_.x     .baseVal.valueInSpecifiedUnits = img.offset;
+	_pic_.y     .baseVal.valueInSpecifiedUnits = img.offset;
+
+	var imgShadowWidth  = img.width  + img.offset*2;
+	var imgShadowHeight = img.height + img.offset*2;
+
+	_pic_shadow_.href.baseVal = img.name + "_shadow.png";
+	_pic_shadow_.width .baseVal.valueInSpecifiedUnits = imgShadowWidth;
+	_pic_shadow_.height.baseVal.valueInSpecifiedUnits = imgShadowHeight;
+
+	_root_.viewBox.baseVal.width  = imgShadowWidth;
+	_root_.viewBox.baseVal.height = imgShadowHeight;
+	_root_.width .baseVal.valueInSpecifiedUnits = imgShadowWidth;
+	_root_.height.baseVal.valueInSpecifiedUnits = imgShadowHeight;
+
+	_pic_.onclick = function(){
+		this.onclick = null;
+
+		var _parentWnd = window.parent;
+		var parentDoc  = _parentWnd.document;
+		var parentHead = parentDoc.head || parentDoc.querySelectorAll("head")[0];
+
+		var _content_ = parentDoc.querySelectorAll("#_support-us_content_")[0];
+
+		var CrDonCSS  = parentDoc.createElement("link");
+		CrDonCSS.rel  = "stylesheet";
+		CrDonCSS.href = "{{ site.baseurl }}/theme/crypto-currency/crdon.css";
+
+		var CrDonJS = parentDoc.createElement("script");
+		CrDonJS.src = "{{ site.baseurl }}/theme/crypto-currency/crdon.js";
+
+		var GhBtnCSS  = parentDoc.createElement("link");
+		GhBtnCSS.rel  = "stylesheet";
+		GhBtnCSS.href = "{{ site.baseurl }}/theme/github-button/gh-btn.css";
+
+		var GhBtnJS = parentDoc.createElement("script");
+		GhBtnJS.src = "{{ site.baseurl }}/theme/github-button/gh-btn.js";
+
+		_content_.parentNode.removeChild(_content_);
+		parentHead.appendChild(CrDonCSS);
+		parentHead.appendChild(GhBtnCSS);
+		parentHead.appendChild(CrDonJS);
+		parentHead.appendChild(GhBtnJS);
+		window.frameElement.outerHTML = _content_.firstChild.data; //here window.parent == null
+
+		if(_parentWnd.CrDon) _parentWnd.setTimeout(function(){_parentWnd.CrDon.init(); },0); // safe call w/o try...catch
+		else CrDonJS.onload = function(){ this.onload = null; _parentWnd.CrDon.init(); };
+
+		if(_parentWnd.GhBtn) _parentWnd.setTimeout(function(){_parentWnd.GhBtn.init(); },0); // safe call w/o try...catch
+		else GhBtnJS.onload = function(){ this.onload = null; _parentWnd.GhBtn.init(); };
+
+		parentDoc = parentHead = _content_ = CrDonCSS = CrDonJS = GhBtnCSS = GhBtnJS = null; //:-)
+	};
+
+	imgs = img = _root_ = _pic_ = _pic_shadow_ = imgShadowWidth = imgShadowHeight = null; //:-)
+})();
+//]]></script>
+</svg>
+{%- comment %}<!--
+
+- вместо real-time размытия (Gaussian blur для тени) создать отдельный файл с тенью максимально используемого размера (в состоянии UP - картинка парит над плоскостью). Создавать тень при помощи того же самого размытия альфа-канала (или размыть что-то другое).
+- в real-time при помощи "кривых" (GIMP/Photoshop/Affinity Photo-Designer; "передаточной функции") изменять значения цвета каждого пикселя - тем самым менять размер размытия, т.е. по сути, меняем контраст.
+
+это напоминает Signed Distance Field:
+- https://habrahabr.ru/post/215905
+- https://habrahabr.ru/post/318880
+- https://habrahabr.ru/post/245729
+- https://github.com/libgdx/libgdx/wiki/Distance-field-fonts
+
+или
+
+создать второй svg файл, в котором создается "наиболее размытая тень", а в основном svg подключить его как Image - при этом, по идее, тень должна отрендрется (и стать картинкой) 1 раз.
+-> нет - каждый раз перерисовывается заново.
+
+
+docs:
+- buffered-rendering - https://www.w3.org/TR/SVGTiny12/painting.html#BufferedRenderingProperty
+- SVGElement.targetFps:
+  - http://www.opera.com/docs/specs/presto29/graphics/
+  - http://web.archive.org/web/20130530075508/http://dev.opera.com/articles/view/presto-2-2-and-opera-10-a-first-look/#fps
+  - https://github.com/operasoftware/devopera-static-backup/blob/master/http/dev.opera.com/articles/view/presto-2-2-and-opera-10-a-first-look/index.html
+  - https://habrahabr.ru/post/61303
+- View Box Alignment (preserveAspectRatio) http://tutorials.jenkov.com/svg/svg-viewport-view-box.html
+
+Анимация (SMIL):
+- https://upload.wikimedia.org/wikipedia/commons/b/ba/Toy_train_SMIL.svg
+- https://www.w3.org/TR/SVG/animate.html#InterfaceElementTimeControl
+- https://www.w3.org/TR/2001/REC-smil-animation-20010904/#Timing-EventValueSyntax
+- https://www.w3.org/TR/SVG/interact.html#SVGEvents
+- https://www.w3.org/TR/SVGTiny12/animate.html#TimingAttributes
+Команда Chromium'а хотят запретить SMIL (Chromium стыдится своих тормозов):
+- "blink-dev > Intent to deprecate: SMIL" https://groups.google.com/a/chromium.org/forum/#!topic/blink-dev/5o0yiO440LM%5B1-25%5D
+- https://developer.mozilla.org/en-US/docs/Web/SVG/SVG_animation_with_SMIL
+- https://stackoverflow.com/questions/30965580/deprecated-smil-svg-animation-replaced-with-css-or-web-animations-effects-hover#comment66177886_32007630
+- когда-то было все иначе: https://code.google.com/archive/p/svgweb/
+
+Для корректного alpha-blending нужен color-interpolation-filters="sRGB". Разница между linearRGB и sRGB видна на нижнем краю "wanted_bitcoin-grant-at-freepik-dot-com". Тем более, что sRGB работает быстрее (для работы в linearRGB нужно выполнять дополнительные преобразования: https://www.w3.org/TR/SVG/painting.html#ColorInterpolationProperties )
+
+Высоту основных изображений нужно увеличивать на 1 пиксель (добавлять снизу), чтобы предотвратить размытие нижних полупрозрачных пикселей. Соответственно, высоту "*_shadow.png" тоже нужно увеличить на 1 пиксель (чтобы сохранить прежний offset; чтобы offset со всех сторон [между "*_shadow.png" и основным изображением] был одинаковым)
+
+Некоторые тени можно экспортировать в "16 цветов" с дизерингом - это добавит шум тени и уменьшит размер файла. Делать это (by-mishierru-at-deviantart-dot-com_shadow) или нет (все остальные) зависит от качества дизеринга и итогового размера файла (иногда он получится больше полноцветного из-за качественного дизеринга). Чем меньше прямых краев в исходном изображении - тем лучше результат.
+
+Не включать DOCTYPE в файл: https://jwatt.org/svg/authoring/#doctype-declaration
+
+В начале добавлять `<?xml version="1.0" encoding="UTF-8"?>`: https://www.w3.org/TR/SVGTiny12/struct.html#NewDocument
+
+
+Подключение SVG https://www.w3.org/Graphics/SVG/IG/resources/svgprimer.html#SVG_in_HTML :
+SVG в <embed> ( https://www.w3.org/TR/html5/embedded-content-0.html#the-embed-element ) не всегда отображается если отключен JS ( https://svgontheweb.com ; и не заблокирован use.typekit.net/*.js ).
+Поэтому лучше использовать <object> ( https://www.w3.org/TR/html5/embedded-content-0.html#the-object-element с указанием type и typemustmatch).
+
+Добавить aria: role="document" к <object>, и role="button" к <image> в SVG.
+
+Для обработки клика:
+- можно повесить обработчик извне (для заглядывания внутрь лучше использовать contentDocument вместо getSVGDocument() https://www.w3.org/TR/SVG2/struct.html#InterfaceGetSVGDocument ), но тогда придется ждать load ( https://stackoverflow.com/questions/337293/how-to-check-if-an-embedded-svg-document-is-loaded-in-an-html-page )
+- либо вызвать внешнюю функцию/обработчик изнутри ( https://developer.mozilla.org/en-US/docs/Web/SVG/Scripting#Inter-document_scripting:_calling_JavaScript_functions https://www.w3.org/TR/SVG11/interact.html#ClickEvent )
+- либо см. код выше.
+
+"no_js.css" для CrDon подключать в отдельном <noscript> (перед <noscript> с основным контентом)
+
+Баг в Safari 11.0.2: после первой анимации - SMIL ломается
+
+-->{% endcomment %}
+

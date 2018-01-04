@@ -1,0 +1,41 @@
+
+	<!--[if lte IE 6]>
+	<style type="text/css">
+	.comment-form{margin-bottom: -3px}
+	html{background-attachment:fixed}
+	.wow_ie{position:absolute;top:50%;height:100%;width:100%;z-index:100}
+	.wow_ie_img{position:absolute;top:expression(eval(document.documentElement.scrollTop));left:50%;margin-top:-182px;margin-left:-408px;height:365px;width:816px;cursor:move;background:url({{ "/theme/img/lfs/ie6.png" | relative_url }})}
+	</style>
+	<script type='text/javascript'>
+	var _x=0;
+	var _y=0;
+	var el=document.getElementById("vax_ie");
+	var notopen=1;
+		
+	function init_trans()
+	{
+		_x=el.offsetLeft-window.event.clientX+2;
+		_y=el.offsetTop-window.event.clientY+2;
+	   
+		document.onmousemove=motor_trans;  
+		document.onmouseup=kill_trans; 
+	}
+		 
+	function kill_trans()
+	{
+		document.onmouseup=null;
+		document.onmousemove=null;
+	}
+		 
+	function motor_trans()
+	{
+		el.style.top=(_y+window.event.clientY-2)+"px";
+		el.style.left=(_x+window.event.clientX-2)+"px";
+		if(notopen){
+			notopen=0;
+			Ошибки.ha_ha;							//very good
+		}else if(event.button==0) kill_trans();		//not goog
+	}
+	</script>
+	<div id="vax_ie" class="wow_ie" onmousedown="init_trans()"><a href="http://www.opera.com/?utm_source=community&utm_medium=banner&utm_campaign=myoperalinks" alt="Get Opera" target="_blank"><div class="wow_ie_img">__</div></a></div>
+	<![endif]-->

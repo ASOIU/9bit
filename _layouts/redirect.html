@@ -1,0 +1,89 @@
+{%- comment -%}<!--
+ Original file:  https://github.com/jekyll/jekyll-redirect-from/blob/master/lib/jekyll-redirect-from/redirect.html
+ Is valid HTML5: https://github.com/jekyll/jekyll-redirect-from/pull/20
+
+ Customizing the redirect template:
+ - https://github.com/jekyll/jekyll-redirect-from#customizing-the-redirect-template
+ - https://github.com/jekyll/jekyll-redirect-from/issues/55 (start here)
+
+ Preserve #hash in redirect:
+ - https://github.com/jekyll/jekyll-redirect-from/pull/127
+ - https://maxchadwick.xyz/blog/preserving-the-hash-and-query-string-with-jekyll-redirects
+
+ How Googlebot Crawls Javascript
+ - https://searchengineland.com/tested-googlebot-crawls-javascript-heres-learned-220157
+
+-->{%- endcomment -%}
+
+{%- unless page.dir == "/excerpt/" -%}
+<!DOCTYPE html>
+<html lang="ru">
+	<meta charset="{{ site.encoding | upcase }}">
+	<title>Перенаправление&hellip;</title>
+	<link rel="canonical" href="{{ page.redirect.to }}">
+	<script>location="{{ page.redirect.to }}"+location.hash</script>
+	<meta http-equiv="refresh" content="0; url={{ page.redirect.to }}">
+	<meta name="robots" content="noindex">
+	<h1>Перенаправление&hellip;</h1>
+	Это удивительно, но автоматическое перенаправление не сработало.
+	Придется нажать на <a href="{{ page.redirect.to }}" tabindex>эту ссылку вручную</a>, чтобы страница открылась.
+</html>
+{%- else -%}
+{%- comment %} Generate one "post excerpt file" for Author, Issue, Category, Tag and other Taxonomy Term pages {% endcomment -%}
+
+
+{%- assign site_abs_base_url        = '/' | absolute_url -%}{%- comment %} Don't use "site.url | append: site.baseurl" instead of "'/' | absolute_url"! If (site.port == 80) (default port for http) then (redirect_to_abs_base_url != site_abs_base_url) https://jekyllrb.com/news/#3-siteurl-is-set-by-the-development-server {% endcomment -%}
+{%- assign redirect_to_abs_base_url = page.redirect.to | slice: 0, site_abs_base_url.size -%}
+
+{%- if redirect_to_abs_base_url != site_abs_base_url %}Test failed, "page.redirect.to" format is changed! (see below){{ 0 | divided_by:0 }}{% endif -%}
+
+{%- assign site_abs_base_url__last_char = site_abs_base_url | slice: -1, 1 -%}
+{%- if site_abs_base_url__last_char == '/' -%}
+	{%- assign site_abs_base_url__size = site_abs_base_url.size | minus: 1 -%}
+{%- else -%}
+	{%- assign site_abs_base_url__size = site_abs_base_url.size -%}
+{%- endif -%}
+
+{%- assign redirect_to_url = page.redirect.to | slice: site_abs_base_url__size, page.redirect.to.size -%}{%- comment %} build relative url {% endcomment -%}
+{%- assign post            = site.posts | where: "url", redirect_to_url | first -%}
+
+{%- unless post %}Something wrong in this world{{ 0 | divided_by:0 }}{% endunless -%}
+
+
+{%- comment -%}
+ Fastest Alternative Solution (to get the "post"):
+ 1. get "wp_id" from "page" { page | inspect } + { | to_integer }
+ 2. use { site.posts | where: "wp_id", redirect_to_wp_id | first }
+{%- endcomment -%}
+
+
+{%- comment -%} from "_layouts/index.html"; affect to "_includes/p_query_handler.html" (querySelectorAll) {%- endcomment -%}
+<article class="postWrapper"{% comment %} itemprop="blogPost"{% endcomment %} itemscope itemtype="http://schema.org/BlogPosting">
+
+	{%- include post_metadata.html page=post L10n=site.data.L10n_ru_RU alone=false %}
+
+	<div class="post">
+		<header itemprop="headline" id="post-{{ post.wp_id | to_integer }}">
+			<h1 itemprop="name"><a href="{{ post.url | absolute_url }}" rel="bookmark" itemprop="url mainEntityOfPage" title="Постоянная ссылка на &ldquo;{{ post.title | strip_html | normalize_whitespace | escape_once }}&rdquo;">{{ post.title | strip_html | escape_once }}</a></h1>
+		</header>
+		<div class="entry" itemprop="description">
+			{%- if post.content contains site.excerpt_separator %}
+				{{ post.excerpt }}
+				<div class="more-link"><a href="{{ post.url | absolute_url }}#more" aria-describedby="post-{{ post.wp_id | to_integer }}">Читать дальше &raquo;</a></div>
+			{%- else %}
+				{{ post.content }}
+			{%- endif %}
+		</div>
+	</div>
+</article>
+{%- endunless -%}
+
+
+{%- comment -%}
+ "include scope" test:
+
+ {% assign foo = "Bar" %}
+ {% include *.html foo="Bug?" %}
+ {{ foo }}
+{%- endcomment -%}
+

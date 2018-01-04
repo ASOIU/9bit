@@ -1,0 +1,28 @@
+
+<h2>Облако тэгов</h2>
+{%- assign tags = site.empty_array -%}
+{%- for tag in site.tags limit:45 -%}
+	{%- assign arr = site.empty_array | push: tag[0] | push: tag[1].size -%}
+	{%- assign tags = tags | push: arr -%}
+{%- endfor -%}
+
+{%- assign count_max = tags.first[1] -%}
+{%- assign count_min = tags.last[1] -%}
+{%- assign count_delta = count_max | minus: count_min -%}
+{%- if count_delta == 0 -%}
+	{%- comment %} to calc middle font size {% endcomment -%}
+	{%- assign count_min   = count_min | minus: 1 -%}
+	{%- assign count_delta = 2 -%}
+{%- endif -%}
+
+{%- assign font_max = 22 -%}
+{%- assign font_min = 8 -%}
+{%- assign font_delta = font_max | minus: font_min -%}
+
+{%- assign count2font = font_delta | times: 10000 | divided_by: count_delta | times: 0.0001 -%}{%- comment %} https://help.shopify.com/themes/liquid/filters/math-filters#divided_by {% endcomment -%}
+
+{%- assign tags = tags | sort -%}
+{%- for tag in tags %}
+	{%- assign tag_data = site.tags_ | where: "slug", tag[0] | first %}
+	<a href="{{ tag_data.url | prepend: '/taxonomy/#' | relative_url }}" style="font-size:{{ tag[1] | minus: count_min | times: count2font | plus: font_min }}pt">{{ tag[0] | escape_once }}</a>
+{%- endfor %}

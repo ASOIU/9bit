@@ -1,0 +1,85 @@
+/* Test mode:
+ * - increase "font-size" in "<input>";
+ * - rename "icon_wallet.png" -> "icon_bitcoin.png"
+/*/
+
+
+/* ## Text/line solution ##
+ * Need set fixed "width" for "<input>". (not for flexible/fluid layout)
+ * ========================
+ * <div>
+ * 	<input value="123">
+ * 	<a><img></a>
+ * </div>
+/* ======================== */    /*(del me to uncomment)
+div > input {
+	display: inline-block;
+	width: 210px;
+	vertical-align: middle;
+}
+div > a > img {
+	vertical-align: middle;
+}/**/
+
+
+/* ## Block solution ##
+ * Need calc "margin-right" for "#holder" once.
+ * Need "div#holder" for "<input>".
+ * For "<input>": increase "font-size" -> increase "width".
+ * Breaks if turn on/off "fit to width" Browser feature.
+ * ============================
+ * <div id="line">
+ * 	<div id="holder">
+ * 		<input value="123">
+ * 	</div>
+ * 	<a><img></a>
+ * </div>
+/* ============================ *//*
+#line {
+	position: relative;
+}
+#holder {
+	margin-right: 45px; /* (2*1:border + (3+20):padding):input + 4:space + 16:img *//*
+}
+#holder > input {
+	width: 100%;
+}
+#line > a > img {
+	position: absolute;
+	right: 0;
+	top: 0;
+	bottom: 0;
+	margin: auto 0;
+}/**/
+
+
+/* ## Table-cell solution ##
+ * Not for all Browsers ("display:table-cell" + "box-sizing:border-box").
+ * ============================
+ * <div>
+ * 	<input value="123">
+ * 	<a><img></a>
+ * </div>
+/* ============================ *//*
+div {
+	display: table;
+	width: 100%;
+}
+div > input {
+	display: table-cell;
+	vertical-align: middle;
+	text-align: left;
+	box-sizing: border-box;
+	width: 100%;
+}
+div > a  {
+	display: table-cell;
+	vertical-align: middle;
+	line-height: 0;
+	font-size: 0;
+	width: 16px;
+	padding-left: 4px;
+}
+div > a > img {
+	display: block;
+}/**/
