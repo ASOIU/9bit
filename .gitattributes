@@ -30,5 +30,6 @@ wordpress.*.xml  -text
 ###############################################################################
 .gitignore      export-ignore
 .gitattributes  export-ignore
+LICENSE_N0      export-ignore
 
 
