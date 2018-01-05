@@ -8,7 +8,7 @@
 	WAI-ARIA:
 	- http://prgssr.ru/development/dostupnye-svg.html#heading-svg-1
 	- https://www.w3.org/TR/SVG2/struct.html#WAIARIAAttributes
-	  https://www.w3.org/TR/SVG2/struct.html#implicit-aria-semantics (список присвоенных елементам SVG2 ролей по умолчанию)
+	  https://www.w3.org/TR/SVG2/struct.html#implicit-aria-semantics (список присвоенных элементам SVG2 ролей по умолчанию)
 	
 	focusable/tabindex:
 	- https://stackoverflow.com/questions/22671799/svg-focusable-attribute-is-not-working
