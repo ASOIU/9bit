@@ -12,6 +12,16 @@
 
 
 ###############################################################################
+# Set custom file attributes
+#
+# https://www.kernel.org/pub/software/scm/git/docs/gitattributes.html
+###############################################################################
+
+# Mixed content
+wordpress.*.xml  -text
+
+
+###############################################################################
 # Exclude files from "git archive" and "Download ZIP" (GitHub, ...)
 #
 # https://feeding.cloud.geek.nz/posts/excluding-files-from-git-archive/
