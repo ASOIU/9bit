@@ -1403,14 +1403,27 @@ function the_attachment_link( $id = 0, $fullsize = false, $deprecated = false, $
  * @return string HTML content.
  */
 function wp_get_attachment_link( $id = 0, $size = 'thumbnail', $permalink = false, $icon = false, $text = false ) {
+	// For gallery
+	//=============
+	// /wp-includes/media.php:gallery_shortcode() > "$link" > /wp-includes/post-template.php:wp_get_attachment_link()
+	// > $url, [$permalink] > [/wp-includes/link-template.php:get_attachment_link()] && /wp-includes/post.php:wp_get_attachment_url()
+	//----------------------------------------------------------------------------------------
+	// Before patch:
+	// - `<a href='{{ site.url }}{{ site.baseurl }}/?attachment_id=1960'>`
+	// - `<a href='{{ site.url }}{{ site.baseurl }}/post_path/file_name/'>`
+	// - `<a href='{{ site.url }}{{ site.baseurl }}/post_path/attachment/file_name/'>`
+	// After patch:
+	// - `<a href='{{ site.url }}{{ site.baseurl }}/wp-content/uploads/path_to_file'>`
+	$permalink = false;
+
 	$id = intval( $id );
 	$_post = get_post( $id );
 
 	if ( empty( $_post ) || ( 'attachment' != $_post->post_type ) || ! $url = wp_get_attachment_url( $_post->ID ) )
 		return __( 'Missing Attachment' );
 
-	if ( $permalink )
-		$url = get_attachment_link( $_post->ID );
+	//if ( $permalink )
+	//	$url = get_attachment_link( $_post->ID );
 
 	$post_title = esc_attr( $_post->post_title );
 

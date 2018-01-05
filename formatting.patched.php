@@ -27,33 +27,34 @@
  * @return string The string replaced with html entities
  */
 function wptexturize($text) {
+	/*
 	global $wp_cockneyreplace;
 	static $static_characters, $static_replacements, $dynamic_characters, $dynamic_replacements,
 		$default_no_texturize_tags, $default_no_texturize_shortcodes;
 
 	// No need to set up these static variables more than once
 	if ( ! isset( $static_characters ) ) {
-		/* translators: opening curly double quote */
+		// translators: opening curly double quote
 		$opening_quote = _x( '&#8220;', 'opening curly double quote' );
-		/* translators: closing curly double quote */
+		// translators: closing curly double quote
 		$closing_quote = _x( '&#8221;', 'closing curly double quote' );
 
-		/* translators: apostrophe, for example in 'cause or can't */
+		// translators: apostrophe, for example in 'cause or can't
 		$apos = _x( '&#8217;', 'apostrophe' );
 
-		/* translators: prime, for example in 9' (nine feet) */
+		// translators: prime, for example in 9' (nine feet)
 		$prime = _x( '&#8242;', 'prime' );
-		/* translators: double prime, for example in 9" (nine inches) */
+		// translators: double prime, for example in 9" (nine inches)
 		$double_prime = _x( '&#8243;', 'double prime' );
 
-		/* translators: opening curly single quote */
+		// translators: opening curly single quote
 		$opening_single_quote = _x( '&#8216;', 'opening curly single quote' );
-		/* translators: closing curly single quote */
+		// translators: closing curly single quote
 		$closing_single_quote = _x( '&#8217;', 'closing curly single quote' );
 
-		/* translators: en dash */
+		// translators: en dash
 		$en_dash = _x( '&#8211;', 'en dash' );
-		/* translators: em dash */
+		// translators: em dash
 		$em_dash = _x( '&#8212;', 'em dash' );
 
 		$default_no_texturize_tags = array('pre', 'code', 'kbd', 'style', 'script', 'tt');
@@ -73,13 +74,11 @@ function wptexturize($text) {
 		$static_characters = array_merge( array( '---', ' -- ', '--', ' - ', 'xn&#8211;', '...', '``', '\'\'', ' (tm)' ), $cockney );
 		$static_replacements = array_merge( array( $em_dash, ' ' . $em_dash . ' ', $en_dash, ' ' . $en_dash . ' ', 'xn--', '&#8230;', $opening_quote, $closing_quote, ' &#8482;' ), $cockneyreplace );
 
-		/*
-		 * Regex for common whitespace characters.
-		 *
-		 * By default, spaces include new lines, tabs, nbsp entities, and the UTF-8 nbsp.
-		 * This is designed to replace the PCRE \s sequence.  In #WP22692, that sequence
-		 * was found to be unreliable due to random inclusion of the A0 byte.
-		 */
+		// Regex for common whitespace characters.
+		//
+		// By default, spaces include new lines, tabs, nbsp entities, and the UTF-8 nbsp.
+		// This is designed to replace the PCRE \s sequence.  In #WP22692, that sequence
+		// was found to be unreliable due to random inclusion of the A0 byte.
 		$spaces = '[\r\n\t ]|\xC2\xA0|&nbsp;';
 
 
@@ -132,25 +131,25 @@ function wptexturize($text) {
 
 	// Transform into regexp sub-expression used in _wptexturize_pushpop_element
 	// Must do this every time in case plugins use these filters in a context sensitive manner
-	/**
-	 * Filter the list of HTML elements not to texturize.
-	 *
-	 * @since 2.8.0
-	 *
-	 * @param array $default_no_texturize_tags An array of HTML element names.
-	 */
+	//
+	// Filter the list of HTML elements not to texturize.
+	//
+	// @since 2.8.0
+	//
+	// @param array $default_no_texturize_tags An array of HTML element names.
 	$no_texturize_tags = '(' . implode( '|', apply_filters( 'no_texturize_tags', $default_no_texturize_tags ) ) . ')';
-	/**
-	 * Filter the list of shortcodes not to texturize.
-	 *
-	 * @since 2.8.0
-	 *
-	 * @param array $default_no_texturize_shortcodes An array of shortcode names.
-	 */
+	//
+	// Filter the list of shortcodes not to texturize.
+	//
+	// @since 2.8.0
+	//
+	// @param array $default_no_texturize_shortcodes An array of shortcode names.
 	$no_texturize_shortcodes = '(' . implode( '|', apply_filters( 'no_texturize_shortcodes', $default_no_texturize_shortcodes ) ) . ')';
 
 	$no_texturize_tags_stack = array();
 	$no_texturize_shortcodes_stack = array();
+
+	/**/
 
 	// Look for shortcodes and HTML elements.
 	
@@ -166,6 +165,7 @@ function wptexturize($text) {
 			continue;
 		}
 
+		/*
 		// Only call _wptexturize_pushpop_element if first char is correct tag opening
 		$first = $curl[0];
 		if ( '<' === $first ) {
@@ -186,6 +186,7 @@ function wptexturize($text) {
 				$curl = preg_replace( '/\b(\d+)x(\d+)\b/', '$1&#215;$2', $curl );
 			}
 		}
+		*/
 
 		// Replace each & with &#038; unless it already looks like an entity.
 		$curl = preg_replace('/&([^#])(?![a-zA-Z1-4]{1,8};)/', '&#038;$1', $curl);

@@ -264,6 +264,33 @@ function export_wp( $args = array() ) {
 	}
 
 	/**
+	 * Output list of users
+	 */
+	function wxr_users_list() {
+		global $wpdb;
+		
+		$users = $wpdb->get_results( "SELECT ID, user_login, user_email, display_name FROM $wpdb->users" );
+		
+		foreach ( (array) $users as $user ) {
+			// https://codex.wordpress.org/Function_Reference/get_avatar
+			// https://codex.wordpress.org/Using_Gravatars
+			// https://core.trac.wordpress.org/changeset/31107
+			$email_hash = md5(strtolower(trim( $user->user_email )));
+			$gravatar_server_rnd = hexdec( $email_hash[0] ); // apply "%3" by Liquid filter "modulo":
+			                                                 // https://github.com/Shopify/liquid/wiki/Liquid-for-Designers#standard-filters
+
+			echo "\t<wp:user>";
+			echo   '<wp:user_id>'                 .           $user->ID            .'</wp:user_id>';
+			echo   '<wp:user_login>'              .           $user->user_login    .'</wp:user_login>';
+			echo   '<wp:user_email>'              .           $user->user_email    .'</wp:user_email>';
+			echo   '<wp:user_gravatar_email_hash>'.           $email_hash          .'</wp:user_gravatar_email_hash>';
+			echo   '<wp:user_gravatar_server_rnd>'.           $gravatar_server_rnd .'</wp:user_gravatar_server_rnd>';
+			echo   '<wp:user_display_name>'       .wxr_cdata( $user->display_name ).'</wp:user_display_name>';
+			echo  "</wp:user>\n";
+		}
+	}
+
+	/**
 	 * Ouput all navigation menu terms
 	 *
 	 * @since 3.1.0
@@ -293,9 +320,17 @@ function export_wp( $args = array() ) {
 			return;
 		$terms = wp_get_object_terms( $post->ID, $taxonomies );
 
+		echo "\t\t<wp:taxonomies>\n";
 		foreach ( (array) $terms as $term ) {
-			echo "\t\t<category domain=\"{$term->taxonomy}\" nicename=\"{$term->slug}\">" . wxr_cdata( $term->name ) . "</category>\n";
+			switch ($term->taxonomy) {
+			case 'category': echo "\t\t\t<wp:category nicename=\"{$term->slug}\">" . wxr_cdata( $term->name ) . "</wp:category>\n";
+				break;
+			case 'post_tag': echo "\t\t\t<wp:tag      nicename=\"{$term->slug}\">" . wxr_cdata( $term->name ) . "</wp:tag>\n";
+				break;
+			default:         echo "\t\t\t<wp:term domain=\"{$term->taxonomy}\" nicename=\"{$term->slug}\">" . wxr_cdata( $term->name ) . "</wp:term>\n";
+			}
 		}
+		echo "\t\t</wp:taxonomies>\n";
 	}
 
 	function wxr_filter_postmeta( $return_me, $meta_key ) {
@@ -346,6 +381,8 @@ function export_wp( $args = array() ) {
 
 <?php wxr_authors_list(); ?>
 
+<?php wxr_users_list(); ?>
+
 <?php foreach ( $cats as $c ) : ?>
 	<wp:category><wp:term_id><?php echo $c->term_id ?></wp:term_id><wp:category_nicename><?php echo $c->slug; ?></wp:category_nicename><wp:category_parent><?php echo $c->parent ? $cats[$c->parent]->slug : ''; ?></wp:category_parent><?php wxr_cat_name( $c ); ?><?php wxr_category_description( $c ); ?></wp:category>
 <?php endforeach; ?>
@@ -392,7 +429,7 @@ function export_wp( $args = array() ) {
 			 *
 			 * @param string $post_content Content of the current post.
 			 */
-			echo wxr_cdata( apply_filters( 'the_content_export', $post->post_content ) );
+			echo wxr_cdata( str_replace( ']]>', ']]&gt;',  apply_filters( 'the_content', $post->post_content ) ) );
 		?></content:encoded>
 		<excerpt:encoded><?php
 			/**
@@ -407,6 +444,9 @@ function export_wp( $args = array() ) {
 		<wp:post_id><?php echo $post->ID; ?></wp:post_id>
 		<wp:post_date><?php echo $post->post_date; ?></wp:post_date>
 		<wp:post_date_gmt><?php echo $post->post_date_gmt; ?></wp:post_date_gmt>
+		<wp:post_modified><?php echo $post->post_modified; ?></wp:post_modified>
+		<wp:post_modified_gmt><?php echo $post->post_modified_gmt; ?></wp:post_modified_gmt>
+		<wp:post_author><?php echo $post->post_author; ?></wp:post_author>
 		<wp:comment_status><?php echo $post->comment_status; ?></wp:comment_status>
 		<wp:ping_status><?php echo $post->ping_status; ?></wp:ping_status>
 		<wp:post_name><?php echo $post->post_name; ?></wp:post_name>
@@ -452,11 +492,12 @@ function export_wp( $args = array() ) {
 			<wp:comment_author_IP><?php echo $c->comment_author_IP; ?></wp:comment_author_IP>
 			<wp:comment_date><?php echo $c->comment_date; ?></wp:comment_date>
 			<wp:comment_date_gmt><?php echo $c->comment_date_gmt; ?></wp:comment_date_gmt>
-			<wp:comment_content><?php echo wxr_cdata( $c->comment_content ) ?></wp:comment_content>
+			<wp:comment_content><?php echo wxr_cdata( str_replace( ']]>', ']]&gt;', apply_filters( 'comment_text', $c->comment_content ) ) ) ?></wp:comment_content>
 			<wp:comment_approved><?php echo $c->comment_approved; ?></wp:comment_approved>
 			<wp:comment_type><?php echo $c->comment_type; ?></wp:comment_type>
 			<wp:comment_parent><?php echo $c->comment_parent; ?></wp:comment_parent>
 			<wp:comment_user_id><?php echo $c->user_id; ?></wp:comment_user_id>
+			<wp:comment_user_login><?php echo wxr_cdata( get_userdata($c->user_id)->user_login ); ?></wp:comment_user_login>
 <?php		$c_meta = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->commentmeta WHERE comment_id = %d", $c->comment_ID ) );
 			foreach ( $c_meta as $meta ) : ?>
 			<wp:commentmeta>
