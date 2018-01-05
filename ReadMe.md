@@ -65,10 +65,16 @@ Usage for own blog / Загрузка темы для адаптации под 
 --------------------------------------------------------------
 1. **[Install](https://github.com/git-lfs/git-lfs/releases/latest)** [Git Large File Storage (LFS)](https://git-lfs.github.com)
   <br>|||<br>
-  Для хранения загруженных пользователями файлов `/wp-content/uploads/*` и некоторых больших картинок темы - используется [Git LFS](https://habrahabr.ru/post/255413/), поэтому **[устанавливаем](https://github.com/git-lfs/git-lfs/releases/latest)** [его](https://packagecloud.io/github/git-lfs/install#manual)
-1. See [this](https://stackoverflow.com/questions/20280726/how-to-git-clone-a-specific-tag), [this](https://stackoverflow.com/questions/791959/download-a-specific-tag-with-git/792027#792027) and [this LFS Tutorial](https://github.com/git-lfs/git-lfs/wiki/Tutorial#pulling-and-cloning) before run `git clone -b tags/black-triangle --single-branch -- https://github.com/ASOIU/9bit.git` ("[black-triangle](http://rampantgames.com/blog/?p=7745)" contain only main files + 3 posts for testing w/o user content)
+  ~~Для хранения загруженных пользователями файлов `/wp-content/uploads/*` и некоторых больших картинок темы~~[<sup>1</sup>](#1) - используется [Git LFS](https://habrahabr.ru/post/255413/), поэтому **[устанавливаем](https://github.com/git-lfs/git-lfs/releases/latest)** [его](https://packagecloud.io/github/git-lfs/install#manual)
+1. See [this](https://stackoverflow.com/questions/20280726/how-to-git-clone-a-specific-tag), [this](https://stackoverflow.com/questions/791959/download-a-specific-tag-with-git/792027#792027) ~~and [this LFS Tutorial](https://github.com/git-lfs/git-lfs/wiki/Tutorial#pulling-and-cloning)~~[<sup>1</sup>](#1) before run `git clone -b tags/black-triangle --single-branch -- https://github.com/ASOIU/9bit.git` ("[black-triangle](http://rampantgames.com/blog/?p=7745)" contain only main files + 3 posts for testing w/o user content)
   <br>|||<br>
-  Чтобы не скачивать весь репозиторий (со всем пользовательским контентом "Девятого бита"), в репозитории есть коммит помеченный тегом `black-triangle` ([Чёрный треугольник](https://habrahabr.ru/post/339782/)), в котором из всего пользовательского контента оставлены только 3 поста (использовались для тестирования темы при ее создании), клонируем: `git clone -b tags/black-triangle --single-branch -- https://github.com/ASOIU/9bit.git` (это может помочь увеличить скорость копирования: [LFS Tutorial](https://github.com/git-lfs/git-lfs/wiki/Tutorial#pulling-and-cloning), [`git lfs pull`](https://github.com/git-lfs/git-lfs/issues/325#issuecomment-149713215), [`GIT_LFS_SKIP_SMUDGE=1`](https://stackoverflow.com/questions/36376136/is-it-possible-for-git-lfs-pull-to-ignore-some-files-folders))
+  Чтобы не скачивать весь репозиторий (со всем пользовательским контентом "Девятого бита"), в репозитории есть коммит помеченный тегом `black-triangle` ([Чёрный треугольник](https://habrahabr.ru/post/339782/)), в котором из всего пользовательского контента оставлены только 3 поста (использовались для тестирования темы при ее создании), клонируем: `git clone -b tags/black-triangle --single-branch -- https://github.com/ASOIU/9bit.git` ~~(это может помочь увеличить скорость копирования: [LFS Tutorial](https://github.com/git-lfs/git-lfs/wiki/Tutorial#pulling-and-cloning), [`git lfs pull`](https://github.com/git-lfs/git-lfs/issues/325#issuecomment-149713215), [`GIT_LFS_SKIP_SMUDGE=1`](https://stackoverflow.com/questions/36376136/is-it-possible-for-git-lfs-pull-to-ignore-some-files-folders))~~[<sup>1</sup>](#1)
 1. Be happy.
   <br>|||<br>
   Прочесть [заметку в Google+](#TODO:вставить-ссылку-на-заметку-в-google+) (если прежде ее не читали).
+
+###### \[1\]:
+Git LFS :soon: GitHub Pages:
+
+- [GitHub Pages won’t load files tracked using git-lfs](https://github.com/git-lfs/git-lfs/issues/791)
+- [GitHub Pages serving the reference file instead of the actual binary](https://github.com/git-lfs/git-lfs/issues/1342)
