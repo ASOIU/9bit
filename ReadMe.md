@@ -3,7 +3,7 @@
 <p align="center" style="text-align:center"><img src="https://user-images.githubusercontent.com/6351274/34527970-a5b667a6-f0a7-11e7-92fe-5065a982cf58.png" alt="'Девятый бит' mockup"></p>
 
 Обычный WordPress блог, ничего особого в нем нет ;)
-[Подробнее…](#TODO:вставить-ссылку-на-заметку-в-google+)
+[Подробнее…](https://plus.google.com/+ZiroKyl/posts/B9KuEZums2h)
 
 Includes / Включает в себя
 --------------------------
@@ -99,7 +99,7 @@ Usage for own blog / Загрузка темы для адаптации под 
   ~~(это может помочь увеличить скорость копирования: [LFS Tutorial](https://github.com/git-lfs/git-lfs/wiki/Tutorial#pulling-and-cloning), [`git lfs pull`](https://github.com/git-lfs/git-lfs/issues/325#issuecomment-149713215), [`GIT_LFS_SKIP_SMUDGE=1`](https://stackoverflow.com/questions/36376136/is-it-possible-for-git-lfs-pull-to-ignore-some-files-folders))~~[<sup>1</sup>](#1)
 1. :small_orange_diamond: Be happy.
 
-   :small_blue_diamond: Прочесть [заметку в Google+](#TODO:вставить-ссылку-на-заметку-в-google+) (если прежде ее не читали).
+   :small_blue_diamond: Прочесть [заметку в Google+](https://plus.google.com/+ZiroKyl/posts/B9KuEZums2h) (если прежде ее не читали).
 
 ______
 ###### \[1\]: Git LFS :soon: GitHub Pages:
