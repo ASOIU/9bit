@@ -34,7 +34,7 @@ Site available at http://localhost:4000 with live reload enabled.
 docker compose run --rm build
 ```
 
-Output goes to `_site/` directory.
+Output goes to `docs/` directory (configured for GitHub Pages deployment).
 
 ### Check for broken links and images
 
@@ -102,7 +102,7 @@ bundle exec jekyll serve --ssl-key test.key --ssl-cert test.crt
 ```bash
 gem install html-proofer
 bundle exec jekyll build
-htmlproofer ./_site --disable-external --ignore-urls '/taxonomy/,/#/'
+htmlproofer ./docs --disable-external --ignore-urls '/taxonomy/,/#/'
 ```
 
 Options:

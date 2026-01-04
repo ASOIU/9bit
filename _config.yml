@@ -115,7 +115,6 @@ plugins:
 #  - jemoji
 
 exclude:
-  - CNAME
   - '**readme'
   - '**readme.txt'
   - '**readme.md'
