@@ -1,0 +1,868 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta charset="windows-1251">
+<title>MyLivePage</title>
+<meta name="description" content="#liveСМИ &quot;Мои Живые страницы&quot;">
+<meta name="keywords" content="Новости, СМИ, бизнес, недвижимость, Выборы, РФ">
+<meta name="generator" content="DataLife Engine (http://dle-news.ru)">
+<link rel="search" type="application/opensearchdescription+xml" href="http://mylivepage.ru/engine/opensearch.php" title="MyLivePage">
+<link rel="alternate" type="application/rss+xml" title="MyLivePage" href="http://mylivepage.ru/rss.xml" />
+<link href="/engine/editor/css/default.css?v=22" rel="stylesheet" type="text/css">
+<script type="text/javascript" src="/engine/classes/js/jquery.js?v=22"></script>
+<script type="text/javascript" src="/engine/classes/js/jqueryui.js?v=22"></script>
+<script type="text/javascript" src="/engine/classes/js/dle_js.js?v=22"></script>
+	<link rel="stylesheet" href="/templates/mylivepage/css/style.css" type="text/css" />
+	<!--[if lte IE 7]>
+	<link rel="stylesheet" href="/templates/mylivepage/css/style-ie.css" type="text/css" />
+	<![endif]-->
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,700&amp;subset=cyrillic,cyrillic-ext,latin-ext" rel="stylesheet" />
+	<script type="text/javascript" src="/templates/mylivepage/js/jquery.ttabs.js"></script>
+	<script type="text/javascript" src="/templates/mylivepage/js/active.js"></script>
+	<link rel="shortcut icon" href="/templates/mylivepage/images/favicon.ico" type="image/x-icon" />    
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="f2019a3c2ff0889c9318b7f8d788e378" content="">    
+<meta name="rp91b7cee84255419cb14d862e6441b98b" content="765581a3b30edb1727affd3d0365442a" />
+    <meta name="telderi" content="4feb8f88d7b8f3b28f122d311bb38c5c" />
+<meta name="yandex-verification" content="c8a6435a93736c04" />
+
+
+</head>
+<body>
+<script type="text/javascript">
+<!--
+var dle_root       = '/';
+var dle_admin      = '';
+var dle_login_hash = 'd22a6768df0dd2a0b44e42de7fe74bf061038b0b';
+var dle_group      = 5;
+var dle_skin       = 'mylivepage';
+var dle_wysiwyg    = '1';
+var quick_wysiwyg  = '1';
+var dle_act_lang   = ["Да", "Нет", "Ввод", "Отмена", "Сохранить", "Удалить", "Загрузка. Пожалуйста, подождите..."];
+var menu_short     = 'Быстрое редактирование';
+var menu_full      = 'Полное редактирование';
+var menu_profile   = 'Просмотр профиля';
+var menu_send      = 'Отправить сообщение';
+var menu_uedit     = 'Админцентр';
+var dle_info       = 'Информация';
+var dle_confirm    = 'Подтверждение';
+var dle_prompt     = 'Ввод информации';
+var dle_req_field  = 'Заполните все необходимые поля';
+var dle_del_agree  = 'Вы действительно хотите удалить? Данное действие невозможно будет отменить';
+var dle_spam_agree = 'Вы действительно хотите отметить пользователя как спамера? Это приведёт к удалению всех его комментариев';
+var dle_complaint  = 'Укажите текст Вашей жалобы для администрации:';
+var dle_big_text   = 'Выделен слишком большой участок текста.';
+var dle_orfo_title = 'Укажите комментарий для администрации к найденной ошибке на странице';
+var dle_p_send     = 'Отправить';
+var dle_p_send_ok  = 'Уведомление успешно отправлено';
+var dle_save_ok    = 'Изменения успешно сохранены. Обновить страницу?';
+var dle_reply_title= 'Ответ на комментарий';
+var dle_tree_comm  = '0';
+var dle_del_news   = 'Удалить статью';
+var dle_sub_agree  = 'Вы действительно хотите подписаться на комментарии к данной публикации?';
+var allow_dle_delete_news   = false;
+var dle_search_delay   = false;
+var dle_search_value   = '';
+jQuery(function($){
+FastSearch();
+});
+//-->
+</script>
+
+
+<div class="login-block">
+<div class="login-block2">
+	<form method="post" action="">
+		<div class="login-line">
+			<div class="login-title">Логин:</div>
+			<input name="login_name" type="text" class="login-input-text" title="Ваше имя на сайте" />
+		</div>
+		<div class="login-line">
+			<div class="login-title">Пароль:</div>
+			<input name="login_password" type="password" class="login-input-text" title="Ваш пароль" />
+		</div>
+		<input onclick="submit();" type="submit" class="enter" value="ВОЙТИ" /><input name="login" type="hidden" id="login" value="submit" />
+		<div class="reg-link">
+			<a href="http://mylivepage.ru/index.php?do=register" title="регистрация на сайте">Регистрация</a> / 
+			<a href="http://mylivepage.ru/index.php?do=lostpassword" title="регистрация на сайте">Забыл все?</a>
+		</div>
+		
+		<div class="login-soc">
+			<div class="login-soc-title">
+				Войти через:
+			</div>
+			<a href="" class="login-soc1" target="_blank"></a>
+			<a href="" class="login-soc2" target="_blank"></a>
+			<a href="" class="login-soc3" target="_blank"></a>
+			<a href="" class="login-soc4" target="_blank"></a>
+			<a href="" class="login-soc5" target="_blank"></a>
+		</div>
+		
+	</form>
+	<div class="login-close"></div>
+</div>
+</div>
+
+<div class="head-block">
+	<div class="head-block2">
+		<a href="/" class="logo">
+			MY<span>LIVE</span>PAGE
+		</a>
+		<div class="head-soc">
+			<a href="#" class="head-soc1"></a>
+			<a href="#" class="head-soc2"></a>
+			<a href="#" class="head-soc3"></a>
+			<a href="#" class="head-soc4"></a>
+			<a href="#" class="head-soc5"></a>
+			<a href="#" class="head-soc6"></a>
+			<div style="clear: both;"></div>
+		</div>
+		<div class="head-right-icons">
+			<div class="open-login"></div>
+			<div class="open-search"></div>
+		</div>
+		<div class="search-block">
+			<form method="post"  action='' style="margin: 0;padding: 0;">
+				<input type="hidden" name="do" value="search"><input type="hidden" name="subaction" value="search" />
+				<input name="story" type="text" class="form-text" id="story" value="поиск по сайту" onblur="if(this.value=='') this.value='поиск по сайту';" onfocus="if(this.value=='поиск по сайту') this.value='';" title="наберите Ваш запрос и нажмите enter" />
+				<input type="image" src="/templates/mylivepage/images/open-search.png" value="Найти!" border="0" class="form-search" alt="Найти!" />
+			</form>
+		</div>
+		<div class="mob-menu"></div>
+	</div>
+</div>
+<div class="menu-line">
+	<div class="menu-line2">
+		<ul class="top-menu">
+			<li style="width: 56px;">
+				<div class="left-open"></div>
+			</li>
+			<li>
+				<a href="/" class="top-menu-link">Главная</a>
+			</li>
+			<li>
+				<a href="/v-mire/" class="top-menu-link">В Мире</a>
+			</li>
+			<li>
+				<a href="#" class="top-menu-link">Общество</a>
+				<div class="hidden-menu">
+					<a href="/religiya/">Религия</a>
+					<a href="/kriminal/">Криминал</a>
+				</div>
+			</li>
+			<li>
+				<a href="/ekonomika/" class="top-menu-link">Экономика</a>
+			</li>
+			<li>
+				<a href="/inopressa/" class="top-menu-link">Инопресса</a>
+			</li>
+			<li>
+				<a href="/sport/" class="top-menu-link">Спорт</a>
+			</li>
+           
+			<li>
+				<a href="/kultura/" class="top-menu-link">Культура</a>
+				<div class="hidden-menu">
+					<a href="/person/">Личности</a>
+				</div>
+			</li>            
+            
+			<li>
+				<a href="/photo/" class="top-menu-link">Фоторепортажи</a>
+			</li>            
+		</ul>
+	</div>
+</div>
+
+<div class="main-center-block">
+	<div class="left-col">
+		<div class="day-block">
+			<div class="day-block-left">
+				<div class="left-title">
+					<div class="left-title2">
+						Картина дня
+					</div>
+				</div>
+				<div class="day-left">
+	<div class="day-left-image">
+		<a href="http://mylivepage.ru/news/2220-gde-nauchitsya-upravlencheskomu-menedzhmentu.html"><img src="/templates/mylivepage/dleimages/no_image.jpg" alt="Где научиться управленческому менеджменту" /></a>
+	</div>
+	<div class="day-left-title">
+		<a href="http://mylivepage.ru/news/2220-gde-nauchitsya-upravlencheskomu-menedzhmentu.html">Где научиться управленческому менеджменту</a>
+	</div>
+	<div class="day-left-text">
+		Управленческий менеджмент — это фундаментальная компетенция, которая определяет качество работы руководителя и устойчивость всей
+	</div>
+</div><div class="day-left">
+	<div class="day-left-image">
+		<a href="http://mylivepage.ru/news/2219-sovremennye-materialy-i-tehnologii-dlya-pechati-interernyh-nakleek.html"><img src="/templates/mylivepage/dleimages/no_image.jpg" alt="Современные материалы и технологии для печати интерьерных наклеек" /></a>
+	</div>
+	<div class="day-left-title">
+		<a href="http://mylivepage.ru/news/2219-sovremennye-materialy-i-tehnologii-dlya-pechati-interernyh-nakleek.html">Современные материалы и технологии для печати интерьерных наклеек</a>
+	</div>
+	<div class="day-left-text">
+		Интерьерные стикеры давно вышли за рамки детских рисунков на стенах. Сейчас ими оформляют офисы, кафе, студии красоты, квартиры.
+	</div>
+</div><div class="day-left">
+	<div class="day-left-image">
+		<a href="http://mylivepage.ru/news/2218-gde-kupit-bilety-na-marshrutku.html"><img src="/templates/mylivepage/dleimages/no_image.jpg" alt="Где купить билеты на маршрутку?" /></a>
+	</div>
+	<div class="day-left-title">
+		<a href="http://mylivepage.ru/news/2218-gde-kupit-bilety-na-marshrutku.html">Где купить билеты на маршрутку?</a>
+	</div>
+	<div class="day-left-text">
+		Один из самых быстрых и бюджетных способов путешествовать между городами – маршрутное такси. Если вам срочно понадобилось ехать в
+	</div>
+</div><div class="day-left">
+	<div class="day-left-image">
+		<a href="http://mylivepage.ru/news/2217-vnesenie-tovarnogo-znaka-v-tamozhennyi-reestr-znachenie-procedura-i-prakticheskie-aspekty-zashchity-brenda.html"><img src="/templates/mylivepage/dleimages/no_image.jpg" alt="Внесение товарного знака в таможенный реестр: значение, процедура и практические аспекты защиты бренда" /></a>
+	</div>
+	<div class="day-left-title">
+		<a href="http://mylivepage.ru/news/2217-vnesenie-tovarnogo-znaka-v-tamozhennyi-reestr-znachenie-procedura-i-prakticheskie-aspekty-zashchity-brenda.html">Внесение товарного знака в таможенный реестр: значение, процедура и практические аспекты защиты бренда</a>
+	</div>
+	<div class="day-left-text">
+		Защита интеллектуальной собственности сегодня становится ключевым элементом безопасности бизнеса. Нарушения прав правообладателей
+	</div>
+</div>
+			</div>
+			<div class="day-block-right">
+				<div class="day-right">
+	<div class="day-right-image">
+		<a href="http://mylivepage.ru/v-mire/2200-komanda-bnb-chain-gotovit-revolyuciyu-v-infrastrukture-blokcheyna.html"><img src="/uploads/posts/2025-07/thumbs/1752734974_komanda-bnb-chain-gotovit-revolyuciyu-v-infrastrukture-blokcheyna.jpg" alt="Команда BNB Chain готовит революцию в инфраструктуре блокчейна" /><u></u></a>
+	</div>
+	<div class="day-right-bottom">
+		<div class="day-right-info">
+			<i>В мире</i> / 23 ноябрь 2025
+		</div>
+		<div class="day-right-title">
+			<a href="http://mylivepage.ru/v-mire/2200-komanda-bnb-chain-gotovit-revolyuciyu-v-infrastrukture-blokcheyna.html">Команда BNB Chain готовит революцию в инфраструктуре блокчейна</a>
+		</div>
+		<div class="day-right-text">
+			Разработчики BNB Chain объявили о запуске принципиально новой сети к 2026 году — с целью достичь
+		</div>
+	</div>
+</div><div class="day-right">
+	<div class="day-right-image">
+		<a href="http://mylivepage.ru/v-mire/2170-deyna-uayt-titulnyy-boy-ankalaeva-proydet-v-ramadan-bez-izmeneniy.html"><img src="/uploads/posts/2025-02/thumbs/1738359478_deyna-uayt-titulnyy-boy-ankalaeva-proydet-v-ramadan-bez-izmeneniy.jpg" alt="Дэйна Уайт: Титульный бой Анкалаева пройдет в Рамадан без изменений" /><u></u></a>
+	</div>
+	<div class="day-right-bottom">
+		<div class="day-right-info">
+			<i>В мире                    / Спорт</i> / 22 ноябрь 2025
+		</div>
+		<div class="day-right-title">
+			<a href="http://mylivepage.ru/v-mire/2170-deyna-uayt-titulnyy-boy-ankalaeva-proydet-v-ramadan-bez-izmeneniy.html">Дэйна Уайт: Титульный бой Анкалаева пройдет в Рамадан без изменений</a>
+		</div>
+		<div class="day-right-text">
+			Президент UFC Дэйна Уайт заявил, что титульный бой Магомеда Анкалаева против Алекса Перейры
+		</div>
+	</div>
+</div><div class="day-right">
+	<div class="day-right-image">
+		<a href="http://mylivepage.ru/v-mire/2201-zamorozka-kvantovouyazvimyh-bitkoinov-novaya-bipiniciativa.html"><img src="/uploads/posts/2025-07/thumbs/1752734965_zamorozka-kvantovouyazvimyh-bitkoinov.jpg" alt="Заморозка квантово?уязвимых биткоинов: новая BIP?инициатива" /><u></u></a>
+	</div>
+	<div class="day-right-bottom">
+		<div class="day-right-info">
+			<i>В мире                     / Экономика</i> / 22 ноябрь 2025
+		</div>
+		<div class="day-right-title">
+			<a href="http://mylivepage.ru/v-mire/2201-zamorozka-kvantovouyazvimyh-bitkoinov-novaya-bipiniciativa.html">Заморозка квантово?уязвимых биткоинов: новая BIP?инициатива</a>
+		</div>
+		<div class="day-right-text">
+			Группа криптографов под руководством Джеймсона Лоппа выдвинула предложение о приостановке операций
+		</div>
+	</div>
+</div>
+			</div>
+			<div style="clear: both;"></div>
+		</div>
+	</div>
+	<div class="right-col">
+		<div class="banner-block">
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- mylivepage -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:240px;height:400px"
+     data-ad-client="ca-pub-1885000219129768"
+     data-ad-slot="9288350245"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+		</div>
+		<div class="right-tabs">
+			<div class="tt-tabs">
+				<div class="index-tabs">
+					<span>Экономика</span>
+					<span>Происшествия</span>			
+				</div>
+				<div class="index-panel">
+					<div class="tt-panel">
+						<div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/news/2164-kak-zaymy-rabotnikam-prevraschayutsya-v-zarplaty-keys-brazmk.html"><img src="/uploads/posts/2024-12/thumbs/1735550240_kak-zaymy-rabotnikam-prevraschayutsya-v-zarplaty.jpg" alt="Как займы работникам превращаются в зарплаты: кейс БраЗМК" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/news/2164-kak-zaymy-rabotnikam-prevraschayutsya-v-zarplaty-keys-brazmk.html">Как займы работникам превращаются в зарплаты: кейс БраЗМК</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/news/2136-kirill-ignahin-level-budet-aktivno-razvivat-kommercheskuyu-nedvizhimost-v-moskve.html"><img src="/uploads/posts/2024-10/thumbs/1729118952_level-budet-aktivno-razvivat-kommercheskuyu-nedvizhimost-v-moskve.jpg" alt="Кирилл Игнахин: «Level будет активно развивать коммерческую недвижимость в Москве»" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/news/2136-kirill-ignahin-level-budet-aktivno-razvivat-kommercheskuyu-nedvizhimost-v-moskve.html">Кирилл Игнахин: «Level будет активно развивать коммерческую недвижимость в Москве»</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/v-mire/2201-zamorozka-kvantovouyazvimyh-bitkoinov-novaya-bipiniciativa.html"><img src="/uploads/posts/2025-07/thumbs/1752734965_zamorozka-kvantovouyazvimyh-bitkoinov.jpg" alt="Заморозка квантово?уязвимых биткоинов: новая BIP?инициатива" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/v-mire/2201-zamorozka-kvantovouyazvimyh-bitkoinov-novaya-bipiniciativa.html">Заморозка квантово?уязвимых биткоинов: новая BIP?инициатива</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/news/2180-obem-likvidnoy-chasti-fnb-rossii-snizilsya-bolee-chem-vdvoe-do-minimuma-s-2019-goda.html"><img src="/uploads/posts/2025-03/thumbs/1742123052_obem-likvidnoy-chasti-fnb-rossii-snizilsya-bolee-chem-vdvoe-do-minimuma-s-2019-goda.jpg" alt="Объем ликвидной части ФНБ России снизился более чем вдвое до минимума с 2019 года" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/news/2180-obem-likvidnoy-chasti-fnb-rossii-snizilsya-bolee-chem-vdvoe-do-minimuma-s-2019-goda.html">Объем ликвидной части ФНБ России снизился более чем вдвое до минимума с 2019 года</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/news/2198-mordashov-opisal-kak-sozdaval-biznes-na-chermk-v-usloviyah-krizisa.html"><img src="/uploads/posts/2025-07/thumbs/1752734752_mordashov-opisal-kak-sozdaval-biznes-na-chermk-v-usloviyah-krizisa.jpg" alt="Мордашов описал, как создавал бизнес на ЧерМК в условиях кризиса" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/news/2198-mordashov-opisal-kak-sozdaval-biznes-na-chermk-v-usloviyah-krizisa.html">Мордашов описал, как создавал бизнес на ЧерМК в условиях кризиса</a>
+	</div>
+</div>
+					</div>
+					<div class="tt-panel">
+						<div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/religiya/1718-bloger-poluchil-10-mesyacev-za-imitaciyu-seksa-u-hrama-vasiliya-blazhennogo.html"><img src="/uploads/posts/2021-10/medium/1635515256_snimok.jpg" alt="Блогер получил 10 месяцев за имитацию секса у храма Василия Блаженного" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/religiya/1718-bloger-poluchil-10-mesyacev-za-imitaciyu-seksa-u-hrama-vasiliya-blazhennogo.html">Блогер получил 10 месяцев за имитацию секса у храма Василия Блаженного</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/news/1680-patriarh-kirill-nagradil-medvedeva-ordenom.html"><img src="/uploads/posts/2021-10/medium/1635420057_snimok.jpg" alt="Патриарх Кирилл наградил Медведева орденом" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/news/1680-patriarh-kirill-nagradil-medvedeva-ordenom.html">Патриарх Кирилл наградил Медведева орденом</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/religiya/1274-papa-rimskiy-oficialno-razreshil-zhenschinam-byt-chtecami-na-bogosluzheniyah.html"><img src="/uploads/posts/2021-01/thumbs/1610484691_1.jpg" alt="Папа Римский официально разрешил женщинам быть чтецами на богослужениях" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/religiya/1274-papa-rimskiy-oficialno-razreshil-zhenschinam-byt-chtecami-na-bogosluzheniyah.html">Папа Римский официально разрешил женщинам быть чтецами на богослужениях</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/religiya/1176-skonchalsya-byvshiy-glava-belorusskoy-pravoslavnoy-cerkvi-filaret.html"><img src="/uploads/posts/2021-01/thumbs/1610458837_1.jpg" alt="Скончался бывший глава Белорусской православной церкви Филарет" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/religiya/1176-skonchalsya-byvshiy-glava-belorusskoy-pravoslavnoy-cerkvi-filaret.html">Скончался бывший глава Белорусской православной церкви Филарет</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/news/438-kareliya-sobrala-polmilliona-rubley-dlya-rekonstrukcii-uspenskoy-cerkvi.html"><img src="/uploads/posts/2018-09/thumbs/1538137672_1.jpg" alt="Карелия собрала полмиллиона рублей для реконструкции Успенской церкви" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/news/438-kareliya-sobrala-polmilliona-rubley-dlya-rekonstrukcii-uspenskoy-cerkvi.html">Карелия собрала полмиллиона рублей для реконструкции Успенской церкви</a>
+	</div>
+</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="right-tabs">
+			<div class="tt-tabs">
+				<div class="index-tabs">
+					<span>Спорт</span>
+					<span>Бизнес</span>			
+				</div>
+				<div class="index-panel">
+					<div class="tt-panel">
+						<div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/kriminal/2071-nazvan-razmer-krupneyshey-vzyatki-v-istorii-sovremennoy-rossii.html"><img src="/uploads/posts/2024-06/thumbs/1718267440_nazvan-razmer-krupneyshey-vzyatki-v-istorii-sovremennoy-rossii.jpg" alt="Назван размер крупнейшей взятки в истории современной России" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/kriminal/2071-nazvan-razmer-krupneyshey-vzyatki-v-istorii-sovremennoy-rossii.html">Назван размер крупнейшей взятки в истории современной России</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/kriminal/2072-eks-chinovniki-mvd-i-pravitelstva-karachaevo-cherkesii-zaderzhany-za-hischenie-byudzhetnyh-sredstv.html"><img src="/uploads/posts/2024-06/thumbs/1718267570_eks-chinovniki-mvd-i-pravitelstva-karachaevo-cherkesii-zaderzhany-za-hischenie-byudzhetnyh-sredstv.jpg" alt="Экс-чиновники МВД и правительства Карачаево-Черкесии задержаны за хищение бюджетных средств" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/kriminal/2072-eks-chinovniki-mvd-i-pravitelstva-karachaevo-cherkesii-zaderzhany-za-hischenie-byudzhetnyh-sredstv.html">Экс-чиновники МВД и правительства Карачаево-Черкесии задержаны за хищение бюджетных средств</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/kriminal/1876-v-peterburge-revakcinaciyu-ot-kovida-provodyat-nazalnoy-vakcinoy.html"><img src="/uploads/posts/2022-10/thumbs/1664994918_11.jpg" alt="В Петербурге ревакцинацию от ковида проводят назальной вакциной" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/kriminal/1876-v-peterburge-revakcinaciyu-ot-kovida-provodyat-nazalnoy-vakcinoy.html">В Петербурге ревакцинацию от ковида проводят назальной вакциной</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/kriminal/1818-v-amsterdame-muzhchina-pyat-chasov-derzhal-zalozhnika-v-magazine-apple-treboval-200-mln-evro.html"><img src="/uploads/posts/2022-07/thumbs/1657100257_v-amsterdame-muzhchina-pyat-chasov-derzhal-zalozhnika-v-magazine-apple-treboval-200-mln-evro.jpg" alt="В Амстердаме мужчина пять часов держал заложника в магазине Apple: требовал 200 млн евро" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/kriminal/1818-v-amsterdame-muzhchina-pyat-chasov-derzhal-zalozhnika-v-magazine-apple-treboval-200-mln-evro.html">В Амстердаме мужчина пять часов держал заложника в магазине Apple: требовал 200 млн евро</a>
+	</div>
+</div>
+					</div>
+					<div class="tt-panel">
+						<div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/v-mire/2170-deyna-uayt-titulnyy-boy-ankalaeva-proydet-v-ramadan-bez-izmeneniy.html"><img src="/uploads/posts/2025-02/thumbs/1738359478_deyna-uayt-titulnyy-boy-ankalaeva-proydet-v-ramadan-bez-izmeneniy.jpg" alt="Дэйна Уайт: Титульный бой Анкалаева пройдет в Рамадан без изменений" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/v-mire/2170-deyna-uayt-titulnyy-boy-ankalaeva-proydet-v-ramadan-bez-izmeneniy.html">Дэйна Уайт: Титульный бой Анкалаева пройдет в Рамадан без изменений</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/news/2178-magomed-ankalaev-stal-chempionom-ufc-v-polutyazhelom-vese.html"><img src="/uploads/posts/2025-03/thumbs/1741507224_magomed-ankalaev-stal-chempionom-ufc-v-polutyazhelom-vese.jpg" alt="Магомед Анкалаев стал чемпионом UFC в полутяжелом весе" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/news/2178-magomed-ankalaev-stal-chempionom-ufc-v-polutyazhelom-vese.html">Магомед Анкалаев стал чемпионом UFC в полутяжелом весе</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/news/2177-magomed-ankalaev-zavoeval-titul-chempiona-ufc-v-polutyazhelom-vese.html"><img src="/uploads/posts/2025-03/thumbs/1741506967_magomed-ankalaev-zavoeval-titul-chempiona-ufc-v-polutyazhelom-vese.jpg" alt="Магомед Анкалаев завоевал титул чемпиона UFC в полутяжелом весе" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/news/2177-magomed-ankalaev-zavoeval-titul-chempiona-ufc-v-polutyazhelom-vese.html">Магомед Анкалаев завоевал титул чемпиона UFC в полутяжелом весе</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/news/2169-cska-obygral-rostov-v-zimnem-kubke-rpl.html"><img src="/uploads/posts/2025-02/thumbs/1738359056_cska-obygral-rostov-v-zimnem-kubke-rpl.jpg" alt="ЦСКА обыграл «Ростов» в Зимнем кубке РПЛ" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/news/2169-cska-obygral-rostov-v-zimnem-kubke-rpl.html">ЦСКА обыграл «Ростов» в Зимнем кубке РПЛ</a>
+	</div>
+</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div style="clear: both;"></div>
+</div>
+<div style="clear: both;height: 100px;"></div>
+<div class="center-news-block">
+	<div class="main-center-block">
+		<div class="center-title">
+			<div class="center-title2">
+				Лента новостей
+			</div>
+		</div>
+		<div class="left-col">
+			<div id='dle-content'><div class="main-news">
+	<div class="main-news-image">
+		<a href="http://mylivepage.ru/news/2220-gde-nauchitsya-upravlencheskomu-menedzhmentu.html"><img src="/templates/mylivepage/dleimages/no_image.jpg" alt="Где научиться управленческому менеджменту" /></a>
+	</div>
+	<div class="day-right-info">
+		<i>Новости</i> / 24 декабрь 2025
+	</div>
+	<div class="main-news-title">
+		<a href="http://mylivepage.ru/news/2220-gde-nauchitsya-upravlencheskomu-menedzhmentu.html">Где научиться управленческому менеджменту</a>
+	</div>
+	<div class="main-news-text">
+		Управленческий менеджмент — это фундаментальная компетенция, которая определяет качество работы руководителя и устойчивость всей организации. Современный менеджер должен владеть инструментами
+	</div>
+</div><div class="main-news">
+	<div class="main-news-image">
+		<a href="http://mylivepage.ru/news/2219-sovremennye-materialy-i-tehnologii-dlya-pechati-interernyh-nakleek.html"><img src="/templates/mylivepage/dleimages/no_image.jpg" alt="Современные материалы и технологии для печати интерьерных наклеек" /></a>
+	</div>
+	<div class="day-right-info">
+		<i>Новости</i> / 15 декабрь 2025
+	</div>
+	<div class="main-news-title">
+		<a href="http://mylivepage.ru/news/2219-sovremennye-materialy-i-tehnologii-dlya-pechati-interernyh-nakleek.html">Современные материалы и технологии для печати интерьерных наклеек</a>
+	</div>
+	<div class="main-news-text">
+		Интерьерные стикеры давно вышли за рамки детских рисунков на стенах. Сейчас ими оформляют офисы, кафе, студии красоты, квартиры.
+	</div>
+</div><div class="main-news">
+	<div class="main-news-image">
+		<a href="http://mylivepage.ru/news/2218-gde-kupit-bilety-na-marshrutku.html"><img src="/templates/mylivepage/dleimages/no_image.jpg" alt="Где купить билеты на маршрутку?" /></a>
+	</div>
+	<div class="day-right-info">
+		<i>Новости</i> / 10 декабрь 2025
+	</div>
+	<div class="main-news-title">
+		<a href="http://mylivepage.ru/news/2218-gde-kupit-bilety-na-marshrutku.html">Где купить билеты на маршрутку?</a>
+	</div>
+	<div class="main-news-text">
+		Один из самых быстрых и бюджетных способов путешествовать между городами – маршрутное такси. Если вам срочно понадобилось ехать в соседний город, то всего пара часов в маршрутке – и вы окажетесь на
+	</div>
+</div><div class="main-news">
+	<div class="main-news-image">
+		<a href="http://mylivepage.ru/news/2217-vnesenie-tovarnogo-znaka-v-tamozhennyi-reestr-znachenie-procedura-i-prakticheskie-aspekty-zashchity-brenda.html"><img src="/templates/mylivepage/dleimages/no_image.jpg" alt="Внесение товарного знака в таможенный реестр: значение, процедура и практические аспекты защиты бренда" /></a>
+	</div>
+	<div class="day-right-info">
+		<i>Новости</i> / 05 декабрь 2025
+	</div>
+	<div class="main-news-title">
+		<a href="http://mylivepage.ru/news/2217-vnesenie-tovarnogo-znaka-v-tamozhennyi-reestr-znachenie-procedura-i-prakticheskie-aspekty-zashchity-brenda.html">Внесение товарного знака в таможенный реестр: значение, процедура и практические аспекты защиты бренда</a>
+	</div>
+	<div class="main-news-text">
+		Защита интеллектуальной собственности сегодня становится ключевым элементом безопасности бизнеса. Нарушения прав правообладателей — от ввоза контрафактной продукции до параллельного импорта товаров —
+	</div>
+</div><div class="main-news">
+	<div class="main-news-image">
+		<a href="http://mylivepage.ru/news/2164-kak-zaymy-rabotnikam-prevraschayutsya-v-zarplaty-keys-brazmk.html"><img src="/uploads/posts/2024-12/thumbs/1735550240_kak-zaymy-rabotnikam-prevraschayutsya-v-zarplaty.jpg" alt="Как займы работникам превращаются в зарплаты: кейс БраЗМК" /></a>
+	</div>
+	<div class="day-right-info">
+		<i>Новости         / Экономика</i> / 24 ноябрь 2025
+	</div>
+	<div class="main-news-title">
+		<a href="http://mylivepage.ru/news/2164-kak-zaymy-rabotnikam-prevraschayutsya-v-zarplaty-keys-brazmk.html">Как займы работникам превращаются в зарплаты: кейс БраЗМК</a>
+	</div>
+	<div class="main-news-text">
+		Арбитражный суд поддержал доначисление НДФЛ на займы работникам. Как налоговики переквалифицируют выплаты и что это значит для бизнеса — в материале.
+	</div>
+</div><div class="main-news">
+	<div class="main-news-image">
+		<a href="http://mylivepage.ru/v-mire/2200-komanda-bnb-chain-gotovit-revolyuciyu-v-infrastrukture-blokcheyna.html"><img src="/uploads/posts/2025-07/thumbs/1752734974_komanda-bnb-chain-gotovit-revolyuciyu-v-infrastrukture-blokcheyna.jpg" alt="Команда BNB Chain готовит революцию в инфраструктуре блокчейна" /></a>
+	</div>
+	<div class="day-right-info">
+		<i>В мире</i> / 23 ноябрь 2025
+	</div>
+	<div class="main-news-title">
+		<a href="http://mylivepage.ru/v-mire/2200-komanda-bnb-chain-gotovit-revolyuciyu-v-infrastrukture-blokcheyna.html">Команда BNB Chain готовит революцию в инфраструктуре блокчейна</a>
+	</div>
+	<div class="main-news-text">
+		Разработчики BNB Chain объявили о запуске принципиально новой сети к 2026 году — с целью достичь почти мгновенной обработки транзакций и производительности до 20?000 операций в секунду.
+	</div>
+</div><div class="main-news">
+	<div class="main-news-image">
+		<a href="http://mylivepage.ru/news/2136-kirill-ignahin-level-budet-aktivno-razvivat-kommercheskuyu-nedvizhimost-v-moskve.html"><img src="/uploads/posts/2024-10/thumbs/1729118952_level-budet-aktivno-razvivat-kommercheskuyu-nedvizhimost-v-moskve.jpg" alt="Кирилл Игнахин: «Level будет активно развивать коммерческую недвижимость в Москве»" /></a>
+	</div>
+	<div class="day-right-info">
+		<i>Новости           / Экономика</i> / 22 ноябрь 2025
+	</div>
+	<div class="main-news-title">
+		<a href="http://mylivepage.ru/news/2136-kirill-ignahin-level-budet-aktivno-razvivat-kommercheskuyu-nedvizhimost-v-moskve.html">Кирилл Игнахин: «Level будет активно развивать коммерческую недвижимость в Москве»</a>
+	</div>
+	<div class="main-news-text">
+		Генеральный директор Level Group Кирилл Игнахин рассказал о планах компании по развитию коммерческой недвижимости и выделил ключевые тренды этого сегмента.
+	</div>
+</div><div class="main-news">
+	<div class="main-news-image">
+		<a href="http://mylivepage.ru/v-mire/2170-deyna-uayt-titulnyy-boy-ankalaeva-proydet-v-ramadan-bez-izmeneniy.html"><img src="/uploads/posts/2025-02/thumbs/1738359478_deyna-uayt-titulnyy-boy-ankalaeva-proydet-v-ramadan-bez-izmeneniy.jpg" alt="Дэйна Уайт: Титульный бой Анкалаева пройдет в Рамадан без изменений" /></a>
+	</div>
+	<div class="day-right-info">
+		<i>В мире            / Спорт</i> / 22 ноябрь 2025
+	</div>
+	<div class="main-news-title">
+		<a href="http://mylivepage.ru/v-mire/2170-deyna-uayt-titulnyy-boy-ankalaeva-proydet-v-ramadan-bez-izmeneniy.html">Дэйна Уайт: Титульный бой Анкалаева пройдет в Рамадан без изменений</a>
+	</div>
+	<div class="main-news-text">
+		Президент UFC Дэйна Уайт заявил, что титульный бой Магомеда Анкалаева против Алекса Перейры состоится 8 марта, несмотря на совпадение с месяцем Рамадан.
+	</div>
+</div><div class="main-news">
+	<div class="main-news-image">
+		<a href="http://mylivepage.ru/v-mire/2201-zamorozka-kvantovouyazvimyh-bitkoinov-novaya-bipiniciativa.html"><img src="/uploads/posts/2025-07/thumbs/1752734965_zamorozka-kvantovouyazvimyh-bitkoinov.jpg" alt="Заморозка квантово?уязвимых биткоинов: новая BIP?инициатива" /></a>
+	</div>
+	<div class="day-right-info">
+		<i>В мире             / Экономика</i> / 22 ноябрь 2025
+	</div>
+	<div class="main-news-title">
+		<a href="http://mylivepage.ru/v-mire/2201-zamorozka-kvantovouyazvimyh-bitkoinov-novaya-bipiniciativa.html">Заморозка квантово?уязвимых биткоинов: новая BIP?инициатива</a>
+	</div>
+	<div class="main-news-text">
+		Группа криптографов под руководством Джеймсона Лоппа выдвинула предложение о приостановке операций с частью биткоинов, уязвимых к атакам со стороны квантовых компьютеров.
+	</div>
+</div><div class="main-news">
+	<div class="main-news-image">
+		<a href="http://mylivepage.ru/news/2180-obem-likvidnoy-chasti-fnb-rossii-snizilsya-bolee-chem-vdvoe-do-minimuma-s-2019-goda.html"><img src="/uploads/posts/2025-03/thumbs/1742123052_obem-likvidnoy-chasti-fnb-rossii-snizilsya-bolee-chem-vdvoe-do-minimuma-s-2019-goda.jpg" alt="Объем ликвидной части ФНБ России снизился более чем вдвое до минимума с 2019 года" /></a>
+	</div>
+	<div class="day-right-info">
+		<i>Новости              / Экономика</i> / 22 ноябрь 2025
+	</div>
+	<div class="main-news-title">
+		<a href="http://mylivepage.ru/news/2180-obem-likvidnoy-chasti-fnb-rossii-snizilsya-bolee-chem-vdvoe-do-minimuma-s-2019-goda.html">Объем ликвидной части ФНБ России снизился более чем вдвое до минимума с 2019 года</a>
+	</div>
+	<div class="main-news-text">
+		По данным Министерства финансов РФ, на 1 марта 2025 года объем ликвидной части Фонда национального благосостояния (ФНБ) составил около 3,4 трлн рублей, что почти в 2,5 раза меньше показателя начала
+	</div>
+</div><div class="navigation">
+	<div class="navigation-center">
+		<span>1</span> <a href="http://mylivepage.ru/page/2/">2</a> <a href="http://mylivepage.ru/page/3/">3</a> <a href="http://mylivepage.ru/page/4/">4</a> <a href="http://mylivepage.ru/page/5/">5</a> <a href="http://mylivepage.ru/page/6/">6</a> <a href="http://mylivepage.ru/page/7/">7</a> <a href="http://mylivepage.ru/page/8/">8</a> <a href="http://mylivepage.ru/page/9/">9</a> <a href="http://mylivepage.ru/page/10/">10</a> <span class="nav_ext">...</span> <a href="http://mylivepage.ru/page/162/">162</a>
+	</div>
+	<div style="clear: both;"></div>
+</div></div>
+			<div style="clear: both;"></div>
+		</div>
+		<div class="right-col">
+			<div class="banner-block">
+
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- mylivepage -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:240px;height:400px"
+     data-ad-client="ca-pub-1885000219129768"
+     data-ad-slot="9288350245"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+			</div>
+			<div class="right-tabs">
+			<div class="tt-tabs">
+				<div class="index-tabs">
+					<span>Авто</span>
+					<span>Здоровье</span>			
+				</div>
+				<div class="index-panel">
+					<div class="tt-panel">
+						<div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/news/2075-turisticheskiy-sbor-mogut-razreshit-vvodit-s-2025-goda.html"><img src="/uploads/posts/2024-06/thumbs/1718969054_turisticheskiy-sbor-mogut-razreshit-vvodit-s-2025-goda.jpg" alt="Туристический сбор могут разрешить вводить с 2025 года" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/news/2075-turisticheskiy-sbor-mogut-razreshit-vvodit-s-2025-goda.html">Туристический сбор могут разрешить вводить с 2025 года</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/news/2089-vtoroy-pianisticheskiy-marafon-v-ekaterinburge-fortepiannaya-muzyka-na-green-royal-fest.html"><img src="/uploads/posts/2024-08/thumbs/1723538283_vtoroy-pianisticheskiy-marafon-v-ekaterinburge.jpg" alt="Второй пианистический марафон в Екатеринбурге: фортепианная музыка на Green Royal Fest" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/news/2089-vtoroy-pianisticheskiy-marafon-v-ekaterinburge-fortepiannaya-muzyka-na-green-royal-fest.html">Второй пианистический марафон в Екатеринбурге: фортепианная музыка на Green Royal Fest</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/news/2061-v-volgograde-prozvuchala-premera-novoy-pesni-vydayuschegosya-kompozitora-aleksandry-pahmutovoy.html"><img src="/uploads/posts/2024-05/thumbs/1715153715_v-volgograde-prozvuchala-premera-novoy-pesni-vydayuschegosya-kompozitora-aleksandry-pahmutovoy.jpg" alt="В Волгограде прозвучала премьера новой песни выдающегося композитора Александры Пахмутовой" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/news/2061-v-volgograde-prozvuchala-premera-novoy-pesni-vydayuschegosya-kompozitora-aleksandry-pahmutovoy.html">В Волгограде прозвучала премьера новой песни выдающегося композитора Александры Пахмутовой</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/news/1898-v-rossiyskom-prokate-poyavilas-piratskaya-versiya-filma-avatar-put-vody.html"><img src="/uploads/posts/2022-12/thumbs/1672054278_v-rossiyskom-prokate-poyavilas-piratskaya-versiya-filma-avatar-put-vody.jpg" alt="В российском прокате появилась пиратская версия фильма «Аватар: Путь воды»" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/news/1898-v-rossiyskom-prokate-poyavilas-piratskaya-versiya-filma-avatar-put-vody.html">В российском прокате появилась пиратская версия фильма «Аватар: Путь воды»</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/kultura/1932-pacienty-teper-mogut-rugat-vrachey-v-internete.html"><img src="/uploads/posts/2023-02/thumbs/1676801019_pacienty-teper-mogut-rugat-vrachey-v-internete.jpg" alt="Пациенты теперь могут ругать врачей в интернете" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/kultura/1932-pacienty-teper-mogut-rugat-vrachey-v-internete.html">Пациенты теперь могут ругать врачей в интернете</a>
+	</div>
+</div>
+					</div>
+					<div class="tt-panel">
+						<div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/news/2166-profsoyuzy-ocenili-nedostupnost-ipoteki-dlya-semey-v-rossii.html"><img src="/uploads/posts/2024-12/thumbs/1735550739_profsoyuzy-ocenili-nedostupnost-ipoteki-dlya-semey-v-rossii.jpg" alt="Профсоюзы оценили недоступность ипотеки для семей в России" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/news/2166-profsoyuzy-ocenili-nedostupnost-ipoteki-dlya-semey-v-rossii.html">Профсоюзы оценили недоступность ипотеки для семей в России</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/news/1979-portativnaya-konsol-aokzoe-a1-pro-na-chto-sposoben-igpu-radeon-780m.html"><img src="/uploads/posts/2023-05/thumbs/1683362334_portativnaya-konsol-aokzoe-a1-pro-na-chto-sposoben-igpu-radeon-780m.jpg" alt="Портативная консоль AOKZOE A1 Pro: на что способен iGPU Radeon 780M" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/news/1979-portativnaya-konsol-aokzoe-a1-pro-na-chto-sposoben-igpu-radeon-780m.html">Портативная консоль AOKZOE A1 Pro: на что способен iGPU Radeon 780M</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/news/1899-zvanie-luchshego-smartfona-2022-goda-poluchil-google-pixel-7-pro.html"><img src="/uploads/posts/2022-12/thumbs/1672054396_zvanie-luchshego-smartfona-2022-goda-poluchil-google-pixel-7-pro.jpg" alt="Звание лучшего смартфона 2022 года получил Google Pixel 7 Pro" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/news/1899-zvanie-luchshego-smartfona-2022-goda-poluchil-google-pixel-7-pro.html">Звание лучшего смартфона 2022 года получил Google Pixel 7 Pro</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/inopressa/1918-telekanal-dozhd-skazal-o-perenose-redakcionnogo-centra-v-amsterdam.html"><img src="/uploads/posts/2023-02/thumbs/1676734547_3.jpg" alt="Телеканал Дождь сказал о переносе редакционного центра в Амстердам" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/inopressa/1918-telekanal-dozhd-skazal-o-perenose-redakcionnogo-centra-v-amsterdam.html">Телеканал Дождь сказал о переносе редакционного центра в Амстердам</a>
+	</div>
+</div><div class="right-news">
+	<div class="right-news-image">
+		<a href="http://mylivepage.ru/inopressa/1938-kak-spasti-svoyu-pechen-ot-porazheniya-vrach-nazvala-pyat-prostyh-produktov.html"><img src="/uploads/posts/2023-02/thumbs/1676811080_9.jpg" alt="Как спасти свою печень от поражения: Врач назвала пять простых продуктов" /></a>
+	</div>
+	<div class="right-news-title">
+		<a href="http://mylivepage.ru/inopressa/1938-kak-spasti-svoyu-pechen-ot-porazheniya-vrach-nazvala-pyat-prostyh-produktov.html">Как спасти свою печень от поражения: Врач назвала пять простых продуктов</a>
+	</div>
+</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		</div>
+		<div style="clear: both;"></div>
+	</div>
+</div>
+<div class="photo-block">
+	<div class="photo-block2">
+		<div class="center-title">
+			<div class="center-title2">
+				Фоторепортажи
+			</div>
+		</div>
+		<div class="photo-block-content">
+			<div class="photo-slider">
+				<div class="photo-news">
+	<div class="photo-news-image">
+		<a href="http://mylivepage.ru/kultura/1960-kak-shvedskiy-startap-razrabatyvaet-elektrosamolet-ponravitsya-grete-tunberg.html"><img src="/uploads/posts/2023-02/thumbs/1676907738_kak-shvedskiy-startap-razrabatyvaet-elektrosamolet-ponravitsya-grete-tunberg-3.jpg" alt="Как шведский стартап разрабатывает электросамолет – понравится Грете Тунберг" /><u></u></a>
+	</div>
+	<div class="photo-news-title">
+		<a href="http://mylivepage.ru/kultura/1960-kak-shvedskiy-startap-razrabatyvaet-elektrosamolet-ponravitsya-grete-tunberg.html">Как шведский стартап разрабатывает электросамолет – понравится Грете Тунберг</a>
+	</div>
+</div><div class="photo-news">
+	<div class="photo-news-image">
+		<a href="http://mylivepage.ru/ekonomika/1957-ne-tolko-neuralink-sovremennye-startapy-kotorye-delayut-neyrotehnologii-massovymi.html"><img src="/uploads/posts/2023-02/thumbs/1676905888_ne-tolko-neuralink-sovremennye-startapy-kotorye-delayut-neyrotehnologii-massovymi.jpg" alt="Не только Neuralink: современные стартапы, которые делают нейротехнологии массовыми" /><u></u></a>
+	</div>
+	<div class="photo-news-title">
+		<a href="http://mylivepage.ru/ekonomika/1957-ne-tolko-neuralink-sovremennye-startapy-kotorye-delayut-neyrotehnologii-massovymi.html">Не только Neuralink: современные стартапы, которые делают нейротехнологии массовыми</a>
+	</div>
+</div><div class="photo-news">
+	<div class="photo-news-image">
+		<a href="http://mylivepage.ru/ekonomika/1964-o-zdorove-i-ume-kto-razvivaet-ii-v-rossiyskom-healthtech.html"><img src="/uploads/posts/2023-02/thumbs/1676919131_o-zdorove-i-ume-kto-razvivaet-ii-v-rossiyskom-healthtech-2.jpg" alt="О здоровье и уме: кто развивает ИИ в российском HealthTech" /><u></u></a>
+	</div>
+	<div class="photo-news-title">
+		<a href="http://mylivepage.ru/ekonomika/1964-o-zdorove-i-ume-kto-razvivaet-ii-v-rossiyskom-healthtech.html">О здоровье и уме: кто развивает ИИ в российском HealthTech</a>
+	</div>
+</div><div class="photo-news">
+	<div class="photo-news-image">
+		<a href="http://mylivepage.ru/news/972-v-ivanove-otkrylsya-pervyy-magazin-lerua-merlen.html"><img src="/uploads/posts/2019-12/thumbs/1576857798_2.jpg" alt="В Иванове открылся первый магазин «Леруа Мерлен»" /><u></u></a>
+	</div>
+	<div class="photo-news-title">
+		<a href="http://mylivepage.ru/news/972-v-ivanove-otkrylsya-pervyy-magazin-lerua-merlen.html">В Иванове открылся первый магазин «Леруа Мерлен»</a>
+	</div>
+</div><div class="photo-news">
+	<div class="photo-news-image">
+		<a href="http://mylivepage.ru/news/934-fotokonkurs-raboty-pokazat-i-sebya-zarekomendovat.html"><img src="/uploads/posts/2019-11/thumbs/1573326123_1.jpg" alt="Фотоконкурс – работы показать и себя зарекомендовать" /><u></u></a>
+	</div>
+	<div class="photo-news-title">
+		<a href="http://mylivepage.ru/news/934-fotokonkurs-raboty-pokazat-i-sebya-zarekomendovat.html">Фотоконкурс – работы показать и себя зарекомендовать</a>
+	</div>
+</div>
+			</div>
+			<div class="photo-left"></div>
+			<div class="photo-right"></div>
+		</div>
+	</div>
+</div>
+
+
+<div class="footer">
+	<div class="footer2">
+		<div class="footer-left">
+			<a href="/" class="footer-logo">
+				MY<span>LIVE</span>PAGE
+			</a>
+			<div class="footer-text">
+Эстетика и культура, мода и спорт – выбираем www.mylivepage.ru и остаёмся в курсе самых свежих событий нашей родины и мира. И не забываем, что копирование материалов без согласия администрации строго запрещено. Если же нужно процитировать не более одного абзаца, то это допускается  без согласования с администрацией при условии прямой, открытой для поисковых систем гиперссылки на сайт www.mylivepage.ru.                
+<br><br>
+2005 - 2018 © mylivepage.ru
+                <br>                
+                
+			</div>
+		</div>
+		<div class="footer-center">
+			<div class="footer-menu">
+			<a href="/">Главная</a>
+			<a href="/v-mire/">В Мире</a>
+			<a href="#">Общество</a>
+			<a href="/religiya/">Религия</a>
+			<a href="/kriminal/">Криминал</a>
+			</div>
+			<div class="footer-menu">
+			<a href="/ekonomika/">Экономика</a>
+			<a href="/inopressa/">Инопресса</a>
+			<a href="/sport/">Спорт</a>
+			<a href="/kultura/">Культура</a>
+			<a href="/photo/">Фоторепортажи</a>   
+			</div>
+		</div>
+		<div class="footer-right">
+            
+<!--LiveInternet counter--><script type="text/javascript">
+document.write("<a href='//www.liveinternet.ru/click' "+
+"target=_blank><img src='//counter.yadro.ru/hit?t26.11;r"+
+escape(document.referrer)+((typeof(screen)=="undefined")?"":
+";s"+screen.width+"*"+screen.height+"*"+(screen.colorDepth?
+screen.colorDepth:screen.pixelDepth))+";u"+escape(document.URL)+
+";"+Math.random()+
+"' alt='' title='LiveInternet: показано число посетителей за"+
+" сегодня' "+
+"border='0' width='88' height='15'><\/a>")
+</script><!--/LiveInternet-->
+            
+<!-- Yandex.Metrika informer -->
+<a href="https://metrika.yandex.ua/stat/?id=47227944&amp;from=informer"
+target="_blank" rel="nofollow"><img src="https://informer.yandex.ru/informer/47227944/3_1_FFFFFFFF_EFEFEFFF_0_pageviews"
+style="width:88px; height:31px; border:0;" alt="Яндекс.Метрика" title="Яндекс.Метрика: данные за сегодня (просмотры, визиты и уникальные посетители)" class="ym-advanced-informer" data-cid="47227944" data-lang="ru" /></a>
+<!-- /Yandex.Metrika informer -->
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function (d, w, c) {
+        (w[c] = w[c] || []).push(function() {
+            try {
+                w.yaCounter47227944 = new Ya.Metrika({
+                    id:47227944,
+                    clickmap:true,
+                    trackLinks:true,
+                    accurateTrackBounce:true
+                });
+            } catch(e) { }
+        });
+
+        var n = d.getElementsByTagName("script")[0],
+            s = d.createElement("script"),
+            f = function () { n.parentNode.insertBefore(s, n); };
+        s.type = "text/javascript";
+        s.async = true;
+        s.src = "https://mc.yandex.ru/metrika/watch.js";
+
+        if (w.opera == "[object Opera]") {
+            d.addEventListener("DOMContentLoaded", f, false);
+        } else { f(); }
+    })(document, window, "yandex_metrika_callbacks");
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/47227944" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
+            
+		</div>
+		<div style="clear: both;"></div>
+	</div>
+</div>
+<div class="mob-shad"></div>
+<div class="mob-panel">
+	<div class="mob-panel2">
+		<div class="menu1">
+			
+		</div>
+		<div class="menu2">
+			<a href="/">Главная</a>
+			<a href="/v-mire/">В Мире</a>
+			<a href="#">Общество</a>
+			<a href="/religiya/">Религия</a>
+			<a href="/kriminal/">Криминал</a>
+			<a href="/ekonomika/">Экономика</a>
+			<a href="/inopressa/">Инопресса</a>
+			<a href="/sport/">Спорт</a>
+			<a href="/kultura/">Культура</a>
+			<a href="/photo/">Фоторепортажи</a> 
+		</div>
+	</div>	
+</div>
+<div class="mob-close"></div>
+<!--[if IE 6]>
+<a href="http://www.microsoft.com/rus/windows/internet-explorer/worldwide-sites.aspx" class="alert"></a>
+<![endif]-->
+</body>
+</html>
+<!-- DataLife Engine Copyright SoftNews Media Group (http://dle-news.ru) -->

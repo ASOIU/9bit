@@ -1,0 +1,41 @@
+services:
+  jekyll:
+    build: .
+    ports:
+      - "4000:4000"
+      - "35729:35729"  # LiveReload
+    volumes:
+      - .:/site
+      - bundle_cache:/usr/local/bundle
+    environment:
+      - JEKYLL_ENV=development
+    command: >
+      sh -c "bundle install &&
+             bundle exec jekyll serve --host 0.0.0.0 --livereload"
+
+  # Build static site only (no server)
+  build:
+    build: .
+    volumes:
+      - .:/site
+      - bundle_cache:/usr/local/bundle
+    command: sh -c "bundle install && bundle exec jekyll build"
+    profiles:
+      - build
+
+  # Check for broken links and images
+  htmlproofer:
+    build: .
+    volumes:
+      - .:/site
+      - bundle_cache:/usr/local/bundle
+    command: >
+      sh -c "bundle install &&
+             bundle exec jekyll build &&
+             gem install html-proofer &&
+             htmlproofer ./docs --disable-external --ignore-urls '/taxonomy/,/#/'"
+    profiles:
+      - test
+
+volumes:
+  bundle_cache:

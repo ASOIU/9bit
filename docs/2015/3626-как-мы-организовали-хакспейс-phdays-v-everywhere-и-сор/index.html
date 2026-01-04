@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>Как мы организовали хакспейс PHDays V Everywhere и соревнование OmskCTF &laquo; Девятый бит</title>
+	<meta name="viewport" content="width=968, initial-scale=0.796, maximum-scale=0.796">
+	<!-- Optimal "mobile" scale: double tap on ".post h1" (selector) element -->
+	<meta name="MobileOptimized" content="968">
+	<link rel="stylesheet" href="/theme/main.css" media="screen">
+	<noscript><link rel="stylesheet" href="/theme/crypto-currency/crdon_no-js.css"></noscript>
+	<noscript><link rel="stylesheet" href="/theme/github-button/gh-btn.css"></noscript>
+	<link rel="alternate" type="application/atom+xml" href="/feed.xml" title="Девятый бит Atom Feed">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+			<link rel="edit" href="https://github.com/ASOIU/9bit/blob/master/_posts/2015-07-01-3626-как-мы-организовали-хакспейс-phdays-v-everywhere-и-сор.html" title="Улучшить эту статью">
+			<link rel="canonical" href="http://9b.asoiu.com/2015/3626-%D0%BA%D0%B0%D0%BA-%D0%BC%D1%8B-%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D0%BB%D0%B8-%D1%85%D0%B0%D0%BA%D1%81%D0%BF%D0%B5%D0%B9%D1%81-phdays-v-everywhere-%D0%B8-%D1%81%D0%BE%D1%80/">
+	<meta name="generator" content="Jekyll v3.10.0">
+
+			<script id="comments-plus-script" src="/theme/comments.plus.js" data-canonical-uri="https://9b.asoiu.com/2015/3626-%D0%BA%D0%B0%D0%BA-%D0%BC%D1%8B-%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D0%BB%D0%B8-%D1%85%D0%B0%D0%BA%D1%81%D0%BF%D0%B5%D0%B9%D1%81-phdays-v-everywhere-%D0%B8-%D1%81%D0%BE%D1%80/" async></script>
+			<script>
+				"use strict";
+				document.addEventListener("DOMContentLoaded", function(){
+					window.isDOMContentLoadedHelper = true; // need for async comments.plus.js
+					if(window.location.hash == "#more") document.querySelectorAll("#more-cut")[0].style.display = "block";
+				}, false);
+			</script>
+</head>
+<body id="top" itemscope itemtype="http://schema.org/Blog">
+<div id="wrapper">
+    <header id="header">
+        <nav id="logo"><a class="logo" href="/" title="Домой"></a></nav>
+        <ul id="navAdmin">
+            <li><a href="https://github.com/ASOIU/9bit">Fork me on GitHub</a></li>
+            <li><a href="//web.archive.org/web/*/9b.asoiu.com">Archive</a></li>
+		</ul>         
+        <a id="rss" href="/feed.xml" title="Syndicate this site using Atom... Atom!">SUBSCRIBE TO <b>RSS</b></a>
+    </header>
+    <div id="pageWrapper">
+		<main id="content">
+
+			<!--------------------------- POST --------------------------->
+<div id="intro"><p><a href="//9b.asoiu.com/"><b>Девятый бит</b></a>: Архив блога кафедры АСОИУ ОмГТУ</p></div>
+
+<article class="postWrapper" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+<!--------------------------- META --------------------------->
+<footer class="postmetadata">
+	<p class="meta-date">
+		<time itemprop="datePublished" datetime="2015-07-01T13:34:27+00:00">
+			<span class="date-day">1</span>
+			<span class="date-month">Июл</span>
+			<span class="date-year">2015</span>
+		</time>
+	</p>
+	<p class="meta-author" itemprop="creator" itemscope itemtype="http://schema.org/Person">by <span itemprop="name">ZKyl</span></p>
+		<p class="meta-authors">
+				<a href="/taxonomy/#/author/%D0%B2%D0%B0%D1%81%D0%B8%D0%BB%D1%8C%D0%B5%D0%B2-%D0%B5%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D0%B9/" title="Просмотреть все статьи автора &ldquo;Васильев Евгений&rdquo;" rel="category" itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Васильев Евгений</span></a>
+		</p>
+	<p class="meta-improve"><a href="https://github.com/ASOIU/9bit/blob/master/_posts/2015-07-01-3626-как-мы-организовали-хакспейс-phdays-v-everywhere-и-сор.html" class="post-edit-link" title="Улучшить эту статью">Улучшить &raquo;</a></p>
+	<p class="meta-comments"><a rel="discussion" itemprop="discussionUrl" href="#comments">Без комментов</a></p>
+		<p class="meta-issues">
+				<a href="/taxonomy/#/issue/%D0%BA-%D0%B8%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D1%8E/" title="Просмотреть все статьи, попавшие в выпуск &ldquo;(к изданию)&rdquo;" rel="category">(к изданию)</a>
+		</p>
+		<p class="meta-categories">
+				<a href="/taxonomy/#/category/it%D1%88%D1%82%D1%83%D0%BA%D0%B8/" title="Просмотреть все статьи в рубрике &ldquo;ITштуки&rdquo;" rel="category"><span itemprop="articleSection">ITштуки</span></a>, 
+				<a href="/taxonomy/#/category/%D1%80%D0%B5%D0%BF%D0%BE%D1%80%D1%82%D0%B0%D0%B6/" title="Просмотреть все статьи в рубрике &ldquo;репортаж&rdquo;" rel="category"><span itemprop="articleSection">репортаж</span></a>, 
+				<a href="/taxonomy/#/category/%D1%81%D0%BE%D0%B1%D1%8B%D1%82%D0%B8%D1%8F/" title="Просмотреть все статьи в рубрике &ldquo;события&rdquo;" rel="category"><span itemprop="articleSection">события</span></a>
+		</p>
+		<p class="meta-tags" itemprop="keywords">
+				<a href="/taxonomy/#/tag/ctf/" rel="tag">CTF</a>, 
+				<a href="/taxonomy/#/tag/hacker/" rel="tag">Hacker</a>, 
+				<a href="/taxonomy/#/tag/party/" rel="tag">party</a>, 
+				<a href="/taxonomy/#/tag/phdays/" rel="tag">PHDays</a>, 
+				<a href="/taxonomy/#/tag/phdcontest/" rel="tag">PHDContest</a>, 
+				<a href="/taxonomy/#/tag/%D0%BA%D0%BE%D0%BD%D0%BA%D1%83%D1%80%D1%81/" rel="tag">конкурс</a>, 
+				<a href="/taxonomy/#/tag/%D0%BA%D0%BE%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%86%D0%B8%D0%B8/" rel="tag">конференции</a>
+		</p>
+	<meta itemprop="isFamilyFriendly" content="true">
+</footer>
+<!--------------------------- META end ----------------------->
+
+
+	<div class="post" id="post-3626">
+		<header itemprop="headline">
+			<h1 itemprop="name">Как мы организовали хакспейс PHDays V Everywhere и соревнование OmskCTF</h1>
+			<link itemprop="url" href="/2015/3626-%D0%BA%D0%B0%D0%BA-%D0%BC%D1%8B-%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D0%BB%D0%B8-%D1%85%D0%B0%D0%BA%D1%81%D0%BF%D0%B5%D0%B9%D1%81-phdays-v-everywhere-%D0%B8-%D1%81%D0%BE%D1%80/">
+		</header>
+		<div class="entry" itemprop="articleBody">
+			<!--------------------------- ---- --------------------------->
+			<p><img class="aligncenter noborder size-full wp-image-3693" style="margin: -10px -20px 8px -20px;" src="/wp-content/uploads/2015/07/Singular-OmskCTF-PHDays-5.png" alt="OmskCTF PHDays 5" width="520" height="215" /></p>
+<p>Это уже второе описание истории про то как несколько людей организовывало PHDays Everywhere in Omsk и OmskCTF.</p>
+<p>Что получилось сделать в этом году, а также как проходила организация, какие трудности пришлось преодолеть, какие были запланированы активности - в общем, полный отчет о мероприятии - <b>читайте под катом</b>.</p>
+<p><b>Несколько ссылок</b>: <a href="https://goo.gl/dWtsKF">пресс-релиз</a> мероприятия, событие в <a href="https://goo.gl/qixNAo">G+</a>, <a href="https://vk.com/phdays_omsk">VK</a>, <a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011">Фотки</a> (если их смотреть в режиме слайд-шоу и читать подписи, то получится небольшая история; не забывайте нажимать на зум/лупу на верхней панели - фото загрузится в оригинальном качестве). <span id="more-cut"></span></p>
+<p>Мы уже четвертый год организовываем PHDays Everywhere в Омске, и в отличие от <a title="Как мы организовали хакспейс PHDays Everywhere и соревнование CTF в этом году" href="/2014/3486-%D0%BA%D0%B0%D0%BA-%D0%BC%D1%8B-%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D0%BB%D0%B8-%D1%85%D0%B0%D0%BA%D1%81%D0%BF%D0%B5%D0%B9%D1%81-phdays-everywhere-%D0%B8-%D1%81%D0%BE%D1%80/" target="_blank">предыдущих лет</a> решили провести мероприятие на более высоком уровне - арендовали большой зал на два дня, увеличили количество Geo‑квестов. У самих же квестов в этом году появилась история - они рассказывают про секреты нано-государства <strong><em>Brizzland</em></strong>...</p>
+<h1 style="font-weight: 400; color: #33352c;">Подготовка</h1>
+<h2>За полтора месяца до часа X</h2>
+<p>Начинаем накидывать задачи в <a href="https://trello.com">Trello</a>.</p>
+<div id="attachment_3627" style="width: 310px" class="wp-caption aligncenter"><a href="/wp-content/uploads/2015/06/trello-phdays5.png"><img class="wp-image-3627 size-medium" src="/wp-content/uploads/2015/06/trello-phdays5-300x206.png" alt="Trello, PHDays 5" width="300" height="206" /></a><p class="wp-caption-text">Как выглядит Trello сейчас.</p></div>
+<p>Одна из первых задач звучала примерно так: “Разнообразить квесты DarkNet'ом”, с описанием “Перенести часть описаний задач в DarkNet”. Предполагалось, что участники вначале задания получат адрес сервиса в DarkNet'е, а затем, открыв этот сервис, получат само <i>описание задания</i>.</p>
+<p>Среди кандидатов на “роль DarkNet” были <span class="grey">(не все из них истинные DarkNet)</span>:</p>
+<ol>
+<li><a href="https://www.torproject.org/docs/tor-hidden-service.html.en">.onion</a> (Tor)</li>
+<li><a href="https://geti2p.net/ru/faq#myeepsite">i2p</a></li>
+<li><a href="https://ru.wikipedia.org/wiki/Bitmessage">Bitmessage</a></li>
+<li><a href="http://habrahabr.ru/post/255507/">Project Maelstrom</a></li>
+<li><a href="https://ru.wikipedia.org/wiki/BitTorrent_Sync">BTSync</a></li>
+<li><a href="http://habrahabr.ru/post/225655">Synthingc</a></li>
+<li><a href="http://habrahabr.ru/post/250945">ZeroNet</a></li>
+<li><a href="https://ru.wikipedia.org/wiki/Perfect_Dark_(файлообменный_клиент)">Perfect Dark</a></li>
+</ol>
+<p><i>Сеть </i>должна была удовлетворять нескольким требованиям:</p>
+<ol>
+<li>обход NAT <span class="grey">(при работе по IPv4)</span> - отсеялись Project Maelstrom, ZeroNet, и Perfect Dark;</li>
+<li>односторонняя авторизация - отсеялся Synthingc.</li>
+</ol>
+<p>В итоге остались:</p>
+<ol>
+<li><a href="https://www.torproject.org/docs/tor-hidden-service.html.en">.onion</a> (Tor)</li>
+<li><a href="https://geti2p.net/ru/faq#myeepsite">i2p</a></li>
+<li><a href="https://ru.wikipedia.org/wiki/Bitmessage">Bitmessage</a></li>
+<li><a href="https://ru.wikipedia.org/wiki/BitTorrent_Sync">BTSync</a></li>
+</ol>
+<p>Теперь нужно было дать ответ на вопрос “<strong>Как участники поймут, что сервис нужно искать в особой сети?</strong>”.</p>
+<p>С “.onion” и “.i2p” проблем не было - сеть можно определить по домену.</p>
+<p>С Bitmessage было труднее - намеком на Bitmessage могло служить только начало идентификатора пользователя “BM-”.</p>
+<p>С BTSync дела были еще хуже - видимые маркеры в идентификаторе сервиса отсутствовали. Решение проблемы оказалось простым - вместе с адресом сервиса, участник сразу же получает клиента для используемой в задании сети. Но и здесь участников ждал сюрприз.</p>
+<h3>BTSync</h3>
+<p>В некоторых старых версиях BTSync, при создании сервиса под старой Windows (NT5.*), возникал баг - генерировался секрет невалидный для других ОС. В новых версиях этот баг устранили, и все клиенты начали корректно воспринимать невалидный секрет.</p>
+<p>Для воспроизведения этого бага в задании, участники получали “(не)валидный” секрет + старую версию BTSync, в которой был баг. Если просто воспользоваться полученным секретом и клиентом BTSync, то он покажет сообщение “This secret is invalid. Please generate a new secret or enter a secret generated at another computer”.</p>
+<p>Быстро обойти баг можно было двумя способами:</p>
+<ul>
+<li>[простой] скачать <a href="http://syncapp.bittorrent.com/1.4.111">новую версию BTSync</a></li>
+<li>[сложнее] запустить BTSync на аналогичной старой Windows</li>
+</ul>
+<h3>Bitmessage</h3>
+<p>В Bitmessage также было несколько уловок.</p>
+<p>Если оба участника переписки расположены за разными NAT, то сообщения в Bitmessage распространяются <a href="https://bitmessage.org/forum/index.php/topic,1472.0.html">очень медленно</a>. Поэтому участники получали не обычный идентификатор пользователя, а идентификатор (и имя) chain'а.</p>
+<p>Одним из участников chain'а был бот, с которым участникам нужно было сыграть в игру, чтобы получить <i>описание задания</i>. При этом вся переписка chain'а доступна всем командам, подключившимся к этому chain'у. Первая команда, которая “выбьет” из бота <i>описание задания</i> откроет его также и для всех остальных команд.</p>
+<p>Чуть позже от игры с ботом пришлось отказаться - слишком долго приходят сообщения. Сам бот стал выполнять роль простого <a href="https://bitmessage.org/wiki/Echo_service#Custom_Message">Custom Message эхо-сервиса</a>.</p>
+<h3>Игра с “заклинившим ботом”</h3>
+<p>И все же, от идеи “игры с ботом” отказываться не хотелось, поэтому игра с “заклинившим ботом” встречала участников в .onion сети.</p>
+<p>Игра была простой. При подключении к “заклинившему ботоу” - тот несколько раз отправлял одно и то же слово, после чего разрывал соединение. Участник должен был отправить боту это слово, тогда бот перешлет участнику ссылку на <i>описание задания</i> в вперемешку с “заклинившим словом”:</p>
+<div id="attachment_3628" style="width: 652px" class="wp-caption aligncenter"><a href="/wp-content/uploads/2015/06/image14.png"><img class="wp-image-3628 size-full" src="/wp-content/uploads/2015/06/image14.png" alt="Cookie | URI" width="642" height="70" /></a><p class="wp-caption-text">Cookie | URI</p></div>
+<div id="attachment_3629" style="width: 651px" class="wp-caption aligncenter"><a href="/wp-content/uploads/2015/06/image53.png"><img class="size-full wp-image-3629" src="/wp-content/uploads/2015/06/image53.png" alt="Cookie | URI double2" width="641" height="84" /></a><p class="wp-caption-text">Cookie | URI double2</p></div>
+<div id="attachment_3630" style="width: 670px" class="wp-caption aligncenter"><a href="/wp-content/uploads/2015/06/image22.png"><img class="size-full wp-image-3630" src="/wp-content/uploads/2015/06/image22.png" alt="I want a cookie. Give me a cookie, NOW!" width="660" height="207" /></a><p class="wp-caption-text">NOW!</p></div>
+<h3>Protection</h3>
+<p>По завершению экспериментов, каждый DarkNet сервис расположился в своем контейнере / виртуальной машине. А созданные снапшоты давали возможность быстро вернуть сервис в строй, например, после его взлома одной из команд.</p>
+<h2>За месяц до часа X</h2>
+<p>Обычно к этому моменту уже приходят письма-анкеты от <span style="color: #ff0000;">PT</span>, в которых нужно указать информацию о своем хакспейсе. Затем эта информация публикуется на сайте, в разделе <a href="http://www.phdays.ru/registration/everywhere/#2">PHDays Everywhere</a>.</p>
+<p>Мы уже стали волноваться, т.к. письмо-анкета до сих пор не пришла, и нас не было в списке хакспейсов. Связаться получилось только 5-го мая, и информация о хакспейсе была успешно отправлена <span class="grey">(правда на сайте мы появились только перед самим началом PHDays - после 16 мая)</span>.</p>
+<p>В этом году мы решили провести PHDays Everywhere в большом зале новой библиотеки ОмГТУ, которая чем то напоминает <a href="https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D0%B2%D0%BE%D1%80%D0%BA%D0%B8%D0%BD%D0%B3">коворкинг</a>. Так как это была библиотека, то мы не могли упустить шанс, и сделали Old School geo-квест с участием книг (о нем дальше). А вот делать geo-квесты с IP-камерами мы изначально не планировали, но вскоре это изменилось...</p>
+<h2>За две недели до часа X</h2>
+<p>Для OmskCTF, как и в прошлом году, мы хотели взять задания от <span style="color: #ff0000;">PT</span>, добавить свои задания, и объединить это все в квесты. Наши планы изменило письмо:</p>
+<blockquote>
+<p style="font-size: small;">Условно «оффлайновый» конкурс - соревнования посетителей внутри отдельных площадок между собой. Традиционно предоставим вам материалы с решениями незадолго до PHDays. В этом году <b>заданий будет немного</b>, потому что мы хотели бы сделать основной акцент на онлайновый конкурс.</p>
+<p style="font-size: small;">Онлайновый конкурс: площадки могут участвовать в экономической жизни созданного для PHDays государства United States of Soviet Unions (USSU)...</p>
+</blockquote>
+<p>В этот момент стало понятно, что квесты с IP-камерами все же нужны. Как и в прошлом году, нам одолжили несколько резервных камер, используемых в университете, фирмы ***. В этих квестах предполагалось, что участникам предстоит взломать камеры для получения изображения с них (логин/пасс участником не был известен). Камеры были той же фирмы, что и год назад, но с более новой версией прошивки. За 30 минут поиска уязвимостей мы нашли 0 новых уязвимостей, а старые дыры были залатаны.</p>
+<p>Так как, в этот раз, лежащие на поверхности уязвимости отсутствовали, то можно назвать производителя камер - это был Hikvision, а модель камер в этом году - DS-2CD2032-I.</p>
+<p>Раз простые уязвимости “от производителя” отсутствуют, то добавим свои :)  Время поджимало, поэтому просто сделали аналог прошлогодней уязвимости с возможностью анонимного входа в web-интерфейс камеры.</p>
+<p>Для реализации этой уязвимости достаточно было модифицировать один js файл, и как-нибудь залить его на камеру. Менять оригинальную прошивку камеры не хотелось, поэтому все действия проводились в памяти самой камеры.</p>
+<p>Для начала, мы подключились к камере по telnet/ssh, и осмотрелись. Вскоре поняли, что постоянное хранилище примонтировано в “<strong>/dav/</strong>”. В директории “<strong>/dav/</strong>” располагался скрипт <strong>“initrun.sh</strong>”, который инициализировал систему, и распаковывал файлы из лежащих рядом архивов.</p>
+<p>Теперь нужно было понять какой из архивов содержит файлы web-интерфейса. После беглого осмотра инициализирующего скрипта, архив был найден, им оказался “<strong>IEfile.tar.gz</strong>”. Название архива буквально намекало, что web-интерфейс создавался специально под Internet Explorer, а под остальными браузерами ждите глюков.</p>
+<p>Архив уже нашли, осталось найти способ выгрузить его из камеры, а затем (после правки) загрузить обратно. На одном из <a href="http://www.ipcamtalk.com/showthread.php/162-How-to-hack-5-1-2-firmware-on-China-region-cameras-to-English">форумов</a> использовали для этого комады/бинарники <strong>ftpput</strong> и <strong>ftpget</strong>, присутствующие в прошивке 5.1.2. Однако, на DS-2CD2032-I была более новая версия прошивки, в которой <strong>ftpput</strong> и <strong>ftpget</strong> отсутствовали. На помощь пришел “<strong>/bin/rz</strong>” - ZMODEM <span class="grey">(под win наиболее стабильный клиент - <a href="https://ru.wikipedia.org/wiki/Tera_Term">Tera Term</a>)</span>, при помощи которого можно будет залить измененный “<strong>IEfile.tar.gz</strong>”. А для выгрузки использовался работающий http сервер - нужно было всего-лишь выполнить команду:</p>
+<pre>cp /dav/IEfile.tar.gz /home/doc/</pre>
+<p>и загрузить “http://192.0.0.64/doc/IEfile.tar.gz”.</p>
+<p>В этот момент планы претерпели изменения. Вместо замены оригинального “<strong>IEfile.tar.gz</strong>” - сделали следующее:</p>
+<pre>echo cp -Rf /dav/IEfile_patch/\* /home/ &gt;&gt; /dav/initrun.sh</pre>
+<p>Теперь достаточно записать отдельный измененный файл в “<strong>/dav/IEfile_patch/</strong>”, сохранив при этом относительные пути (из “<strong>IEfile.tar.gz</strong>”). При включении камеры все пропатченные файлы из “<strong>/dav/IEfile_patch/</strong>” заменят собой оригинальные файлы из “<strong>IEfile.tar.gz</strong>”.</p>
+<p>Чтобы вернуть все назад <span class="grey">(а это придется сделать по завершению PHDays)</span> достаточно будет очистить директорию “<strong>/dav/IEfile_patch/</strong>”.</p>
+<h3>Немного про задания с камерами</h3>
+<p>Всего было два задания с камерами: First Eye и Second Eye. В обоих заданиях камеры были спрятаны внутри шкафчика для вещей. Сами шкафчики расположены у входа в библиотеку.</p>
+<h4>Second Eye</h4>
+<p><strong>Изначально задание было простым</strong>:</p>
+<ul>
+<li>Флаг записывается в QR-код, и наклеивается на стенку одного из шкафчиков.</li>
+<li>Камера через дырочки в дверце шкафчика “видит” окружающую обстановку.</li>
+<li>Участник получает IP камеры, и ключи от нескольких шкафчиков. Изначально каждый ключ имеет брелок с номером шкафчика. В этом задании брелки с ключей были сняты.</li>
+<li>Для “захвата флага” участнику нужно было:
+<ol>
+<li>по изображению с камеры <span class="grey">(и полученным ключам)</span> понять где она находится;</li>
+<li>прогуляться до шкафчиков;</li>
+<li>наблюдая за собой на изображении с камеры, найти конкретный шкафчик; перебирая ключи открыть шкафчик;</li>
+<li>считать QR-код.</li>
+</ol>
+</li>
+</ul>
+<p>Так выглядело задание до того, как мы начали изучать камеры в поисках уязвимостей.</p>
+<p>Во время изучения камер, мы заметили, что, при включении ИК-подсветки, с изображения камеры пропадают все надписи на бумаге, сделанные обычной ручкой. При этом камера продолжает “видеть” текст, распечатанный на лазерном принтере черным тонером.</p>
+<p><strong>В этот момент родился новый сценарий задания</strong>:</p>
+<ul>
+<li>Участник получает IP:port камеры и подсказку “if you only look where you can't go, you will miss the riches below”.</li>
+<li>Получив доступ к изображению с камеры, участник наблюдают окружающую обстановку через отверстие в шкафчике:</li>
+</ul>
+<div id="attachment_3631" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364216376161714&amp;oid=112973193951042107011"><img class="wp-image-3631 size-full" src="/wp-content/uploads/2015/06/201_464px.jpg" alt="IP Cam See" width="464" height="309" /></a><p class="wp-caption-text">IP Cam See</p></div>
+<ul>
+<li>Также на OSD камеры выводится подсказка: “librarians have a keys for the secret place - barter appropriate”.</li>
+<li>Участники обменивают что-нибудь на коробку с ключами:</li>
+</ul>
+<div id="attachment_3632" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364213612056482&amp;oid=112973193951042107011"><img class="wp-image-3632 size-full" src="/wp-content/uploads/2015/06/202_464px.jpg" alt="Box + Keys + Secret" width="464" height="309" /></a><p class="wp-caption-text">Box + Keys</p></div>
+<ul>
+<li>Находят шкафчик.</li>
+<li>Перебирает ключи <span class="grey">(всего 9 ключей)</span>.</li>
+<li>Открывают шкафчик, а внутри - печенья с предсказанием.</li>
+<li>Разламывают печеньку - там конец флага: “_now_you_see_me”:</li>
+</ul>
+<div id="attachment_3633" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364215752696946&amp;oid=112973193951042107011"><img class="wp-image-3633 size-full" src="/wp-content/uploads/2015/06/203_464px.jpg" alt="_now_you_see_me" width="464" height="309" /></a><p class="wp-caption-text">End Of Flag</p></div>
+<ul>
+<li>Вспомнив ранее полученные подсказки, и “повертев” коробку от ключей, участник подносит коробку к камере <span class="grey">(“козырьком вверх”, чтобы закрыть свет)</span> и получает вторую часть флага:</li>
+</ul>
+<div id="attachment_3680" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364213767562754&amp;oid=112973193951042107011"><img class="wp-image-3680 size-full" src="/wp-content/uploads/2015/07/204.5_464px.jpg" alt="Malevich's black square + Eye" width="464" height="344" /></a><p class="wp-caption-text">In Box - Malevich's black square || Bottom Box - Eye</p></div>
+<div id="attachment_3638" style="width: 319px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364216422643266&amp;oid=112973193951042107011"><img class="wp-image-3638 size-full" src="/wp-content/uploads/2015/06/206_464px.jpg" alt="True" width="309" height="464" /></a><p class="wp-caption-text">True</p></div>
+<p><strong>Позже сценарий еще раз изменился.</strong> ИК-подсветка засвечивала дверцу, и через отверстие в дверце камера ничего не видела <span class="grey">(отверстие превращалось в черную точку)</span>. Попытка соединить, при помощи цилиндра, объектив камеры и дверцу, чтобы изолировать свечение ИК-подсветки, не увенчалась успехом. Поэтому для участников была добавлена еще одна подсказка: “find red eyes in black holes”. И теперь участникам, для обнаружения местоположения камеры, нужно было заглянуть в шкафчик через отверстия, и увидеть красный свет от ИК-светодиодов.</p>
+<h4>First Eye</h4>
+<p>Флаг также записывается в QR-код, и печатается на специальной конструкции, которая закрепляется на дверце шкафчика:</p>
+<div id="attachment_3639" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364215432433362&amp;oid=112973193951042107011"><img class="wp-image-3639 size-full" src="/wp-content/uploads/2015/06/211_464px.jpg" alt="QR Code" width="464" height="272" /></a><p class="wp-caption-text">Cam See</p></div>
+<p>Конструкция состоит из плоскости для QR-кода, грузиков, лески, ограничителя (закрепленного на леске), и брелка от ключей (закрепленного на конце лески) с номером шкафчика. Еще на 12 шкафчиках закрепляются муляжи (конструкции без QR-кода).</p>
+<p>Участник получает IP камеры.</p>
+<p>Для получения флага участник должен, по изображению с камеры <span class="grey">(внутренностям шкафчика)</span>, понять где она находится; затем подойти к шкафчикам и перебрать лески; если потянуть за леску у нужного шкафчика, то поднимется QR-код:</p>
+<div id="attachment_3640" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364214068275730&amp;oid=112973193951042107011"><img class="wp-image-3640 size-full" src="/wp-content/uploads/2015/06/212_464px.jpg" alt="Outside" width="464" height="309" /></a><p class="wp-caption-text">Outside</p></div>
+<div id="attachment_3641" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364216423138770&amp;oid=112973193951042107011"><img class="wp-image-3641 size-full" src="/wp-content/uploads/2015/06/213_464px.jpg" alt="Malevich's black square" width="464" height="309" /></a><p class="wp-caption-text">Malevich's? Again?</p></div>
+<h2>За неделю до часа X</h2>
+<p>19 мая о нашем хакспейсе упомянули на <a href="http://habrahabr.ru/company/tceh/blog/258223/">habrahabr</a> (Хакатоны и около того), что было приятно видеть, т.к. в разделе <a href="http://www.phdays.ru/registration/everywhere/#2">PHDays Everywhere</a> нас все еще не было.</p>
+<p>Началась подготовка к <strong>Old School geo-квесту</strong>. Для квеста нам понадобились:</p>
+<ol>
+<li>старый сканер <span class="grey">(для которого отсутствует 64bit драйвер для Win, но который работает под *nix - GNU/Linux, OS X)</span>;</li>
+<li>местоположение (адресацию) 8 случайных книг в библиотеке;</li>
+<li>1 книга на английском языке.</li>
+</ol>
+<p>Со старым сканером, который мы планировали использовать, возникли проблемы - куда-то пропал его блок питания. На следующий день нашлась ему замена - старый сканер для которого отсутствовал официальный Win 64bit драйвер. Однако у замены был недостаток - официальный драйвер отсутствовал, но можно было установить 64bit драйвер другой модели, и сканер “заведется”, что могло подпортить Old School'ность квеста.</p>
+<p>Чуть позже собрали задание с участием <strong>git</strong> и <a href="http://githowto.com/ru/removing_commits_from_a_branch">(не)удаленного коммита</a>. Остаток дня провели создавая задание “Master of hash collisions”.</p>
+<p>В “<strong>Master of hash collisions</strong>” мы хотели познакомить участников с внутренностями созданной системы квестов, в которой ссылка на очередное задание квеста открывается после получения флага на текущее задание квеста. Это, примерно, выглядит так:</p>
+<pre>URL<sub>i+1</sub>=AES(message: pre_defined_msg_in_Base64<sub>i+1</sub>, key: SHA3(flag<sub>i</sub>))</pre>
+<p>Изначально мы хотели заменить SHA3 на MD4, и сгенерировать для участников коллизию - 2 флага. Один “псевдо флаг” записывался в комментарий к коду квестовой системы, второй “истинный флаг” - участники должны найти. Также участникам давалось время начала генерации коллизии, и намек на код, генерировавший коллизию.</p>
+<p>В оригинальном варианте код, генерирующий коллизии, использовать было нельзя - генерировались непечатные символы. Поэтому мы засекли 30 минут - если за этот период мы сможем сделать код, генерирующий коллизии, состоящие только из печатных символов (8bit), и сможем решить задачу <span class="grey">(восстановить второе сообщение-флаг)</span> то заданию в текущем виде - быть, иначе его нужно менять.</p>
+<p>В итоге задание пришлось изменить - не получилось избавится от трех непечатных символов в “флагах”:</p>
+<pre>‘ХЈњЙЎ¶B'РРыљ‘;пd5‚Jџ__][__Y__г_Лb_џ-__c_a[_________Я_______</pre>
+<pre>‘ХЈњЙЎ¶В'РРkљ‘;пd5‚Jџ__][__Y__г_Лb_џ-__c_a[_________Я_______</pre>
+<p>В новой версии задания использовался CRC32. В коде также был закомментирован хеш, и появилась проверка на условие “<code>if(flag.len &gt; 9 &amp;&amp; flag.len &lt; 14 )</code>”. В коде турнирной таблицы прописалось более точное условие “<code>if(flag.len == 12)</code>”. А новая подсказка намекала на код для обращения CRC32.</p>
+<p><strong>Остаток недели</strong> прошел менее интересно, и более напряженно. В этом году в последний момент появилось много новых помощников, не знакомых с *trello, и на координацию работы уходило много сил, т.к. единственным способ связи/координации с <i>новичками </i>был телефон. В общем было несколько Scrum-митингов, тестирование связи с Москвой для проведения викторины и телемоста, ..., пока не пришла часть заданий на CTF от <span style="color: #ff0000;">P</span>ositive <span style="color: #ff0000;">T</span>echnologies.</p>
+<p>К этому моменту мы уже поняли как объединить глобальную историю про USSU <span class="grey">(соревнование между площадками)</span> и локальный OmskCTF. Для локального OmskCTF сделали следующую <a href="https://goo.gl/dWtsKF">легенду</a>:</p>
+<blockquote>
+<p style="font-size: small;">Вы – житель омского нано-государства.</p>
+<p style="font-size: small;">Нано-государства – это немногочисленные оставшиеся на планете независимые государства, которые не присоединились к USSU... ваше нано-государство хранит множество секретов, и обладает множеством потайных мест, о существовании которых знают только избранные. Раскрытие каждой из тайн государства - это целый квест.</p>
+<p style="font-size: small;">Ваша задача - раскрыть все тайны вашего государства.</p>
+</blockquote>
+<p>Поэтому в заданиях на локальный CTF от <span style="color: #ff0000;">P</span>ositive <span style="color: #ff0000;">T</span>echnologies важно было содержимое флага, чтобы сам флаг раскрывал какой-нибудь секрет о нано-государствах. Либо чтобы была возможность быстро заменить оригинальный флаг задания на свой флаг. Так оно и вышло.</p>
+<p>В итоге мы получили 5 заданий категории web <span class="grey">(исходники, в основном PHP и Python)</span>. В этих заданиях предполагалось, что участник будет взаимодействовать с удаленным сервером. Чтобы не поднимать свой web-сервер, <span style="color: #ff0000;">P</span>ositive <span style="color: #ff0000;">T</span>echnologies развернули эти задания на своем сервере, и прислали ссылки. Единственным условием использования сервера <span style="color: #ff0000;">PT</span> было - запретить участникам устраивать DoS атаку на него.</p>
+<p><strong>А флаги...</strong> Флаги были в виде случайной Base64 строки. Благодаря тому, что у нас на руках были исходники всех заданий, то заменить флаг было легко, единственное это потребовало бы поднятия своего web-сервера, его тюнинга, закрытия дыр, не предусмотренных заданием, ... В общем мы всегда любили PaaS, и этот случай не стал исключением. Все PHP и Python скрипты были адаптированы для запуска на Google App Engine.</p>
+<p>При адаптации скриптов возникли трудности с одним заданием. Для этого задания требовалось развернуть на сервере <a href="http://habrahabr.ru/post/152653/">Selenium</a>, что уже выходило за рамки PaaS. Было несколько вариантов решения этой проблемы, одним из которых было написание небольшого proxy до сервера <span style="color: #ff0000;">PT</span> с уже развернутым Selenium. На этом варианте и остановились.</p>
+<p>Затем начался процесс стилизации заданий под единый формат, и генерация квестов.</p>
+<h3>Немного про Old School квест</h3>
+<p>Сценариев квеста было несколько. Финальный вариант сценария выглядел так:</p>
+<ul>
+<li>Участник получает подсказку - список книг <span class="grey">(8 существующих книг + 1 несуществующая книга - подсказка)</span>.</li>
+<li>Начинает искать книги <span class="grey">(без помощи библиотекарей, они только могут пояснить адресацию)</span>.</li>
+<li>Находит книгу, забирает закладку с 2D Barcode на одной стороне, и подсказкой на другой стороне.</li>
+<li>По содержимому закладки, становится ясно - чтобы прочитать содержимое - надо воспользоваться сканером библиотекарей.</li>
+<li>Открывает сканет - видит, что там уже наклеено 2 бумажки <span class="grey">(Dead Zone - вверху и еще один код с текстом - внизу)</span>.</li>
+<li>Кладет свою бумажку-закладку посередине.</li>
+<li>Замечает наклеенный на крышку сканера QR-код <span class="grey">(с подписью Driver)</span>, и устанавливает драйвер.</li>
+<li>Драйвер не ставится - нужна старая Windows.</li>
+<li>Запускает виртуалку, ставит драйвер, прокидывает USB внутрь виртуалки.</li>
+<li>Сканирует.</li>
+<li>По тексту на “нижнем коде” - гуглит, и понимает, что нужно скачать PaperBak.</li>
+<li>Считывает информацию в PaperBak.</li>
+<li>PaperBak декодирует только первый (верхний) блок 2D Barcode с бумажки-закладки, нижний блок <span class="grey">(приклеенный листок с еще одним 2D Barcode и с текстом)</span> помечается как не декодированный.</li>
+<li>В графическом редакторе вырезается нижний 2D Barcode, и PaperBak успешно его декодирует.</li>
+<li>Следуя считанным указаниям (нижний 2D Barcode) - просит у библиотекарей “спец-заказ”.</li>
+<li>Книга “спец-заказ” дается на 3 минуты.</li>
+<li>Пользуясь “книжным шифром” (2D Barcode с бумажки-закладки) - начинает расшифровку сообщения.</li>
+<li>За 1 минуту библиотекарь дает подсказку: “Отсканируйте, потом продолжите. И отсканируйте то, что уже просчитали - вдруг ошиблись”.</li>
+<li>В итоге получается строка чем-то похожая на флаг.</li>
+<li>По подсказке в списке книг, и по подсказке считанной PaperBak информации (нижний 2D Barcode) - понимает, что это шифр Цезаря.</li>
+<li>Пользуясь, например, онлайн дешифраторами, определяет, что используется ROT7, и получает флаг.</li>
+</ul>
+<h2>За день до часа X</h2>
+<p>Планы на этот день были грандиозные:</p>
+<ol>
+<li>Небольшая перепланировка библиотеки :) </li>
+<li>Разворачивание оборудования для трансляции докладов, и вывода турнирной таблицы участников OmskCTF на отдельный TV.</li>
+<li>Монтаж устройств для geo-квестов.</li>
+<li>Рассказ библиотекарям про их роль.</li>
+<li>Проверка сетевых настроек для WiFi <span class="grey">(был отдельный VLAN и SSID для трансляции докладов, и отдельный VLAN и SSID для участников CTF)</span>.</li>
+<li>Ожидание звонка от курьера, который должен был привести призы-сувениры.</li>
+<li>Интеграция с Google Spreadsheet задания “Master of hash collisions”.</li>
+<li>Подготовка квестов для всех участников <span class="grey">(разложить по директориям, подключить систему “сбора достижений”)</span>.</li>
+<li>Возможно было что-то еще...</li>
+</ol>
+<p>Можно сказать, что этот день прошел “плавно”. Суета отсутствовала, т.к. 1/3 времени просто были заняты поисками рабочего HDMI кабеля :) </p>
+<p>Смонтировать geo-квесты успели только частично (библиотека начала закрываться). Рассказать библиотекарям про их роль не вышло, т.к. сегодня они взяли выходной. Курьер так и не позвонил...</p>
+<p>А вот тест WiFi прошел отлично. По сравнению с прошлым годом - все работало.</p>
+<p>Этот день закончился где-то в 02:00 - когда мы завершили “распределять” квесты по директориям команд-участников. Это был прогресс - год назад этот же день продлился до 03:00.</p>
+<p>К слову о командах, участники одной команды сообщили, что не смогут прийти, а команды от ОмГТУ так и не было <span class="grey">(25 мая - студенты погрузились в сессию)</span>.</p>
+<p>WiFi работает :)  <span class="grey">(с этой мыслью мы заснули)</span>.</p>
+<h3>Немного про формат проведения CTF</h3>
+<p>Соревнование состоит из заданий, объединенных в несколько квестов. Квесты выдаются последовательно, один за другим, через каждые <b>2 часа</b>. Если одна из команд решила (до истечения двух часов) все задания текущего квеста, то она может попросить открыть через <b>15 минут</b> задания следующего квеста. Задания очередного квеста становятся доступны для всех команд одновременно.</p>
+<p>Квесты состоят из заданий следующих категорий: <b>misc</b>, <b>crypto</b>, <b>stego</b>, <b>web</b>, <b>pwn </b>и <b>geo</b>.</p>
+<p>Участники, для каждого квеста, получают Google Spreadsheets, который, по ответу на текущее задание квеста, генерирует ссылку на следующее задание квеста (ссылка на первое задание - в примечании к ячейки <b>A2</b>).</p>
+<p>Участники должны для каждого из заданий найти “тайну” / “потайное место” (CTF-флаг), имеющий формат “<b>PHD_flag_*</b>”. В случае если ключ верный, команде начисляется 1 балл.</p>
+<p>Про то, как мы определяли победителя написано <a href="https://goo.gl/dWtsKF">здесь</a>.</p>
+<p>Это мало отличалось от того, что было в прошлом году. Основное отличие было в количестве двухчасовых квкстов. В этом году заданий было меньше, из-за этого квестов было всего два. Однако был еще PHD Stock Market.</p>
+<p>Общий Timeline выглядел так:</p>
+<ol>
+<li>старт соревнования – игроки со статусом PHD Stock Market получают первые инструкции от “капитана нано-государства”, остальным участникам команд открывается доступ к первому квесту CTF</li>
+<li> :) </li>
+<li>окончание CTF, игроки PHD Stock Market вводят в курс дела остальных участников своей команды</li>
+<li>конец первого дня – награждение победителей CTF</li>
+<li>второй день – продолжение PHD Stock Market, и укрепление позиции своего нано-государства</li>
+<li>...</li>
+<li>“Государство, заработавшее больше всего <b>публей</b>, становится победителем, и получает призы от Positive Technologies”</li>
+</ol>
+<h2>За два часа до часа X</h2>
+<p>Вспомнив, что в прошлом году в это время мы вспомнили про статью “<a href="http://www.pvsm.ru/game-development/33895">3 дня без сна или как создать крупнейший киберспортивный турнир за Уралом</a>”, и войдя в рекурсию, у нас включился режим “Фигаро” <span class="grey">(вспоминая как кто-то вспомнил как прошел “день до часа X” год назад; кто именно вспомнил, мы уже забыли)</span> :) </p>
+<p>“Вспомнив все” нас, на входе в библиотеку уже ждали студенты-помощники - они помогли с монтажом оборудования для geo-квестов. С этого момента мы разделились:</p>
+<ul>
+<li><strong>одни</strong> пошли донастраивать оборудование для трансляции докладов,</li>
+<li><strong>другие</strong> - подстройкой DSLR под условия освещения,</li>
+<li><strong>третьи</strong> - рассказывать библиотекарям про их роль с помещением закладок в книги (для Old School квеста),</li>
+<li><strong>четвертые</strong> - разносить список участников охранникам,</li>
+<li><strong>пятые</strong> - рассказывали изумленным посетителям библиотеки про PHDays,</li>
+<li><strong>шестые</strong> - остались монтировать гаджеты для geo-квестов.</li>
+</ul>
+<div id="attachment_3642" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364213273735522&amp;oid=112973193951042107011"><img class="wp-image-3642 size-full" src="/wp-content/uploads/2015/06/001_464px.jpg" alt="All Ready" width="464" height="309" /></a><p class="wp-caption-text">All Ready</p></div>
+<p class="note">в реальности нас было примерно 3 человека - на тот момент мы еще не определились с точным числом</p>
+<p>И “секунда в секунду”, как все работы были завершены, пришли первые посетители нашего хакспейса.</p>
+<div id="attachment_3643" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364216685685810&amp;oid=112973193951042107011"><img class="wp-image-3643 size-full" src="/wp-content/uploads/2015/06/002_464px.jpg" alt="Good" width="464" height="309" /></a><p class="wp-caption-text">Good</p></div>
+<h1>OmskCTF — Час X</h1>
+<p>После небольшой вступительной речи <a href="https://google.com/+PavelLozhnikov">проректора по информатизации</a> и организаторов. В личные директории участников не был загружен первый квест. Участников от ОмГТУ так и не было, и нас попросили начать CTF вместе с началом PHD Stock Market.</p>
+<p>Настало время “раздать WiFi”:</p>
+<div id="attachment_3644" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364213496051058&amp;oid=112973193951042107011"><img class="wp-image-3644 size-full" src="/wp-content/uploads/2015/06/030_464px.jpg" alt="Wi-Fi Zone QR-Code" width="464" height="309" /></a><p class="wp-caption-text">Wi-Fi</p></div>
+<p>Через час пришли несколько студентов. Сессия их потрепала, поэтому мы дали им VIP-место - на баблах.</p>
+<div id="attachment_3645" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364213590567330&amp;oid=112973193951042107011"><img class="wp-image-3645 size-full" src="/wp-content/uploads/2015/06/035_464px.jpg" alt="OmSTU Team" width="464" height="309" /></a><p class="wp-caption-text">OmSTU Team on Bubbles</p></div>
+<h2>Час X (дубль 2)</h2>
+<p>В личные директории участников наконец был загружен первый квест, что ознаменовало <strong>начало CTF!</strong> Параллельно началась трансляция докладов.</p>
+<h3>1/2</h3>
+<p>Уже второй год первой задачей первого квеста мы делаем вводной - участники знакомились с <a href="http://www.securitylab.ru/contest/262791.php">форматом</a> <a href="http://lurkmore.to/Rarjpeg">задач</a>.</p>
+<div id="attachment_3495" style="width: 474px" class="wp-caption aligncenter"><img class="wp-image-3495 size-full" src="/wp-content/uploads/2014/06/we-need-to-go-deeper.jpg" alt="we need to go deeper" width="464" height="260" /><p class="wp-caption-text">7zipJpeg</p></div>
+<p>Мы опять планировали тем командам, которые в течение первых 30 минут не распознают формат, дать подсказку. В этот раз все команды затратили на первую задачу менее 30 минут, однако не все из них поняли, что остальные задачи имеют аналогичный формат.</p>
+<p>Параллельно со стартом локального CTF включились игроки со статусом <strong>PHD Stock Market</strong>.</p>
+<div id="attachment_3646" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364214556412994&amp;oid=112973193951042107011"><img class="wp-image-3646 size-full" src="/wp-content/uploads/2015/06/051_464px.jpg" alt="PHD Stock Market Man" width="464" height="309" /></a><p class="wp-caption-text">PHD Stock Market Man</p></div>
+<p>Спустя некоторое время команды добрались до первого geo-квеста с камерами.</p>
+<div id="attachment_3647" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364214453036930&amp;oid=112973193951042107011"><img class="wp-image-3647 size-full" src="/wp-content/uploads/2015/06/092_464px.jpg" alt="First Eye Code" width="464" height="309" /></a><p class="wp-caption-text">First Eye Code</p></div>
+<p>В этот момент стало ясно, что с web у участников дела обстоят не очень, и всем командам была дана подсказка.</p>
+<div id="attachment_3648" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364216191216994&amp;oid=112973193951042107011"><img class="wp-image-3648 size-full" src="/wp-content/uploads/2015/06/083_464px.jpg" alt="In Box" width="464" height="309" /></a><p class="wp-caption-text">Stage 1 - In Box</p></div>
+<div id="attachment_3649" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364214555056450&amp;oid=112973193951042107011"><img class="wp-image-3649 size-full" src="/wp-content/uploads/2015/06/093_464px.jpg" alt="Try" width="464" height="309" /></a><p class="wp-caption-text">Stage 2 - Try</p></div>
+<div id="attachment_3650" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364216576490642&amp;oid=112973193951042107011"><img class="wp-image-3650 size-full" src="/wp-content/uploads/2015/06/084_464px.jpg" alt="Be Happy" width="464" height="309" /></a><p class="wp-caption-text">Stage 3 - Be Happy</p></div>
+<p>В этих квестах была одна уловка – пока одна команда пытается найти нужный шкафчик, другие команды могут просто наблюдать за процессом (через IP-камеру):</p>
+<div id="attachment_3651" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364215918866034&amp;oid=112973193951042107011"><img class="wp-image-3651 size-full" src="/wp-content/uploads/2015/06/094_464px.jpg" alt="I Watching To You" width="464" height="309" /></a><p class="wp-caption-text">Thanks To You ;)</p></div>
+<p>Поэтому “первопроходцам”, нужно было все делать быстро, чтобы остальные команды не успели среагировать, и сфотографировать QR-код.</p>
+<p>Настало время Old School квеста.</p>
+<div id="attachment_3652" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364213872595602&amp;oid=112973193951042107011"><img class="wp-image-3652 size-full" src="/wp-content/uploads/2015/06/111_464px.jpg" alt="Bookmark" width="464" height="309" /></a><p class="wp-caption-text">Scanner guarded by librarians</p></div>
+<div id="attachment_3653" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364215266894402&amp;oid=112973193951042107011"><img class="wp-image-3653 size-full" src="/wp-content/uploads/2015/06/112_464px.jpg" alt="Scanner" width="464" height="309" /></a><p class="wp-caption-text">Old Scanner</p></div>
+<div id="attachment_3655" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364215097512210&amp;oid=112973193951042107011"><img class="wp-image-3655 size-full" src="/wp-content/uploads/2015/06/114_464px.jpg" alt="PaperBak" width="464" height="309" /></a><p class="wp-caption-text">Old OS</p></div>
+<p>К окончанию первого этапа вперед вырвалась команда “<strong>Занято</strong>”.<a href="/wp-content/uploads/2015/06/omskctf-fin-1_2.png"><img class="aligncenter size-full wp-image-3656" src="/wp-content/uploads/2015/06/omskctf-fin-1_2.png" alt="OmskCTF fin 1/2" width="280" height="269" /></a></p>
+<h3>2/2</h3>
+<div id="attachment_3657" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364216890240818&amp;oid=112973193951042107011"><img class="wp-image-3657 size-full" src="/wp-content/uploads/2015/06/140_464px.jpg" alt="ADSL vs GPON" width="464" height="309" /></a><p class="wp-caption-text">ADSL vs GPON, or ...</p></div>
+<p>После постижения таинств работы Git'а и сравнения скорости <a href="https://goo.gl/fgN3xV">ADSL vs GPON</a>, команда “<strong>Занято</strong>” добралась до второго квеста с камерами.</p>
+<div id="attachment_3658" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364214745848882&amp;oid=112973193951042107011"><img class="wp-image-3658 size-full" src="/wp-content/uploads/2015/06/150_464px.jpg" alt="Black Dot" width="464" height="309" /></a><p class="wp-caption-text">I See Black Singularity</p></div>
+<div id="attachment_3659" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364214423342930&amp;oid=112973193951042107011"><img class="wp-image-3659 size-full" src="/wp-content/uploads/2015/06/152_464px.jpg" alt="Linux" width="464" height="327" /></a><p class="wp-caption-text">Where Is My Red Eyes?</p></div>
+<div id="attachment_3660" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364216201568514&amp;oid=112973193951042107011"><img class="wp-image-3660 size-full" src="/wp-content/uploads/2015/06/154_464px.jpg" alt="Fortune cookie" width="464" height="309" /></a><p class="wp-caption-text">Fortune cookie</p></div>
+<p>Печенья с предсказанием оказались настолько вкусные, что некоторые команды не удержались и взяли сразу несколько печенек.</p>
+<div id="attachment_3661" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364216917456338&amp;oid=112973193951042107011"><img class="wp-image-3661 size-full" src="/wp-content/uploads/2015/06/155_464px.jpg" alt="Two Cookie" width="464" height="309" /></a><p class="wp-caption-text">We Need Two Cookie</p></div>
+<p>За 30 минут до окончания CTF, участники дошли до задания “Master of hash collisions”. В этом задании была одна лазейка: можно было расшифровать ссылку на следующее задание при помощи хеша, спрятанного в коде. Система не засчитала бы текущее задание (на “сервере” были добавлены дополнительные проверки), однако команда смогла бы начать выполнять 2 задания одновременно.</p>
+<div id="attachment_3662" style="width: 490px" class="wp-caption aligncenter"><a href="https://ru.wikipedia.org/wiki/%D0%A7%D0%B0%D1%81_%D0%97%D0%B5%D0%BC%D0%BB%D0%B8"><img class="wp-image-3662 size-full" src="/wp-content/uploads/2015/06/Botanigif.gif" alt="Internet Disconnection" width="480" height="322" /></a><p class="wp-caption-text">Internet Disconnection</p></div>
+<p>За 10 минут до окончания, кто-то решил еще раз отметить <a href="https://ru.wikipedia.org/wiki/%D0%A7%D0%B0%D1%81_%D0%97%D0%B5%D0%BC%D0%BB%D0%B8">Час Земли</a>, и закрыл выход в Интернет через WiFi. Однако, команды не растерялись и сами подняли AP на своих смартфонах.</p>
+<p>Спустя 10 минут, сохранив лидерство, команда “<strong>Занято</strong>” заняла первое место в PHD OmskCTF 2015.</p>
+<div id="attachment_3663" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364216558235106&amp;oid=112973193951042107011"><img class="wp-image-3663 size-full" src="/wp-content/uploads/2015/06/302_464px.jpg" alt="The-Winners-is" width="464" height="309" /></a><p class="wp-caption-text">The Winners is Занято</p></div>
+<h2>День второй</h2>
+<p>В этот день мы уже спокойно наслаждались докладами. Было и несколько сюрпризов, связанных с WiFi - перед самым началом телемоста с Москвой (когда ведущие уже объявили о телемосте) <a href="https://market.yandex.ru/product/8368213/reviews?hid=723087">WiFi опять отвалился</a>.</p>
+<h3>Hacker Quiz и завершение PHDays Everywhere V in Omsk</h3>
+<p>Под конец для остались несколько человек на Hacker Quiz <span class="grey">(большинство из них были студенты, пришедшие, после получения очередного зачета)</span>. Участники историю знали плохо, но зато увлекались “социальной инженерией”.</p>
+<div id="attachment_3664" style="width: 403px" class="wp-caption aligncenter"><a href="https://youtu.be/cDphUib5iG4?t=4m35s"><img class="wp-image-3664 size-full" src="/wp-content/uploads/2015/06/image06.jpg" alt="Hacker Quiz" width="393" height="206" /></a><p class="wp-caption-text">Hacker Quiz</p></div>
+<p>Кто победил? Смотрите в <a href="https://broadcast.comdi.com/event/ebuypftnx6km8vcr9515" target="_blank">записи</a>.</p>
+<p class="note">На этом PHDays Everywhere in Omsk завершил свою работу.</p>
+
+
+			<!--------------------------- ---- end ----------------------->
+		</div>
+	</div>
+	<footer class="postbottom">
+		<nav class="nav nav-padding">
+			<div class="alignleft" ><a       href="/2014/3486-%D0%BA%D0%B0%D0%BA-%D0%BC%D1%8B-%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D0%BB%D0%B8-%D1%85%D0%B0%D0%BA%D1%81%D0%BF%D0%B5%D0%B9%D1%81-phdays-everywhere-%D0%B8-%D1%81%D0%BE%D1%80/" title="Как мы организовали хакспейс PHDays Everywhere и соревнование CTF в этом году">&laquo; Предыдущая статья</a>&nbsp;</div>
+			<div class="alignright">&nbsp;<a href="/2016/3704-ringsync-%D1%81%D0%B8%D0%BD%D1%85%D1%80%D0%BE%D0%BD%D0%B8%D0%B7%D0%B8%D1%80%D1%83%D0%B5%D0%BC-%D0%BD%D0%B0-%D0%BF%D0%BE%D0%BB%D0%BD%D0%BE%D0%B9-%D1%81%D0%BA%D0%BE%D1%80%D0%BE%D1%81%D1%82%D0%B8-%D1%81/" title="RingSync: синхронизируем на полной скорости сети">Следующая статья &raquo;</a></div>
+			<a href="https://github.com/ASOIU/9bit/blob/master/_posts/2015-07-01-3626-как-мы-организовали-хакспейс-phdays-v-everywhere-и-сор.html" title="Улучшить эту статью на GitHub">
+				<svg class="octicon-mark-github" width="19" height="19" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" version="1.1" aria-hidden="true">
+					<path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+				</svg>
+			</a>
+		</nav>
+		<section class="commentlist">
+			<h3 class="left-sidebar" id="comments">Без комментов</h3>
+			<section id="comments-plus" class="not-https">
+				<div class="left-sidebar">
+					<svg class="octicon octicon-comment-discussion-plus" width="30px" height="22px" viewBox="0 0 30 22" xmlns="http://www.w3.org/2000/svg" version="1.1" aria-hidden="true">
+						<path fill-rule="evenodd" d="M25 14h-4v3l-3-3H8V2h17v1h2V2c0-1.1-.9-2-2-2H9C6 0 5 1 5 3v10c0 2 1 3 4 3h8l6 6v-6h2c1.1 0 2-.9 2-2v-1h-2V14zM27 7V4h-2v3h-3v2h3v3h2V9h3V7H27zM2 4v8c0 1.1 .9 2 2 2V2C2.9 2 2 2.9 2 4zM0 5v6c0 .55 .45 1 1 1V4C.45 4 0 4.45 0 5z"/>
+					</svg>
+					<h3>посмотреть<br> и написать</h3>
+					<svg width="0" height="0" style="display:none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1">
+						<symbol id="svg-octicon-pencil" viewBox="0 0 14 16"><path fill-rule="evenodd" d="M0 12v3h3l8-8-3-3-8 8zm3 2H1v-2h1v1h1v1zm10.3-9.3L12 6 9 3l1.3-1.3a.996.996 0 0 1 1.41 0l1.59 1.59c.39.39.39 1.02 0 1.41z"/></symbol>
+						<symbol id="svg-octicon-eye" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z"/></symbol>
+					</svg>
+				</div>
+				<div class="comments-plus-intro not-https">
+					<a id="comments-plus_not-https_open-https" href="#comments-plus">
+						<span title="И надеть заземленную шапочку-шлем из свинцовой фольги">Открыть</span> <span class="secure">шифрованный канал связи</span>, чтобы<br>
+						<svg class="octicon octicon-pencil" width="14" height="16" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><use xlink:href="#svg-octicon-pencil"/></svg>
+						Написать комментарий и
+						<svg class="octicon octicon-eye" width="16" height="16" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><use xlink:href="#svg-octicon-eye"/></svg>
+						Посмотреть остальные комментарии
+					</a><br>
+					или<br>
+					<a id="comments-plus_not-https_open" href="#comments-plus">жить проще</a>
+					<noscript><br>
+						(Google+ комментарии больше не работают)
+					</noscript>
+				</div>
+				<div class="comments-plus-intro https">
+					<button id="comments-plus_https_open">
+						<span class="pseudo-btn">
+							<svg class="octicon octicon-pencil" width="26" height="24" xmlns="http://www.w3.org/2000/svg" version="1.1" aria-hidden="true"><use xlink:href="#svg-octicon-pencil"/></svg>
+							написать&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- NOTE: nbsp for Chrome... --><br> комментарий
+						</span>
+						или
+						<span class="pseudo-btn">
+							<svg class="octicon octicon-eye" width="32" height="26" xmlns="http://www.w3.org/2000/svg" version="1.1" aria-hidden="true"><use xlink:href="#svg-octicon-eye"/></svg>
+							посмотреть новые<br> комментарии
+						</span>
+					</button>
+				</div>
+				<div class="comment-content comments-g-plus-wrapper-1">
+					<div class="comments-g-plus-wrapper-0">
+						<div id="comments-g-plus"></div>
+					</div>
+				</div>
+
+				<div class="clear"></div>
+			</section>
+		</section>
+	</footer>
+	<div class="clear"></div>
+</article>
+<!--------------------------- POST end ----------------------->
+
+
+			<div class="clear"></div>
+		</main>
+		<aside id="sidebar">
+			<section class="nobackground" aria-label="Поиск по сайту">
+				<form id="searchform" method="get" action="https://www.google.com/search">
+					<input  class="search-field"  name="q" type="search" maxlength="2048" placeholder="Поиск по сайту...">
+					<button class="search-submit" name="btnG" value="Search"></button>
+					<input name="as_sitesearch" value="/" type="hidden">
+					<input name="sourceid"      value="vivaldi" type="hidden">
+				</form>
+			</section>
+			<section class="links"     >
+<h2>Ссылки</h2>
+<ul>
+	<li><a href="http://wiki.asoiu.com/" target="_blank" rel="noopener">Вики-страницы [offline]</a></li>
+	<li><a href="https://google.com/+asoiu-IT" target="_blank" rel="noopener">Новости+</a></li>
+	<li><a href="http://asoiu.com">Основной Сайт</a></li>
+	<li><a href="https://github.com/ASOIU">Репозиторий (GitHub)</a></li>
+	<li><a href="http://forum.asoiu.com/" target="_blank" rel="noopener">Форум [offline]</a></li>
+</ul>
+</section>
+			<section class="tag-cloud" >
+<h2>Облако тэгов</h2>
+	<a href="/taxonomy/#/tag/%D0%B0%D1%81%D0%BE%D0%B8%D1%83-web/" style="font-size:16.82pt">АСОИУ.web</a>
+	<a href="/taxonomy/#/tag/%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D0%BE%D0%B5-%D0%BF%D0%BE/" style="font-size:8.0pt">бесплатное ПО</a>
+	<a href="/taxonomy/#/tag/%D0%B1%D0%BB%D0%BE%D0%B3/" style="font-size:8.0pt">блог</a>
+	<a href="/taxonomy/#/tag/%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE/" style="font-size:11.88pt">видео</a>
+	<a href="/taxonomy/#/tag/%D0%B2%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F/" style="font-size:8.0pt">Википедия</a>
+	<a href="/taxonomy/#/tag/%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D0%BE%D0%BB%D0%BE%D0%BC%D0%BA%D0%B8/" style="font-size:10.76pt">головоломки</a>
+	<a href="/taxonomy/#/tag/%D0%B4%D0%B5%D0%B2%D1%8F%D1%82%D1%8B%D0%B9-%D0%B1%D0%B8%D1%82/" style="font-size:8.0pt">Девятый Бит</a>
+	<a href="/taxonomy/#/tag/%D0%B4%D0%B5%D0%BD%D1%8C%D0%B3%D0%B8/" style="font-size:15.4pt">деньги</a>
+	<a href="/taxonomy/#/tag/%D0%B4%D0%B5%D0%BD%D1%8C-%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D1%82%D1%8B%D1%85-%D0%B4%D0%B2%D0%B5%D1%80%D0%B5%D0%B9/" style="font-size:8.0pt">День открытых дверей</a>
+	<a href="/taxonomy/#/tag/%D0%B4%D0%B5%D1%82%D0%B4%D0%BE%D0%BC/" style="font-size:8.0pt">детдом</a>
+	<a href="/taxonomy/#/tag/%D0%B4%D0%B8%D0%BF%D0%BB%D0%BE%D0%BC/" style="font-size:8.0pt">диплом</a>
+	<a href="/taxonomy/#/tag/%D0%B4%D0%BE%D1%81%D1%83%D0%B3/" style="font-size:19.3pt">досуг</a>
+	<a href="/taxonomy/#/tag/%D0%B5%D0%B3%D1%8D/" style="font-size:13.79pt">ЕГЭ</a>
+	<a href="/taxonomy/#/tag/%D0%B7%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B7%D0%BA%D0%B0-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B/" style="font-size:8.0pt">заморозка системы</a>
+	<a href="/taxonomy/#/tag/%D0%B8%D0%B2%D1%82/" style="font-size:8.0pt">ИВТ</a>
+	<a href="/taxonomy/#/tag/%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%BD%D0%B5%D1%82/" style="font-size:10.76pt">интернет</a>
+	<a href="/taxonomy/#/tag/%D0%BA%D0%BE%D0%BD%D0%BA%D1%83%D1%80%D1%81/" style="font-size:11.88pt">конкурс</a>
+	<a href="/taxonomy/#/tag/%D0%BA%D0%BE%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%86%D0%B8%D0%B8/" style="font-size:12.88pt">конференции</a>
+	<a href="/taxonomy/#/tag/%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D1%8B/" style="font-size:16.82pt">олимпиады</a>
+	<a href="/taxonomy/#/tag/%D0%BE%D0%BC%D0%B3%D1%82%D1%83/" style="font-size:14.62pt">ОмГТУ</a>
+	<a href="/taxonomy/#/tag/%D0%BF%D0%BE%D1%81%D0%B2%D1%8F%D1%89%D0%B5%D0%BD%D0%B8%D0%B5/" style="font-size:9.49pt">Посвящение</a>
+	<a href="/taxonomy/#/tag/%D0%BF%D1%80%D0%B8%D1%82%D1%87%D0%B8/" style="font-size:10.76pt">притчи</a>
+	<a href="/taxonomy/#/tag/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/" style="font-size:21.48pt">программирование</a>
+	<a href="/taxonomy/#/tag/%D0%BF%D1%80%D0%BE%D1%87%D0%B5%D0%B5/" style="font-size:11.88pt">прочее</a>
+	<a href="/taxonomy/#/tag/%D1%80%D0%B0%D0%B7%D0%BE%D0%B1%D0%BB%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D0%B5/" style="font-size:9.49pt">разоблачение</a>
+	<a href="/taxonomy/#/tag/%D1%81%D0%B5%D1%81%D1%81%D0%B8%D1%8F/" style="font-size:9.49pt">сессия</a>
+	<a href="/taxonomy/#/tag/%D1%81%D0%B8%D1%81%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD/" style="font-size:13.79pt">сисадмин</a>
+	<a href="/taxonomy/#/tag/%D1%81%D0%BF%D0%B8%D1%87%D0%BA%D0%B8/" style="font-size:9.49pt">спички</a>
+	<a href="/taxonomy/#/tag/%D1%81%D0%BF%D0%BE%D1%80%D1%82/" style="font-size:11.88pt">спорт</a>
+	<a href="/taxonomy/#/tag/%D1%82%D0%B0%D0%B9%D0%BC-%D0%BC%D0%B5%D0%BD%D0%B5%D0%B4%D0%B6%D0%BC%D0%B5%D0%BD%D1%82/" style="font-size:22.0pt">тайм-менеджмент</a>
+	<a href="/taxonomy/#/tag/%D1%82%D0%B2%D0%BE%D1%80%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%BE/" style="font-size:11.88pt">творчество</a>
+	<a href="/taxonomy/#/tag/%D1%84%D0%BE%D1%82%D0%BE/" style="font-size:12.88pt">фото</a>
+	<a href="/taxonomy/#/tag/%D1%85%D0%B0%D0%BB%D1%8F%D0%B2%D0%B0/" style="font-size:10.76pt">халява</a>
+	<a href="/taxonomy/#/tag/%D1%88%D0%BA%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%B0%D0%BC/" style="font-size:12.88pt">школьникам</a>
+	<a href="/taxonomy/#/tag/docx/" style="font-size:9.49pt">docx</a>
+	<a href="/taxonomy/#/tag/en/" style="font-size:9.49pt">EN</a>
+	<a href="/taxonomy/#/tag/freeware/" style="font-size:9.49pt">Freeware</a>
+	<a href="/taxonomy/#/tag/google-docs/" style="font-size:9.49pt">Google Docs</a>
+	<a href="/taxonomy/#/tag/google/" style="font-size:10.76pt">Google</a>
+	<a href="/taxonomy/#/tag/microsoft-office/" style="font-size:9.49pt">Microsoft Office</a>
+	<a href="/taxonomy/#/tag/microsoft/" style="font-size:11.88pt">Microsoft</a>
+	<a href="/taxonomy/#/tag/p2p/" style="font-size:9.49pt">p2p</a>
+	<a href="/taxonomy/#/tag/party/" style="font-size:19.86pt">party</a>
+	<a href="/taxonomy/#/tag/wiki/" style="font-size:10.76pt">wiki</a>
+	<a href="/taxonomy/#/tag/windows/" style="font-size:9.49pt">Windows</a>
+</section>
+			<nav     class="taxonomies">
+<h2>Таксономии</h2>
+<ul>
+	<li>
+		Рубрики
+		<ul>
+			<li><a href="/taxonomy/#/category/hardware/">Hardware</a></li>
+			<li><a href="/taxonomy/#/category/it%D1%88%D1%82%D1%83%D0%BA%D0%B8/">ITштуки</a></li>
+			<li><a href="/taxonomy/#/category/software/">Software</a></li>
+			<li><a href="/taxonomy/#/category/links/">links</a></li>
+			<li><a href="/taxonomy/#/category/web-%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/">web-инструменты</a></li>
+			<li><a href="/taxonomy/#/category/wiki/">wiki</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B4%D0%B5%D0%B2%D1%8F%D1%82%D1%8B%D0%B9-%D0%B1%D0%B8%D1%82/">Девятый бит</a></li>
+			<li><a href="/taxonomy/#/category/%D1%83%D0%BD%D0%B8%D0%BA/">УНИК</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B0%D0%B1%D0%B8%D1%82%D1%83%D1%80%D0%B8%D0%B5%D0%BD%D1%82%D0%B0%D0%BC/">абитуриентам</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B0%D0%BD%D0%BE%D0%BD%D1%81/">анонс</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B2%D0%BD%D0%B8%D0%BC%D0%B0%D0%BD%D0%B8%D0%B5/">внимание!</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D0%B0-%D0%BB%D0%BE%D0%BC/">голова-лом</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B4%D0%B5%D1%82%D0%B4%D0%BE%D0%BC/">детдом</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B7%D1%80%D0%B8%D0%B2%D0%BE/">зриво</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B8%D0%B7%D0%B1%D1%80%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5-%D1%84%D0%BE%D1%82%D0%BA%D0%B8/">избранные фотки</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%B2%D1%8C%D1%8E/">интервью</a></li>
+			<li><a href="/taxonomy/#/category/%D0%BE%D0%B1%D1%89%D0%B0%D0%B3%D0%B0/">общага</a></li>
+			<li><a href="/taxonomy/#/category/%D0%BE%D1%84%D0%B8%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE/">официально</a></li>
+			<li><a href="/taxonomy/#/category/%D0%BF%D0%BE%D0%B7%D0%B4%D1%80%D0%B0%D0%B2%D0%BB%D1%8F%D0%B5%D0%BC/">поздравляем</a></li>
+			<li><a href="/taxonomy/#/category/%D1%80%D0%B5%D0%BF%D0%BE%D1%80%D1%82%D0%B0%D0%B6/">репортаж</a></li>
+			<li><a href="/taxonomy/#/category/%D1%81%D0%BE%D0%B1%D1%8B%D1%82%D0%B8%D1%8F/">события</a></li>
+			<li><a href="/taxonomy/#/category/%D1%81%D0%BF%D0%BE%D1%80%D1%82/">спорт</a></li>
+			<li><a href="/taxonomy/#/category/%D1%83%D1%87%D1%91%D0%B1%D0%B0/">учёба</a></li>
+			<li><a href="/taxonomy/#/category/%D1%85%D0%B8-%D1%85%D0%B8/">хи-хи</a></li>
+			<li><a href="/taxonomy/#/category/%D1%86%D0%B8%D1%82%D0%B0%D1%82%D0%B0/">цитата</a></li>
+			<li><a href="/taxonomy/#/category/%D1%87%D1%82%D0%B8%D0%B2%D0%BE/">чтиво</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B1%D0%B5%D0%B7-%D1%80%D1%83%D0%B1%D1%80%D0%B8%D0%BA%D0%B8/">Без рубрики</a></li>
+		</ul>
+	</li>
+	<li>
+		Выпуски
+		<ul>
+			<li><a href="/taxonomy/#/issue/%D0%BA-%D0%B8%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D1%8E/">(к изданию)</a></li>
+			<li><a href="/taxonomy/#/issue/%D0%BD%D0%B5-%D0%B8%D0%B7%D0%B4%D0%B0%D0%BD%D0%BD%D0%BE%D0%B5/">(не изданное)</a></li>
+			<li><a href="/taxonomy/#/issue/1-%D0%BE%D0%BA%D1%82%D1%8F%D0%B1%D1%80%D1%8C-2008/">№1 октябрь 2008</a></li>
+			<li><a href="/taxonomy/#/issue/2-%D0%BE%D0%BA%D1%82%D1%8F%D0%B1%D1%80%D1%8C-2008/">№2 октябрь 2008</a></li>
+			<li><a href="/taxonomy/#/issue/3-%D0%BD%D0%BE%D1%8F%D0%B1%D1%80%D1%8C-2008/">№3 ноябрь 2008</a></li>
+			<li><a href="/taxonomy/#/issue/4-%D0%B4%D0%B5%D0%BA%D0%B0%D0%B1%D1%80%D1%8C-2008/">№4 декабрь 2008</a></li>
+			<li><a href="/taxonomy/#/issue/5-%D0%BC%D0%B0%D0%B9-2009/">№5 май 2009</a></li>
+			<li><a href="/taxonomy/#/issue/6-%D0%BD%D0%BE%D1%8F%D0%B1%D1%80%D1%8C-2009/">№6 ноябрь 2009</a></li>
+			<li><a href="/taxonomy/#/issue/7-%D0%B8%D1%8E%D0%BD%D1%8C-2010/">№7 июнь 2010</a></li>
+			<li><a href="/taxonomy/#/issue/8-%D1%8F%D0%BD%D0%B2%D0%B0%D1%80%D1%8C-2011/">№8 январь 2011</a></li>
+			<li><a href="/taxonomy/#/issue/9-%D0%B8%D1%8E%D0%BD%D1%8C-2012/">№9 июнь 2012</a></li></ul>
+	</li>
+	<li>
+		Авторы
+		<ul>
+			<li><a href="/taxonomy/#/author/%D0%B1%D0%BE%D0%B3%D0%B0%D1%82%D0%BE%D0%B2-%D1%80-%D0%BD/">Богатов Р.Н.</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B1%D0%BE%D1%8F%D1%80%D1%88%D0%B8%D0%BD%D0%BE%D0%B2-%D0%BA%D0%B8%D1%80%D0%B8%D0%BB%D0%BB/">Бояршинов Кирилл</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B1%D1%80%D0%B0%D0%B9%D0%B0%D0%BD-%D1%82%D1%80%D0%B5%D0%B9%D1%81%D0%B8/">Брайан Трейси</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B1%D1%83%D1%80%D0%B0%D0%BC%D0%B5%D0%BD%D1%81%D0%BA%D0%B8%D0%B9-%D0%BF%D0%B0%D0%B2%D0%B5%D0%BB/">Бураменский Павел</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B2%D0%B0%D1%81%D0%B8%D0%BB%D1%8C%D0%B5%D0%B2-%D0%B5%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D0%B9/">Васильев Евгений</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B2%D0%B5%D1%88%D0%BA%D1%83%D1%80%D1%86%D0%B5%D0%B2-%D0%BD%D0%B8%D0%BA%D0%B8%D1%82%D0%B0/">Вешкурцев Никита</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B2%D0%BE%D1%81%D0%BA%D1%80%D0%B5%D1%81%D0%B5%D0%BD%D1%81%D0%BA%D0%B0%D1%8F-%D0%BD%D0%B0%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0/">Воскресенская Надежда</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B3%D0%B0%D1%80%D0%B1%D0%B0%D1%80%D0%B5%D0%B2-%D0%B0%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B9/">Гарбарев Алексей</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B3%D0%B5%D1%80%D0%B0%D1%81%D0%B8%D0%BC%D0%BE%D0%B2-%D0%B2%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80/">Герасимов Владимир</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B4%D0%B5%D0%BC%D0%B8%D0%B4%D0%BE%D0%B2-%D0%B2%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80/">Демидов Владимир</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%B5%D0%B2-%D0%B3%D0%BB%D0%B5%D0%B1/">Еремеев Глеб</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B6%D0%B0%D0%BA%D0%B8%D1%8F%D0%BD%D0%BE%D0%B2-%D0%B0-%D1%81/">Жакиянов А. С.</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B7%D0%B0%D0%B2%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9-%D0%B0%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80/">Завальный Александр</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B8%D0%B2%D1%82-%D1%8545/">ИВТ-х45</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B8%D0%B2%D1%82-%D1%8546/">ИВТ-х46</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BA%D0%BE%D1%80%D0%BE%D0%B1%D0%BE%D0%B2-%D0%B2%D0%BB%D0%B0%D0%B4/">Коробов Влад</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BA%D1%80%D1%83%D0%BC%D0%B8%D0%BD%D0%B0-%D0%B0%D0%BD%D0%BD%D0%B0/">Крумина Анна</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BA%D1%83%D0%BB%D0%B8%D0%BA%D0%BE%D0%B2%D0%B0-%D0%B5%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D1%8F/">Куликова Евгения</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BA%D1%83%D1%80%D1%87%D0%B0%D0%BD%D0%BE%D0%B2-%D0%B0%D0%BD%D0%B4%D1%80%D0%B5%D0%B9/">Курчанов Андрей</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BA%D1%83%D1%8F%D0%BD%D0%BE%D0%B2-%D0%B4%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B9/">Куянов Дмитрий</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BB%D0%B5%D0%B1%D0%B5%D0%B4%D0%B5%D0%B2-%D0%B0%D0%BD%D1%82%D0%BE%D0%BD/">Лебедев Антон</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BC%D0%B0%D0%BD%D0%B4%D1%80%D0%BE%D0%BD%D0%BE%D0%B2-%D0%BC%D0%B8%D1%85%D0%B0%D0%B8%D0%BB/">Мандронов Михаил</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BC%D0%B0%D1%81%D0%BB%D0%BE%D0%B2-%D1%81-%D0%B0/">Маслов С.А.</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BC%D0%B8%D1%82%D1%8C%D0%BA%D0%B8%D0%BD-%D0%B0%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80/">Митькин Александр</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BC%D1%8F%D1%81%D0%B8%D1%89%D0%B5%D0%B2-%D1%81-%D0%B2/">Мясищев С.В.</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BD%D0%B8%D0%BA%D0%BE%D0%BD%D0%BE%D0%B2-%D0%B0-%D0%B2/">Никонов А.В.</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BE%D0%B2%D1%87%D0%B8%D0%BD%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2%D0%B0-%D0%B5%D0%BB%D0%B5%D0%BD%D0%B0/">Овчинникова Елена</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BF%D0%B5%D0%BD%D0%B4%D0%B5%D1%80-%D0%B5%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%BD%D0%B0/">Пендер Екатерина</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BF%D0%BE%D0%BD%D0%BE%D0%BC%D0%B0%D1%80%D1%91%D0%B2%D0%B0-%D1%8F%D0%BD%D0%B0/">Пономарёва Яна</a></li>
+			<li><a href="/taxonomy/#/author/%D1%81%D0%B5%D1%80%D0%B3%D0%B5%D0%B5%D0%B2-%D0%B4%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B9/">Сергеев Дмитрий</a></li>
+			<li><a href="/taxonomy/#/author/%D1%81%D0%BE%D0%BB%D0%BE%D1%88%D0%B5%D0%BD%D0%BA%D0%BE-%D0%B2%D0%B8%D1%82%D0%B0%D0%BB%D0%B8%D0%B9/">Солошенко Виталий</a></li>
+			<li><a href="/taxonomy/#/author/%D1%82%D1%80%D0%BE%D0%B8%D1%86%D0%BA%D0%B8%D0%B9-%D0%B5%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D0%B9/">Троицкий Евгений</a></li>
+			<li><a href="/taxonomy/#/author/%D1%86%D0%B0%D1%80%D0%B5%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D1%86%D0%B5%D0%B2-%D0%B8%D0%B3%D0%BE%D1%80%D1%8C/">Царегородцев Игорь</a></li>
+			<li><a href="/taxonomy/#/author/%D1%88%D0%B0%D1%80%D0%BA%D0%B0%D0%BD%D0%BE%D0%B2-%D0%BC-%D0%B2/">Шарканов М.В.</a></li>
+			<li><a href="/taxonomy/#/author/%D1%88%D1%82%D1%80%D0%B8%D0%BF%D0%BB%D0%B8%D0%BD%D0%B3-%D0%B0%D0%BD%D0%B0%D1%81%D1%82%D0%B0%D1%81%D0%B8%D1%8F/">Штриплинг Анастасия</a></li>
+			<li><a href="/taxonomy/#/author/%D1%8E%D0%B4%D0%B8%D0%BD-%D0%B5-%D0%B1/">Юдин Е.Б.</a></li>
+			<li><a href="/taxonomy/#/author/%D1%8E%D1%80%D0%B4%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0-%D0%BA%D1%80%D0%B8%D1%81%D1%82%D0%B8%D0%BD%D0%B0/">Юрданова Кристина</a></li></ul>
+	</li>
+</ul>
+</nav>
+			<section class="support-us" aria-label="поддержать нас">
+<object class="ambient-occlusion-shadow-effect_demo-pics" data="/theme/support-us/support-us.svg" role="document" type="image/svg+xml" typemustmatch tabindex="0"></object>
+<!-- "crdon_no-js.css" and "gh-btn.css" in <head> -->
+<!--
+	Опасный target="_blank" (noopener + noreferrer):
+	- https://habrahabr.ru/post/282880/#comment_8879836
+	- https://web.archive.org/web/20150114045622/http://habrahabr.ru/post/164539#comment_5666391
+	- https://developers.google.com/web/tools/lighthouse/audits/noopener
+	- https://habrahabr.ru/post/282880/#comment_9628780 (patch for Opera 12.*)
+-->
+<noscript id="_support-us_content_">
+	<img alt="Donate" src="/theme/img/lfs/support-us_after-open_candy-doBnate.png">
+	<p style="font-weight:bold;text-shadow:0px 1px 0px rgba(255,255,255,0.5);" title="Где Вы находитесь? / Откуда Вы родом?">
+		<span aria-hidden="true" style="visibility:hidden">&hellip;</span>Я нахожусь&hellip;
+	</p>
+	<p>
+		&hellip;за пределами <span style="color:#D28800">Солнечной системы</span>
+	</p>
+	<span id="github-btn">
+		<a id="gh-btn" href="https://github.com/ASOIU/9bit" target="_blank" rel="noopener" aria-label="Поставить нам звездочку (добавить в закладки) на GitHub"
+			>Star</a
+		><a id="gh-btn-count" href="https://github.com/ASOIU/9bit/stargazers" target="_blank" rel="noopener" aria-label="Открыть список пользователей GitHub, добавивших нас в закладки">...</a>
+	</span>
+	<p>
+		&hellip;за пределами
+		<a href="https://habrahabr.ru/company/yandex/blog/233101/" target="_blank" rel="nofollow noreferrer noopener">Росс</a><a href="https://www.linux.org.ru/forum/talks/10729346" target="_blank" rel="nofollow noreferrer noopener">ий</a><a href="https://geektimes.ru/post/292645/" target="_blank" rel="nofollow noreferrer noopener">ской</a>
+		<a href="https://habrahabr.ru/post/231163/#comment_7813853" target="_blank" rel="nofollow noreferrer noopener">Феде</a><a href="http://bitnovosti.com/2014/02/20/roger-ver-o-blockchain/" target="_blank" rel="nofollow noreferrer noopener">рации</a>
+	</p>
+	<a class="crdon-here crdon_mpo-a-bc" href="bitcoin:13GCXbWHU8byXo3cHmQkKkB8Kw3KrY9y9A">наш Bitcoin кошелек</a>
+	<div data-see-notes-in="https://github.com/ASOIU/9bit/blob/master/theme/crypto-currency/example.html" style="display:none" hidden><!-- alternative to <template> -->
+
+		<span id="_template_crdon_btn_">
+			<span class="crdon_holder">
+				<button type="button" aria-expanded="false" aria-controls="" aria-pressed="false"><img src="/theme/crypto-currency/icons_cc/-bitcoin.png?message=Template-Test"><span>Поддержать</span></button></span
+			><span class="crdon_btn-total-received">...</span>
+		</span>
+
+		<div id="_template_crdon_mpo_" class="crdon_mpo-a" aria-hidden="true">
+			<div id="_crdon__mpo_">
+				<label for="_crdon__mpo_wallet_address_">наш Тестовый кошелек</label>
+				<div id="_crdon__mpo_line_wallet_address_">
+					<input type="text" id="_crdon__mpo_wallet_address_" value="test_13GCXbWHU8byXo3cHmQkKkB8Kw3KrY9y9A_test" title="Drag'n'Drop Me" readonly autofocus>
+					<a href="bitcoin:13GCXbWHU8byXo3cHmQkKkB8Kw3KrY9y9A?label=9b.asoiu.com&message=Template-Test__If-you-see-me-Then-code-contain-a-bug__Donation-might-help-in-fixing-this-issue" target="_blank" title="Открыть программу-кошелек для отправки монеток (программа-кошелек должна быть установлена)">
+						<img src="/theme/crypto-currency/icon_wallet.png" alt="Отправить монетки">
+					</a>
+				</div>
+				<div id="_crdon__mpo_line_wallet_stat_" aria-label="Статистика">
+					<span id="_crdon__mpo_wallet_n_tx_">0<small>поддержало человек</small></span>
+					<span id="_crdon__mpo_wallet_total_received_" class="crdon_mpo-line-wallet-stat-end">0.00<small>монеток</small></span>
+				</div>
+				<span id="_crdon__mpo_qr_code_" aria-haspopup="true" tabindex="0"><img src="/theme/crypto-currency/qr/13GCXbWHU8byXo3cHmQkKkB8Kw3KrY9y9A.png?message=Template-Test__If-you-see-me-Then-code-contain-a-bug__Donation-might-help-in-fixing-this-issue" alt="QR-код нашего кошелька для приложения на смартфоне"></span>
+				<button type="button" id="_crdon__mpo_close_" aria-label="Закрыть" aria-controls="_crdon__mpo_" title="Возможно, эта штучка закроет это окно. Стоит попробовать.">&times;</button>
+			</div>
+		</div>
+
+	</div>
+	<style>
+		.mouse-maze{text-align:left}
+
+		.mouse-maze .mmz{display:none}
+		.mouse-maze :hover>.mmz{display:inline}
+		/* or
+		.mouse-maze .mmz{opacity:0;transition: opacity 1s ease-out 0.25s}
+		.mouse-maze :hover>.mmz{opacity:1}
+		*/
+	</style>
+	<p class="mouse-maze"><span>
+		&hellip;за <span style="color:#080">Персональным Компьютером</span><span class="mmz">
+			<a href="https://duckduckgo.com/?q=%22%D0%9C%D0%B0%D1%82%D1%80%D0%B8%D1%86%D0%B0%3A+%D0%BD%D0%B5%D0%B8%D0%B7%D0%B2%D0%B5%D1%81%D1%82%D0%BD%D1%8B%D0%B9+%D1%84%D0%B8%D0%BD%D0%B0%D0%BB%22" target="_blank" rel="nofollow noreferrer noopener">в Матрице</a><span class="mmz">,
+				<a href="https://ru.wikipedia.org/wiki/Тринадцатый_этаж?stable=1" target="_blank" rel="nofollow noopener">на 13 этаже</a><span class="mmz">,
+					<a href="https://youtu.be/q6j5TFE_iCk" target="_blank" rel="noopener">играю в симулятор</a><span class="mmz">,
+						<a href="https://futurist.ru/articles/871-ben-uilyyams-operatsionniy-direktor-adblock-plus-reklamnie-banneri-uydut-v-proshloe" target="_blank" rel="nofollow noreferrer noopener">в мире без рекламы</a>
+	</p>
+	<iframe src="//button.flattr.com/view/?fid=12pk70&button=compact&url=https://9b.asoiu.com/2015/3626-%D0%BA%D0%B0%D0%BA-%D0%BC%D1%8B-%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D0%BB%D0%B8-%D1%85%D0%B0%D0%BA%D1%81%D0%BF%D0%B5%D0%B9%D1%81-phdays-v-everywhere-%D0%B8-%D1%81%D0%BE%D1%80/" width="110" height="20" margin-width="0" margin-height="0" scrolling="no" style="border:none" title="Flattr"></iframe>
+	<p><img alt="Thank you so much (smile)" title="TODO: написать под картинкой текст, что на самом деле нам не нужны деньги. Когда ты автономен, сам вырабатываешь электроэнергию, умеешь перерабатывать материалы (имеешь запасы руды, &hellip;), выращиваешь еду, интроверт, и у тебя есть лучшие помощники - манипуляторы с большим числом степеней свободы на подвижной платформе, то деньги начинают терять свою ценность. Ты просто занимаешься исследованиями, и создаешь новые вещи. Но бумажные деньги тоже могут пригодиться: когда надо отвлечься от основного дела (чтобы появились новые идеи в голове) - можно изучить материалы, из которых была сделана 'банкнота', разделить (разрезать) ее на полосы, поднять температуру отдельных полосок (поджечь их), попробовать разделить каждую полоску на слои, &hellip; В общем #arbejdsglæde ( https://youtu.be/6uxu-wiYsYU ). Единственный минус (или плюс) - игры наподобие Factorio, судя по ее обзору ( https://habrahabr.ru/company/mosigra/blog/331800/#comment_10290254 ; Factorio в 3D - Infinifactory https://habrahabr.ru/post/336364/ ), начинают напоминать происходящее в реальной жизни, превращаясь тем самым в среду для весьма грубого прототипирования. [текст получился длинным, и нужно еще придумать визуальное оформление для него, поэтому пока под картинкой только вставлю ссылку на #arbejdsglæde]" src="/theme/img/lfs/support-us_after-open_thank-you.png"></p>
+	<p><a href="http://www.whattheheckisarbejdsglaede.com" target="_blank" rel="noopener"><span style="color:#fff">#</span><span style="color:#888; text-shadow:0 1px 0 rgba(255,255,255, 0.76)">arbejdsglæde</span></a></p>
+</noscript>
+</section>
+		</aside>
+		<div class="clear"></div>
+    </div>
+    <footer id="footer">
+		<a href="#top" id="toTop">&nbsp;</a>
+		<p>
+			Написано с <svg class="octicon octicon-heart" viewBox="0 0 12 16" version="1.1" width="12" height="16" role="img" aria-label="любовью" xmlns="http://www.w3.org/2000/svg">
+				<path aria-hidden="true" fill-rule="evenodd" d="M11.2 3c-.52-.63-1.25-.95-2.2-1-.97 0-1.69.42-2.2 1-.51.58-.78.92-.8 1-.02-.08-.28-.42-.8-1-.52-.58-1.17-1-2.2-1-.95.05-1.69.38-2.2 1-.52.61-.78 1.28-.8 2 0 .52.09 1.52.67 2.67C1.25 8.82 3.01 10.61 6 13c2.98-2.39 4.77-4.17 5.34-5.33C11.91 6.51 12 5.5 12 5c-.02-.72-.28-1.39-.8-2.02V3z"/>
+			</svg> к мозгу. <svg class="octicon octicon-eye" viewBox="0 0 16 16" version="1.1" width="16" height="16" role="img" aria-label="Внимание" xmlns="http://www.w3.org/2000/svg">
+				<path aria-hidden="true" fill-rule="evenodd" d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z"/>
+			</svg> опасность: Можно стать умным <svg class="octicon octicon-telescope" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" d="M8 9l3 6h-1l-2-4v5H7v-6l-2 5H4l2-5 2-1zM7 0H6v1h1V0zM5 3H4v1h1V3zM2 1H1v1h1V1zM.63 9a.52.52 0 0 0-.16.67l.55.92c.13.23.41.31.64.2l1.39-.66-1.16-2-1.27.86.01.01zm7.89-5.39l-5.8 3.95L3.95 9.7l6.33-3.03-1.77-3.06h.01zm4.22 1.28l-1.47-2.52a.51.51 0 0 0-.72-.17l-1.2.83 1.84 3.2 1.33-.64c.27-.13.36-.44.22-.7z"/>
+			</svg>
+		</p>
+		<p>
+        	Some contents copyrigbt &copy; <a href="//9b.asoiu.com/">Девятый бит</a>. All rights are forbidden.
+
+			<!-- License: http://web-kreation.com/demos/oneroom/index.php/license/ -->
+			<!-- If you want to remove this copyright notice, please contact me at info {at} web-kreation {dot} com -->
+			Theme design by <a href="http://web.archive.org/web/20151020142204/http://web-kreation.com">Web-Kreation</a>.
+			<!-- / END -->
+        </p>
+    </footer>
+</div>
+</body>
+</html>

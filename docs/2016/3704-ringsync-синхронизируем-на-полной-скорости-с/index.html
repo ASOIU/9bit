@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>RingSync: синхронизируем на полной скорости сети &laquo; Девятый бит</title>
+	<meta name="viewport" content="width=968, initial-scale=0.796, maximum-scale=0.796">
+	<!-- Optimal "mobile" scale: double tap on ".post h1" (selector) element -->
+	<meta name="MobileOptimized" content="968">
+	<link rel="stylesheet" href="/theme/main.css" media="screen">
+	<noscript><link rel="stylesheet" href="/theme/crypto-currency/crdon_no-js.css"></noscript>
+	<noscript><link rel="stylesheet" href="/theme/github-button/gh-btn.css"></noscript>
+	<link rel="alternate" type="application/atom+xml" href="/feed.xml" title="Девятый бит Atom Feed">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+			<link rel="edit" href="https://github.com/ASOIU/9bit/blob/master/_posts/2016-09-20-3704-ringsync-синхронизируем-на-полной-скорости-с.html" title="Улучшить эту статью">
+			<link rel="canonical" href="http://9b.asoiu.com/2016/3704-ringsync-%D1%81%D0%B8%D0%BD%D1%85%D1%80%D0%BE%D0%BD%D0%B8%D0%B7%D0%B8%D1%80%D1%83%D0%B5%D0%BC-%D0%BD%D0%B0-%D0%BF%D0%BE%D0%BB%D0%BD%D0%BE%D0%B9-%D1%81%D0%BA%D0%BE%D1%80%D0%BE%D1%81%D1%82%D0%B8-%D1%81/">
+	<meta name="generator" content="Jekyll v3.10.0">
+
+			<script id="comments-plus-script" src="/theme/comments.plus.js" data-canonical-uri="https://9b.asoiu.com/2016/3704-ringsync-%D1%81%D0%B8%D0%BD%D1%85%D1%80%D0%BE%D0%BD%D0%B8%D0%B7%D0%B8%D1%80%D1%83%D0%B5%D0%BC-%D0%BD%D0%B0-%D0%BF%D0%BE%D0%BB%D0%BD%D0%BE%D0%B9-%D1%81%D0%BA%D0%BE%D1%80%D0%BE%D1%81%D1%82%D0%B8-%D1%81/" async></script>
+			<script>
+				"use strict";
+				document.addEventListener("DOMContentLoaded", function(){
+					window.isDOMContentLoadedHelper = true; // need for async comments.plus.js
+					if(window.location.hash == "#more") document.querySelectorAll("#more-cut")[0].style.display = "block";
+				}, false);
+			</script>
+</head>
+<body id="top" itemscope itemtype="http://schema.org/Blog">
+<div id="wrapper">
+    <header id="header">
+        <nav id="logo"><a class="logo" href="/" title="Домой"></a></nav>
+        <ul id="navAdmin">
+            <li><a href="https://github.com/ASOIU/9bit">Fork me on GitHub</a></li>
+            <li><a href="//web.archive.org/web/*/9b.asoiu.com">Archive</a></li>
+		</ul>         
+        <a id="rss" href="/feed.xml" title="Syndicate this site using Atom... Atom!">SUBSCRIBE TO <b>RSS</b></a>
+    </header>
+    <div id="pageWrapper">
+		<main id="content">
+
+			<!--------------------------- POST --------------------------->
+<div id="intro"><p><a href="//9b.asoiu.com/"><b>Девятый бит</b></a>: Архив блога кафедры АСОИУ ОмГТУ</p></div>
+
+<article class="postWrapper" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+<!--------------------------- META --------------------------->
+<footer class="postmetadata">
+	<p class="meta-date">
+		<time itemprop="datePublished" datetime="2016-09-20T13:37:32+00:00">
+			<span class="date-day">20</span>
+			<span class="date-month">Сен</span>
+			<span class="date-year">2016</span>
+		</time>
+	</p>
+	<p class="meta-author" itemprop="creator" itemscope itemtype="http://schema.org/Person">by <span itemprop="name">ZKyl</span></p>
+		<p class="meta-authors">
+				<a href="/taxonomy/#/author/%D0%B2%D0%B0%D1%81%D0%B8%D0%BB%D1%8C%D0%B5%D0%B2-%D0%B5%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D0%B9/" title="Просмотреть все статьи автора &ldquo;Васильев Евгений&rdquo;" rel="category" itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Васильев Евгений</span></a>
+		</p>
+	<p class="meta-improve"><a href="https://github.com/ASOIU/9bit/blob/master/_posts/2016-09-20-3704-ringsync-синхронизируем-на-полной-скорости-с.html" class="post-edit-link" title="Улучшить эту статью">Улучшить &raquo;</a></p>
+	<p class="meta-comments"><a rel="discussion" itemprop="discussionUrl" href="#comments"><span itemprop="commentCount">2</span> Комментариев &raquo;</a></p>
+		<p class="meta-issues">
+				<a href="/taxonomy/#/issue/%D0%BA-%D0%B8%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D1%8E/" title="Просмотреть все статьи, попавшие в выпуск &ldquo;(к изданию)&rdquo;" rel="category">(к изданию)</a>
+		</p>
+		<p class="meta-categories">
+				<a href="/taxonomy/#/category/it%D1%88%D1%82%D1%83%D0%BA%D0%B8/" title="Просмотреть все статьи в рубрике &ldquo;ITштуки&rdquo;" rel="category"><span itemprop="articleSection">ITштуки</span></a>, 
+				<a href="/taxonomy/#/category/software/" title="Просмотреть все статьи в рубрике &ldquo;Software&rdquo;" rel="category"><span itemprop="articleSection">Software</span></a>, 
+				<a href="/taxonomy/#/category/%D1%87%D1%82%D0%B8%D0%B2%D0%BE/" title="Просмотреть все статьи в рубрике &ldquo;чтиво&rdquo;" rel="category"><span itemprop="articleSection">чтиво</span></a>
+		</p>
+		<p class="meta-tags" itemprop="keywords">
+				<a href="/taxonomy/#/tag/btsync/" rel="tag">BTSync</a>, 
+				<a href="/taxonomy/#/tag/client-server/" rel="tag">client-server</a>, 
+				<a href="/taxonomy/#/tag/github/" rel="tag">GitHub</a>, 
+				<a href="/taxonomy/#/tag/golang/" rel="tag">Golang</a>, 
+				<a href="/taxonomy/#/tag/hdd/" rel="tag">HDD</a>, 
+				<a href="/taxonomy/#/tag/p2p/" rel="tag">p2p</a>, 
+				<a href="/taxonomy/#/tag/ringsync/" rel="tag">RingSync</a>, 
+				<a href="/taxonomy/#/tag/switch/" rel="tag">switch</a>, 
+				<a href="/taxonomy/#/tag/sync/" rel="tag">sync</a>, 
+				<a href="/taxonomy/#/tag/tcp/" rel="tag">TCP</a>, 
+				<a href="/taxonomy/#/tag/vhd/" rel="tag">VHD</a>
+		</p>
+	<meta itemprop="isFamilyFriendly" content="true">
+</footer>
+<!--------------------------- META end ----------------------->
+
+
+	<div class="post" id="post-3704">
+		<header itemprop="headline">
+			<h1 itemprop="name">RingSync: синхронизируем на полной скорости сети</h1>
+			<link itemprop="url" href="/2016/3704-ringsync-%D1%81%D0%B8%D0%BD%D1%85%D1%80%D0%BE%D0%BD%D0%B8%D0%B7%D0%B8%D1%80%D1%83%D0%B5%D0%BC-%D0%BD%D0%B0-%D0%BF%D0%BE%D0%BB%D0%BD%D0%BE%D0%B9-%D1%81%D0%BA%D0%BE%D1%80%D0%BE%D1%81%D1%82%D0%B8-%D1%81/">
+		</header>
+		<div class="entry" itemprop="articleBody">
+			<!--------------------------- ---- --------------------------->
+			<p><img class="noborder aligncenter wp-image-3748 size-full" style="margin: -10px -20px 8px -20px;" src="/wp-content/uploads/2016/09/sync-party.jpg" alt="RingSync demo party" width="520" height="215" /></p>
+<p>В комментарии к статье про <a title="Заморозка системы: история перехода с EWF на dVHD" href="/2013/2793-%D0%B7%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B7%D0%BA%D0%B0-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B-%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8F-%D0%BF%D0%B5%D1%80%D0%B5%D1%85%D0%BE%D0%B4%D0%B0-%D1%81-ew/" target="_blank">dVHD заморозку системы</a> я намекнул на быстрый способ распространения/синхронизации больших файлов по локальной сети.</p>
+<p>Конкретно, в моем случае VHD файл весил примерно 120 GiB, и его нужно было залить на 30 PC. При каждом обновлении VHD он перезаливался. Под катом читайте историю, про то, как с таким большим файлом <del>не</del> справлялся <a title="BitTorrent Sync: скорость до 90 мегабайт/с и открытые API" href="https://habrahabr.ru/post/201072" target="_blank">BTSync</a>, и про создание <strong>RingSync</strong>. <span id="more-cut"></span></p>
+<p>Начну с небольшого <strong>QA</strong> (Вопрос-Ответа), сравнивая различные схемы обмена данными.</p>
+<h1 id="h-1-klassika-server-client">Классика: Server → Client</h1>
+<p><strong>Q:</strong> Что происходит в классическом варианте, когда один сервер раздает файл множеству клиентов?</p>
+<p><strong>A:</strong> Допустим, что и на сервере и на клиентах установлены обычные HDD <span class="grey">(<a title="Последовательный и произвольный доступ к носителю данных" href="https://ru.wikipedia.org/wiki/IOPS#.D0.A5.D0.B0.D1.80.D0.B0.D0.BA.D1.82.D0.B5.D1.80.D0.B8.D1.81.D1.82.D0.B8.D0.BA.D0.B8_.D0.BF.D1.80.D0.BE.D0.B8.D0.B7.D0.B2.D0.BE.D0.B4.D0.B8.D1.82.D0.B5.D0.BB.D1.8C.D0.BD.D0.BE.D1.81.D1.82.D0.B8" target="_blank">последовательное</a> чтение/запись выполняется быстро, <a title="Последовательный и произвольный доступ к носителю данных" href="https://ru.wikipedia.org/wiki/IOPS#.D0.A5.D0.B0.D1.80.D0.B0.D0.BA.D1.82.D0.B5.D1.80.D0.B8.D1.81.D1.82.D0.B8.D0.BA.D0.B8_.D0.BF.D1.80.D0.BE.D0.B8.D0.B7.D0.B2.D0.BE.D0.B4.D0.B8.D1.82.D0.B5.D0.BB.D1.8C.D0.BD.D0.BE.D1.81.D1.82.D0.B8" target="_blank">произвольное</a> - медленно)</span>.</p>
+<p><a href="/wp-content/uploads/2016/09/server-client.png"><img class="aligncenter wp-image-3711" src="/wp-content/uploads/2016/09/server-client.png" alt="1 x Server - switch - N x Clients" width="464" height="319" /></a></p>
+<p>У нас есть:</p>
+<ul>
+<li><strong>1</strong> сервер <span class="grey">(файловое хранилище)</span>;</li>
+<li><strong>4</strong> клиента <span class="grey">(загружающие с файлового хранилища один и тот же файл)</span>;</li>
+<li><strong>1</strong> switch <span class="grey">(все порты работают в <a title="Дуплекс (телекоммуникации)" href="https://ru.wikipedia.org/w/index.php?title=Дуплекс_(телекоммуникации)&amp;stable=1" target="_blank">дуплексном</a> режиме; скорость соединения на всех портах одинаковая)</span>.</li>
+</ul>
+<p>Еще один важный момент - скорость используемых HDD <span class="grey">(при последовательных операциях доступа к данным)</span> выше скорости сетевого подключения.</p>
+<p style="text-align: justify;">В этом случае узким местом будет сетевое соединение между сервером и switch'ом. Сервер инициирует 4 потока <span class="grey">(по потоку для каждого клиента)</span> передачи данных, которые разделят общую пропускную способность сетевого соединения сервера.</p>
+<p style="text-align: justify;"><strong>В итоге скорость загрузки упадет в 4 раза</strong>, по сравнению со случаем, когда только 1 клиент загружает файл. Чем больше клиентов, тем меньше скорость загрузки у каждого из этих клиентов. Для 30 клиентов и 100 Mbps сети 120 GiB файл будет загружаться минимум 3 дня 13 часов и 54 минуты, т.е. для клиента 100 Mbps превратятся в 3 Mbps :(  .</p>
+<p style="text-align: justify;">При этом сервер вынужден несколько раз <span class="grey">(по количеству клиентов)</span> отправлять одну и ту же часть файла в сеть. Последствия этого можно увидеть, сравнив две ситуации <span class="grey">(два граничных условия)</span>:</p>
+<ol>
+<li>Все клиенты запустили загрузку файла в одно и то же время.</li>
+<li>Запуск загрузки не был синхронизирован, например, получился разброс ±10 минут.</li>
+</ol>
+<p class="note">Вспомним, что у нас обычные HDD, которым трудно дается произвольный доступ к данным...</p>
+<p><strong>В первом</strong> случае система сможет кешировать считанную один раз из HDD часть файла <span class="grey">(для одного клиента)</span>, и будет раздавать оставшимся клиентам эту часть файла уже из кеша <span class="grey">(без обращения к HDD)</span>. Для HDD это будет выглядеть, как последовательное чтение данных, которое ему легко дается.</p>
+<p><strong>Во втором</strong> случае клиенты станут обращаться к разным частям, и у системы будет меньше шансов повторно воспользоваться кешированными частями файла. Для HDD это будет выглядеть как произвольный доступ к данным. Например, второй клиент запустил загрузку с 10 минутным отставанием от первого клиента, значит, первый клиент уже успел загрузить 7 GiB, и чтобы система смогла отдавать части файла для второго клиента без повторного обращения к HDD, ей нужен кеш размером в 7 GiB.</p>
+<p class="note">В реальности 100% “<a title="What is a cache hit and a cache miss?" href="http://stackoverflow.com/q/18559342" target="_blank">попадание</a>” в файловый кеш не требуется, например, в кеш можно помещать не только текущую часть файла, но и несколько следующих частей...</p>
+<h1 id="h-2-p2p-btsync">P2P: BTSync</h1>
+<p><strong>Q:</strong> В чем заключается польза от использования p2p в локальной сети?</p>
+<p><strong>A:</strong> Если p2p клиенты используют следующую схему передачи данных:</p>
+<ol>
+<li><em><a title="Терминология" href="https://ru.wikipedia.org/wiki/BitTorrent_(протокол)#.D0.A2.D0.B5.D1.80.D0.BC.D0.B8.D0.BD.D0.BE.D0.BB.D0.BE.D0.B3.D0.B8.D1.8F" target="_blank">сид</a></em> отправляет каждому <em><a title="Терминология" href="https://ru.wikipedia.org/wiki/BitTorrent_(протокол)#.D0.A2.D0.B5.D1.80.D0.BC.D0.B8.D0.BD.D0.BE.D0.BB.D0.BE.D0.B3.D0.B8.D1.8F" target="_blank">пиру</a></em> разную часть файла,</li>
+<li>каждый <em>пир</em> пересылает полученную часть файла другому <em>пиру</em>,</li>
+<li><em>сид</em> отправляет каждому <em>пиру</em> разную часть файла, которую <em>сид</em> не отправлял никому ранее,</li>
+<li>одновременно с предыдущим пунктом, <em>пиры</em> продолжают обмениваться частями файла,</li>
+<li>пункты 3-4 повторяются, пока <em>сид</em> не раздаст все части файла, и все <em>пиры</em> получат эти части</li>
+</ol>
+<p style="text-align: justify;">, и все они подключены к одному switch'у, то, теоретически, скорость получения данных пиром не будет уменьшаться с увеличением числа <em>пиров</em> <span class="grey">(в классическом варианте Server → Client скорость уменьшалась)</span>. Это работает благодаря возможности switch “соединять” любые 2 своих порта, и <strong>данные</strong> между этими портами <strong>смогут передаваться на полной скорости соединения</strong>.</p>
+<p class="note">Похожий режим работы в BitTorrent клиентах называется <a title="Суперсид" href="https://ru.wikipedia.org/wiki/Суперсид" target="_blank">Super-seeding</a>.</p>
+<p><strong>Q:</strong> Какой может быть негативный эффект от использования этой схемы?</p>
+<p><strong>A:</strong> Так как теперь части файла передаются не последовательно <span class="grey">(от начала до конца)</span>, а в разброс, то скорость чтения(для <em>сида</em>)/записи(для <em>пира</em>) с/на HDD упадет <span class="grey">(последствия произвольного доступа к данным)</span>. Поэтому клиенты должны выбирать оптимальный размер части файла, и использовать адаптированный под эту схему работы алгоритм кеширования.</p>
+<h2 id="h-2-1-istoriya-pro-btsync-i-bolshoj-fajl">История про BTSync и большой файл</h2>
+<p><img class="noborder alignright wp-image-3729 size-full" src="/wp-content/uploads/2016/09/BTSync.png" alt="BitTorrent Sync" width="64" height="320" />Про <a href="https://ru.wikipedia.org/wiki/BitTorrent_Sync" target="_blank">BTSync</a> написано уже много статьей (<a href="https://habrahabr.ru/search/?q=syncapp" target="_blank"> 1 </a> <a href="https://habrahabr.ru/search/?q=bittorrent+sync" target="_blank"> 2 </a> <a href="https://www.youtube.com/watch?v=83D26IsAfT0" target="_blank"> 3 </a>), но самое интересное можно было найти на <a title="forum" href="http://forum.bittorrent.com/forum/107-bittorrent-sync/" target="_blank">официальном форуме</a> <span class="grey">(он переехал <a href="https://forum.resilio.com/forum/108-sync-troubleshooting/" target="_blank">сюда</a>)</span>. Вкратце, баги были, и с ними приходилось бороться, например, в некоторых версиях были проблемы с<a href="https://ru.wikipedia.org/wiki/Local_Peer_Discovery" target="_blank"> Local Peer Discovery</a> <span class="grey">(не всегда работал)</span> - обходилась проблема прописыванием IP одного из пиров в сети. У него есть еще тележка интересных “особенностей”, но сейчас речь пойдет про его работу с большими файлами...</p>
+<p>Для развертывания системы на VHD, был собран минимальный WinPE, содержащий:</p>
+<ul>
+<li>BTSync - запускался через “<strong>BTSync.exe /config config.json</strong>”;</li>
+<li>программу ShowWindow, которая используя <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms633499.aspx" target="_blank">FindWindow</a>, <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms644950.aspx" target="_blank">SendMessage</a> (WinAPI), и переданное ей имя класса окна “BTSync4823DF041B09”, открывает скрытое окно BTSync <span class="grey">(он запускается “свернутым в трей”, а трея у нас нет...)</span>;</li>
+<li>драйверы <span class="grey">(в основном для <a href="https://en.wikipedia.org/wiki/Network_interface_controller" target="_blank">NIC</a>)</span>;</li>
+<li>скрипты <span class="grey">(<strong>startnet.cmd</strong>: тюнинг сетевого стека, вызов пред и пост разверточных скриптов)</span>.</li>
+</ul>
+<p class="note"><small>Всё это происходило в середине 2014 года (или 2013...), и пишется по <a title="4) Память хранится в мозгу так же, как вещи в ящиках" href="https://geektimes.ru/post/280440/" target="_blank">памяти<sup>4</sup></a>.</small></p>
+<p>На <em>сиде</em> BTSync запускался с RW <em>секретом</em>, а на <em>пирах</em> - с RO <em>секретом</em> (с включенной опцией <strong>принудительной синхронизации</strong>, если файл существует, и отличается от файла у <em>сида</em>).</p>
+<p style="text-align: justify;">После трех “разворачиваний” системы по 8-10 PC за раз <span class="grey">(скорость сетевого соединения 100 Mbps; PC подключены к одному switch; максимальная скорость HDD была в районе 110 MiBps; размер файла тот же - 120 GiB)</span>, собралась следующая “статистика”:</p>
+<ul>
+<li>после запуска BTSync на всех PC, и начала синхронизации, в районе часа сетевая активность была минимальна, т.е. файл не передавался;</li>
+<li>на некоторых (1-2) <em>пирах</em> процесс синхронизации прерывался, и приходилась вручную перезапускать BTSync;</li>
+<li>при подключении через нормальный switch средняя скорость загрузки была <strong>8 MiBps</strong> <span class="grey">(падала до 6, поднималась до 9)</span> - при отключенном шифровании трафика;</li>
+<li>при подключении через устройство, очень похожее на <a href="https://zyxel.ru/es-116s/" target="_blank">ZyXEL ES-116S</a>, средняя скорость загрузки была <strong>3.4 MiBps</strong> <span class="grey">(иногда поднималась до 6)</span> - шифрование трафика также было отключено.</li>
+</ul>
+<h3 id="h-2-1-1-eksperiment-1">Эксперимент 1</h3>
+<p style="text-align: justify;">После этого было решено провести эксперимент: взять <strong>2-3 PC</strong>, нормальный  switch, и добавить <a href="https://ru.wikipedia.org/wiki/Process_Explorer" target="_blank"><strong>Process Explorer</strong></a> в WinPE для наблюдения за активностью  BTSync. Судя по описанию проблем на <a href="http://forum.bittorrent.com/forum/107-bittorrent-sync/" target="_blank">форуме</a> - у каждой версии имелся свой набор “особенностей” <span class="grey">(новая версия не значит более лучшая версия)</span>, поэтому в эксперименте участвовало несколько версий BTSync (<strong>1.0.134</strong> - <strong>1.3.106</strong>). После каждого опыта, скаченный <em>пирами</em> файл стирался, и все PC перезагружались.</p>
+<ul>
+<li>И так, запускаем BTSync на <em>сиде</em>, запускаем на одном <em>пире</em>, и вуаля: сетевая активность появляется сразу же, и файл синхронизируется со скоростью <strong>11 MiBps</strong>.</li>
+<li>Теперь сделаем то же самое, но запустим два <em>пира</em> одновременно: сетевая активность минимальна, у <em>сида</em> наблюдается высокая дисковая активность <span class="grey">(BTSync запустил подсчет контрольных сумм частей файла?)</span>, и только после уменьшения дисковой активности начинается синхронизация с некоторыми “<strong>особенностями</strong>” (про них - ниже).</li>
+<li>А если взять первый вариант, и запустить второго пира посередине синхронизации: синхронизация приостанавливается, и возрастает дисковая активность у <em>сида</em> <span class="grey">(вычисляет контрольные суммы?)</span>, затем <span class="grey">(когда вычислит все контрольные суммы?)</span> синхронизация продолжается (опять же с “<strong>особенностями</strong>”).</li>
+</ul>
+<p><strong>Особенности</strong> синхронизации заключались в том, что при каждом новом запуске, <em>схема работы</em> отличалась от предыдущего запуска. Всего получилось 3 <em>схемы работы</em> <span class="grey">(сокращения: <em>сид</em> - s, <em>пир</em>1 - p1, <em>пир</em>2 - p2)</span>:</p>
+<pre style="overflow-x: scroll;">1. s --{7 MiBps}--&gt; p1; s --{4.5 MiBps}--&gt; p2; p1 --{7 MiBps}--&gt; p2; p2 --{4.5 MiBps}--&gt; p1; через определенный промежуток времени p1 и p2 меняются местами:
+   s --{7 MiBps}--&gt; p2; s --{4.5 MiBps}--&gt; p1; p2 --{7 MiBps}--&gt; p1; p1 --{4.5 MiBps}--&gt; p2; смена происходит с определенным периодом времени;
+
+2. s --{10 MiBps}--&gt; p1; после того, как p1 все загрузит:
+   s --{10 MiBps}--&gt; p2;
+
+3. s --{7.5 MiBps}--&gt; p1; s --{3.5 MiBps}--&gt; p2; p1 --{7.5 MiBps}--&gt; p2; p2 --{3.5 MiBps}--&gt; p1; затем:
+   s --{4.5 MiBps}--&gt; p2;                        p2 --{4.5 MiBps}--&gt; p1; и возвращение:
+   s --{7.5 MiBps}--&gt; p1; s --{3.5 MiBps}--&gt; p2; p1 --{7.5 MiBps}--&gt; p2; p2 --{3.5 MiBps}--&gt; p1; смена происходит с определенным периодом времени.</pre>
+<p>Причем первая <em>схема работы</em> <span class="grey">(самая лучшая)</span> включалась, когда BTSync на обоих пира запускался одновременно. Если же была задержка между запусками, то чаще встречалась <em>схема</em> 3 или 2.</p>
+<p>Что касается различий в версиях BTSync, то в опытах с более новыми версиями второй вариант <em>схемы</em> встречался реже. Но это ничего не значит, т.к. испытания каждой версией повторялись всего 4 раза, что очень мало. Версии 1.0.134 и 1.3.106 испытывались большее число раз.</p>
+<p style="text-align: justify;">Однако в новых версиях <span class="grey">(предположительно начиная с 1.3. x)</span>, появилась еще одна “<strong>особенность</strong>”: когда размер загружаемого файла <span class="grey">(можно посмотреть командой dir в консоли)</span> на <em>пире</em> достигает 70% <span class="grey">(или около того)</span>, рост размера файла приостанавливается на некоторое время.</p>
+<h3 id="h-2-1-2-eksperiment-2">Эксперимент 2</h3>
+<p>За основу брался первый эксперимент, с отличиями:</p>
+<ol>
+<li>использовалась только последняя версия BTSync;</li>
+<li>загруженный пирами файл не удалялся, а изменялось его содержимое.</li>
+</ol>
+<p class="error">Эти испытания BTSync провалил - синхронизация с сидом так и не начиналась (опция <strong>принудительной синхронизации</strong> была включена).</p>
+<p> :(  <span style="float: right;"> :(  </span></p>
+<p class="note">В повседневном использовании с 1 GiB файлами мне помогала "легкая приостановка" - через контекстное меню “иконки в трее” <em>пира</em> поставить BTSync на паузу, а затем убрать паузу.</p>
+<h1 id="h-3-ringsync">RingSync</h1>
+<p>Во время борьбы с “<strong>особенностями</strong>” BTSync появились несколько мыслей:</p>
+<ul>
+<li>большинство проблем с BTSync связаны с теми возможностями, которые в данном случае не нужны;</li>
+<li>нам не нужно отслеживание изменений в файле, т.к. каждый раз его все равно приходится передавать целиком, и источник всегда один - <em>сид</em>;</li>
+<li>следовательно, нет необходимости в отдельном этапе подсчитывания контрольных сумм, и определения “кто из <em>пиров</em> обладает более новой версией файла”;</li>
+<li>у нас всего один файл;</li>
+<li>HDD попросил сделать последовательное чтение/запись файла 8-O  .</li>
+</ul>
+<p>С этими мыслями родилась следующая схема:</p>
+<p><a href="/wp-content/uploads/2016/09/RingSync.png"><img class="aligncenter wp-image-3718" src="/wp-content/uploads/2016/09/RingSync.png" alt="1 x Seed - switch - N-1 x Peers + 1 x Leech" width="464" height="370" /></a></p>
+<ol>
+<li><em>сид</em> передает часть файла пиру;</li>
+<li><em>пир</em> сохраняет ее на HDD, и параллельно передает следующему <em>пиру</em> <span class="grey">(то же самое делают остальные <em>пиры</em> в цепочке)</span>;</li>
+<li><em><a title="Терминология" href="https://ru.wikipedia.org/wiki/BitTorrent_(протокол)#.D0.A2.D0.B5.D1.80.D0.BC.D0.B8.D0.BD.D0.BE.D0.BB.D0.BE.D0.B3.D0.B8.D1.8F" target="_blank">лич</a></em> <span class="grey">(последний <em>пир</em>)</span> просто сохраняет часть файла на HDD.</li>
+</ol>
+<p style="text-align: justify;">Причем это все происходит параллельно <span class="grey">(в потоковом режиме)</span> - когда первый <em>пир</em> отправляет часть файла следующему <em>пиру</em>, он уже получает следующую часть файла от <em>сида</em>. А сам файл передается от начала до конца, что очень хорошо для HDD <span class="grey">(последовательный доступ к данным)</span>.</p>
+<p>От switch здесь требуется всего лишь “соединить” <strong><span style="color: #ff9900;">Rx</span></strong> одного порта с <strong><span style="color: #3366ff;">Tx</span></strong> другого порта на полной скорости (см. схему), с чем он отлично справляется.</p>
+<h2 id="h-3-1-programma-na-golang">Программа на Golang</h2>
+<p><img class="alignright size-full wp-image-3727" src="/wp-content/uploads/2016/09/gobot-gopher-96px.png" alt="go, golang, gobot-gopher" width="96" height="110" />На современном языке сделать <a title="Proof of Concept" href="https://en.wikipedia.org/wiki/Proof_of_concept" target="_blank">PoC</a> этой схемы не составит никакого труда. На <a title="Go" href="https://golang.org/" target="_blank">Golang</a> основную часть программы <em>пира</em> можно записать всего в одну строчку:</p>
+<p><code>io.<a href="https://golang.org/pkg/io/#Copy" target="_blank">Copy</a>(io.<a href="https://golang.org/pkg/io/#MultiWriter" target="_blank">MultiWriter</a>(outFile, peerConn), seedConn)</code></p>
+<p>, все остальное - обвязка.</p>
+<h3 id="h-3-1-1-posledovatelnost-zapuska">Последовательность запуска</h3>
+<p style="text-align: justify;">Код RingSync написан максимально <a title="Эффект Даннинга-Крюгера" href="https://habrahabr.ru/post/310026/#comment_9807834" target="_blank">просто</a>, и при этом в нем предусмотрена возможность запуска <em>сида</em> и <em>пиров</em> в произвольном порядке. Что это означает? Можно одновременно запустить всех <em>пиров</em> и <em>сида</em>, дождаться пока они включатся, а затем запустить <em>лича</em>. Именно <em>лич</em> запускает процесс синхронизации.</p>
+<p>Под капотом это выглядит так:</p>
+<ol>
+<li>запускаются <em>пиры</em> и <em>лич</em>, и начинают слушать входящие соединения;</li>
+<li>запускается <em>лич</em>, и устанавливает соединение с последним <em>пиром</em>;</li>
+<li>каждый <em>пир</em> устанавливают соединение с предыдущим <em>пиром</em> <span class="grey">(по цепочке)</span>;</li>
+<li>первый <em>пир</em> устанавливают соединение с <em>сидом</em>, и <em>сид</em> начинает отправку данных.</li>
+</ol>
+<p>Если немного пожертвовать простотой, и добавить возможность переподключения при неудачной “установке соединения”, то можно будет и лича, и сида, и пиров запускать в любой последовательности.</p>
+<h3 id="h-3-1-2-repozitorij">Репозиторий</h3>
+<p><img class="noborder alignright wp-image-3728 size-full" src="/wp-content/uploads/2016/09/labtocat.png" alt="the Labtocat" width="184" height="196" />RingSync можно <a title="Fork me on GitHub" href="https://github.com/ZiroKyl/RingSync" target="_blank"><strong>форкнуть здесь</strong></a>.<br />
+<a href="https://github.com/ZiroKyl/RingSync/releases" target="_blank">Там же</a> можно скачать уже собранный для Windows 32bit бинарник.</p>
+<p><strong>Q:</strong> Почему именно Windows 32bit?<br />
+<strong>A:</strong> Потому, что я его использовал с WinPE 32bit. К тому же, вместе с RingSync лежит специальный launcher, который облегчает конфигурирование после сетевой загрузки. Launcher считывает конфиг из файла <span class="grey">(одного и того же для всех PC)</span>, и в зависимости от MAC-адреса первого сетевого интерфейса PC, настраивает этот сетевой интерфейс, и запускает RingSync с нужными параметрами. Сейчас launcher завязан на использование <a href="https://ru.wikipedia.org/wiki/Netsh.exe" target="_blank">netsh</a>, поэтому результат кросс-компиляции под <a href="https://golang.org/doc/install/source#environment" target="_blank">не Windows</a> работать не будет. В отличие от launcher, у самого RingSync таких проблем нет :) </p>
+<p style="text-align: justify;">Опции запуска RingSync приводить не буду - их можно увидеть, просто запустив его без опций. А вот примеры для разных режимов (<em>сид</em>, <em>пир</em>, <em>лич</em>) будут полезны.</p>
+<p><strong>Сид</strong> (слушает порт 5001, ожидает подключения от <em>лича</em>/<em>пира</em> с IP “192.168.0.2”, рассылает содержимое файла “big_file.vhd”):</p>
+<pre>RingSync -mode=seed -port=5001 ^
+         -leech=192.168.0.2 -if=big_file.vhd</pre>
+<p><strong>Пир</strong> (слушает порт 5001, ожидает подключения от <em>лича</em>/<em>пира</em> с IP “192.168.0.3”, подключается к порту 5001 <em>сида</em>/<em>пира</em> с IP “194.168.0.1”, записывает полученные данные в файл “big_file.vhd”):</p>
+<pre>RingSync -mode=peer -port=5001 ^
+         -leech=194.168.0.3 ^
+         -seed=194.168.0.1:5001 -of=big_file.vhd</pre>
+<p><strong>Лич</strong> (подключается к порту 5001 <em>сида</em>/<em>пира</em> с IP “194.168.0.1”, записывает полученные данные в файл “big_file.vhd”):</p>
+<pre>RingSync -mode=leech ^
+         -seed=194.168.0.2:5001 -of=big_file.vhd</pre>
+<p>Сборку этих же строк можно увидеть в исходниках launcher'а.</p>
+<h2 id="h-3-2-tcp-congestion-control">TCP Congestion Control</h2>
+<p>До написания кода RingSync была идея собрать свой <em>TCP-велосипед</em>, в котором данные передавались бы по цепочке от <em>сида</em> -&gt; через <em>пиров</em> -&gt; к <em>личу</em>, а ответ (ACK), подтверждающий получение данных, отправлял бы <em>лич</em> к <em>сиду</em>. Причем, если <em>сида</em> переименовать в “сервер”, <em>лича</em> - в “клиент”, а <em>пиров</em> в “маршрутизаторы”, то получится типичная схема передачи данных в Интернете. Вот только маршрутизаторы не сохраняют переданные через себя данные. В этот <em>TCP-велосипед</em>, можно было бы включить наиболее подходящий для данных условий передачи данных TCP Congestion Avoidance Algorithm (<a href="https://habrahabr.ru/post/168407/" target="_blank"> 1 </a> <a href="https://habrahabr.ru/post/161499/" target="_blank"> 2 </a> <a href="https://networklessons.com/ip-routing/tcp-window-size-scaling/" target="_blank"> 3 </a>), а не полагаться на системный TCP Congestion Control и его настройки. А в будущем можно было бы получить больший контроль над передачей данных, например, добавив возможность отправки сообщений о “заторах” в сети или HDD.</p>
+<p style="text-align: justify;">Но был и более легкий путь - использовать стандартный системный TCP. В этом случае <em>пир</em>, получивший данные, сам отправляет подтверждение <span class="grey">(об успешной доставке данных)</span> <em>пиру</em>, отправившему эти данные. И информация о случившимся “заторе” автоматически передается через цепочку <em>пиров</em> к <em>сиду</em>:</p>
+<ol>
+<li>вначале ближайший к “затору” <em>пир</em>, не получив вовремя подтверждение, сбрасывает скорость, и его буфер на прием данных <span class="grey">(входной буфер)</span> начинает наполняться;</li>
+<li>при переполнении буфера, предыдущий в цепочке <em>пир</em> также перестает получать подтверждения вовремя, и начнет сбрасывать скорость;</li>
+<li>то же самое делают остальные <em>пиры</em>, вплоть до <em>сида</em>.</li>
+</ol>
+<p style="text-align: justify;">Это напоминает <a href="https://www.kinopoisk.ru/film/195460/" title="Unstoppable 2010" target="_blank">движение длинного состава</a> <span class="grey">(локомотив-<em>сид</em> тянет спереди)</span> с большим числом вагонов <span class="grey">(<em>пиров</em>)</span>, и пружиной <span class="grey">(буфером)</span> вместо сцепки.</p>
+<p style="text-align: justify;">На самом деле второй вариант даже лучше, т.к. для некоторых алгоритмов TCP Congestion Avoidance <span class="grey">(косвенно это влияет и на остальных)</span> чем меньше <a title="round-trip time -- Определение времени возврата" href="http://opds.sut.ru/old/electronic_manuals/RStevens_TCP_IP/glava21.html" target="_blank">RTT</a> - тем лучше. А в первом варианте мы заведомо создаем более неблагоприятные условия...</p>
+<p>В итоге, второй вариант, даже в сети с двумя switch:</p>
+<pre>switch{1 Gbps}[<em>сид</em> -&gt; <em>пир</em> -&gt; <em>пир</em>]
+└─{100 Mbps}—↓
+switch{100 Mbps}[<em>пир</em> -&gt; <em>пир</em> -&gt; <em>пир</em> -&gt; <em>лич</em>]</pre>
+<p>показал стабильные <strong>11.8 MiBps</strong>.</p>
+<h2 id="h-3-3-pc-podklyucheny-k-raznym-switch">PC подключены к разным switch</h2>
+<p style="text-align: justify;">В сети с несколькими switch узким местом может стать соединение между ними. Например, если строить цепочку пиров в произвольном порядке, то при сети:</p>
+<pre>switch1{1 Gbps}[<em>сид</em>, <em>пир</em>2, <em>пир</em>4, <em>пир</em>6]
+└─{1 Gbps}─┐
+switch2{1 Gbps}[<em>пир</em>1, <em>лич</em>, <em>пир</em>3, <em>пир</em>5]</pre>
+<p>, и цепочке:</p>
+<pre><em>сид</em>-&gt;<em>пир</em>1-&gt;<em>пир</em>2-&gt;<em>пир</em>3-&gt;<em>пир</em>4-&gt;<em>пир</em>5-&gt;<em>пир</em>6-&gt;<em>лич</em></pre>
+<p>, скорость упадет в <strong>4 раза</strong>.</p>
+<p><strong>Q:</strong> Почему скорость падает в <strong>4 раза</strong>? Как получилось это число “<strong>4</strong>”?<br />
+<strong>A:</strong> Если возьмем все потоки данных в направлении от switch1 к switch2, то получим:</p>
+<ol>
+<li><code><em>сид</em>  -&gt; <em>пир</em>1</code></li>
+<li><code><em>пир</em>2 -&gt; <em>пир</em>3</code></li>
+<li><code><em>пир</em>4 -&gt; <em>пир</em>5</code></li>
+<li><code><em>пир</em>6 -&gt; <em>лич</em></code></li>
+</ol>
+<p>Теперь посмотрим на потоки данных в обратном направлении (от switch2 к switch1):</p>
+<ol>
+<li><code><em>пир</em>2 &lt;- <em>пир</em>1</code></li>
+<li><code><em>пир</em>4 &lt;- <em>пир</em>3</code></li>
+<li><code><em>пир</em>6 &lt;- <em>пир</em>5</code></li>
+</ol>
+<p style="text-align: justify;">В направлении от switch1 к switch2, общий канал в 1 Gbps делили <strong>4</strong> потока, получая максимум 0.25 Gbps на поток. В обратном направлении получилось 3 потока, соответственно максимум 0.33 Gbps на поток. Самым узким местом стал канал от switch1 к switch2 <span class="grey">(максимальная скорость потока 0.25 Gbps)</span>. В самом узком месте скорость потока в <strong>4 раза</strong> меньше, по сравнению с максимальной скорости в “самом широком месте” (1 Gbps).</p>
+<p><strong>Q:</strong> Как исправить ситуацию?<br />
+<strong>A:</strong> Достаточно строить цепочку примерно так (можно сразу перейти к <strong>TL;DR</strong>) 8)  :</p>
+<ol>
+<li>добавить в цепочку <em>сида</em>;</li>
+<li>взять switch, к которому подключен <em>сид</em>, и добавить в цепочку всех <em>пиров</em> <span class="grey">(в любом порядке)</span>, подключенных к этому switch;</li>
+<li>взять следующий, ранее не взятый, switch <span class="grey">(к которому подключены <em>пиры</em>)</span>, подключенный к предыдущему switch <span class="grey">(возможно не прямое подключение, а подключение через несколько промежуточных switch, к которым не подключен ни один <em>пир</em>)</span>, и добавить в цепочку всех <em>пиров</em> <span class="grey">(в любом порядке)</span>, подключенных к этому switch;</li>
+<li>повторять предыдущий пункт, пока он будет выполним <span class="grey">(“следующий switch” будет существовать)</span>;</li>
+<li>если можно вернуться к предыдущему switch, то вернуться к нему, и выполнить предыдущий пункт;</li>
+<li>последнего <em>пира</em> в цепочке назвать <em>личем</em>.</li>
+</ol>
+<p><strong>TL;DR</strong>: используем <a title="Поиск в глубину" href="https://ru.wikipedia.org/wiki/Поиск_в_глубину" target="_blank">обход графа в глубину</a>, при этом:</p>
+<ul>
+<li>вершины - это switch;</li>
+<li>в вершине хранится список <em>пиров</em>, подключенных к этому switch/вершине;</li>
+<li>начинаем со switch/вершины, к которому подключен <em>сид</em>;</li>
+<li>при входе в вершину, добавляем в цепочку всех пиров из списка этой вершины.</li>
+</ul>
+<p class="note">Для использования этого способа нужна информация о <a title="Сетевая топология" href="https://ru.wikipedia.org/wiki/Сетевая_топология" target="_blank">топологии сети</a> на <a title="L2" href="https://ru.wikipedia.org/wiki/Канальный_уровень" target="_blank">канальном уровне</a>.</p>
+<h1 id="h-4-ssylki-v-temu">Ссылки «в тему»</h1>
+<ul>
+<li><a href="http://iris.karalabe.com/book/run_forrest_run" target="_blank">Project Iris</a> - Completely decentralized cloud messaging</li>
+<li><a href="https://github.com/elgs/filesync" target="_blank">Filesync</a> ( Golang : (</li>
+<li><a href="https://habrahabr.ru/post/230863" target="_blank">Недостатки TCP и новые протоколы транспортного уровня</a></li>
+<li><a href="http://www.catapultsoft.com" target="_blank">Catapult</a> - Fast Data Transfers</li>
+<li><a href="https://ind.ie/labs/" target="_blank">Pulse</a> - free (as in freedom), secure, and distributed file synchronization engine</li>
+<li>Фильм <a href="https://www.kinopoisk.ru/film/195460/" target="_blank">Unstoppable 2010</a> + <a href="https://ru.wikipedia.org/wiki/Буфер_(железнодорожный)#.D0.98.D0.BD.D1.82.D0.B5.D1.80.D0.B5.D1.81.D0.BD.D1.8B.D0.B9_.D1.84.D0.B0.D0.BA.D1.82" target="_blank">сдвинуть тяжелый состав</a> ("Интересный факт" про сцепку; <a href="http://www.bolshoyvopros.ru/questions/1188489-pochemu-mashinist-gruzovogo-poezda-prezhde-chem-poehat-vpered-sdaet-nazad.html" target="_blank">подробнее</a>)</li>
+</ul>
+<h1 id="h-5-kak-obojtis-bez-kopirovaniya-bolshogo-vhd-fajla-po-seti">Как обойтись без копирования большого VHD файла по сети?</h1>
+<p>На самом деле можно не копировать каждый раз полный VHD при обновлении системы, а распространять только dVHD с обновлением. Такая схема обновления работает следующим образом <span class="grey">(система обновляется на одном Master-PC, и копируется на множество Slave-PC)</span>:</p>
+<ul>
+<li>На Master-PC все изменения, в ходе обновления системы, сохраняются в новый dVHD файл.</li>
+<li>Все Slave-PC должны хранить оригинальный VHD файл с Master-PC, поэтому на них нужно создавать <em>дополнительный dVHD файл</em>, в котором будут сохранены все отличия Slave-PC от Master-PC. Без этого следующий пункт работать не будет.</li>
+<li>На Slave-PC копируется dVHD файл с обновлением, и, затем, объединяется с VHD файлом <span class="grey">(если бы VHD файл на Master-PC и Slave-PC отличался, то объединение завершилось бы с ошибкой)</span>.</li>
+<li>На каждом Slave-PC заново создается тот <em>дополнительный dVHD файл</em>, хранящий отличия каждого Slave-PC от Master-PC.</li>
+<li>На Master-PC dVHD файл с обновлением системы также объединяется с VHD файлом.</li>
+</ul>
+<p style="text-align: justify;">При этом время распространения обновления будет включать в себя время копирования обновления на Slave-PC + время объединения VHD с dVHD. Здесь важно, чтобы объединение выполнялось быстро, иначе суммарное время <span class="grey">(копирование dVHD + объединение)</span> может превысить время простого копирования цельного VHD файла. Еще один минус – из-за появления на Slave-PC <em>дополнительного dVHD файла</em>, система будет работать медленней.</p>
+<p>   </p>
+
+
+			<!--------------------------- ---- end ----------------------->
+		</div>
+	</div>
+	<footer class="postbottom">
+		<nav class="nav nav-padding">
+			<div class="alignleft" ><a       href="/2015/3626-%D0%BA%D0%B0%D0%BA-%D0%BC%D1%8B-%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D0%BB%D0%B8-%D1%85%D0%B0%D0%BA%D1%81%D0%BF%D0%B5%D0%B9%D1%81-phdays-v-everywhere-%D0%B8-%D1%81%D0%BE%D1%80/" title="Как мы организовали хакспейс PHDays V Everywhere и соревнование OmskCTF">&laquo; Предыдущая статья</a>&nbsp;</div>
+			<div class="alignright" aria-hidden="true">&nbsp;<a href="" title="">Следующая статья &raquo;</a></div>
+			<a href="https://github.com/ASOIU/9bit/blob/master/_posts/2016-09-20-3704-ringsync-синхронизируем-на-полной-скорости-с.html" title="Улучшить эту статью на GitHub">
+				<svg class="octicon-mark-github" width="19" height="19" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" version="1.1" aria-hidden="true">
+					<path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+				</svg>
+			</a>
+		</nav>
+		<section class="commentlist">
+			<h3 class="left-sidebar" id="comments">Комментарии <span>2</span>+</h3>
+				<article class="comment bypostauthor" itemprop="comment" itemscope itemtype="http://schema.org/UserComments" id="comment-251">
+					<link itemprop="url" href="#comment-251">
+					<footer class="left-sidebar">
+						<img class="avatar" src="https://1.gravatar.com/avatar/177530664c81583828f968b3cb498ae7?s=32&d=retro&r=G" alt="ZKyl avatar" height="32" width="32">
+						<p>
+							<span itemprop="creator" itemscope itemtype="http://schema.org/Person">
+								<b itemprop="name">ZKyl</b>
+							</span>
+							<br>
+							<time itemprop="commentTime" datetime="2016-09-20T14:08:37+00:00">
+								20 Сен, 2016
+							</time>
+						</p>
+					</footer>
+					<div class="comment-content" itemprop="commentText">
+						<p><del datetime="2017-12-12">Комментарии можно оставлять здесь -&gt; <a href="https://plus.google.com/+ZiroKyl/posts/DuhWqH9CwDG" rel="nofollow">https://plus.google.com/+ZiroKyl/posts/DuhWqH9CwDG</a></del></p>
+
+					</div>
+				</article>
+				<article class="comment bypostauthor" itemprop="comment" itemscope itemtype="http://schema.org/UserComments" id="comment-252">
+					<link itemprop="url" href="#comment-252">
+					<footer class="left-sidebar">
+						<img class="avatar" src="https://1.gravatar.com/avatar/177530664c81583828f968b3cb498ae7?s=32&d=retro&r=G" alt="ZKyl avatar" height="32" width="32">
+						<p>
+							<span itemprop="creator" itemscope itemtype="http://schema.org/Person">
+								<b itemprop="name">ZKyl</b>
+							</span>
+							<br>
+							<time itemprop="commentTime" datetime="2018-06-22T17:54:16+00:00">
+								22 Июн, 2018
+							</time>
+						</p>
+					</footer>
+					<div class="comment-content" itemprop="commentText">
+						<p>Продолжение темы:<br><a href="https://habr.com/post/414799/">LLTR Часть 0: Автоматическое определение топологии сети и неуправляемые коммутаторы. Миссия невыполнима?</a></p>
+
+					</div>
+				</article>
+			<section id="comments-plus" class="not-https">
+				<div class="left-sidebar">
+					<svg class="octicon octicon-comment-discussion-plus" width="30px" height="22px" viewBox="0 0 30 22" xmlns="http://www.w3.org/2000/svg" version="1.1" aria-hidden="true">
+						<path fill-rule="evenodd" d="M25 14h-4v3l-3-3H8V2h17v1h2V2c0-1.1-.9-2-2-2H9C6 0 5 1 5 3v10c0 2 1 3 4 3h8l6 6v-6h2c1.1 0 2-.9 2-2v-1h-2V14zM27 7V4h-2v3h-3v2h3v3h2V9h3V7H27zM2 4v8c0 1.1 .9 2 2 2V2C2.9 2 2 2.9 2 4zM0 5v6c0 .55 .45 1 1 1V4C.45 4 0 4.45 0 5z"/>
+					</svg>
+					<h3>посмотреть<br> и написать</h3>
+					<svg width="0" height="0" style="display:none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1">
+						<symbol id="svg-octicon-pencil" viewBox="0 0 14 16"><path fill-rule="evenodd" d="M0 12v3h3l8-8-3-3-8 8zm3 2H1v-2h1v1h1v1zm10.3-9.3L12 6 9 3l1.3-1.3a.996.996 0 0 1 1.41 0l1.59 1.59c.39.39.39 1.02 0 1.41z"/></symbol>
+						<symbol id="svg-octicon-eye" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z"/></symbol>
+					</svg>
+				</div>
+				<div class="comments-plus-intro not-https">
+					<a id="comments-plus_not-https_open-https" href="#comments-plus">
+						<span title="И надеть заземленную шапочку-шлем из свинцовой фольги">Открыть</span> <span class="secure">шифрованный канал связи</span>, чтобы<br>
+						<svg class="octicon octicon-pencil" width="14" height="16" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><use xlink:href="#svg-octicon-pencil"/></svg>
+						Написать комментарий и
+						<svg class="octicon octicon-eye" width="16" height="16" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><use xlink:href="#svg-octicon-eye"/></svg>
+						Посмотреть остальные комментарии
+					</a><br>
+					или<br>
+					<a id="comments-plus_not-https_open" href="#comments-plus">жить проще</a>
+					<noscript><br>
+						(Google+ комментарии больше не работают)
+					</noscript>
+				</div>
+				<div class="comments-plus-intro https">
+					<button id="comments-plus_https_open">
+						<span class="pseudo-btn">
+							<svg class="octicon octicon-pencil" width="26" height="24" xmlns="http://www.w3.org/2000/svg" version="1.1" aria-hidden="true"><use xlink:href="#svg-octicon-pencil"/></svg>
+							написать&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- NOTE: nbsp for Chrome... --><br> комментарий
+						</span>
+						или
+						<span class="pseudo-btn">
+							<svg class="octicon octicon-eye" width="32" height="26" xmlns="http://www.w3.org/2000/svg" version="1.1" aria-hidden="true"><use xlink:href="#svg-octicon-eye"/></svg>
+							посмотреть новые<br> комментарии
+						</span>
+					</button>
+				</div>
+				<div class="comment-content comments-g-plus-wrapper-1">
+					<div class="comments-g-plus-wrapper-0">
+						<div id="comments-g-plus"></div>
+					</div>
+				</div>
+
+				<div class="clear"></div>
+			</section>
+		</section>
+	</footer>
+	<div class="clear"></div>
+</article>
+<!--------------------------- POST end ----------------------->
+
+
+			<div class="clear"></div>
+		</main>
+		<aside id="sidebar">
+			<section class="nobackground" aria-label="Поиск по сайту">
+				<form id="searchform" method="get" action="https://www.google.com/search">
+					<input  class="search-field"  name="q" type="search" maxlength="2048" placeholder="Поиск по сайту...">
+					<button class="search-submit" name="btnG" value="Search"></button>
+					<input name="as_sitesearch" value="/" type="hidden">
+					<input name="sourceid"      value="vivaldi" type="hidden">
+				</form>
+			</section>
+			<section class="links"     >
+<h2>Ссылки</h2>
+<ul>
+	<li><a href="http://wiki.asoiu.com/" target="_blank" rel="noopener">Вики-страницы [offline]</a></li>
+	<li><a href="https://google.com/+asoiu-IT" target="_blank" rel="noopener">Новости+</a></li>
+	<li><a href="http://asoiu.com">Основной Сайт</a></li>
+	<li><a href="https://github.com/ASOIU">Репозиторий (GitHub)</a></li>
+	<li><a href="http://forum.asoiu.com/" target="_blank" rel="noopener">Форум [offline]</a></li>
+</ul>
+</section>
+			<section class="tag-cloud" >
+<h2>Облако тэгов</h2>
+	<a href="/taxonomy/#/tag/%D0%B0%D1%81%D0%BE%D0%B8%D1%83-web/" style="font-size:16.82pt">АСОИУ.web</a>
+	<a href="/taxonomy/#/tag/%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D0%BE%D0%B5-%D0%BF%D0%BE/" style="font-size:8.0pt">бесплатное ПО</a>
+	<a href="/taxonomy/#/tag/%D0%B1%D0%BB%D0%BE%D0%B3/" style="font-size:8.0pt">блог</a>
+	<a href="/taxonomy/#/tag/%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE/" style="font-size:11.88pt">видео</a>
+	<a href="/taxonomy/#/tag/%D0%B2%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F/" style="font-size:8.0pt">Википедия</a>
+	<a href="/taxonomy/#/tag/%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D0%BE%D0%BB%D0%BE%D0%BC%D0%BA%D0%B8/" style="font-size:10.76pt">головоломки</a>
+	<a href="/taxonomy/#/tag/%D0%B4%D0%B5%D0%B2%D1%8F%D1%82%D1%8B%D0%B9-%D0%B1%D0%B8%D1%82/" style="font-size:8.0pt">Девятый Бит</a>
+	<a href="/taxonomy/#/tag/%D0%B4%D0%B5%D0%BD%D1%8C%D0%B3%D0%B8/" style="font-size:15.4pt">деньги</a>
+	<a href="/taxonomy/#/tag/%D0%B4%D0%B5%D0%BD%D1%8C-%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D1%82%D1%8B%D1%85-%D0%B4%D0%B2%D0%B5%D1%80%D0%B5%D0%B9/" style="font-size:8.0pt">День открытых дверей</a>
+	<a href="/taxonomy/#/tag/%D0%B4%D0%B5%D1%82%D0%B4%D0%BE%D0%BC/" style="font-size:8.0pt">детдом</a>
+	<a href="/taxonomy/#/tag/%D0%B4%D0%B8%D0%BF%D0%BB%D0%BE%D0%BC/" style="font-size:8.0pt">диплом</a>
+	<a href="/taxonomy/#/tag/%D0%B4%D0%BE%D1%81%D1%83%D0%B3/" style="font-size:19.3pt">досуг</a>
+	<a href="/taxonomy/#/tag/%D0%B5%D0%B3%D1%8D/" style="font-size:13.79pt">ЕГЭ</a>
+	<a href="/taxonomy/#/tag/%D0%B7%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B7%D0%BA%D0%B0-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B/" style="font-size:8.0pt">заморозка системы</a>
+	<a href="/taxonomy/#/tag/%D0%B8%D0%B2%D1%82/" style="font-size:8.0pt">ИВТ</a>
+	<a href="/taxonomy/#/tag/%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%BD%D0%B5%D1%82/" style="font-size:10.76pt">интернет</a>
+	<a href="/taxonomy/#/tag/%D0%BA%D0%BE%D0%BD%D0%BA%D1%83%D1%80%D1%81/" style="font-size:11.88pt">конкурс</a>
+	<a href="/taxonomy/#/tag/%D0%BA%D0%BE%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%86%D0%B8%D0%B8/" style="font-size:12.88pt">конференции</a>
+	<a href="/taxonomy/#/tag/%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D1%8B/" style="font-size:16.82pt">олимпиады</a>
+	<a href="/taxonomy/#/tag/%D0%BE%D0%BC%D0%B3%D1%82%D1%83/" style="font-size:14.62pt">ОмГТУ</a>
+	<a href="/taxonomy/#/tag/%D0%BF%D0%BE%D1%81%D0%B2%D1%8F%D1%89%D0%B5%D0%BD%D0%B8%D0%B5/" style="font-size:9.49pt">Посвящение</a>
+	<a href="/taxonomy/#/tag/%D0%BF%D1%80%D0%B8%D1%82%D1%87%D0%B8/" style="font-size:10.76pt">притчи</a>
+	<a href="/taxonomy/#/tag/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/" style="font-size:21.48pt">программирование</a>
+	<a href="/taxonomy/#/tag/%D0%BF%D1%80%D0%BE%D1%87%D0%B5%D0%B5/" style="font-size:11.88pt">прочее</a>
+	<a href="/taxonomy/#/tag/%D1%80%D0%B0%D0%B7%D0%BE%D0%B1%D0%BB%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D0%B5/" style="font-size:9.49pt">разоблачение</a>
+	<a href="/taxonomy/#/tag/%D1%81%D0%B5%D1%81%D1%81%D0%B8%D1%8F/" style="font-size:9.49pt">сессия</a>
+	<a href="/taxonomy/#/tag/%D1%81%D0%B8%D1%81%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD/" style="font-size:13.79pt">сисадмин</a>
+	<a href="/taxonomy/#/tag/%D1%81%D0%BF%D0%B8%D1%87%D0%BA%D0%B8/" style="font-size:9.49pt">спички</a>
+	<a href="/taxonomy/#/tag/%D1%81%D0%BF%D0%BE%D1%80%D1%82/" style="font-size:11.88pt">спорт</a>
+	<a href="/taxonomy/#/tag/%D1%82%D0%B0%D0%B9%D0%BC-%D0%BC%D0%B5%D0%BD%D0%B5%D0%B4%D0%B6%D0%BC%D0%B5%D0%BD%D1%82/" style="font-size:22.0pt">тайм-менеджмент</a>
+	<a href="/taxonomy/#/tag/%D1%82%D0%B2%D0%BE%D1%80%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%BE/" style="font-size:11.88pt">творчество</a>
+	<a href="/taxonomy/#/tag/%D1%84%D0%BE%D1%82%D0%BE/" style="font-size:12.88pt">фото</a>
+	<a href="/taxonomy/#/tag/%D1%85%D0%B0%D0%BB%D1%8F%D0%B2%D0%B0/" style="font-size:10.76pt">халява</a>
+	<a href="/taxonomy/#/tag/%D1%88%D0%BA%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%B0%D0%BC/" style="font-size:12.88pt">школьникам</a>
+	<a href="/taxonomy/#/tag/docx/" style="font-size:9.49pt">docx</a>
+	<a href="/taxonomy/#/tag/en/" style="font-size:9.49pt">EN</a>
+	<a href="/taxonomy/#/tag/freeware/" style="font-size:9.49pt">Freeware</a>
+	<a href="/taxonomy/#/tag/google-docs/" style="font-size:9.49pt">Google Docs</a>
+	<a href="/taxonomy/#/tag/google/" style="font-size:10.76pt">Google</a>
+	<a href="/taxonomy/#/tag/microsoft-office/" style="font-size:9.49pt">Microsoft Office</a>
+	<a href="/taxonomy/#/tag/microsoft/" style="font-size:11.88pt">Microsoft</a>
+	<a href="/taxonomy/#/tag/p2p/" style="font-size:9.49pt">p2p</a>
+	<a href="/taxonomy/#/tag/party/" style="font-size:19.86pt">party</a>
+	<a href="/taxonomy/#/tag/wiki/" style="font-size:10.76pt">wiki</a>
+	<a href="/taxonomy/#/tag/windows/" style="font-size:9.49pt">Windows</a>
+</section>
+			<nav     class="taxonomies">
+<h2>Таксономии</h2>
+<ul>
+	<li>
+		Рубрики
+		<ul>
+			<li><a href="/taxonomy/#/category/hardware/">Hardware</a></li>
+			<li><a href="/taxonomy/#/category/it%D1%88%D1%82%D1%83%D0%BA%D0%B8/">ITштуки</a></li>
+			<li><a href="/taxonomy/#/category/software/">Software</a></li>
+			<li><a href="/taxonomy/#/category/links/">links</a></li>
+			<li><a href="/taxonomy/#/category/web-%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/">web-инструменты</a></li>
+			<li><a href="/taxonomy/#/category/wiki/">wiki</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B4%D0%B5%D0%B2%D1%8F%D1%82%D1%8B%D0%B9-%D0%B1%D0%B8%D1%82/">Девятый бит</a></li>
+			<li><a href="/taxonomy/#/category/%D1%83%D0%BD%D0%B8%D0%BA/">УНИК</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B0%D0%B1%D0%B8%D1%82%D1%83%D1%80%D0%B8%D0%B5%D0%BD%D1%82%D0%B0%D0%BC/">абитуриентам</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B0%D0%BD%D0%BE%D0%BD%D1%81/">анонс</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B2%D0%BD%D0%B8%D0%BC%D0%B0%D0%BD%D0%B8%D0%B5/">внимание!</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D0%B0-%D0%BB%D0%BE%D0%BC/">голова-лом</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B4%D0%B5%D1%82%D0%B4%D0%BE%D0%BC/">детдом</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B7%D1%80%D0%B8%D0%B2%D0%BE/">зриво</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B8%D0%B7%D0%B1%D1%80%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5-%D1%84%D0%BE%D1%82%D0%BA%D0%B8/">избранные фотки</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%B2%D1%8C%D1%8E/">интервью</a></li>
+			<li><a href="/taxonomy/#/category/%D0%BE%D0%B1%D1%89%D0%B0%D0%B3%D0%B0/">общага</a></li>
+			<li><a href="/taxonomy/#/category/%D0%BE%D1%84%D0%B8%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE/">официально</a></li>
+			<li><a href="/taxonomy/#/category/%D0%BF%D0%BE%D0%B7%D0%B4%D1%80%D0%B0%D0%B2%D0%BB%D1%8F%D0%B5%D0%BC/">поздравляем</a></li>
+			<li><a href="/taxonomy/#/category/%D1%80%D0%B5%D0%BF%D0%BE%D1%80%D1%82%D0%B0%D0%B6/">репортаж</a></li>
+			<li><a href="/taxonomy/#/category/%D1%81%D0%BE%D0%B1%D1%8B%D1%82%D0%B8%D1%8F/">события</a></li>
+			<li><a href="/taxonomy/#/category/%D1%81%D0%BF%D0%BE%D1%80%D1%82/">спорт</a></li>
+			<li><a href="/taxonomy/#/category/%D1%83%D1%87%D1%91%D0%B1%D0%B0/">учёба</a></li>
+			<li><a href="/taxonomy/#/category/%D1%85%D0%B8-%D1%85%D0%B8/">хи-хи</a></li>
+			<li><a href="/taxonomy/#/category/%D1%86%D0%B8%D1%82%D0%B0%D1%82%D0%B0/">цитата</a></li>
+			<li><a href="/taxonomy/#/category/%D1%87%D1%82%D0%B8%D0%B2%D0%BE/">чтиво</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B1%D0%B5%D0%B7-%D1%80%D1%83%D0%B1%D1%80%D0%B8%D0%BA%D0%B8/">Без рубрики</a></li>
+		</ul>
+	</li>
+	<li>
+		Выпуски
+		<ul>
+			<li><a href="/taxonomy/#/issue/%D0%BA-%D0%B8%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D1%8E/">(к изданию)</a></li>
+			<li><a href="/taxonomy/#/issue/%D0%BD%D0%B5-%D0%B8%D0%B7%D0%B4%D0%B0%D0%BD%D0%BD%D0%BE%D0%B5/">(не изданное)</a></li>
+			<li><a href="/taxonomy/#/issue/1-%D0%BE%D0%BA%D1%82%D1%8F%D0%B1%D1%80%D1%8C-2008/">№1 октябрь 2008</a></li>
+			<li><a href="/taxonomy/#/issue/2-%D0%BE%D0%BA%D1%82%D1%8F%D0%B1%D1%80%D1%8C-2008/">№2 октябрь 2008</a></li>
+			<li><a href="/taxonomy/#/issue/3-%D0%BD%D0%BE%D1%8F%D0%B1%D1%80%D1%8C-2008/">№3 ноябрь 2008</a></li>
+			<li><a href="/taxonomy/#/issue/4-%D0%B4%D0%B5%D0%BA%D0%B0%D0%B1%D1%80%D1%8C-2008/">№4 декабрь 2008</a></li>
+			<li><a href="/taxonomy/#/issue/5-%D0%BC%D0%B0%D0%B9-2009/">№5 май 2009</a></li>
+			<li><a href="/taxonomy/#/issue/6-%D0%BD%D0%BE%D1%8F%D0%B1%D1%80%D1%8C-2009/">№6 ноябрь 2009</a></li>
+			<li><a href="/taxonomy/#/issue/7-%D0%B8%D1%8E%D0%BD%D1%8C-2010/">№7 июнь 2010</a></li>
+			<li><a href="/taxonomy/#/issue/8-%D1%8F%D0%BD%D0%B2%D0%B0%D1%80%D1%8C-2011/">№8 январь 2011</a></li>
+			<li><a href="/taxonomy/#/issue/9-%D0%B8%D1%8E%D0%BD%D1%8C-2012/">№9 июнь 2012</a></li></ul>
+	</li>
+	<li>
+		Авторы
+		<ul>
+			<li><a href="/taxonomy/#/author/%D0%B1%D0%BE%D0%B3%D0%B0%D1%82%D0%BE%D0%B2-%D1%80-%D0%BD/">Богатов Р.Н.</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B1%D0%BE%D1%8F%D1%80%D1%88%D0%B8%D0%BD%D0%BE%D0%B2-%D0%BA%D0%B8%D1%80%D0%B8%D0%BB%D0%BB/">Бояршинов Кирилл</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B1%D1%80%D0%B0%D0%B9%D0%B0%D0%BD-%D1%82%D1%80%D0%B5%D0%B9%D1%81%D0%B8/">Брайан Трейси</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B1%D1%83%D1%80%D0%B0%D0%BC%D0%B5%D0%BD%D1%81%D0%BA%D0%B8%D0%B9-%D0%BF%D0%B0%D0%B2%D0%B5%D0%BB/">Бураменский Павел</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B2%D0%B0%D1%81%D0%B8%D0%BB%D1%8C%D0%B5%D0%B2-%D0%B5%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D0%B9/">Васильев Евгений</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B2%D0%B5%D1%88%D0%BA%D1%83%D1%80%D1%86%D0%B5%D0%B2-%D0%BD%D0%B8%D0%BA%D0%B8%D1%82%D0%B0/">Вешкурцев Никита</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B2%D0%BE%D1%81%D0%BA%D1%80%D0%B5%D1%81%D0%B5%D0%BD%D1%81%D0%BA%D0%B0%D1%8F-%D0%BD%D0%B0%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0/">Воскресенская Надежда</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B3%D0%B0%D1%80%D0%B1%D0%B0%D1%80%D0%B5%D0%B2-%D0%B0%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B9/">Гарбарев Алексей</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B3%D0%B5%D1%80%D0%B0%D1%81%D0%B8%D0%BC%D0%BE%D0%B2-%D0%B2%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80/">Герасимов Владимир</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B4%D0%B5%D0%BC%D0%B8%D0%B4%D0%BE%D0%B2-%D0%B2%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80/">Демидов Владимир</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%B5%D0%B2-%D0%B3%D0%BB%D0%B5%D0%B1/">Еремеев Глеб</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B6%D0%B0%D0%BA%D0%B8%D1%8F%D0%BD%D0%BE%D0%B2-%D0%B0-%D1%81/">Жакиянов А. С.</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B7%D0%B0%D0%B2%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9-%D0%B0%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80/">Завальный Александр</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B8%D0%B2%D1%82-%D1%8545/">ИВТ-х45</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B8%D0%B2%D1%82-%D1%8546/">ИВТ-х46</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BA%D0%BE%D1%80%D0%BE%D0%B1%D0%BE%D0%B2-%D0%B2%D0%BB%D0%B0%D0%B4/">Коробов Влад</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BA%D1%80%D1%83%D0%BC%D0%B8%D0%BD%D0%B0-%D0%B0%D0%BD%D0%BD%D0%B0/">Крумина Анна</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BA%D1%83%D0%BB%D0%B8%D0%BA%D0%BE%D0%B2%D0%B0-%D0%B5%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D1%8F/">Куликова Евгения</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BA%D1%83%D1%80%D1%87%D0%B0%D0%BD%D0%BE%D0%B2-%D0%B0%D0%BD%D0%B4%D1%80%D0%B5%D0%B9/">Курчанов Андрей</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BA%D1%83%D1%8F%D0%BD%D0%BE%D0%B2-%D0%B4%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B9/">Куянов Дмитрий</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BB%D0%B5%D0%B1%D0%B5%D0%B4%D0%B5%D0%B2-%D0%B0%D0%BD%D1%82%D0%BE%D0%BD/">Лебедев Антон</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BC%D0%B0%D0%BD%D0%B4%D1%80%D0%BE%D0%BD%D0%BE%D0%B2-%D0%BC%D0%B8%D1%85%D0%B0%D0%B8%D0%BB/">Мандронов Михаил</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BC%D0%B0%D1%81%D0%BB%D0%BE%D0%B2-%D1%81-%D0%B0/">Маслов С.А.</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BC%D0%B8%D1%82%D1%8C%D0%BA%D0%B8%D0%BD-%D0%B0%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80/">Митькин Александр</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BC%D1%8F%D1%81%D0%B8%D1%89%D0%B5%D0%B2-%D1%81-%D0%B2/">Мясищев С.В.</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BD%D0%B8%D0%BA%D0%BE%D0%BD%D0%BE%D0%B2-%D0%B0-%D0%B2/">Никонов А.В.</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BE%D0%B2%D1%87%D0%B8%D0%BD%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2%D0%B0-%D0%B5%D0%BB%D0%B5%D0%BD%D0%B0/">Овчинникова Елена</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BF%D0%B5%D0%BD%D0%B4%D0%B5%D1%80-%D0%B5%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%BD%D0%B0/">Пендер Екатерина</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BF%D0%BE%D0%BD%D0%BE%D0%BC%D0%B0%D1%80%D1%91%D0%B2%D0%B0-%D1%8F%D0%BD%D0%B0/">Пономарёва Яна</a></li>
+			<li><a href="/taxonomy/#/author/%D1%81%D0%B5%D1%80%D0%B3%D0%B5%D0%B5%D0%B2-%D0%B4%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B9/">Сергеев Дмитрий</a></li>
+			<li><a href="/taxonomy/#/author/%D1%81%D0%BE%D0%BB%D0%BE%D1%88%D0%B5%D0%BD%D0%BA%D0%BE-%D0%B2%D0%B8%D1%82%D0%B0%D0%BB%D0%B8%D0%B9/">Солошенко Виталий</a></li>
+			<li><a href="/taxonomy/#/author/%D1%82%D1%80%D0%BE%D0%B8%D1%86%D0%BA%D0%B8%D0%B9-%D0%B5%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D0%B9/">Троицкий Евгений</a></li>
+			<li><a href="/taxonomy/#/author/%D1%86%D0%B0%D1%80%D0%B5%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D1%86%D0%B5%D0%B2-%D0%B8%D0%B3%D0%BE%D1%80%D1%8C/">Царегородцев Игорь</a></li>
+			<li><a href="/taxonomy/#/author/%D1%88%D0%B0%D1%80%D0%BA%D0%B0%D0%BD%D0%BE%D0%B2-%D0%BC-%D0%B2/">Шарканов М.В.</a></li>
+			<li><a href="/taxonomy/#/author/%D1%88%D1%82%D1%80%D0%B8%D0%BF%D0%BB%D0%B8%D0%BD%D0%B3-%D0%B0%D0%BD%D0%B0%D1%81%D1%82%D0%B0%D1%81%D0%B8%D1%8F/">Штриплинг Анастасия</a></li>
+			<li><a href="/taxonomy/#/author/%D1%8E%D0%B4%D0%B8%D0%BD-%D0%B5-%D0%B1/">Юдин Е.Б.</a></li>
+			<li><a href="/taxonomy/#/author/%D1%8E%D1%80%D0%B4%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0-%D0%BA%D1%80%D0%B8%D1%81%D1%82%D0%B8%D0%BD%D0%B0/">Юрданова Кристина</a></li></ul>
+	</li>
+</ul>
+</nav>
+			<section class="support-us" aria-label="поддержать нас">
+<object class="ambient-occlusion-shadow-effect_demo-pics" data="/theme/support-us/support-us.svg" role="document" type="image/svg+xml" typemustmatch tabindex="0"></object>
+<!-- "crdon_no-js.css" and "gh-btn.css" in <head> -->
+<!--
+	Опасный target="_blank" (noopener + noreferrer):
+	- https://habrahabr.ru/post/282880/#comment_8879836
+	- https://web.archive.org/web/20150114045622/http://habrahabr.ru/post/164539#comment_5666391
+	- https://developers.google.com/web/tools/lighthouse/audits/noopener
+	- https://habrahabr.ru/post/282880/#comment_9628780 (patch for Opera 12.*)
+-->
+<noscript id="_support-us_content_">
+	<img alt="Donate" src="/theme/img/lfs/support-us_after-open_candy-doBnate.png">
+	<p style="font-weight:bold;text-shadow:0px 1px 0px rgba(255,255,255,0.5);" title="Где Вы находитесь? / Откуда Вы родом?">
+		<span aria-hidden="true" style="visibility:hidden">&hellip;</span>Я нахожусь&hellip;
+	</p>
+	<p>
+		&hellip;за пределами <span style="color:#D28800">Солнечной системы</span>
+	</p>
+	<span id="github-btn">
+		<a id="gh-btn" href="https://github.com/ASOIU/9bit" target="_blank" rel="noopener" aria-label="Поставить нам звездочку (добавить в закладки) на GitHub"
+			>Star</a
+		><a id="gh-btn-count" href="https://github.com/ASOIU/9bit/stargazers" target="_blank" rel="noopener" aria-label="Открыть список пользователей GitHub, добавивших нас в закладки">...</a>
+	</span>
+	<p>
+		&hellip;за пределами
+		<a href="https://habrahabr.ru/company/yandex/blog/233101/" target="_blank" rel="nofollow noreferrer noopener">Росс</a><a href="https://www.linux.org.ru/forum/talks/10729346" target="_blank" rel="nofollow noreferrer noopener">ий</a><a href="https://geektimes.ru/post/292645/" target="_blank" rel="nofollow noreferrer noopener">ской</a>
+		<a href="https://habrahabr.ru/post/231163/#comment_7813853" target="_blank" rel="nofollow noreferrer noopener">Феде</a><a href="http://bitnovosti.com/2014/02/20/roger-ver-o-blockchain/" target="_blank" rel="nofollow noreferrer noopener">рации</a>
+	</p>
+	<a class="crdon-here crdon_mpo-a-bc" href="bitcoin:13GCXbWHU8byXo3cHmQkKkB8Kw3KrY9y9A">наш Bitcoin кошелек</a>
+	<div data-see-notes-in="https://github.com/ASOIU/9bit/blob/master/theme/crypto-currency/example.html" style="display:none" hidden><!-- alternative to <template> -->
+
+		<span id="_template_crdon_btn_">
+			<span class="crdon_holder">
+				<button type="button" aria-expanded="false" aria-controls="" aria-pressed="false"><img src="/theme/crypto-currency/icons_cc/-bitcoin.png?message=Template-Test"><span>Поддержать</span></button></span
+			><span class="crdon_btn-total-received">...</span>
+		</span>
+
+		<div id="_template_crdon_mpo_" class="crdon_mpo-a" aria-hidden="true">
+			<div id="_crdon__mpo_">
+				<label for="_crdon__mpo_wallet_address_">наш Тестовый кошелек</label>
+				<div id="_crdon__mpo_line_wallet_address_">
+					<input type="text" id="_crdon__mpo_wallet_address_" value="test_13GCXbWHU8byXo3cHmQkKkB8Kw3KrY9y9A_test" title="Drag'n'Drop Me" readonly autofocus>
+					<a href="bitcoin:13GCXbWHU8byXo3cHmQkKkB8Kw3KrY9y9A?label=9b.asoiu.com&message=Template-Test__If-you-see-me-Then-code-contain-a-bug__Donation-might-help-in-fixing-this-issue" target="_blank" title="Открыть программу-кошелек для отправки монеток (программа-кошелек должна быть установлена)">
+						<img src="/theme/crypto-currency/icon_wallet.png" alt="Отправить монетки">
+					</a>
+				</div>
+				<div id="_crdon__mpo_line_wallet_stat_" aria-label="Статистика">
+					<span id="_crdon__mpo_wallet_n_tx_">0<small>поддержало человек</small></span>
+					<span id="_crdon__mpo_wallet_total_received_" class="crdon_mpo-line-wallet-stat-end">0.00<small>монеток</small></span>
+				</div>
+				<span id="_crdon__mpo_qr_code_" aria-haspopup="true" tabindex="0"><img src="/theme/crypto-currency/qr/13GCXbWHU8byXo3cHmQkKkB8Kw3KrY9y9A.png?message=Template-Test__If-you-see-me-Then-code-contain-a-bug__Donation-might-help-in-fixing-this-issue" alt="QR-код нашего кошелька для приложения на смартфоне"></span>
+				<button type="button" id="_crdon__mpo_close_" aria-label="Закрыть" aria-controls="_crdon__mpo_" title="Возможно, эта штучка закроет это окно. Стоит попробовать.">&times;</button>
+			</div>
+		</div>
+
+	</div>
+	<style>
+		.mouse-maze{text-align:left}
+
+		.mouse-maze .mmz{display:none}
+		.mouse-maze :hover>.mmz{display:inline}
+		/* or
+		.mouse-maze .mmz{opacity:0;transition: opacity 1s ease-out 0.25s}
+		.mouse-maze :hover>.mmz{opacity:1}
+		*/
+	</style>
+	<p class="mouse-maze"><span>
+		&hellip;за <span style="color:#080">Персональным Компьютером</span><span class="mmz">
+			<a href="https://duckduckgo.com/?q=%22%D0%9C%D0%B0%D1%82%D1%80%D0%B8%D1%86%D0%B0%3A+%D0%BD%D0%B5%D0%B8%D0%B7%D0%B2%D0%B5%D1%81%D1%82%D0%BD%D1%8B%D0%B9+%D1%84%D0%B8%D0%BD%D0%B0%D0%BB%22" target="_blank" rel="nofollow noreferrer noopener">в Матрице</a><span class="mmz">,
+				<a href="https://ru.wikipedia.org/wiki/Тринадцатый_этаж?stable=1" target="_blank" rel="nofollow noopener">на 13 этаже</a><span class="mmz">,
+					<a href="https://youtu.be/q6j5TFE_iCk" target="_blank" rel="noopener">играю в симулятор</a><span class="mmz">,
+						<a href="https://futurist.ru/articles/871-ben-uilyyams-operatsionniy-direktor-adblock-plus-reklamnie-banneri-uydut-v-proshloe" target="_blank" rel="nofollow noreferrer noopener">в мире без рекламы</a>
+	</p>
+	<iframe src="//button.flattr.com/view/?fid=12pk70&button=compact&url=https://9b.asoiu.com/2016/3704-ringsync-%D1%81%D0%B8%D0%BD%D1%85%D1%80%D0%BE%D0%BD%D0%B8%D0%B7%D0%B8%D1%80%D1%83%D0%B5%D0%BC-%D0%BD%D0%B0-%D0%BF%D0%BE%D0%BB%D0%BD%D0%BE%D0%B9-%D1%81%D0%BA%D0%BE%D1%80%D0%BE%D1%81%D1%82%D0%B8-%D1%81/" width="110" height="20" margin-width="0" margin-height="0" scrolling="no" style="border:none" title="Flattr"></iframe>
+	<p><img alt="Thank you so much (smile)" title="TODO: написать под картинкой текст, что на самом деле нам не нужны деньги. Когда ты автономен, сам вырабатываешь электроэнергию, умеешь перерабатывать материалы (имеешь запасы руды, &hellip;), выращиваешь еду, интроверт, и у тебя есть лучшие помощники - манипуляторы с большим числом степеней свободы на подвижной платформе, то деньги начинают терять свою ценность. Ты просто занимаешься исследованиями, и создаешь новые вещи. Но бумажные деньги тоже могут пригодиться: когда надо отвлечься от основного дела (чтобы появились новые идеи в голове) - можно изучить материалы, из которых была сделана 'банкнота', разделить (разрезать) ее на полосы, поднять температуру отдельных полосок (поджечь их), попробовать разделить каждую полоску на слои, &hellip; В общем #arbejdsglæde ( https://youtu.be/6uxu-wiYsYU ). Единственный минус (или плюс) - игры наподобие Factorio, судя по ее обзору ( https://habrahabr.ru/company/mosigra/blog/331800/#comment_10290254 ; Factorio в 3D - Infinifactory https://habrahabr.ru/post/336364/ ), начинают напоминать происходящее в реальной жизни, превращаясь тем самым в среду для весьма грубого прототипирования. [текст получился длинным, и нужно еще придумать визуальное оформление для него, поэтому пока под картинкой только вставлю ссылку на #arbejdsglæde]" src="/theme/img/lfs/support-us_after-open_thank-you.png"></p>
+	<p><a href="http://www.whattheheckisarbejdsglaede.com" target="_blank" rel="noopener"><span style="color:#fff">#</span><span style="color:#888; text-shadow:0 1px 0 rgba(255,255,255, 0.76)">arbejdsglæde</span></a></p>
+</noscript>
+</section>
+		</aside>
+		<div class="clear"></div>
+    </div>
+    <footer id="footer">
+		<a href="#top" id="toTop">&nbsp;</a>
+		<p>
+			Написано с <svg class="octicon octicon-heart" viewBox="0 0 12 16" version="1.1" width="12" height="16" role="img" aria-label="любовью" xmlns="http://www.w3.org/2000/svg">
+				<path aria-hidden="true" fill-rule="evenodd" d="M11.2 3c-.52-.63-1.25-.95-2.2-1-.97 0-1.69.42-2.2 1-.51.58-.78.92-.8 1-.02-.08-.28-.42-.8-1-.52-.58-1.17-1-2.2-1-.95.05-1.69.38-2.2 1-.52.61-.78 1.28-.8 2 0 .52.09 1.52.67 2.67C1.25 8.82 3.01 10.61 6 13c2.98-2.39 4.77-4.17 5.34-5.33C11.91 6.51 12 5.5 12 5c-.02-.72-.28-1.39-.8-2.02V3z"/>
+			</svg> к мозгу. <svg class="octicon octicon-eye" viewBox="0 0 16 16" version="1.1" width="16" height="16" role="img" aria-label="Внимание" xmlns="http://www.w3.org/2000/svg">
+				<path aria-hidden="true" fill-rule="evenodd" d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z"/>
+			</svg> опасность: Можно стать умным <svg class="octicon octicon-telescope" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" d="M8 9l3 6h-1l-2-4v5H7v-6l-2 5H4l2-5 2-1zM7 0H6v1h1V0zM5 3H4v1h1V3zM2 1H1v1h1V1zM.63 9a.52.52 0 0 0-.16.67l.55.92c.13.23.41.31.64.2l1.39-.66-1.16-2-1.27.86.01.01zm7.89-5.39l-5.8 3.95L3.95 9.7l6.33-3.03-1.77-3.06h.01zm4.22 1.28l-1.47-2.52a.51.51 0 0 0-.72-.17l-1.2.83 1.84 3.2 1.33-.64c.27-.13.36-.44.22-.7z"/>
+			</svg>
+		</p>
+		<p>
+        	Some contents copyrigbt &copy; <a href="//9b.asoiu.com/">Девятый бит</a>. All rights are forbidden.
+
+			<!-- License: http://web-kreation.com/demos/oneroom/index.php/license/ -->
+			<!-- If you want to remove this copyright notice, please contact me at info {at} web-kreation {dot} com -->
+			Theme design by <a href="http://web.archive.org/web/20151020142204/http://web-kreation.com">Web-Kreation</a>.
+			<!-- / END -->
+        </p>
+    </footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+	<meta charset="UTF-8">
+	<title>Заморозка системы: история перехода с EWF на dVHD &laquo; Девятый бит</title>
+	<meta name="viewport" content="width=968, initial-scale=0.796, maximum-scale=0.796">
+	<!-- Optimal "mobile" scale: double tap on ".post h1" (selector) element -->
+	<meta name="MobileOptimized" content="968">
+	<link rel="stylesheet" href="/theme/main.css" media="screen">
+	<noscript><link rel="stylesheet" href="/theme/crypto-currency/crdon_no-js.css"></noscript>
+	<noscript><link rel="stylesheet" href="/theme/github-button/gh-btn.css"></noscript>
+	<link rel="alternate" type="application/atom+xml" href="/feed.xml" title="Девятый бит Atom Feed">
+	<link rel="icon" type="image/x-icon" href="/favicon.ico">
+	<link rel="profile" href="http://gmpg.org/xfn/11">
+			<link rel="edit" href="https://github.com/ASOIU/9bit/blob/master/_posts/2013-09-19-2793-заморозка-системы-история-перехода-с-ew.html" title="Улучшить эту статью">
+			<link rel="canonical" href="http://9b.asoiu.com/2013/2793-%D0%B7%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B7%D0%BA%D0%B0-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B-%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8F-%D0%BF%D0%B5%D1%80%D0%B5%D1%85%D0%BE%D0%B4%D0%B0-%D1%81-ew/">
+	<meta name="generator" content="Jekyll v3.10.0">
+
+			<script id="comments-plus-script" src="/theme/comments.plus.js" data-canonical-uri="https://9b.asoiu.com/2013/2793-%D0%B7%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B7%D0%BA%D0%B0-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B-%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8F-%D0%BF%D0%B5%D1%80%D0%B5%D1%85%D0%BE%D0%B4%D0%B0-%D1%81-ew/" async></script>
+			<script>
+				"use strict";
+				document.addEventListener("DOMContentLoaded", function(){
+					window.isDOMContentLoadedHelper = true; // need for async comments.plus.js
+					if(window.location.hash == "#more") document.querySelectorAll("#more-cut")[0].style.display = "block";
+				}, false);
+			</script>
+</head>
+<body id="top" itemscope itemtype="http://schema.org/Blog">
+<div id="wrapper">
+    <header id="header">
+        <nav id="logo"><a class="logo" href="/" title="Домой"></a></nav>
+        <ul id="navAdmin">
+            <li><a href="https://github.com/ASOIU/9bit">Fork me on GitHub</a></li>
+            <li><a href="//web.archive.org/web/*/9b.asoiu.com">Archive</a></li>
+		</ul>         
+        <a id="rss" href="/feed.xml" title="Syndicate this site using Atom... Atom!">SUBSCRIBE TO <b>RSS</b></a>
+    </header>
+    <div id="pageWrapper">
+		<main id="content">
+
+			<!--------------------------- POST --------------------------->
+<div id="intro"><p><a href="//9b.asoiu.com/"><b>Девятый бит</b></a>: Архив блога кафедры АСОИУ ОмГТУ</p></div>
+
+<article class="postWrapper" itemprop="blogPost" itemscope itemtype="http://schema.org/BlogPosting">
+<!--------------------------- META --------------------------->
+<footer class="postmetadata">
+	<p class="meta-date">
+		<time itemprop="datePublished" datetime="2013-09-19T01:23:23+00:00">
+			<span class="date-day">19</span>
+			<span class="date-month">Сен</span>
+			<span class="date-year">2013</span>
+		</time>
+	</p>
+	<p class="meta-author" itemprop="creator" itemscope itemtype="http://schema.org/Person">by <span itemprop="name">ZKyl</span></p>
+		<p class="meta-authors">
+				<a href="/taxonomy/#/author/%D0%B2%D0%B0%D1%81%D0%B8%D0%BB%D1%8C%D0%B5%D0%B2-%D0%B5%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D0%B9/" title="Просмотреть все статьи автора &ldquo;Васильев Евгений&rdquo;" rel="category" itemprop="author" itemscope itemtype="http://schema.org/Person"><span itemprop="name">Васильев Евгений</span></a>
+		</p>
+	<p class="meta-improve"><a href="https://github.com/ASOIU/9bit/blob/master/_posts/2013-09-19-2793-заморозка-системы-история-перехода-с-ew.html" class="post-edit-link" title="Улучшить эту статью">Улучшить &raquo;</a></p>
+	<p class="meta-comments"><a rel="discussion" itemprop="discussionUrl" href="#comments"><span itemprop="commentCount">3</span> Комментариев &raquo;</a></p>
+		<p class="meta-issues">
+				<a href="/taxonomy/#/issue/%D0%BA-%D0%B8%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D1%8E/" title="Просмотреть все статьи, попавшие в выпуск &ldquo;(к изданию)&rdquo;" rel="category">(к изданию)</a>
+		</p>
+		<p class="meta-categories">
+				<a href="/taxonomy/#/category/it%D1%88%D1%82%D1%83%D0%BA%D0%B8/" title="Просмотреть все статьи в рубрике &ldquo;ITштуки&rdquo;" rel="category"><span itemprop="articleSection">ITштуки</span></a>, 
+				<a href="/taxonomy/#/category/software/" title="Просмотреть все статьи в рубрике &ldquo;Software&rdquo;" rel="category"><span itemprop="articleSection">Software</span></a>, 
+				<a href="/taxonomy/#/category/%D1%87%D1%82%D0%B8%D0%B2%D0%BE/" title="Просмотреть все статьи в рубрике &ldquo;чтиво&rdquo;" rel="category"><span itemprop="articleSection">чтиво</span></a>
+		</p>
+		<p class="meta-tags" itemprop="keywords">
+				<a href="/taxonomy/#/tag/bcd/" rel="tag">BCD</a>, 
+				<a href="/taxonomy/#/tag/enhanced-write-filter/" rel="tag">enhanced write filter</a>, 
+				<a href="/taxonomy/#/tag/ssd/" rel="tag">SSD</a>, 
+				<a href="/taxonomy/#/tag/trim/" rel="tag">TRIM</a>, 
+				<a href="/taxonomy/#/tag/tutorial/" rel="tag">tutorial</a>, 
+				<a href="/taxonomy/#/tag/vhd/" rel="tag">VHD</a>, 
+				<a href="/taxonomy/#/tag/windows/" rel="tag">Windows</a>, 
+				<a href="/taxonomy/#/tag/winpe/" rel="tag">WinPE</a>, 
+				<a href="/taxonomy/#/tag/%D0%B7%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B7%D0%BA%D0%B0-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B/" rel="tag">заморозка системы</a>, 
+				<a href="/taxonomy/#/tag/%D1%81%D0%B8%D1%81%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD/" rel="tag">сисадмин</a>
+		</p>
+	<meta itemprop="isFamilyFriendly" content="true">
+</footer>
+<!--------------------------- META end ----------------------->
+
+
+	<div class="post" id="post-2793">
+		<header itemprop="headline">
+			<h1 itemprop="name">Заморозка системы: история перехода с EWF на dVHD</h1>
+			<link itemprop="url" href="/2013/2793-%D0%B7%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B7%D0%BA%D0%B0-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B-%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8F-%D0%BF%D0%B5%D1%80%D0%B5%D1%85%D0%BE%D0%B4%D0%B0-%D1%81-ew/">
+		</header>
+		<div class="entry" itemprop="articleBody">
+			<!--------------------------- ---- --------------------------->
+			<p><img class="alignright size-full wp-image-2962" src="/wp-content/uploads/2013/09/frozendrive.png" alt="dVHD" width="181" height="189" /></p>
+<p class="grey">Продолжение темы про заморозку системы.</p>
+<p>В предыдущей <a href="/2013/2748-%D0%B7%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B7%D0%BA%D0%B0-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B/">статье</a> речь велась о сторонних программах для Windows, которые позволяют "замораживать" состояние системы. Эти программы необходимы, т.к. считается, что Windows не имеет подобных встроенных механизмов.</p>
+<p>Мало кто знает, что помимо версий Windows для простых смертных (Home, Professional, Ultimate, ...), корпоративных  версии (Enterprise), и серверных версий (Windows Server), существуют <a href="http://ru.wikipedia.org/wiki/Windows_Embedded" target="_blank">несколько версий</a> Windows для <a href="http://habrahabr.ru/post/138630/">встраиваемых систем</a> (Embedded). Именно в Windows Embedded присутствует специальный модуль (EWF), который позволяет "заморозить" систему.</p>
+<p class="note">Далее описывается история установки и настройки Windows Embedded Standard 7 с EpicFAIL'оми и счастливым концом.</p>
+<p><span id="more-cut"></span></p>
+<p style="text-align: justify">Недавно пришлось создать одну встроенную систему на базе неттоп'а (Intel Atom, NVIDIA Ion, 2 GB DDR3, SSD 64 GB). Изначально планировалось установить на него GNU/Linux из-за лучшей возможности кастомизации, и возможности "заморозки" системы при использовании специальных файловых систем (<a href="http://ru.wikipedia.org/wiki/Aufs" target="_blank">Aufs</a>, <a href="http://ru.wikipedia.org/wiki/UnionFS" target="_blank">UnionFS</a>). Однако, как всегда, возникли сложности на пути завоевания Linux'ом кремневых сердец. Встраиваемая система состояла не только из неттоп'а, но и из других устройств, разработчики которых написали ПО только для Windows, и, стоит признать, это ПО было написано хорошо. И так, в очередной раз, победила Винда  T_T   .</p>
+<p style="text-align: justify">Благо, что существует Windows Embedded Standard, который позволяет устанавливать только те компоненты системы, которые будут нужны, что важно при использовании SSD малого объема (установленный Windows Embedded Standard 7 занял 3-4GiB, тогда как обычный Windows 7 занимает 8-10 GiB), и содержит <a href="http://habrahabr.ru/company/pt/blog/155135" target="_blank">EWF</a> <span class="grey">(в статье описывается, как перенести модуль EWF из Windows Embedded в обычную Windows)</span>:</p>
+<p class="note"><strong>Расширенный фильтр записи</strong> (<em>Enhanced Write Filter, <strong>EWF</strong></em>) — это дополнительный компонент, использующийся в Windows Embedded. EWF делает дисковый том доступным только для чтения. При этом операции записи, которые выполняются с данными, хранящимися на этом дисковом томе, перенаправляются в его наложение, которое может находиться на другом диске или в памяти компьютера. Windows рассматривает наложение EWF и его дисковый том как единое устройство. При этом фактически на дисковом томе не происходит изменений. Все изменения сохраняются только в наложении EWF. Изменения можно сохранить на дисковый том в любой момент времени.</p>
+<p><strong>Первый EpicFAIL:</strong> спустя несколько дней после установки Windows Embedded Standard <strong>7</strong>, вышла финальная версия Embedded Standard <strong>8</strong>.</p>
+<h2>Процесс включения EWF</h2>
+<p style="text-align: justify"><strong>Во-первых</strong>, для работы всех возможностей EWF нужен специальный загрузчик (он выбирается на этапе установки системы).<br />
+<strong>Во-вторых</strong>, желательно перенести pagefile.sys на другой раздел. И создать отдельный раздел для логов, документов, и остальных часто изменяемых файлов, которые не требуется замораживать. Также надо выполнить еще несколько подготовительных действий перед активацией EWF, однако в этой статье они описываться не будут, ибо, как раз в этот момент и произошел <strong>EpicFAIL</strong>...</p>
+<h2>Main EpicFAIL</h2>
+<p><strong>Несколько фактов:</strong></p>
+<ul>
+<li>Вся информация о тонкой настройке EWF была взята из <a href="http://msdn.microsoft.com/en-us/library/bb521577(v=winembedded.51).aspx" target="_blank">MSDN</a> для Windows Embedded Standard 2009, т.к. без глобального поиска по всему MSDN, раздел про EWF в Windows Embedded Standard 7 не был найден (однако сам модуль EWF присутствует в Windows Embedded Standard 7).</li>
+<li>Как написано в цитате выше, EWF может размещать наложение либо на диске (Disk Mode), либо в RAM. Планировалось использовать Disk Mode, т.к. хоть оперативки и 2 GiB, её все равно мало для планируемого сценария использования.</li>
+</ul>
+<p>При попытке включить <em>EWF Disk Mode</em> выяснилось следующее:</p>
+<p class="error">Windows Embedded Standard 7 only supports EWF RAM and RAM Reg modes. <strong><em>Disk mode</em> is not supported.</strong></p>
+<p> >:)  <span style="float: right"> >:) </span></p>
+<p>Эта строчка приводится в документе: <a href="http://msdn.microsoft.com/en-us/library/ff794295(v=winembedded.60).aspx" target="_blank">Enhanced Write Filter with HORM (Windows Embedded Standard 7 Service Pack 1)</a>. И если описание EWF для Windows Embedded Standard <strong>2009</strong> находится по пути: 
+<pre>Windows Embedded Standard 2009
+ |- Developer Reference 
+  |- Design a Run-Time Image 
+   |- Enhanced Write Filter</pre>
+<p>, то для Windows Embedded Standard <strong>7</strong> этот путь выглядит иначе: 
+<pre>Windows Embedded Standard 7 
+ |- Windows Embedded Standard 7 Technical Reference 
+  |- Embedded Enabling Features Technical Reference 
+   |- Enhanced Write Filter with HORM</pre>
+<h2>Спасение</h2>
+<p style="text-align: justify">Спустя некоторое время блуждания по просторам сети в поисках ответа на вопрос: «На что MS заменила <em>EWF Disk Mode</em>? Не могли же они просто выкинуть эту фитчу. Или же могли<strong>!?</strong>», была найдена замечательная статья: <a href="http://www.elbacom.com/blog/2010/09/disk-mode-write-filter-or-resetting-differential-vhds" target="_blank">"Disk Mode Write Filter or Resetting Differential VHDs"</a> <span class="grey">(bat'ники приведенные в той статье отличаются от bat'ников, приведенных в этой статье)</span>.<br />
+В статье-спасителе предлагается использовать dVHD вместо <em>EWF Disk Mode</em>.</p>
+<p>Начиная с Windows 7, загрузчик ядра системы поддерживает загрузку из VHD файлов (<em>Native VHD boot</em>).
+<p class="note"><strong>Virtual Hard Disk (VHD)</strong> — формат файла, содержащий полную структуру и содержание сходные с жёстким диском. Используется для хранения виртуальных операционных систем, программ и других файлов в одном файле-образе, который можно открыть разными программами виртуализации или виртуальными машинами.</p>
+<h1>EWF -&gt; dVHD</h1>
+<p><strong>Инструкция:</strong></p>
+<ol style="padding-left: 20px">
+<li><strong>Делаем бекап системы</strong>.</li>
+<li>Необходимо очистить систему от EWF:
+<ol>
+<li><a href="http://reboot.pro/topic/16119-testing-windows-embedded-standard-thinpc-7-install-and-boot-from-vhd/?p=145506" target="_blank">отключаем FBWF driver</a>
+<pre>HKLM\SYSTEM\CurrentControlSet\services\fbwf
+"start" = dword:00000004</pre>
+</li>
+<li>читаем раздел «Установка EWF на Windows 7» статьи <a href="http://habrahabr.ru/company/pt/blog/155135" target="_blank">Внедрение Enhanced Write Filter (EWF)</a>, и <strong>делаем всё наоборот</strong>.</li>
+</ol>
+</li>
+<li>Мы будем использовать <em><a href="http://technet.microsoft.com/en-us/library/gg252579(v=WS.10).aspx" target="_blank">dynamically expanding VHD</a></em>, у которых есть одна особенность - при загрузке с них (<em>Native VHD boot</em>), они <a href="http://habrahabr.ru/post/49670/#comment_1298731" target="_blank">"разбухают в размере"</a>. Чтобы предотвратить "разбухание", необходимо внести изменения в реестр (<a href="http://technet.microsoft.com/en-us/library/gg318055(v=ws.10).aspx#sectionSection13" target="_blank">Step 12: Prevent the VHD from expanding to its full size</a>; на русском: <a href="http://gotch.techfaq.ru/archives/526" target="_blank">Ограничение увеличения динамических VHD при загрузке</a>):
+<pre>HKLM\SYSTEM\CurrentControlSet\services\
+ FsDepends\Parameters 
+"VirtualDiskExpandOnMount"=dword:00000004</pre>
+</li>
+<li>Создайте временный (дополнительный) раздел на SSD для временного хранения VHD, либо подключите внешнее хранилище (SSD или HDD). Далее предполагается, что VHD располагается по адресу: 
+<pre><strong>Z:\VHD\PROJECTOR_PC.VHD</strong></pre>
+</li>
+<li>Перенесите системный (<strong>С:\</strong>) раздел на VHD <span class="grey">(самым быстрым способом является <a href="http://blogs.technet.com/b/abeshkov/archive/2009/10/11/3286054.aspx" target="_blank">использование утилиты disk2vhd</a>; я настоятельно рекомендую перезагрузить ПК перед запуском disk2vhd)</span>. Перед этим этапом лучше удалить весь мусор с системного раздела, и <a href="http://habrahabr.ru/post/106684/" target="_blank">оптимизировать загрузку системы</a> (<strong>compact</strong> не используйте!).</li>
+<li>Сгенерируйте новую подпись диска и запишите ее в <strong>MBR</strong> VHD. Это произойдет автоматически при <a href="http://www.thevista.ru/page.php?id=15555" target="_blank">монтировании VHD</a>.</li>
+<li>После монтирования VHD желательно удалить из него первый (100 MiB) раздел (в оснастке <strong>"Управление дисками"</strong> команда <strong>"Удалить том..."</strong>).</li>
+<li>Освободите букву системного диска (<strong>C:</strong>).<br />
+<blockquote>
+<p style="font-size: small">В Windows системному разделу назначается буква диска (<strong>C:</strong>). Это соответствие (раздел - буква диска) сохраняется в реестре. Если не освободить (удалить запись в реестре) букву диска (<strong>C:</strong>), то при загрузке с VHD новому системному разделу (на VHD) будет присвоена новая буква. Смена буквы диска не повлияла бы на работу программ, если бы у всех программистов руки росли из нужного места, но мы живем не в идеальном мире, и часть программ продолжает обращаться к старому системному диску (<strong>C:</strong>).</p>
+</blockquote>
+<p> Чтобы этого избежать нужно освободить букву диска (<strong>C:</strong>):</p>
+<ol>
+<li><a href="http://technet.microsoft.com/ru-ru/library/cc732157.aspx" target="_blank">загрузите куст реестра</a> с VHD:
+<ol>
+<li>откройте редактор реестра (<strong>regedit</strong>);</li>
+<li>выберите раздел '<strong>HKEY_LOCAL_MACHINE</strong>';</li>
+<li>в меню 'Файл' выберите команду 'Загрузить куст';</li>
+<li>откройте файл '<strong>&lt;точка монтирования VHD&gt;:\Windows\System32\SYSTEM</strong>';</li>
+<li>в поле 'Имя раздела' введите '<strong>_temp</strong>';</li>
+</ol>
+</li>
+<li><a href="http://support.microsoft.com/?kbid=223188" target="_blank">удалите букву системного диска</a>:
+<ol>
+<li>откройте '<strong>HKEY_LOCAL_MACHINE\_temp\MountedDevices</strong>';</li>
+<li>удалите или переименуйте '<strong>\DosDevices\C:</strong>';</li>
+</ol>
+</li>
+<li>выгрузите куст:
+<ol>
+<li>выберите раздел '<strong>HKEY_LOCAL_MACHINE\_temp</strong>';</li>
+<li>в меню 'Файл' выберите команду 'Выгрузить куст'.</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>Демонтируем VHD, и <span style="text-decoration: underline">пробуем загрузится</span> с него:
+<ol>
+<li>создайте запись в BCD (действия происходят <strong>в консоли администратора</strong>) <span class="grey">(составлено на основе статей: <a href="http://habrahabr.ru/post/49670" target="_blank"> 1 </a><a href="http://winitpro.ru/index.php/2011/03/18/zagruzka-windows-7-s-virtualnogo-zhyostkogo-diska-vhd/" target="_blank"> 2 </a><a href="http://searchvirtualdesktop.techtarget.com/tip/How-to-build-a-native-boot-VHD-for-Windows-7-in-a-few-simple-steps" target="_blank"> 3 </a>)</span>:
+<ol>
+<li>создаем новую запись на основе существующей записи:
+<pre>bcdedit /copy {current} /d "Windows VHD"</pre>
+<p>BCDEdit вернет <strong>GUID</strong> вновь созданной записи;</li>
+<li>указываем путь к VHD для загрузки (замените GUID на <strong>GUID</strong> из предыдущего этапа):
+<pre>bcdedit /set {GUID} device ^
+vhd=[Z:]\VHD\PROJECTOR_PC.VHD</pre>
+<pre>bcdedit /set {GUID} osdevice ^
+vhd=[Z:]\VHD\PROJECTOR_PC.VHD</pre>
+</li>
+<li>дополнительно, <a href="http://technet.microsoft.com/ru-ru/library/dd799299(v=ws.10).aspx#sectionSection2" target="_blank">для некоторых систем, необходимо включить <em>detecthal</em></a> (не забудете заменить GUID):
+<pre>bcdedit /set {GUID} detecthal on</pre>
+</li>
+</ol>
+</li>
+<li>перезагрузите систему, и, при загрузке, выберите "Windows VHD";</li>
+<li>если загрузка прошла успешно, то при входе в систему, она сообщит о создании временного файла подкачки, а в оснастке "Управление дисками" будет видно, что старый системный раздел поменял букву диска на <strong>D</strong>, а новому (на VHD) присвоена буква диска <strong>C;</strong></li>
+<li>если, что-то пошло не так, то стоит начать паниковать и бить в бубен  :S  <span class="grey">(шутка, у вас всегда есть бекап системы - <em>шаг 1</em>)</span>.</li>
+</ol>
+</li>
+<li>Форматируем старый системный раздел (диск <strong>D</strong>). При этом важно, чтобы ОС послала на SSD команду <a href="http://ru.wikipedia.org/wiki/TRIM#.D0.9E.D1.81.D0.BE.D0.B1.D0.B5.D0.BD.D0.BD.D0.BE.D1.81.D1.82.D0.B8_.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D1.8B_.D1.82.D0.B2.D0.B5.D1.80.D0.B4.D0.BE.D1.82.D0.B5.D0.BB.D1.8C.D0.BD.D1.8B.D1.85_.D0.BD.D0.B0.D0.BA.D0.BE.D0.BF.D0.B8.D1.82.D0.B5.D0.BB.D0.B5.D0.B9" target="_blank">TRIM</a>.<br />
+<blockquote><p style="font-size: small">Как показывают <a href="http://www.nix.ru/computer_hardware_news/hardware_news_viewer.html?id=160084&amp;page=3" target="_blank">тесты</a>, начиная с Windows 7, при быстром форматировании раздела, ОС сама посылает на SSD команду TRIM, и нет необходимости в "ручном" удалении каждого файла для отправки команды TRIM.</p>
+</blockquote>
+<p> Если система поместила на этот раздел временный файл подкачки, и <strong>не дает отформатировать</strong> этот раздел, то создайте файл подкачки на любом другом разделе физического (не VHD) диска.</li>
+<li>Перенесите файл подкачки на диск <strong>D</strong>.</li>
+<li>Перенесите VHD-файл из '<strong>Z:\VHD\PROJECTOR_PC.VHD</strong>' в '<strong>D:\VHD\PROJECTOR_PC.VHD</strong>'. Так как сейчас система загружена с VHD, то, для его переноса, надо:
+<ol>
+<li>создать на диске <strong>D</strong> директорию VHD;</li>
+<li>загрузится с WinPE (подойдет установочный диск Win7 или Win8);</li>
+<li>при появлении окна, предлагающего установить Windows, <a href="http://support.microsoft.com/kb/242380" target="_blank">нажать Shift+F10</a> (откроется консоль);</li>
+<li>определить буквы дисков (для этого можно использовать команду <strong>dir /A</strong>, последовательно перебирая буквы дисков);</li>
+<li>скопировать VHD-файл командой:
+<pre>copy D:\VHD\PROJECTOR_PC.VHD E:\VHD\</pre>
+<p>(замените буквы дисков на свои);</li>
+<li>поменять путь к VHD для загрузки:
+<pre>bcdedit /set {GUID} device ^
+vhd=[E:]\VHD\PROJECTOR_PC.VHD</pre>
+<pre>bcdedit /set {GUID} osdevice ^
+vhd=[E:]\VHD\PROJECTOR_PC.VHD</pre>
+</li>
+<li>пометить BCD запись, как запись по умолчанию:
+<pre>bcdedit /default {GUID}</pre>
+</li>
+<li>перезагрузите систему (закройте консоль, и окно установки Windows).</li>
+</ol>
+</li>
+<li>При успешной загрузке, удалите старый VHD-файл: '<strong>Z:\VHD\PROJECTOR_PC.VHD</strong>'</li>
+<li>Удалим запись исходной системы из BCD:
+<ol>
+<li>определите её {old_GUID} вызвав <strong>bcdedit</strong>;</li>
+<li>удалите запись:
+<pre>bcdedit /delete {old_GUID} /cleanup</pre>
+</li>
+</ol>
+</li>
+<li><strong>Переходим к настройке дифференциальных VHD</strong>:
+<ol>
+<li>создайте две новые записи в BCD (и запишите их GUID: {OverGUID1} для 'Windows VHD 1', и {OverGUID2} для 'Windows VHD 2'):
+<pre>bcdedit /copy {current} /d "Windows VHD 1"
+bcdedit /copy {current} /d "Windows VHD 2"</pre>
+<pre>bcdedit /set {OverGUID1} device ^
+vhd=[D:]\VHD\PROJECTOR_PC_over1.VHD
+bcdedit /set {OverGUID2} device ^
+vhd=[D:]\VHD\PROJECTOR_PC_over2.VHD</pre>
+<pre>bcdedit /set {OverGUID1} osdevice ^
+vhd=[D:]\VHD\PROJECTOR_PC_over1.VHD
+bcdedit /set {OverGUID2} osdevice ^
+vhd=[D:]\VHD\PROJECTOR_PC_over2.VHD</pre>
+</li>
+<li>настроим автоматическое переключение между dVHD при загрузке системы:
+<ol>
+<li>откройте редактор групповых политик (Win+R -&gt; gpedit.msc);</li>
+<li>зайдите в '<strong>Конфигурация компьютера/Конфигурация Windows/Сценарии (запуск/завершение)</strong>';</li>
+<li>откройте пункт 'Автозагрузка';</li>
+<li>нажмите на кнопку 'Показать файлы...';</li>
+<li>скопируйте файл <a href="http://pastebin.com/uTBphAAa" target="_blank">VHD_set_over<strong>.bat</strong></a> в открывшуюся папку, предварительно заменив GUID в строках 10, 11, 22 на свои (в 22-й строке указывается <strong>GUID</strong> основной записи - "Windows VHD");</li>
+<li>добавьте этот <strong>bat</strong>'ник в список автозагрузки в окне 'Свойства: Автозагрузка';</li>
+</ol>
+</li>
+<li>сохраните в корне диска <strong>D bat</strong>'ники, предварительно заменив GUID's: <a href="http://pastebin.com/npBMT3Tu" target="_blank">VHD_first_set_over<strong>.bat</strong></a>, <a href="http://pastebin.com/StrsEpNV" target="_blank">VHD_set_parent<strong>.bat</strong></a> .</li>
+</ol>
+</li>
+</ol>
+<p>Теперь, для <strong>включения</strong> "заморозки" достаточно загрузится с WinPE, и в консоли запустить <strong>VHD_first_set_over.bat</strong> .</p>
+<p>Для <strong>отключения</strong> "заморозки" запустите <strong>VHD_set_parent.bat</strong> .</p>
+<h2>Несколько советов</h2>
+<p style="text-align: justify">Помните, что если суммарный размер VHD+dVHD превысит размер раздела диска, на котором они расположены, то <a href="http://gotch.techfaq.ru/archives/526" target="_blank">система упадет</a>, т.к. ей просто некуда будет записывать новые измененные данные. Для предотвращения этого, можно уменьшить размер системного раздела на VHD.</p>
+<p>Например, установленная и настроенная система (Windows Embedded 7 + необходимые программы) заняла на системном разделе <strong>2.5 GiB</strong>. Система установлена на SSD объемом <strong>64 GiB</strong>. Предположим, что для нормального функционирования системы (в режиме 24/7) нужно не более <strong>13.5 GiB</strong> свободного места на системном разделе. В данном случае целесообразно уменьшить размер системного раздела до <strong>16 GiB</strong> (2.5 + 13.5). В итоге получаем, что максимальный суммарный объем VHD's будет равен: <strong>2.5 (VHD) + 16 (dVHD) = 18.5 GiB</strong>, что, с учетом pagefile.sys (~2 GiB) и остальных системных файлов, будет меньше <strong>64 GiB</strong> (объем SSD), и система никогда не упадет из-за нехватки места для расширения dVHD на SSD.</p>
+<p>Перед заморозкой обновленной системы (на VHD), советую сделать <em><a href="http://bafff.ru/blog/Obsluzhivanie-vhd-faylov-umenshenie-uve/" target="_blank">Compact</a></em>:</p>
+<p class="note" style="text-align: justify"><strong>Compact</strong> - сжатие диска, позволяющее убрать неиспользуемое место в динамических дисках. Как вы знаете, если на динамический диск записать данные, он расширяется. После этого, мы можем удалить эти данные, но размер VHD диска не уменьшится, и в хост системе начнёт неэффективно растрачиваться полезный объём HDD дисков.</p>
+<h1>Ссылки "в тему"</h1>
+<ul>
+<li>Уже упомянутая статья-спаситель: <a href="http://www.elbacom.com/blog/2010/09/disk-mode-write-filter-or-resetting-differential-vhds" target="_blank">“Disk Mode Write Filter” or “Resetting Differential VHDs”</a></li>
+<li><a href="http://gotch.techfaq.ru/archives/115" target="_blank">Использование дифференциальных дисков VHD в Windows 7</a></li>
+<li><a href="http://articles.org.ru/cn/showdetail.php?cid=8495" target="_blank">Как переустановить Windows за 1 минуту</a></li>
+<li>Native VHD Boot: A Walkthrough of Common Scenarios: <a href="http://technet.microsoft.com/en-us/library/gg318055(v=ws.10).aspx" target="_blank">Scenario 3: Performing an Advanced Deployment of Native Boot VHDs</a></li>
+<li><a href="http://blogs.technet.com/b/virtualization/archive/2009/05/14/native-vhd-support-in-windows-7.aspx" target="_blank">Native VHD Support in Windows 7</a> (сравнение скорости работы: VHD vs "Bare Metal")</li>
+<li>Альтернатива: <a href="http://habrahabr.ru/post/176739/" target="_blank">Разработка MiniFilter драйвера</a></li>
+<li><a href="http://habrahabr.ru/post/185172/" target="_blank">Windows на RAM-диске</a> (описаны способы загрузки различных ОС с VHD)</li>
+<li><a href="http://windowsdisklessaoe.wordpress.com/" target="_blank">Windows Diskless with AoE</a> (how to boot Windows Diskless with ATA over Ethernet Protocol)</li>
+</ul>
+
+
+			<!--------------------------- ---- end ----------------------->
+		</div>
+	</div>
+	<footer class="postbottom">
+		<nav class="nav nav-padding">
+			<div class="alignleft" ><a       href="/2013/2864-sms-%D0%B4%D0%BB%D1%8F-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%81%D1%82%D0%BE%D0%B2/" title="SMS для программистов">&laquo; Предыдущая статья</a>&nbsp;</div>
+			<div class="alignright">&nbsp;<a href="/2013/3079-20-%D0%B2%D0%B5%D1%89%D0%B5%D0%B9-%D0%BA%D0%BE%D1%82%D0%BE%D1%80%D1%8B%D0%B5-%D1%81%D0%BB%D0%B5%D0%B4%D1%83%D0%B5%D1%82-%D0%B7%D0%BD%D0%B0%D1%82%D1%8C-%D0%B2-20-%D0%BB%D0%B5%D1%82/" title="20 вещей, которые следует знать в 20 лет!">Следующая статья &raquo;</a></div>
+			<a href="https://github.com/ASOIU/9bit/blob/master/_posts/2013-09-19-2793-заморозка-системы-история-перехода-с-ew.html" title="Улучшить эту статью на GitHub">
+				<svg class="octicon-mark-github" width="19" height="19" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" version="1.1" aria-hidden="true">
+					<path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"></path>
+				</svg>
+			</a>
+		</nav>
+		<section class="commentlist">
+			<h3 class="left-sidebar" id="comments">Комментарии <span>3</span>+</h3>
+				<article class="comment bypostauthor" itemprop="comment" itemscope itemtype="http://schema.org/UserComments" id="comment-238">
+					<link itemprop="url" href="#comment-238">
+					<footer class="left-sidebar">
+						<img class="avatar" src="https://1.gravatar.com/avatar/177530664c81583828f968b3cb498ae7?s=32&d=retro&r=G" alt="ZKyl avatar" height="32" width="32">
+						<p>
+							<span itemprop="creator" itemscope itemtype="http://schema.org/Person">
+								<b itemprop="name">ZKyl</b>
+							</span>
+							<br>
+							<time itemprop="commentTime" datetime="2013-10-08T11:33:04+00:00">
+								8 Окт, 2013
+							</time>
+						</p>
+					</footer>
+					<div class="comment-content" itemprop="commentText">
+						<p>Скоро выйдет продолжение статьи, в котором будет описан способ, значительно сокращающий время развертывания системы на VHD.</p>
+<p>P.S. небольшой намек: p2p.</p>
+
+					</div>
+				</article>
+				<article class="comment bypostauthor" itemprop="comment" itemscope itemtype="http://schema.org/UserComments" id="comment-249">
+					<link itemprop="url" href="#comment-249">
+					<footer class="left-sidebar">
+						<img class="avatar" src="https://1.gravatar.com/avatar/177530664c81583828f968b3cb498ae7?s=32&d=retro&r=G" alt="ZKyl avatar" height="32" width="32">
+						<p>
+							<span itemprop="creator" itemscope itemtype="http://schema.org/Person">
+								<b itemprop="name">ZKyl</b>
+							</span>
+							<br>
+							<time itemprop="commentTime" datetime="2016-09-06T11:03:38+00:00">
+								6 Сен, 2016
+							</time>
+						</p>
+					</footer>
+					<div class="comment-content" itemprop="commentText">
+						<p>Обновил ссылки на батники (VHD_set_over, VHD_first_set_over, VHD_set_parent).<br />
+В новой версии улучшена стабильность работы, и включена запись логов.</p>
+
+					</div>
+				</article>
+				<article class="comment bypostauthor" itemprop="comment" itemscope itemtype="http://schema.org/UserComments" id="comment-250">
+					<link itemprop="url" href="#comment-250">
+					<footer class="left-sidebar">
+						<img class="avatar" src="https://1.gravatar.com/avatar/177530664c81583828f968b3cb498ae7?s=32&d=retro&r=G" alt="ZKyl avatar" height="32" width="32">
+						<p>
+							<span itemprop="creator" itemscope itemtype="http://schema.org/Person">
+								<b itemprop="name">ZKyl</b>
+							</span>
+							<br>
+							<time itemprop="commentTime" datetime="2016-09-20T13:51:47+00:00">
+								20 Сен, 2016
+							</time>
+						</p>
+					</footer>
+					<div class="comment-content" itemprop="commentText">
+						<p>Продолжение статьи наконец вышло (спустя 3 года): <a href="/2016/3704-ringsync-синхронизируем-на-полной-скорости-с/" rel="nofollow">/2016/3704-ringsync-синхронизируем-на-полной-скорости-с/</a></p>
+
+					</div>
+				</article>
+			<section id="comments-plus" class="not-https">
+				<div class="left-sidebar">
+					<svg class="octicon octicon-comment-discussion-plus" width="30px" height="22px" viewBox="0 0 30 22" xmlns="http://www.w3.org/2000/svg" version="1.1" aria-hidden="true">
+						<path fill-rule="evenodd" d="M25 14h-4v3l-3-3H8V2h17v1h2V2c0-1.1-.9-2-2-2H9C6 0 5 1 5 3v10c0 2 1 3 4 3h8l6 6v-6h2c1.1 0 2-.9 2-2v-1h-2V14zM27 7V4h-2v3h-3v2h3v3h2V9h3V7H27zM2 4v8c0 1.1 .9 2 2 2V2C2.9 2 2 2.9 2 4zM0 5v6c0 .55 .45 1 1 1V4C.45 4 0 4.45 0 5z"/>
+					</svg>
+					<h3>посмотреть<br> и написать</h3>
+					<svg width="0" height="0" style="display:none" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" version="1.1">
+						<symbol id="svg-octicon-pencil" viewBox="0 0 14 16"><path fill-rule="evenodd" d="M0 12v3h3l8-8-3-3-8 8zm3 2H1v-2h1v1h1v1zm10.3-9.3L12 6 9 3l1.3-1.3a.996.996 0 0 1 1.41 0l1.59 1.59c.39.39.39 1.02 0 1.41z"/></symbol>
+						<symbol id="svg-octicon-eye" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z"/></symbol>
+					</svg>
+				</div>
+				<div class="comments-plus-intro not-https">
+					<a id="comments-plus_not-https_open-https" href="#comments-plus">
+						<span title="И надеть заземленную шапочку-шлем из свинцовой фольги">Открыть</span> <span class="secure">шифрованный канал связи</span>, чтобы<br>
+						<svg class="octicon octicon-pencil" width="14" height="16" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><use xlink:href="#svg-octicon-pencil"/></svg>
+						Написать комментарий и
+						<svg class="octicon octicon-eye" width="16" height="16" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true"><use xlink:href="#svg-octicon-eye"/></svg>
+						Посмотреть остальные комментарии
+					</a><br>
+					или<br>
+					<a id="comments-plus_not-https_open" href="#comments-plus">жить проще</a>
+					<noscript><br>
+						(Google+ комментарии больше не работают)
+					</noscript>
+				</div>
+				<div class="comments-plus-intro https">
+					<button id="comments-plus_https_open">
+						<span class="pseudo-btn">
+							<svg class="octicon octicon-pencil" width="26" height="24" xmlns="http://www.w3.org/2000/svg" version="1.1" aria-hidden="true"><use xlink:href="#svg-octicon-pencil"/></svg>
+							написать&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<!-- NOTE: nbsp for Chrome... --><br> комментарий
+						</span>
+						или
+						<span class="pseudo-btn">
+							<svg class="octicon octicon-eye" width="32" height="26" xmlns="http://www.w3.org/2000/svg" version="1.1" aria-hidden="true"><use xlink:href="#svg-octicon-eye"/></svg>
+							посмотреть новые<br> комментарии
+						</span>
+					</button>
+				</div>
+				<div class="comment-content comments-g-plus-wrapper-1">
+					<div class="comments-g-plus-wrapper-0">
+						<div id="comments-g-plus"></div>
+					</div>
+				</div>
+
+				<div class="clear"></div>
+			</section>
+		</section>
+	</footer>
+	<div class="clear"></div>
+</article>
+<!--------------------------- POST end ----------------------->
+
+
+			<div class="clear"></div>
+		</main>
+		<aside id="sidebar">
+			<section class="nobackground" aria-label="Поиск по сайту">
+				<form id="searchform" method="get" action="https://www.google.com/search">
+					<input  class="search-field"  name="q" type="search" maxlength="2048" placeholder="Поиск по сайту...">
+					<button class="search-submit" name="btnG" value="Search"></button>
+					<input name="as_sitesearch" value="/" type="hidden">
+					<input name="sourceid"      value="vivaldi" type="hidden">
+				</form>
+			</section>
+			<section class="links"     >
+<h2>Ссылки</h2>
+<ul>
+	<li><a href="http://wiki.asoiu.com/" target="_blank" rel="noopener">Вики-страницы [offline]</a></li>
+	<li><a href="https://google.com/+asoiu-IT" target="_blank" rel="noopener">Новости+</a></li>
+	<li><a href="http://asoiu.com">Основной Сайт</a></li>
+	<li><a href="https://github.com/ASOIU">Репозиторий (GitHub)</a></li>
+	<li><a href="http://forum.asoiu.com/" target="_blank" rel="noopener">Форум [offline]</a></li>
+</ul>
+</section>
+			<section class="tag-cloud" >
+<h2>Облако тэгов</h2>
+	<a href="/taxonomy/#/tag/%D0%B0%D1%81%D0%BE%D0%B8%D1%83-web/" style="font-size:16.82pt">АСОИУ.web</a>
+	<a href="/taxonomy/#/tag/%D0%B1%D0%B5%D1%81%D0%BF%D0%BB%D0%B0%D1%82%D0%BD%D0%BE%D0%B5-%D0%BF%D0%BE/" style="font-size:8.0pt">бесплатное ПО</a>
+	<a href="/taxonomy/#/tag/%D0%B1%D0%BB%D0%BE%D0%B3/" style="font-size:8.0pt">блог</a>
+	<a href="/taxonomy/#/tag/%D0%B2%D0%B8%D0%B4%D0%B5%D0%BE/" style="font-size:11.88pt">видео</a>
+	<a href="/taxonomy/#/tag/%D0%B2%D0%B8%D0%BA%D0%B8%D0%BF%D0%B5%D0%B4%D0%B8%D1%8F/" style="font-size:8.0pt">Википедия</a>
+	<a href="/taxonomy/#/tag/%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D0%BE%D0%BB%D0%BE%D0%BC%D0%BA%D0%B8/" style="font-size:10.76pt">головоломки</a>
+	<a href="/taxonomy/#/tag/%D0%B4%D0%B5%D0%B2%D1%8F%D1%82%D1%8B%D0%B9-%D0%B1%D0%B8%D1%82/" style="font-size:8.0pt">Девятый Бит</a>
+	<a href="/taxonomy/#/tag/%D0%B4%D0%B5%D0%BD%D1%8C%D0%B3%D0%B8/" style="font-size:15.4pt">деньги</a>
+	<a href="/taxonomy/#/tag/%D0%B4%D0%B5%D0%BD%D1%8C-%D0%BE%D1%82%D0%BA%D1%80%D1%8B%D1%82%D1%8B%D1%85-%D0%B4%D0%B2%D0%B5%D1%80%D0%B5%D0%B9/" style="font-size:8.0pt">День открытых дверей</a>
+	<a href="/taxonomy/#/tag/%D0%B4%D0%B5%D1%82%D0%B4%D0%BE%D0%BC/" style="font-size:8.0pt">детдом</a>
+	<a href="/taxonomy/#/tag/%D0%B4%D0%B8%D0%BF%D0%BB%D0%BE%D0%BC/" style="font-size:8.0pt">диплом</a>
+	<a href="/taxonomy/#/tag/%D0%B4%D0%BE%D1%81%D1%83%D0%B3/" style="font-size:19.3pt">досуг</a>
+	<a href="/taxonomy/#/tag/%D0%B5%D0%B3%D1%8D/" style="font-size:13.79pt">ЕГЭ</a>
+	<a href="/taxonomy/#/tag/%D0%B7%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B7%D0%BA%D0%B0-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B/" style="font-size:8.0pt">заморозка системы</a>
+	<a href="/taxonomy/#/tag/%D0%B8%D0%B2%D1%82/" style="font-size:8.0pt">ИВТ</a>
+	<a href="/taxonomy/#/tag/%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%BD%D0%B5%D1%82/" style="font-size:10.76pt">интернет</a>
+	<a href="/taxonomy/#/tag/%D0%BA%D0%BE%D0%BD%D0%BA%D1%83%D1%80%D1%81/" style="font-size:11.88pt">конкурс</a>
+	<a href="/taxonomy/#/tag/%D0%BA%D0%BE%D0%BD%D1%84%D0%B5%D1%80%D0%B5%D0%BD%D1%86%D0%B8%D0%B8/" style="font-size:12.88pt">конференции</a>
+	<a href="/taxonomy/#/tag/%D0%BE%D0%BB%D0%B8%D0%BC%D0%BF%D0%B8%D0%B0%D0%B4%D1%8B/" style="font-size:16.82pt">олимпиады</a>
+	<a href="/taxonomy/#/tag/%D0%BE%D0%BC%D0%B3%D1%82%D1%83/" style="font-size:14.62pt">ОмГТУ</a>
+	<a href="/taxonomy/#/tag/%D0%BF%D0%BE%D1%81%D0%B2%D1%8F%D1%89%D0%B5%D0%BD%D0%B8%D0%B5/" style="font-size:9.49pt">Посвящение</a>
+	<a href="/taxonomy/#/tag/%D0%BF%D1%80%D0%B8%D1%82%D1%87%D0%B8/" style="font-size:10.76pt">притчи</a>
+	<a href="/taxonomy/#/tag/%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%B8%D0%B5/" style="font-size:21.48pt">программирование</a>
+	<a href="/taxonomy/#/tag/%D0%BF%D1%80%D0%BE%D1%87%D0%B5%D0%B5/" style="font-size:11.88pt">прочее</a>
+	<a href="/taxonomy/#/tag/%D1%80%D0%B0%D0%B7%D0%BE%D0%B1%D0%BB%D0%B0%D1%87%D0%B5%D0%BD%D0%B8%D0%B5/" style="font-size:9.49pt">разоблачение</a>
+	<a href="/taxonomy/#/tag/%D1%81%D0%B5%D1%81%D1%81%D0%B8%D1%8F/" style="font-size:9.49pt">сессия</a>
+	<a href="/taxonomy/#/tag/%D1%81%D0%B8%D1%81%D0%B0%D0%B4%D0%BC%D0%B8%D0%BD/" style="font-size:13.79pt">сисадмин</a>
+	<a href="/taxonomy/#/tag/%D1%81%D0%BF%D0%B8%D1%87%D0%BA%D0%B8/" style="font-size:9.49pt">спички</a>
+	<a href="/taxonomy/#/tag/%D1%81%D0%BF%D0%BE%D1%80%D1%82/" style="font-size:11.88pt">спорт</a>
+	<a href="/taxonomy/#/tag/%D1%82%D0%B0%D0%B9%D0%BC-%D0%BC%D0%B5%D0%BD%D0%B5%D0%B4%D0%B6%D0%BC%D0%B5%D0%BD%D1%82/" style="font-size:22.0pt">тайм-менеджмент</a>
+	<a href="/taxonomy/#/tag/%D1%82%D0%B2%D0%BE%D1%80%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%BE/" style="font-size:11.88pt">творчество</a>
+	<a href="/taxonomy/#/tag/%D1%84%D0%BE%D1%82%D0%BE/" style="font-size:12.88pt">фото</a>
+	<a href="/taxonomy/#/tag/%D1%85%D0%B0%D0%BB%D1%8F%D0%B2%D0%B0/" style="font-size:10.76pt">халява</a>
+	<a href="/taxonomy/#/tag/%D1%88%D0%BA%D0%BE%D0%BB%D1%8C%D0%BD%D0%B8%D0%BA%D0%B0%D0%BC/" style="font-size:12.88pt">школьникам</a>
+	<a href="/taxonomy/#/tag/docx/" style="font-size:9.49pt">docx</a>
+	<a href="/taxonomy/#/tag/en/" style="font-size:9.49pt">EN</a>
+	<a href="/taxonomy/#/tag/freeware/" style="font-size:9.49pt">Freeware</a>
+	<a href="/taxonomy/#/tag/google-docs/" style="font-size:9.49pt">Google Docs</a>
+	<a href="/taxonomy/#/tag/google/" style="font-size:10.76pt">Google</a>
+	<a href="/taxonomy/#/tag/microsoft-office/" style="font-size:9.49pt">Microsoft Office</a>
+	<a href="/taxonomy/#/tag/microsoft/" style="font-size:11.88pt">Microsoft</a>
+	<a href="/taxonomy/#/tag/p2p/" style="font-size:9.49pt">p2p</a>
+	<a href="/taxonomy/#/tag/party/" style="font-size:19.86pt">party</a>
+	<a href="/taxonomy/#/tag/wiki/" style="font-size:10.76pt">wiki</a>
+	<a href="/taxonomy/#/tag/windows/" style="font-size:9.49pt">Windows</a>
+</section>
+			<nav     class="taxonomies">
+<h2>Таксономии</h2>
+<ul>
+	<li>
+		Рубрики
+		<ul>
+			<li><a href="/taxonomy/#/category/hardware/">Hardware</a></li>
+			<li><a href="/taxonomy/#/category/it%D1%88%D1%82%D1%83%D0%BA%D0%B8/">ITштуки</a></li>
+			<li><a href="/taxonomy/#/category/software/">Software</a></li>
+			<li><a href="/taxonomy/#/category/links/">links</a></li>
+			<li><a href="/taxonomy/#/category/web-%D0%B8%D0%BD%D1%81%D1%82%D1%80%D1%83%D0%BC%D0%B5%D0%BD%D1%82%D1%8B/">web-инструменты</a></li>
+			<li><a href="/taxonomy/#/category/wiki/">wiki</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B4%D0%B5%D0%B2%D1%8F%D1%82%D1%8B%D0%B9-%D0%B1%D0%B8%D1%82/">Девятый бит</a></li>
+			<li><a href="/taxonomy/#/category/%D1%83%D0%BD%D0%B8%D0%BA/">УНИК</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B0%D0%B1%D0%B8%D1%82%D1%83%D1%80%D0%B8%D0%B5%D0%BD%D1%82%D0%B0%D0%BC/">абитуриентам</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B0%D0%BD%D0%BE%D0%BD%D1%81/">анонс</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B2%D0%BD%D0%B8%D0%BC%D0%B0%D0%BD%D0%B8%D0%B5/">внимание!</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B3%D0%BE%D0%BB%D0%BE%D0%B2%D0%B0-%D0%BB%D0%BE%D0%BC/">голова-лом</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B4%D0%B5%D1%82%D0%B4%D0%BE%D0%BC/">детдом</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B7%D1%80%D0%B8%D0%B2%D0%BE/">зриво</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B8%D0%B7%D0%B1%D1%80%D0%B0%D0%BD%D0%BD%D1%8B%D0%B5-%D1%84%D0%BE%D1%82%D0%BA%D0%B8/">избранные фотки</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%B2%D1%8C%D1%8E/">интервью</a></li>
+			<li><a href="/taxonomy/#/category/%D0%BE%D0%B1%D1%89%D0%B0%D0%B3%D0%B0/">общага</a></li>
+			<li><a href="/taxonomy/#/category/%D0%BE%D1%84%D0%B8%D1%86%D0%B8%D0%B0%D0%BB%D1%8C%D0%BD%D0%BE/">официально</a></li>
+			<li><a href="/taxonomy/#/category/%D0%BF%D0%BE%D0%B7%D0%B4%D1%80%D0%B0%D0%B2%D0%BB%D1%8F%D0%B5%D0%BC/">поздравляем</a></li>
+			<li><a href="/taxonomy/#/category/%D1%80%D0%B5%D0%BF%D0%BE%D1%80%D1%82%D0%B0%D0%B6/">репортаж</a></li>
+			<li><a href="/taxonomy/#/category/%D1%81%D0%BE%D0%B1%D1%8B%D1%82%D0%B8%D1%8F/">события</a></li>
+			<li><a href="/taxonomy/#/category/%D1%81%D0%BF%D0%BE%D1%80%D1%82/">спорт</a></li>
+			<li><a href="/taxonomy/#/category/%D1%83%D1%87%D1%91%D0%B1%D0%B0/">учёба</a></li>
+			<li><a href="/taxonomy/#/category/%D1%85%D0%B8-%D1%85%D0%B8/">хи-хи</a></li>
+			<li><a href="/taxonomy/#/category/%D1%86%D0%B8%D1%82%D0%B0%D1%82%D0%B0/">цитата</a></li>
+			<li><a href="/taxonomy/#/category/%D1%87%D1%82%D0%B8%D0%B2%D0%BE/">чтиво</a></li>
+			<li><a href="/taxonomy/#/category/%D0%B1%D0%B5%D0%B7-%D1%80%D1%83%D0%B1%D1%80%D0%B8%D0%BA%D0%B8/">Без рубрики</a></li>
+		</ul>
+	</li>
+	<li>
+		Выпуски
+		<ul>
+			<li><a href="/taxonomy/#/issue/%D0%BA-%D0%B8%D0%B7%D0%B4%D0%B0%D0%BD%D0%B8%D1%8E/">(к изданию)</a></li>
+			<li><a href="/taxonomy/#/issue/%D0%BD%D0%B5-%D0%B8%D0%B7%D0%B4%D0%B0%D0%BD%D0%BD%D0%BE%D0%B5/">(не изданное)</a></li>
+			<li><a href="/taxonomy/#/issue/1-%D0%BE%D0%BA%D1%82%D1%8F%D0%B1%D1%80%D1%8C-2008/">№1 октябрь 2008</a></li>
+			<li><a href="/taxonomy/#/issue/2-%D0%BE%D0%BA%D1%82%D1%8F%D0%B1%D1%80%D1%8C-2008/">№2 октябрь 2008</a></li>
+			<li><a href="/taxonomy/#/issue/3-%D0%BD%D0%BE%D1%8F%D0%B1%D1%80%D1%8C-2008/">№3 ноябрь 2008</a></li>
+			<li><a href="/taxonomy/#/issue/4-%D0%B4%D0%B5%D0%BA%D0%B0%D0%B1%D1%80%D1%8C-2008/">№4 декабрь 2008</a></li>
+			<li><a href="/taxonomy/#/issue/5-%D0%BC%D0%B0%D0%B9-2009/">№5 май 2009</a></li>
+			<li><a href="/taxonomy/#/issue/6-%D0%BD%D0%BE%D1%8F%D0%B1%D1%80%D1%8C-2009/">№6 ноябрь 2009</a></li>
+			<li><a href="/taxonomy/#/issue/7-%D0%B8%D1%8E%D0%BD%D1%8C-2010/">№7 июнь 2010</a></li>
+			<li><a href="/taxonomy/#/issue/8-%D1%8F%D0%BD%D0%B2%D0%B0%D1%80%D1%8C-2011/">№8 январь 2011</a></li>
+			<li><a href="/taxonomy/#/issue/9-%D0%B8%D1%8E%D0%BD%D1%8C-2012/">№9 июнь 2012</a></li></ul>
+	</li>
+	<li>
+		Авторы
+		<ul>
+			<li><a href="/taxonomy/#/author/%D0%B1%D0%BE%D0%B3%D0%B0%D1%82%D0%BE%D0%B2-%D1%80-%D0%BD/">Богатов Р.Н.</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B1%D0%BE%D1%8F%D1%80%D1%88%D0%B8%D0%BD%D0%BE%D0%B2-%D0%BA%D0%B8%D1%80%D0%B8%D0%BB%D0%BB/">Бояршинов Кирилл</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B1%D1%80%D0%B0%D0%B9%D0%B0%D0%BD-%D1%82%D1%80%D0%B5%D0%B9%D1%81%D0%B8/">Брайан Трейси</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B1%D1%83%D1%80%D0%B0%D0%BC%D0%B5%D0%BD%D1%81%D0%BA%D0%B8%D0%B9-%D0%BF%D0%B0%D0%B2%D0%B5%D0%BB/">Бураменский Павел</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B2%D0%B0%D1%81%D0%B8%D0%BB%D1%8C%D0%B5%D0%B2-%D0%B5%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D0%B9/">Васильев Евгений</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B2%D0%B5%D1%88%D0%BA%D1%83%D1%80%D1%86%D0%B5%D0%B2-%D0%BD%D0%B8%D0%BA%D0%B8%D1%82%D0%B0/">Вешкурцев Никита</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B2%D0%BE%D1%81%D0%BA%D1%80%D0%B5%D1%81%D0%B5%D0%BD%D1%81%D0%BA%D0%B0%D1%8F-%D0%BD%D0%B0%D0%B4%D0%B5%D0%B6%D0%B4%D0%B0/">Воскресенская Надежда</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B3%D0%B0%D1%80%D0%B1%D0%B0%D1%80%D0%B5%D0%B2-%D0%B0%D0%BB%D0%B5%D0%BA%D1%81%D0%B5%D0%B9/">Гарбарев Алексей</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B3%D0%B5%D1%80%D0%B0%D1%81%D0%B8%D0%BC%D0%BE%D0%B2-%D0%B2%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80/">Герасимов Владимир</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B4%D0%B5%D0%BC%D0%B8%D0%B4%D0%BE%D0%B2-%D0%B2%D0%BB%D0%B0%D0%B4%D0%B8%D0%BC%D0%B8%D1%80/">Демидов Владимир</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B5%D1%80%D0%B5%D0%BC%D0%B5%D0%B5%D0%B2-%D0%B3%D0%BB%D0%B5%D0%B1/">Еремеев Глеб</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B6%D0%B0%D0%BA%D0%B8%D1%8F%D0%BD%D0%BE%D0%B2-%D0%B0-%D1%81/">Жакиянов А. С.</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B7%D0%B0%D0%B2%D0%B0%D0%BB%D1%8C%D0%BD%D1%8B%D0%B9-%D0%B0%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80/">Завальный Александр</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B8%D0%B2%D1%82-%D1%8545/">ИВТ-х45</a></li>
+			<li><a href="/taxonomy/#/author/%D0%B8%D0%B2%D1%82-%D1%8546/">ИВТ-х46</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BA%D0%BE%D1%80%D0%BE%D0%B1%D0%BE%D0%B2-%D0%B2%D0%BB%D0%B0%D0%B4/">Коробов Влад</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BA%D1%80%D1%83%D0%BC%D0%B8%D0%BD%D0%B0-%D0%B0%D0%BD%D0%BD%D0%B0/">Крумина Анна</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BA%D1%83%D0%BB%D0%B8%D0%BA%D0%BE%D0%B2%D0%B0-%D0%B5%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D1%8F/">Куликова Евгения</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BA%D1%83%D1%80%D1%87%D0%B0%D0%BD%D0%BE%D0%B2-%D0%B0%D0%BD%D0%B4%D1%80%D0%B5%D0%B9/">Курчанов Андрей</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BA%D1%83%D1%8F%D0%BD%D0%BE%D0%B2-%D0%B4%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B9/">Куянов Дмитрий</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BB%D0%B5%D0%B1%D0%B5%D0%B4%D0%B5%D0%B2-%D0%B0%D0%BD%D1%82%D0%BE%D0%BD/">Лебедев Антон</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BC%D0%B0%D0%BD%D0%B4%D1%80%D0%BE%D0%BD%D0%BE%D0%B2-%D0%BC%D0%B8%D1%85%D0%B0%D0%B8%D0%BB/">Мандронов Михаил</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BC%D0%B0%D1%81%D0%BB%D0%BE%D0%B2-%D1%81-%D0%B0/">Маслов С.А.</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BC%D0%B8%D1%82%D1%8C%D0%BA%D0%B8%D0%BD-%D0%B0%D0%BB%D0%B5%D0%BA%D1%81%D0%B0%D0%BD%D0%B4%D1%80/">Митькин Александр</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BC%D1%8F%D1%81%D0%B8%D1%89%D0%B5%D0%B2-%D1%81-%D0%B2/">Мясищев С.В.</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BD%D0%B8%D0%BA%D0%BE%D0%BD%D0%BE%D0%B2-%D0%B0-%D0%B2/">Никонов А.В.</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BE%D0%B2%D1%87%D0%B8%D0%BD%D0%BD%D0%B8%D0%BA%D0%BE%D0%B2%D0%B0-%D0%B5%D0%BB%D0%B5%D0%BD%D0%B0/">Овчинникова Елена</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BF%D0%B5%D0%BD%D0%B4%D0%B5%D1%80-%D0%B5%D0%BA%D0%B0%D1%82%D0%B5%D1%80%D0%B8%D0%BD%D0%B0/">Пендер Екатерина</a></li>
+			<li><a href="/taxonomy/#/author/%D0%BF%D0%BE%D0%BD%D0%BE%D0%BC%D0%B0%D1%80%D1%91%D0%B2%D0%B0-%D1%8F%D0%BD%D0%B0/">Пономарёва Яна</a></li>
+			<li><a href="/taxonomy/#/author/%D1%81%D0%B5%D1%80%D0%B3%D0%B5%D0%B5%D0%B2-%D0%B4%D0%BC%D0%B8%D1%82%D1%80%D0%B8%D0%B9/">Сергеев Дмитрий</a></li>
+			<li><a href="/taxonomy/#/author/%D1%81%D0%BE%D0%BB%D0%BE%D1%88%D0%B5%D0%BD%D0%BA%D0%BE-%D0%B2%D0%B8%D1%82%D0%B0%D0%BB%D0%B8%D0%B9/">Солошенко Виталий</a></li>
+			<li><a href="/taxonomy/#/author/%D1%82%D1%80%D0%BE%D0%B8%D1%86%D0%BA%D0%B8%D0%B9-%D0%B5%D0%B2%D0%B3%D0%B5%D0%BD%D0%B8%D0%B9/">Троицкий Евгений</a></li>
+			<li><a href="/taxonomy/#/author/%D1%86%D0%B0%D1%80%D0%B5%D0%B3%D0%BE%D1%80%D0%BE%D0%B4%D1%86%D0%B5%D0%B2-%D0%B8%D0%B3%D0%BE%D1%80%D1%8C/">Царегородцев Игорь</a></li>
+			<li><a href="/taxonomy/#/author/%D1%88%D0%B0%D1%80%D0%BA%D0%B0%D0%BD%D0%BE%D0%B2-%D0%BC-%D0%B2/">Шарканов М.В.</a></li>
+			<li><a href="/taxonomy/#/author/%D1%88%D1%82%D1%80%D0%B8%D0%BF%D0%BB%D0%B8%D0%BD%D0%B3-%D0%B0%D0%BD%D0%B0%D1%81%D1%82%D0%B0%D1%81%D0%B8%D1%8F/">Штриплинг Анастасия</a></li>
+			<li><a href="/taxonomy/#/author/%D1%8E%D0%B4%D0%B8%D0%BD-%D0%B5-%D0%B1/">Юдин Е.Б.</a></li>
+			<li><a href="/taxonomy/#/author/%D1%8E%D1%80%D0%B4%D0%B0%D0%BD%D0%BE%D0%B2%D0%B0-%D0%BA%D1%80%D0%B8%D1%81%D1%82%D0%B8%D0%BD%D0%B0/">Юрданова Кристина</a></li></ul>
+	</li>
+</ul>
+</nav>
+			<section class="support-us" aria-label="поддержать нас">
+<object class="ambient-occlusion-shadow-effect_demo-pics" data="/theme/support-us/support-us.svg" role="document" type="image/svg+xml" typemustmatch tabindex="0"></object>
+<!-- "crdon_no-js.css" and "gh-btn.css" in <head> -->
+<!--
+	Опасный target="_blank" (noopener + noreferrer):
+	- https://habrahabr.ru/post/282880/#comment_8879836
+	- https://web.archive.org/web/20150114045622/http://habrahabr.ru/post/164539#comment_5666391
+	- https://developers.google.com/web/tools/lighthouse/audits/noopener
+	- https://habrahabr.ru/post/282880/#comment_9628780 (patch for Opera 12.*)
+-->
+<noscript id="_support-us_content_">
+	<img alt="Donate" src="/theme/img/lfs/support-us_after-open_candy-doBnate.png">
+	<p style="font-weight:bold;text-shadow:0px 1px 0px rgba(255,255,255,0.5);" title="Где Вы находитесь? / Откуда Вы родом?">
+		<span aria-hidden="true" style="visibility:hidden">&hellip;</span>Я нахожусь&hellip;
+	</p>
+	<p>
+		&hellip;за пределами <span style="color:#D28800">Солнечной системы</span>
+	</p>
+	<span id="github-btn">
+		<a id="gh-btn" href="https://github.com/ASOIU/9bit" target="_blank" rel="noopener" aria-label="Поставить нам звездочку (добавить в закладки) на GitHub"
+			>Star</a
+		><a id="gh-btn-count" href="https://github.com/ASOIU/9bit/stargazers" target="_blank" rel="noopener" aria-label="Открыть список пользователей GitHub, добавивших нас в закладки">...</a>
+	</span>
+	<p>
+		&hellip;за пределами
+		<a href="https://habrahabr.ru/company/yandex/blog/233101/" target="_blank" rel="nofollow noreferrer noopener">Росс</a><a href="https://www.linux.org.ru/forum/talks/10729346" target="_blank" rel="nofollow noreferrer noopener">ий</a><a href="https://geektimes.ru/post/292645/" target="_blank" rel="nofollow noreferrer noopener">ской</a>
+		<a href="https://habrahabr.ru/post/231163/#comment_7813853" target="_blank" rel="nofollow noreferrer noopener">Феде</a><a href="http://bitnovosti.com/2014/02/20/roger-ver-o-blockchain/" target="_blank" rel="nofollow noreferrer noopener">рации</a>
+	</p>
+	<a class="crdon-here crdon_mpo-a-bc" href="bitcoin:13GCXbWHU8byXo3cHmQkKkB8Kw3KrY9y9A">наш Bitcoin кошелек</a>
+	<div data-see-notes-in="https://github.com/ASOIU/9bit/blob/master/theme/crypto-currency/example.html" style="display:none" hidden><!-- alternative to <template> -->
+
+		<span id="_template_crdon_btn_">
+			<span class="crdon_holder">
+				<button type="button" aria-expanded="false" aria-controls="" aria-pressed="false"><img src="/theme/crypto-currency/icons_cc/-bitcoin.png?message=Template-Test"><span>Поддержать</span></button></span
+			><span class="crdon_btn-total-received">...</span>
+		</span>
+
+		<div id="_template_crdon_mpo_" class="crdon_mpo-a" aria-hidden="true">
+			<div id="_crdon__mpo_">
+				<label for="_crdon__mpo_wallet_address_">наш Тестовый кошелек</label>
+				<div id="_crdon__mpo_line_wallet_address_">
+					<input type="text" id="_crdon__mpo_wallet_address_" value="test_13GCXbWHU8byXo3cHmQkKkB8Kw3KrY9y9A_test" title="Drag'n'Drop Me" readonly autofocus>
+					<a href="bitcoin:13GCXbWHU8byXo3cHmQkKkB8Kw3KrY9y9A?label=9b.asoiu.com&message=Template-Test__If-you-see-me-Then-code-contain-a-bug__Donation-might-help-in-fixing-this-issue" target="_blank" title="Открыть программу-кошелек для отправки монеток (программа-кошелек должна быть установлена)">
+						<img src="/theme/crypto-currency/icon_wallet.png" alt="Отправить монетки">
+					</a>
+				</div>
+				<div id="_crdon__mpo_line_wallet_stat_" aria-label="Статистика">
+					<span id="_crdon__mpo_wallet_n_tx_">0<small>поддержало человек</small></span>
+					<span id="_crdon__mpo_wallet_total_received_" class="crdon_mpo-line-wallet-stat-end">0.00<small>монеток</small></span>
+				</div>
+				<span id="_crdon__mpo_qr_code_" aria-haspopup="true" tabindex="0"><img src="/theme/crypto-currency/qr/13GCXbWHU8byXo3cHmQkKkB8Kw3KrY9y9A.png?message=Template-Test__If-you-see-me-Then-code-contain-a-bug__Donation-might-help-in-fixing-this-issue" alt="QR-код нашего кошелька для приложения на смартфоне"></span>
+				<button type="button" id="_crdon__mpo_close_" aria-label="Закрыть" aria-controls="_crdon__mpo_" title="Возможно, эта штучка закроет это окно. Стоит попробовать.">&times;</button>
+			</div>
+		</div>
+
+	</div>
+	<style>
+		.mouse-maze{text-align:left}
+
+		.mouse-maze .mmz{display:none}
+		.mouse-maze :hover>.mmz{display:inline}
+		/* or
+		.mouse-maze .mmz{opacity:0;transition: opacity 1s ease-out 0.25s}
+		.mouse-maze :hover>.mmz{opacity:1}
+		*/
+	</style>
+	<p class="mouse-maze"><span>
+		&hellip;за <span style="color:#080">Персональным Компьютером</span><span class="mmz">
+			<a href="https://duckduckgo.com/?q=%22%D0%9C%D0%B0%D1%82%D1%80%D0%B8%D1%86%D0%B0%3A+%D0%BD%D0%B5%D0%B8%D0%B7%D0%B2%D0%B5%D1%81%D1%82%D0%BD%D1%8B%D0%B9+%D1%84%D0%B8%D0%BD%D0%B0%D0%BB%22" target="_blank" rel="nofollow noreferrer noopener">в Матрице</a><span class="mmz">,
+				<a href="https://ru.wikipedia.org/wiki/Тринадцатый_этаж?stable=1" target="_blank" rel="nofollow noopener">на 13 этаже</a><span class="mmz">,
+					<a href="https://youtu.be/q6j5TFE_iCk" target="_blank" rel="noopener">играю в симулятор</a><span class="mmz">,
+						<a href="https://futurist.ru/articles/871-ben-uilyyams-operatsionniy-direktor-adblock-plus-reklamnie-banneri-uydut-v-proshloe" target="_blank" rel="nofollow noreferrer noopener">в мире без рекламы</a>
+	</p>
+	<iframe src="//button.flattr.com/view/?fid=12pk70&button=compact&url=https://9b.asoiu.com/2013/2793-%D0%B7%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B7%D0%BA%D0%B0-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B-%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8F-%D0%BF%D0%B5%D1%80%D0%B5%D1%85%D0%BE%D0%B4%D0%B0-%D1%81-ew/" width="110" height="20" margin-width="0" margin-height="0" scrolling="no" style="border:none" title="Flattr"></iframe>
+	<p><img alt="Thank you so much (smile)" title="TODO: написать под картинкой текст, что на самом деле нам не нужны деньги. Когда ты автономен, сам вырабатываешь электроэнергию, умеешь перерабатывать материалы (имеешь запасы руды, &hellip;), выращиваешь еду, интроверт, и у тебя есть лучшие помощники - манипуляторы с большим числом степеней свободы на подвижной платформе, то деньги начинают терять свою ценность. Ты просто занимаешься исследованиями, и создаешь новые вещи. Но бумажные деньги тоже могут пригодиться: когда надо отвлечься от основного дела (чтобы появились новые идеи в голове) - можно изучить материалы, из которых была сделана 'банкнота', разделить (разрезать) ее на полосы, поднять температуру отдельных полосок (поджечь их), попробовать разделить каждую полоску на слои, &hellip; В общем #arbejdsglæde ( https://youtu.be/6uxu-wiYsYU ). Единственный минус (или плюс) - игры наподобие Factorio, судя по ее обзору ( https://habrahabr.ru/company/mosigra/blog/331800/#comment_10290254 ; Factorio в 3D - Infinifactory https://habrahabr.ru/post/336364/ ), начинают напоминать происходящее в реальной жизни, превращаясь тем самым в среду для весьма грубого прототипирования. [текст получился длинным, и нужно еще придумать визуальное оформление для него, поэтому пока под картинкой только вставлю ссылку на #arbejdsglæde]" src="/theme/img/lfs/support-us_after-open_thank-you.png"></p>
+	<p><a href="http://www.whattheheckisarbejdsglaede.com" target="_blank" rel="noopener"><span style="color:#fff">#</span><span style="color:#888; text-shadow:0 1px 0 rgba(255,255,255, 0.76)">arbejdsglæde</span></a></p>
+</noscript>
+</section>
+		</aside>
+		<div class="clear"></div>
+    </div>
+    <footer id="footer">
+		<a href="#top" id="toTop">&nbsp;</a>
+		<p>
+			Написано с <svg class="octicon octicon-heart" viewBox="0 0 12 16" version="1.1" width="12" height="16" role="img" aria-label="любовью" xmlns="http://www.w3.org/2000/svg">
+				<path aria-hidden="true" fill-rule="evenodd" d="M11.2 3c-.52-.63-1.25-.95-2.2-1-.97 0-1.69.42-2.2 1-.51.58-.78.92-.8 1-.02-.08-.28-.42-.8-1-.52-.58-1.17-1-2.2-1-.95.05-1.69.38-2.2 1-.52.61-.78 1.28-.8 2 0 .52.09 1.52.67 2.67C1.25 8.82 3.01 10.61 6 13c2.98-2.39 4.77-4.17 5.34-5.33C11.91 6.51 12 5.5 12 5c-.02-.72-.28-1.39-.8-2.02V3z"/>
+			</svg> к мозгу. <svg class="octicon octicon-eye" viewBox="0 0 16 16" version="1.1" width="16" height="16" role="img" aria-label="Внимание" xmlns="http://www.w3.org/2000/svg">
+				<path aria-hidden="true" fill-rule="evenodd" d="M8.06 2C3 2 0 8 0 8s3 6 8.06 6C13 14 16 8 16 8s-3-6-7.94-6zM8 12c-2.2 0-4-1.78-4-4 0-2.2 1.8-4 4-4 2.22 0 4 1.8 4 4 0 2.22-1.78 4-4 4zm2-4c0 1.11-.89 2-2 2-1.11 0-2-.89-2-2 0-1.11.89-2 2-2 1.11 0 2 .89 2 2z"/>
+			</svg> опасность: Можно стать умным <svg class="octicon octicon-telescope" viewBox="0 0 14 16" version="1.1" width="14" height="16" aria-hidden="true" xmlns="http://www.w3.org/2000/svg">
+				<path fill-rule="evenodd" d="M8 9l3 6h-1l-2-4v5H7v-6l-2 5H4l2-5 2-1zM7 0H6v1h1V0zM5 3H4v1h1V3zM2 1H1v1h1V1zM.63 9a.52.52 0 0 0-.16.67l.55.92c.13.23.41.31.64.2l1.39-.66-1.16-2-1.27.86.01.01zm7.89-5.39l-5.8 3.95L3.95 9.7l6.33-3.03-1.77-3.06h.01zm4.22 1.28l-1.47-2.52a.51.51 0 0 0-.72-.17l-1.2.83 1.84 3.2 1.33-.64c.27-.13.36-.44.22-.7z"/>
+			</svg>
+		</p>
+		<p>
+        	Some contents copyrigbt &copy; <a href="//9b.asoiu.com/">Девятый бит</a>. All rights are forbidden.
+
+			<!-- License: http://web-kreation.com/demos/oneroom/index.php/license/ -->
+			<!-- If you want to remove this copyright notice, please contact me at info {at} web-kreation {dot} com -->
+			Theme design by <a href="http://web.archive.org/web/20151020142204/http://web-kreation.com">Web-Kreation</a>.
+			<!-- / END -->
+        </p>
+    </footer>
+</div>
+</body>
+</html>

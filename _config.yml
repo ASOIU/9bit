@@ -17,6 +17,7 @@ incremental: false
 profile:     true
 
 # Outputting
+destination:   docs
 permalink:     /:year/:title/
 paginate_path: /page/:num/
 paginate:      10
@@ -80,15 +81,16 @@ defaults:
       layout: term_build-in
       sitemap: false
 
-include: 
+include:
   - ".*.html" #for "_tags_/.NET Framework.html" https://help.github.com/articles/files-that-start-with-an-underscore-are-missing/
+  - ".nojekyll"
 
 
 # "/assets/javascript/anchor-js", "/assets//css/style.css":
 # https://github.com/jekyll/jekyll/issues/6358 ->
 # -> https://github.com/github/pages-gem/issues/482#issuecomment-328985983 ->
 # -> https://github.com/jekyll/jekyll/issues/6361#issuecomment-335147959
-theme: []
+#theme: []  # Disabled: causes warning, not needed for custom theme folder
 
 # Plugins
 # https://help.github.com/articles/configuring-jekyll-plugins/#default-plugins

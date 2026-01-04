@@ -1,0 +1,923 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" xml:lang="ru"><generator uri="https://jekyllrb.com/" version="3.10.0">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" hreflang="ru" /><updated>2026-01-04T22:53:04+00:00</updated><id>/feed.xml</id><title type="html">Девятый бит</title><subtitle>Архив блога кафедры АСОИУ ОмГТУ</subtitle><entry><title type="html">RingSync: синхронизируем на полной скорости сети</title><link href="/2016/3704-ringsync-%D1%81%D0%B8%D0%BD%D1%85%D1%80%D0%BE%D0%BD%D0%B8%D0%B7%D0%B8%D1%80%D1%83%D0%B5%D0%BC-%D0%BD%D0%B0-%D0%BF%D0%BE%D0%BB%D0%BD%D0%BE%D0%B9-%D1%81%D0%BA%D0%BE%D1%80%D0%BE%D1%81%D1%82%D0%B8-%D1%81/" rel="alternate" type="text/html" title="RingSync: синхронизируем на полной скорости сети" /><published>2016-09-20T13:37:32+00:00</published><updated>2016-11-10T08:25:58+00:00</updated><id>/2016/3704-ringsync-%D1%81%D0%B8%D0%BD%D1%85%D1%80%D0%BE%D0%BD%D0%B8%D0%B7%D0%B8%D1%80%D1%83%D0%B5%D0%BC-%D0%BD%D0%B0-%D0%BF%D0%BE%D0%BB%D0%BD%D0%BE%D0%B9-%D1%81%D0%BA%D0%BE%D1%80%D0%BE%D1%81%D1%82%D0%B8-%D1%81</id><content type="html" xml:base="/2016/3704-ringsync-%D1%81%D0%B8%D0%BD%D1%85%D1%80%D0%BE%D0%BD%D0%B8%D0%B7%D0%B8%D1%80%D1%83%D0%B5%D0%BC-%D0%BD%D0%B0-%D0%BF%D0%BE%D0%BB%D0%BD%D0%BE%D0%B9-%D1%81%D0%BA%D0%BE%D1%80%D0%BE%D1%81%D1%82%D0%B8-%D1%81/"><![CDATA[<p><img class="noborder aligncenter wp-image-3748 size-full" style="margin: -10px -20px 8px -20px;" src="/wp-content/uploads/2016/09/sync-party.jpg" alt="RingSync demo party" width="520" height="215" /></p>
+<p>В комментарии к статье про <a title="Заморозка системы: история перехода с EWF на dVHD" href="/2013/2793-%D0%B7%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B7%D0%BA%D0%B0-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B-%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8F-%D0%BF%D0%B5%D1%80%D0%B5%D1%85%D0%BE%D0%B4%D0%B0-%D1%81-ew/" target="_blank">dVHD заморозку системы</a> я намекнул на быстрый способ распространения/синхронизации больших файлов по локальной сети.</p>
+<p>Конкретно, в моем случае VHD файл весил примерно 120 GiB, и его нужно было залить на 30 PC. При каждом обновлении VHD он перезаливался. Под катом читайте историю, про то, как с таким большим файлом <del>не</del> справлялся <a title="BitTorrent Sync: скорость до 90 мегабайт/с и открытые API" href="https://habrahabr.ru/post/201072" target="_blank">BTSync</a>, и про создание <strong>RingSync</strong>. <!--more--></p>
+<p>Начну с небольшого <strong>QA</strong> (Вопрос-Ответа), сравнивая различные схемы обмена данными.</p>
+<h1 id="h-1-klassika-server-client">Классика: Server → Client</h1>
+<p><strong>Q:</strong> Что происходит в классическом варианте, когда один сервер раздает файл множеству клиентов?</p>
+<p><strong>A:</strong> Допустим, что и на сервере и на клиентах установлены обычные HDD <span class="grey">(<a title="Последовательный и произвольный доступ к носителю данных" href="https://ru.wikipedia.org/wiki/IOPS#.D0.A5.D0.B0.D1.80.D0.B0.D0.BA.D1.82.D0.B5.D1.80.D0.B8.D1.81.D1.82.D0.B8.D0.BA.D0.B8_.D0.BF.D1.80.D0.BE.D0.B8.D0.B7.D0.B2.D0.BE.D0.B4.D0.B8.D1.82.D0.B5.D0.BB.D1.8C.D0.BD.D0.BE.D1.81.D1.82.D0.B8" target="_blank">последовательное</a> чтение/запись выполняется быстро, <a title="Последовательный и произвольный доступ к носителю данных" href="https://ru.wikipedia.org/wiki/IOPS#.D0.A5.D0.B0.D1.80.D0.B0.D0.BA.D1.82.D0.B5.D1.80.D0.B8.D1.81.D1.82.D0.B8.D0.BA.D0.B8_.D0.BF.D1.80.D0.BE.D0.B8.D0.B7.D0.B2.D0.BE.D0.B4.D0.B8.D1.82.D0.B5.D0.BB.D1.8C.D0.BD.D0.BE.D1.81.D1.82.D0.B8" target="_blank">произвольное</a> - медленно)</span>.</p>
+<p><a href="/wp-content/uploads/2016/09/server-client.png"><img class="aligncenter wp-image-3711" src="/wp-content/uploads/2016/09/server-client.png" alt="1 x Server - switch - N x Clients" width="464" height="319" /></a></p>
+<p>У нас есть:</p>
+<ul>
+<li><strong>1</strong> сервер <span class="grey">(файловое хранилище)</span>;</li>
+<li><strong>4</strong> клиента <span class="grey">(загружающие с файлового хранилища один и тот же файл)</span>;</li>
+<li><strong>1</strong> switch <span class="grey">(все порты работают в <a title="Дуплекс (телекоммуникации)" href="https://ru.wikipedia.org/w/index.php?title=Дуплекс_(телекоммуникации)&amp;stable=1" target="_blank">дуплексном</a> режиме; скорость соединения на всех портах одинаковая)</span>.</li>
+</ul>
+<p>Еще один важный момент - скорость используемых HDD <span class="grey">(при последовательных операциях доступа к данным)</span> выше скорости сетевого подключения.</p>
+<p style="text-align: justify;">В этом случае узким местом будет сетевое соединение между сервером и switch'ом. Сервер инициирует 4 потока <span class="grey">(по потоку для каждого клиента)</span> передачи данных, которые разделят общую пропускную способность сетевого соединения сервера.</p>
+<p style="text-align: justify;"><strong>В итоге скорость загрузки упадет в 4 раза</strong>, по сравнению со случаем, когда только 1 клиент загружает файл. Чем больше клиентов, тем меньше скорость загрузки у каждого из этих клиентов. Для 30 клиентов и 100 Mbps сети 120 GiB файл будет загружаться минимум 3 дня 13 часов и 54 минуты, т.е. для клиента 100 Mbps превратятся в 3 Mbps :(  .</p>
+<p style="text-align: justify;">При этом сервер вынужден несколько раз <span class="grey">(по количеству клиентов)</span> отправлять одну и ту же часть файла в сеть. Последствия этого можно увидеть, сравнив две ситуации <span class="grey">(два граничных условия)</span>:</p>
+<ol>
+<li>Все клиенты запустили загрузку файла в одно и то же время.</li>
+<li>Запуск загрузки не был синхронизирован, например, получился разброс ±10 минут.</li>
+</ol>
+<p class="note">Вспомним, что у нас обычные HDD, которым трудно дается произвольный доступ к данным...</p>
+<p><strong>В первом</strong> случае система сможет кешировать считанную один раз из HDD часть файла <span class="grey">(для одного клиента)</span>, и будет раздавать оставшимся клиентам эту часть файла уже из кеша <span class="grey">(без обращения к HDD)</span>. Для HDD это будет выглядеть, как последовательное чтение данных, которое ему легко дается.</p>
+<p><strong>Во втором</strong> случае клиенты станут обращаться к разным частям, и у системы будет меньше шансов повторно воспользоваться кешированными частями файла. Для HDD это будет выглядеть как произвольный доступ к данным. Например, второй клиент запустил загрузку с 10 минутным отставанием от первого клиента, значит, первый клиент уже успел загрузить 7 GiB, и чтобы система смогла отдавать части файла для второго клиента без повторного обращения к HDD, ей нужен кеш размером в 7 GiB.</p>
+<p class="note">В реальности 100% “<a title="What is a cache hit and a cache miss?" href="http://stackoverflow.com/q/18559342" target="_blank">попадание</a>” в файловый кеш не требуется, например, в кеш можно помещать не только текущую часть файла, но и несколько следующих частей...</p>
+<h1 id="h-2-p2p-btsync">P2P: BTSync</h1>
+<p><strong>Q:</strong> В чем заключается польза от использования p2p в локальной сети?</p>
+<p><strong>A:</strong> Если p2p клиенты используют следующую схему передачи данных:</p>
+<ol>
+<li><em><a title="Терминология" href="https://ru.wikipedia.org/wiki/BitTorrent_(протокол)#.D0.A2.D0.B5.D1.80.D0.BC.D0.B8.D0.BD.D0.BE.D0.BB.D0.BE.D0.B3.D0.B8.D1.8F" target="_blank">сид</a></em> отправляет каждому <em><a title="Терминология" href="https://ru.wikipedia.org/wiki/BitTorrent_(протокол)#.D0.A2.D0.B5.D1.80.D0.BC.D0.B8.D0.BD.D0.BE.D0.BB.D0.BE.D0.B3.D0.B8.D1.8F" target="_blank">пиру</a></em> разную часть файла,</li>
+<li>каждый <em>пир</em> пересылает полученную часть файла другому <em>пиру</em>,</li>
+<li><em>сид</em> отправляет каждому <em>пиру</em> разную часть файла, которую <em>сид</em> не отправлял никому ранее,</li>
+<li>одновременно с предыдущим пунктом, <em>пиры</em> продолжают обмениваться частями файла,</li>
+<li>пункты 3-4 повторяются, пока <em>сид</em> не раздаст все части файла, и все <em>пиры</em> получат эти части</li>
+</ol>
+<p style="text-align: justify;">, и все они подключены к одному switch'у, то, теоретически, скорость получения данных пиром не будет уменьшаться с увеличением числа <em>пиров</em> <span class="grey">(в классическом варианте Server → Client скорость уменьшалась)</span>. Это работает благодаря возможности switch “соединять” любые 2 своих порта, и <strong>данные</strong> между этими портами <strong>смогут передаваться на полной скорости соединения</strong>.</p>
+<p class="note">Похожий режим работы в BitTorrent клиентах называется <a title="Суперсид" href="https://ru.wikipedia.org/wiki/Суперсид" target="_blank">Super-seeding</a>.</p>
+<p><strong>Q:</strong> Какой может быть негативный эффект от использования этой схемы?</p>
+<p><strong>A:</strong> Так как теперь части файла передаются не последовательно <span class="grey">(от начала до конца)</span>, а в разброс, то скорость чтения(для <em>сида</em>)/записи(для <em>пира</em>) с/на HDD упадет <span class="grey">(последствия произвольного доступа к данным)</span>. Поэтому клиенты должны выбирать оптимальный размер части файла, и использовать адаптированный под эту схему работы алгоритм кеширования.</p>
+<h2 id="h-2-1-istoriya-pro-btsync-i-bolshoj-fajl">История про BTSync и большой файл</h2>
+<p><img class="noborder alignright wp-image-3729 size-full" src="/wp-content/uploads/2016/09/BTSync.png" alt="BitTorrent Sync" width="64" height="320" />Про <a href="https://ru.wikipedia.org/wiki/BitTorrent_Sync" target="_blank">BTSync</a> написано уже много статьей (<a href="https://habrahabr.ru/search/?q=syncapp" target="_blank"> 1 </a> <a href="https://habrahabr.ru/search/?q=bittorrent+sync" target="_blank"> 2 </a> <a href="https://www.youtube.com/watch?v=83D26IsAfT0" target="_blank"> 3 </a>), но самое интересное можно было найти на <a title="forum" href="http://forum.bittorrent.com/forum/107-bittorrent-sync/" target="_blank">официальном форуме</a> <span class="grey">(он переехал <a href="https://forum.resilio.com/forum/108-sync-troubleshooting/" target="_blank">сюда</a>)</span>. Вкратце, баги были, и с ними приходилось бороться, например, в некоторых версиях были проблемы с<a href="https://ru.wikipedia.org/wiki/Local_Peer_Discovery" target="_blank"> Local Peer Discovery</a> <span class="grey">(не всегда работал)</span> - обходилась проблема прописыванием IP одного из пиров в сети. У него есть еще тележка интересных “особенностей”, но сейчас речь пойдет про его работу с большими файлами...</p>
+<p>Для развертывания системы на VHD, был собран минимальный WinPE, содержащий:</p>
+<ul>
+<li>BTSync - запускался через “<strong>BTSync.exe /config config.json</strong>”;</li>
+<li>программу ShowWindow, которая используя <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms633499.aspx" target="_blank">FindWindow</a>, <a href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms644950.aspx" target="_blank">SendMessage</a> (WinAPI), и переданное ей имя класса окна “BTSync4823DF041B09”, открывает скрытое окно BTSync <span class="grey">(он запускается “свернутым в трей”, а трея у нас нет...)</span>;</li>
+<li>драйверы <span class="grey">(в основном для <a href="https://en.wikipedia.org/wiki/Network_interface_controller" target="_blank">NIC</a>)</span>;</li>
+<li>скрипты <span class="grey">(<strong>startnet.cmd</strong>: тюнинг сетевого стека, вызов пред и пост разверточных скриптов)</span>.</li>
+</ul>
+<p class="note"><small>Всё это происходило в середине 2014 года (или 2013...), и пишется по <a title="4) Память хранится в мозгу так же, как вещи в ящиках" href="https://geektimes.ru/post/280440/" target="_blank">памяти<sup>4</sup></a>.</small></p>
+<p>На <em>сиде</em> BTSync запускался с RW <em>секретом</em>, а на <em>пирах</em> - с RO <em>секретом</em> (с включенной опцией <strong>принудительной синхронизации</strong>, если файл существует, и отличается от файла у <em>сида</em>).</p>
+<p style="text-align: justify;">После трех “разворачиваний” системы по 8-10 PC за раз <span class="grey">(скорость сетевого соединения 100 Mbps; PC подключены к одному switch; максимальная скорость HDD была в районе 110 MiBps; размер файла тот же - 120 GiB)</span>, собралась следующая “статистика”:</p>
+<ul>
+<li>после запуска BTSync на всех PC, и начала синхронизации, в районе часа сетевая активность была минимальна, т.е. файл не передавался;</li>
+<li>на некоторых (1-2) <em>пирах</em> процесс синхронизации прерывался, и приходилась вручную перезапускать BTSync;</li>
+<li>при подключении через нормальный switch средняя скорость загрузки была <strong>8 MiBps</strong> <span class="grey">(падала до 6, поднималась до 9)</span> - при отключенном шифровании трафика;</li>
+<li>при подключении через устройство, очень похожее на <a href="https://zyxel.ru/es-116s/" target="_blank">ZyXEL ES-116S</a>, средняя скорость загрузки была <strong>3.4 MiBps</strong> <span class="grey">(иногда поднималась до 6)</span> - шифрование трафика также было отключено.</li>
+</ul>
+<h3 id="h-2-1-1-eksperiment-1">Эксперимент 1</h3>
+<p style="text-align: justify;">После этого было решено провести эксперимент: взять <strong>2-3 PC</strong>, нормальный  switch, и добавить <a href="https://ru.wikipedia.org/wiki/Process_Explorer" target="_blank"><strong>Process Explorer</strong></a> в WinPE для наблюдения за активностью  BTSync. Судя по описанию проблем на <a href="http://forum.bittorrent.com/forum/107-bittorrent-sync/" target="_blank">форуме</a> - у каждой версии имелся свой набор “особенностей” <span class="grey">(новая версия не значит более лучшая версия)</span>, поэтому в эксперименте участвовало несколько версий BTSync (<strong>1.0.134</strong> - <strong>1.3.106</strong>). После каждого опыта, скаченный <em>пирами</em> файл стирался, и все PC перезагружались.</p>
+<ul>
+<li>И так, запускаем BTSync на <em>сиде</em>, запускаем на одном <em>пире</em>, и вуаля: сетевая активность появляется сразу же, и файл синхронизируется со скоростью <strong>11 MiBps</strong>.</li>
+<li>Теперь сделаем то же самое, но запустим два <em>пира</em> одновременно: сетевая активность минимальна, у <em>сида</em> наблюдается высокая дисковая активность <span class="grey">(BTSync запустил подсчет контрольных сумм частей файла?)</span>, и только после уменьшения дисковой активности начинается синхронизация с некоторыми “<strong>особенностями</strong>” (про них - ниже).</li>
+<li>А если взять первый вариант, и запустить второго пира посередине синхронизации: синхронизация приостанавливается, и возрастает дисковая активность у <em>сида</em> <span class="grey">(вычисляет контрольные суммы?)</span>, затем <span class="grey">(когда вычислит все контрольные суммы?)</span> синхронизация продолжается (опять же с “<strong>особенностями</strong>”).</li>
+</ul>
+<p><strong>Особенности</strong> синхронизации заключались в том, что при каждом новом запуске, <em>схема работы</em> отличалась от предыдущего запуска. Всего получилось 3 <em>схемы работы</em> <span class="grey">(сокращения: <em>сид</em> - s, <em>пир</em>1 - p1, <em>пир</em>2 - p2)</span>:</p>
+<pre style="overflow-x: scroll;">1. s --{7 MiBps}--&gt; p1; s --{4.5 MiBps}--&gt; p2; p1 --{7 MiBps}--&gt; p2; p2 --{4.5 MiBps}--&gt; p1; через определенный промежуток времени p1 и p2 меняются местами:
+   s --{7 MiBps}--&gt; p2; s --{4.5 MiBps}--&gt; p1; p2 --{7 MiBps}--&gt; p1; p1 --{4.5 MiBps}--&gt; p2; смена происходит с определенным периодом времени;
+
+2. s --{10 MiBps}--&gt; p1; после того, как p1 все загрузит:
+   s --{10 MiBps}--&gt; p2;
+
+3. s --{7.5 MiBps}--&gt; p1; s --{3.5 MiBps}--&gt; p2; p1 --{7.5 MiBps}--&gt; p2; p2 --{3.5 MiBps}--&gt; p1; затем:
+   s --{4.5 MiBps}--&gt; p2;                        p2 --{4.5 MiBps}--&gt; p1; и возвращение:
+   s --{7.5 MiBps}--&gt; p1; s --{3.5 MiBps}--&gt; p2; p1 --{7.5 MiBps}--&gt; p2; p2 --{3.5 MiBps}--&gt; p1; смена происходит с определенным периодом времени.</pre>
+<p>Причем первая <em>схема работы</em> <span class="grey">(самая лучшая)</span> включалась, когда BTSync на обоих пира запускался одновременно. Если же была задержка между запусками, то чаще встречалась <em>схема</em> 3 или 2.</p>
+<p>Что касается различий в версиях BTSync, то в опытах с более новыми версиями второй вариант <em>схемы</em> встречался реже. Но это ничего не значит, т.к. испытания каждой версией повторялись всего 4 раза, что очень мало. Версии 1.0.134 и 1.3.106 испытывались большее число раз.</p>
+<p style="text-align: justify;">Однако в новых версиях <span class="grey">(предположительно начиная с 1.3. x)</span>, появилась еще одна “<strong>особенность</strong>”: когда размер загружаемого файла <span class="grey">(можно посмотреть командой dir в консоли)</span> на <em>пире</em> достигает 70% <span class="grey">(или около того)</span>, рост размера файла приостанавливается на некоторое время.</p>
+<h3 id="h-2-1-2-eksperiment-2">Эксперимент 2</h3>
+<p>За основу брался первый эксперимент, с отличиями:</p>
+<ol>
+<li>использовалась только последняя версия BTSync;</li>
+<li>загруженный пирами файл не удалялся, а изменялось его содержимое.</li>
+</ol>
+<p class="error">Эти испытания BTSync провалил - синхронизация с сидом так и не начиналась (опция <strong>принудительной синхронизации</strong> была включена).</p>
+<p> :(  <span style="float: right;"> :(  </span></p>
+<p class="note">В повседневном использовании с 1 GiB файлами мне помогала "легкая приостановка" - через контекстное меню “иконки в трее” <em>пира</em> поставить BTSync на паузу, а затем убрать паузу.</p>
+<h1 id="h-3-ringsync">RingSync</h1>
+<p>Во время борьбы с “<strong>особенностями</strong>” BTSync появились несколько мыслей:</p>
+<ul>
+<li>большинство проблем с BTSync связаны с теми возможностями, которые в данном случае не нужны;</li>
+<li>нам не нужно отслеживание изменений в файле, т.к. каждый раз его все равно приходится передавать целиком, и источник всегда один - <em>сид</em>;</li>
+<li>следовательно, нет необходимости в отдельном этапе подсчитывания контрольных сумм, и определения “кто из <em>пиров</em> обладает более новой версией файла”;</li>
+<li>у нас всего один файл;</li>
+<li>HDD попросил сделать последовательное чтение/запись файла 8-O  .</li>
+</ul>
+<p>С этими мыслями родилась следующая схема:</p>
+<p><a href="/wp-content/uploads/2016/09/RingSync.png"><img class="aligncenter wp-image-3718" src="/wp-content/uploads/2016/09/RingSync.png" alt="1 x Seed - switch - N-1 x Peers + 1 x Leech" width="464" height="370" /></a></p>
+<ol>
+<li><em>сид</em> передает часть файла пиру;</li>
+<li><em>пир</em> сохраняет ее на HDD, и параллельно передает следующему <em>пиру</em> <span class="grey">(то же самое делают остальные <em>пиры</em> в цепочке)</span>;</li>
+<li><em><a title="Терминология" href="https://ru.wikipedia.org/wiki/BitTorrent_(протокол)#.D0.A2.D0.B5.D1.80.D0.BC.D0.B8.D0.BD.D0.BE.D0.BB.D0.BE.D0.B3.D0.B8.D1.8F" target="_blank">лич</a></em> <span class="grey">(последний <em>пир</em>)</span> просто сохраняет часть файла на HDD.</li>
+</ol>
+<p style="text-align: justify;">Причем это все происходит параллельно <span class="grey">(в потоковом режиме)</span> - когда первый <em>пир</em> отправляет часть файла следующему <em>пиру</em>, он уже получает следующую часть файла от <em>сида</em>. А сам файл передается от начала до конца, что очень хорошо для HDD <span class="grey">(последовательный доступ к данным)</span>.</p>
+<p>От switch здесь требуется всего лишь “соединить” <strong><span style="color: #ff9900;">Rx</span></strong> одного порта с <strong><span style="color: #3366ff;">Tx</span></strong> другого порта на полной скорости (см. схему), с чем он отлично справляется.</p>
+<h2 id="h-3-1-programma-na-golang">Программа на Golang</h2>
+<p><img class="alignright size-full wp-image-3727" src="/wp-content/uploads/2016/09/gobot-gopher-96px.png" alt="go, golang, gobot-gopher" width="96" height="110" />На современном языке сделать <a title="Proof of Concept" href="https://en.wikipedia.org/wiki/Proof_of_concept" target="_blank">PoC</a> этой схемы не составит никакого труда. На <a title="Go" href="https://golang.org/" target="_blank">Golang</a> основную часть программы <em>пира</em> можно записать всего в одну строчку:</p>
+<p><code>io.<a href="https://golang.org/pkg/io/#Copy" target="_blank">Copy</a>(io.<a href="https://golang.org/pkg/io/#MultiWriter" target="_blank">MultiWriter</a>(outFile, peerConn), seedConn)</code></p>
+<p>, все остальное - обвязка.</p>
+<h3 id="h-3-1-1-posledovatelnost-zapuska">Последовательность запуска</h3>
+<p style="text-align: justify;">Код RingSync написан максимально <a title="Эффект Даннинга-Крюгера" href="https://habrahabr.ru/post/310026/#comment_9807834" target="_blank">просто</a>, и при этом в нем предусмотрена возможность запуска <em>сида</em> и <em>пиров</em> в произвольном порядке. Что это означает? Можно одновременно запустить всех <em>пиров</em> и <em>сида</em>, дождаться пока они включатся, а затем запустить <em>лича</em>. Именно <em>лич</em> запускает процесс синхронизации.</p>
+<p>Под капотом это выглядит так:</p>
+<ol>
+<li>запускаются <em>пиры</em> и <em>лич</em>, и начинают слушать входящие соединения;</li>
+<li>запускается <em>лич</em>, и устанавливает соединение с последним <em>пиром</em>;</li>
+<li>каждый <em>пир</em> устанавливают соединение с предыдущим <em>пиром</em> <span class="grey">(по цепочке)</span>;</li>
+<li>первый <em>пир</em> устанавливают соединение с <em>сидом</em>, и <em>сид</em> начинает отправку данных.</li>
+</ol>
+<p>Если немного пожертвовать простотой, и добавить возможность переподключения при неудачной “установке соединения”, то можно будет и лича, и сида, и пиров запускать в любой последовательности.</p>
+<h3 id="h-3-1-2-repozitorij">Репозиторий</h3>
+<p><img class="noborder alignright wp-image-3728 size-full" src="/wp-content/uploads/2016/09/labtocat.png" alt="the Labtocat" width="184" height="196" />RingSync можно <a title="Fork me on GitHub" href="https://github.com/ZiroKyl/RingSync" target="_blank"><strong>форкнуть здесь</strong></a>.<br />
+<a href="https://github.com/ZiroKyl/RingSync/releases" target="_blank">Там же</a> можно скачать уже собранный для Windows 32bit бинарник.</p>
+<p><strong>Q:</strong> Почему именно Windows 32bit?<br />
+<strong>A:</strong> Потому, что я его использовал с WinPE 32bit. К тому же, вместе с RingSync лежит специальный launcher, который облегчает конфигурирование после сетевой загрузки. Launcher считывает конфиг из файла <span class="grey">(одного и того же для всех PC)</span>, и в зависимости от MAC-адреса первого сетевого интерфейса PC, настраивает этот сетевой интерфейс, и запускает RingSync с нужными параметрами. Сейчас launcher завязан на использование <a href="https://ru.wikipedia.org/wiki/Netsh.exe" target="_blank">netsh</a>, поэтому результат кросс-компиляции под <a href="https://golang.org/doc/install/source#environment" target="_blank">не Windows</a> работать не будет. В отличие от launcher, у самого RingSync таких проблем нет :) </p>
+<p style="text-align: justify;">Опции запуска RingSync приводить не буду - их можно увидеть, просто запустив его без опций. А вот примеры для разных режимов (<em>сид</em>, <em>пир</em>, <em>лич</em>) будут полезны.</p>
+<p><strong>Сид</strong> (слушает порт 5001, ожидает подключения от <em>лича</em>/<em>пира</em> с IP “192.168.0.2”, рассылает содержимое файла “big_file.vhd”):</p>
+<pre>RingSync -mode=seed -port=5001 ^
+         -leech=192.168.0.2 -if=big_file.vhd</pre>
+<p><strong>Пир</strong> (слушает порт 5001, ожидает подключения от <em>лича</em>/<em>пира</em> с IP “192.168.0.3”, подключается к порту 5001 <em>сида</em>/<em>пира</em> с IP “194.168.0.1”, записывает полученные данные в файл “big_file.vhd”):</p>
+<pre>RingSync -mode=peer -port=5001 ^
+         -leech=194.168.0.3 ^
+         -seed=194.168.0.1:5001 -of=big_file.vhd</pre>
+<p><strong>Лич</strong> (подключается к порту 5001 <em>сида</em>/<em>пира</em> с IP “194.168.0.1”, записывает полученные данные в файл “big_file.vhd”):</p>
+<pre>RingSync -mode=leech ^
+         -seed=194.168.0.2:5001 -of=big_file.vhd</pre>
+<p>Сборку этих же строк можно увидеть в исходниках launcher'а.</p>
+<h2 id="h-3-2-tcp-congestion-control">TCP Congestion Control</h2>
+<p>До написания кода RingSync была идея собрать свой <em>TCP-велосипед</em>, в котором данные передавались бы по цепочке от <em>сида</em> -&gt; через <em>пиров</em> -&gt; к <em>личу</em>, а ответ (ACK), подтверждающий получение данных, отправлял бы <em>лич</em> к <em>сиду</em>. Причем, если <em>сида</em> переименовать в “сервер”, <em>лича</em> - в “клиент”, а <em>пиров</em> в “маршрутизаторы”, то получится типичная схема передачи данных в Интернете. Вот только маршрутизаторы не сохраняют переданные через себя данные. В этот <em>TCP-велосипед</em>, можно было бы включить наиболее подходящий для данных условий передачи данных TCP Congestion Avoidance Algorithm (<a href="https://habrahabr.ru/post/168407/" target="_blank"> 1 </a> <a href="https://habrahabr.ru/post/161499/" target="_blank"> 2 </a> <a href="https://networklessons.com/ip-routing/tcp-window-size-scaling/" target="_blank"> 3 </a>), а не полагаться на системный TCP Congestion Control и его настройки. А в будущем можно было бы получить больший контроль над передачей данных, например, добавив возможность отправки сообщений о “заторах” в сети или HDD.</p>
+<p style="text-align: justify;">Но был и более легкий путь - использовать стандартный системный TCP. В этом случае <em>пир</em>, получивший данные, сам отправляет подтверждение <span class="grey">(об успешной доставке данных)</span> <em>пиру</em>, отправившему эти данные. И информация о случившимся “заторе” автоматически передается через цепочку <em>пиров</em> к <em>сиду</em>:</p>
+<ol>
+<li>вначале ближайший к “затору” <em>пир</em>, не получив вовремя подтверждение, сбрасывает скорость, и его буфер на прием данных <span class="grey">(входной буфер)</span> начинает наполняться;</li>
+<li>при переполнении буфера, предыдущий в цепочке <em>пир</em> также перестает получать подтверждения вовремя, и начнет сбрасывать скорость;</li>
+<li>то же самое делают остальные <em>пиры</em>, вплоть до <em>сида</em>.</li>
+</ol>
+<p style="text-align: justify;">Это напоминает <a href="https://www.kinopoisk.ru/film/195460/" title="Unstoppable 2010" target="_blank">движение длинного состава</a> <span class="grey">(локомотив-<em>сид</em> тянет спереди)</span> с большим числом вагонов <span class="grey">(<em>пиров</em>)</span>, и пружиной <span class="grey">(буфером)</span> вместо сцепки.</p>
+<p style="text-align: justify;">На самом деле второй вариант даже лучше, т.к. для некоторых алгоритмов TCP Congestion Avoidance <span class="grey">(косвенно это влияет и на остальных)</span> чем меньше <a title="round-trip time -- Определение времени возврата" href="http://opds.sut.ru/old/electronic_manuals/RStevens_TCP_IP/glava21.html" target="_blank">RTT</a> - тем лучше. А в первом варианте мы заведомо создаем более неблагоприятные условия...</p>
+<p>В итоге, второй вариант, даже в сети с двумя switch:</p>
+<pre>switch{1 Gbps}[<em>сид</em> -&gt; <em>пир</em> -&gt; <em>пир</em>]
+└─{100 Mbps}—↓
+switch{100 Mbps}[<em>пир</em> -&gt; <em>пир</em> -&gt; <em>пир</em> -&gt; <em>лич</em>]</pre>
+<p>показал стабильные <strong>11.8 MiBps</strong>.</p>
+<h2 id="h-3-3-pc-podklyucheny-k-raznym-switch">PC подключены к разным switch</h2>
+<p style="text-align: justify;">В сети с несколькими switch узким местом может стать соединение между ними. Например, если строить цепочку пиров в произвольном порядке, то при сети:</p>
+<pre>switch1{1 Gbps}[<em>сид</em>, <em>пир</em>2, <em>пир</em>4, <em>пир</em>6]
+└─{1 Gbps}─┐
+switch2{1 Gbps}[<em>пир</em>1, <em>лич</em>, <em>пир</em>3, <em>пир</em>5]</pre>
+<p>, и цепочке:</p>
+<pre><em>сид</em>-&gt;<em>пир</em>1-&gt;<em>пир</em>2-&gt;<em>пир</em>3-&gt;<em>пир</em>4-&gt;<em>пир</em>5-&gt;<em>пир</em>6-&gt;<em>лич</em></pre>
+<p>, скорость упадет в <strong>4 раза</strong>.</p>
+<p><strong>Q:</strong> Почему скорость падает в <strong>4 раза</strong>? Как получилось это число “<strong>4</strong>”?<br />
+<strong>A:</strong> Если возьмем все потоки данных в направлении от switch1 к switch2, то получим:</p>
+<ol>
+<li><code><em>сид</em>  -&gt; <em>пир</em>1</code></li>
+<li><code><em>пир</em>2 -&gt; <em>пир</em>3</code></li>
+<li><code><em>пир</em>4 -&gt; <em>пир</em>5</code></li>
+<li><code><em>пир</em>6 -&gt; <em>лич</em></code></li>
+</ol>
+<p>Теперь посмотрим на потоки данных в обратном направлении (от switch2 к switch1):</p>
+<ol>
+<li><code><em>пир</em>2 &lt;- <em>пир</em>1</code></li>
+<li><code><em>пир</em>4 &lt;- <em>пир</em>3</code></li>
+<li><code><em>пир</em>6 &lt;- <em>пир</em>5</code></li>
+</ol>
+<p style="text-align: justify;">В направлении от switch1 к switch2, общий канал в 1 Gbps делили <strong>4</strong> потока, получая максимум 0.25 Gbps на поток. В обратном направлении получилось 3 потока, соответственно максимум 0.33 Gbps на поток. Самым узким местом стал канал от switch1 к switch2 <span class="grey">(максимальная скорость потока 0.25 Gbps)</span>. В самом узком месте скорость потока в <strong>4 раза</strong> меньше, по сравнению с максимальной скорости в “самом широком месте” (1 Gbps).</p>
+<p><strong>Q:</strong> Как исправить ситуацию?<br />
+<strong>A:</strong> Достаточно строить цепочку примерно так (можно сразу перейти к <strong>TL;DR</strong>) 8)  :</p>
+<ol>
+<li>добавить в цепочку <em>сида</em>;</li>
+<li>взять switch, к которому подключен <em>сид</em>, и добавить в цепочку всех <em>пиров</em> <span class="grey">(в любом порядке)</span>, подключенных к этому switch;</li>
+<li>взять следующий, ранее не взятый, switch <span class="grey">(к которому подключены <em>пиры</em>)</span>, подключенный к предыдущему switch <span class="grey">(возможно не прямое подключение, а подключение через несколько промежуточных switch, к которым не подключен ни один <em>пир</em>)</span>, и добавить в цепочку всех <em>пиров</em> <span class="grey">(в любом порядке)</span>, подключенных к этому switch;</li>
+<li>повторять предыдущий пункт, пока он будет выполним <span class="grey">(“следующий switch” будет существовать)</span>;</li>
+<li>если можно вернуться к предыдущему switch, то вернуться к нему, и выполнить предыдущий пункт;</li>
+<li>последнего <em>пира</em> в цепочке назвать <em>личем</em>.</li>
+</ol>
+<p><strong>TL;DR</strong>: используем <a title="Поиск в глубину" href="https://ru.wikipedia.org/wiki/Поиск_в_глубину" target="_blank">обход графа в глубину</a>, при этом:</p>
+<ul>
+<li>вершины - это switch;</li>
+<li>в вершине хранится список <em>пиров</em>, подключенных к этому switch/вершине;</li>
+<li>начинаем со switch/вершины, к которому подключен <em>сид</em>;</li>
+<li>при входе в вершину, добавляем в цепочку всех пиров из списка этой вершины.</li>
+</ul>
+<p class="note">Для использования этого способа нужна информация о <a title="Сетевая топология" href="https://ru.wikipedia.org/wiki/Сетевая_топология" target="_blank">топологии сети</a> на <a title="L2" href="https://ru.wikipedia.org/wiki/Канальный_уровень" target="_blank">канальном уровне</a>.</p>
+<h1 id="h-4-ssylki-v-temu">Ссылки «в тему»</h1>
+<ul>
+<li><a href="http://iris.karalabe.com/book/run_forrest_run" target="_blank">Project Iris</a> - Completely decentralized cloud messaging</li>
+<li><a href="https://github.com/elgs/filesync" target="_blank">Filesync</a> ( Golang : (</li>
+<li><a href="https://habrahabr.ru/post/230863" target="_blank">Недостатки TCP и новые протоколы транспортного уровня</a></li>
+<li><a href="http://www.catapultsoft.com" target="_blank">Catapult</a> - Fast Data Transfers</li>
+<li><a href="https://ind.ie/labs/" target="_blank">Pulse</a> - free (as in freedom), secure, and distributed file synchronization engine</li>
+<li>Фильм <a href="https://www.kinopoisk.ru/film/195460/" target="_blank">Unstoppable 2010</a> + <a href="https://ru.wikipedia.org/wiki/Буфер_(железнодорожный)#.D0.98.D0.BD.D1.82.D0.B5.D1.80.D0.B5.D1.81.D0.BD.D1.8B.D0.B9_.D1.84.D0.B0.D0.BA.D1.82" target="_blank">сдвинуть тяжелый состав</a> ("Интересный факт" про сцепку; <a href="http://www.bolshoyvopros.ru/questions/1188489-pochemu-mashinist-gruzovogo-poezda-prezhde-chem-poehat-vpered-sdaet-nazad.html" target="_blank">подробнее</a>)</li>
+</ul>
+<h1 id="h-5-kak-obojtis-bez-kopirovaniya-bolshogo-vhd-fajla-po-seti">Как обойтись без копирования большого VHD файла по сети?</h1>
+<p>На самом деле можно не копировать каждый раз полный VHD при обновлении системы, а распространять только dVHD с обновлением. Такая схема обновления работает следующим образом <span class="grey">(система обновляется на одном Master-PC, и копируется на множество Slave-PC)</span>:</p>
+<ul>
+<li>На Master-PC все изменения, в ходе обновления системы, сохраняются в новый dVHD файл.</li>
+<li>Все Slave-PC должны хранить оригинальный VHD файл с Master-PC, поэтому на них нужно создавать <em>дополнительный dVHD файл</em>, в котором будут сохранены все отличия Slave-PC от Master-PC. Без этого следующий пункт работать не будет.</li>
+<li>На Slave-PC копируется dVHD файл с обновлением, и, затем, объединяется с VHD файлом <span class="grey">(если бы VHD файл на Master-PC и Slave-PC отличался, то объединение завершилось бы с ошибкой)</span>.</li>
+<li>На каждом Slave-PC заново создается тот <em>дополнительный dVHD файл</em>, хранящий отличия каждого Slave-PC от Master-PC.</li>
+<li>На Master-PC dVHD файл с обновлением системы также объединяется с VHD файлом.</li>
+</ul>
+<p style="text-align: justify;">При этом время распространения обновления будет включать в себя время копирования обновления на Slave-PC + время объединения VHD с dVHD. Здесь важно, чтобы объединение выполнялось быстро, иначе суммарное время <span class="grey">(копирование dVHD + объединение)</span> может превысить время простого копирования цельного VHD файла. Еще один минус – из-за появления на Slave-PC <em>дополнительного dVHD файла</em>, система будет работать медленней.</p>
+<p>   </p>]]></content><author><name>ZKyl</name></author><category term="ITштуки" /><category term="Software" /><category term="чтиво" /><category term="BTSync" /><category term="client-server" /><category term="GitHub" /><category term="Golang" /><category term="HDD" /><category term="p2p" /><category term="RingSync" /><category term="switch" /><category term="sync" /><category term="TCP" /><category term="VHD" /><summary type="html"><![CDATA[В комментарии к статье про dVHD заморозку системы я намекнул на быстрый способ распространения/синхронизации больших файлов по локальной сети. Конкретно, в моем случае VHD файл весил примерно 120 GiB, и его нужно было залить на 30 PC. При каждом обновлении VHD он перезаливался. Под катом читайте историю, про то, как с таким большим файлом не справлялся BTSync, и про создание RingSync.]]></summary></entry><entry><title type="html">Как мы организовали хакспейс PHDays V Everywhere и соревнование OmskCTF</title><link href="/2015/3626-%D0%BA%D0%B0%D0%BA-%D0%BC%D1%8B-%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D0%BB%D0%B8-%D1%85%D0%B0%D0%BA%D1%81%D0%BF%D0%B5%D0%B9%D1%81-phdays-v-everywhere-%D0%B8-%D1%81%D0%BE%D1%80/" rel="alternate" type="text/html" title="Как мы организовали хакспейс PHDays V Everywhere и соревнование OmskCTF" /><published>2015-07-01T13:34:27+00:00</published><updated>2015-07-02T06:26:55+00:00</updated><id>/2015/3626-%D0%BA%D0%B0%D0%BA-%D0%BC%D1%8B-%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D0%BB%D0%B8-%D1%85%D0%B0%D0%BA%D1%81%D0%BF%D0%B5%D0%B9%D1%81-phdays-v-everywhere-%D0%B8-%D1%81%D0%BE%D1%80</id><content type="html" xml:base="/2015/3626-%D0%BA%D0%B0%D0%BA-%D0%BC%D1%8B-%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D0%BB%D0%B8-%D1%85%D0%B0%D0%BA%D1%81%D0%BF%D0%B5%D0%B9%D1%81-phdays-v-everywhere-%D0%B8-%D1%81%D0%BE%D1%80/"><![CDATA[<p><img class="aligncenter noborder size-full wp-image-3693" style="margin: -10px -20px 8px -20px;" src="/wp-content/uploads/2015/07/Singular-OmskCTF-PHDays-5.png" alt="OmskCTF PHDays 5" width="520" height="215" /></p>
+<p>Это уже второе описание истории про то как несколько людей организовывало PHDays Everywhere in Omsk и OmskCTF.</p>
+<p>Что получилось сделать в этом году, а также как проходила организация, какие трудности пришлось преодолеть, какие были запланированы активности - в общем, полный отчет о мероприятии - <b>читайте под катом</b>.</p>
+<p><b>Несколько ссылок</b>: <a href="https://goo.gl/dWtsKF">пресс-релиз</a> мероприятия, событие в <a href="https://goo.gl/qixNAo">G+</a>, <a href="https://vk.com/phdays_omsk">VK</a>, <a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011">Фотки</a> (если их смотреть в режиме слайд-шоу и читать подписи, то получится небольшая история; не забывайте нажимать на зум/лупу на верхней панели - фото загрузится в оригинальном качестве). <!--more--></p>
+<p>Мы уже четвертый год организовываем PHDays Everywhere в Омске, и в отличие от <a title="Как мы организовали хакспейс PHDays Everywhere и соревнование CTF в этом году" href="/2014/3486-%D0%BA%D0%B0%D0%BA-%D0%BC%D1%8B-%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D0%BB%D0%B8-%D1%85%D0%B0%D0%BA%D1%81%D0%BF%D0%B5%D0%B9%D1%81-phdays-everywhere-%D0%B8-%D1%81%D0%BE%D1%80/" target="_blank">предыдущих лет</a> решили провести мероприятие на более высоком уровне - арендовали большой зал на два дня, увеличили количество Geo‑квестов. У самих же квестов в этом году появилась история - они рассказывают про секреты нано-государства <strong><em>Brizzland</em></strong>...</p>
+<h1 style="font-weight: 400; color: #33352c;">Подготовка</h1>
+<h2>За полтора месяца до часа X</h2>
+<p>Начинаем накидывать задачи в <a href="https://trello.com">Trello</a>.</p>
+<div id="attachment_3627" style="width: 310px" class="wp-caption aligncenter"><a href="/wp-content/uploads/2015/06/trello-phdays5.png"><img class="wp-image-3627 size-medium" src="/wp-content/uploads/2015/06/trello-phdays5-300x206.png" alt="Trello, PHDays 5" width="300" height="206" /></a><p class="wp-caption-text">Как выглядит Trello сейчас.</p></div>
+<p>Одна из первых задач звучала примерно так: “Разнообразить квесты DarkNet'ом”, с описанием “Перенести часть описаний задач в DarkNet”. Предполагалось, что участники вначале задания получат адрес сервиса в DarkNet'е, а затем, открыв этот сервис, получат само <i>описание задания</i>.</p>
+<p>Среди кандидатов на “роль DarkNet” были <span class="grey">(не все из них истинные DarkNet)</span>:</p>
+<ol>
+<li><a href="https://www.torproject.org/docs/tor-hidden-service.html.en">.onion</a> (Tor)</li>
+<li><a href="https://geti2p.net/ru/faq#myeepsite">i2p</a></li>
+<li><a href="https://ru.wikipedia.org/wiki/Bitmessage">Bitmessage</a></li>
+<li><a href="http://habrahabr.ru/post/255507/">Project Maelstrom</a></li>
+<li><a href="https://ru.wikipedia.org/wiki/BitTorrent_Sync">BTSync</a></li>
+<li><a href="http://habrahabr.ru/post/225655">Synthingc</a></li>
+<li><a href="http://habrahabr.ru/post/250945">ZeroNet</a></li>
+<li><a href="https://ru.wikipedia.org/wiki/Perfect_Dark_(файлообменный_клиент)">Perfect Dark</a></li>
+</ol>
+<p><i>Сеть </i>должна была удовлетворять нескольким требованиям:</p>
+<ol>
+<li>обход NAT <span class="grey">(при работе по IPv4)</span> - отсеялись Project Maelstrom, ZeroNet, и Perfect Dark;</li>
+<li>односторонняя авторизация - отсеялся Synthingc.</li>
+</ol>
+<p>В итоге остались:</p>
+<ol>
+<li><a href="https://www.torproject.org/docs/tor-hidden-service.html.en">.onion</a> (Tor)</li>
+<li><a href="https://geti2p.net/ru/faq#myeepsite">i2p</a></li>
+<li><a href="https://ru.wikipedia.org/wiki/Bitmessage">Bitmessage</a></li>
+<li><a href="https://ru.wikipedia.org/wiki/BitTorrent_Sync">BTSync</a></li>
+</ol>
+<p>Теперь нужно было дать ответ на вопрос “<strong>Как участники поймут, что сервис нужно искать в особой сети?</strong>”.</p>
+<p>С “.onion” и “.i2p” проблем не было - сеть можно определить по домену.</p>
+<p>С Bitmessage было труднее - намеком на Bitmessage могло служить только начало идентификатора пользователя “BM-”.</p>
+<p>С BTSync дела были еще хуже - видимые маркеры в идентификаторе сервиса отсутствовали. Решение проблемы оказалось простым - вместе с адресом сервиса, участник сразу же получает клиента для используемой в задании сети. Но и здесь участников ждал сюрприз.</p>
+<h3>BTSync</h3>
+<p>В некоторых старых версиях BTSync, при создании сервиса под старой Windows (NT5.*), возникал баг - генерировался секрет невалидный для других ОС. В новых версиях этот баг устранили, и все клиенты начали корректно воспринимать невалидный секрет.</p>
+<p>Для воспроизведения этого бага в задании, участники получали “(не)валидный” секрет + старую версию BTSync, в которой был баг. Если просто воспользоваться полученным секретом и клиентом BTSync, то он покажет сообщение “This secret is invalid. Please generate a new secret or enter a secret generated at another computer”.</p>
+<p>Быстро обойти баг можно было двумя способами:</p>
+<ul>
+<li>[простой] скачать <a href="http://syncapp.bittorrent.com/1.4.111">новую версию BTSync</a></li>
+<li>[сложнее] запустить BTSync на аналогичной старой Windows</li>
+</ul>
+<h3>Bitmessage</h3>
+<p>В Bitmessage также было несколько уловок.</p>
+<p>Если оба участника переписки расположены за разными NAT, то сообщения в Bitmessage распространяются <a href="https://bitmessage.org/forum/index.php/topic,1472.0.html">очень медленно</a>. Поэтому участники получали не обычный идентификатор пользователя, а идентификатор (и имя) chain'а.</p>
+<p>Одним из участников chain'а был бот, с которым участникам нужно было сыграть в игру, чтобы получить <i>описание задания</i>. При этом вся переписка chain'а доступна всем командам, подключившимся к этому chain'у. Первая команда, которая “выбьет” из бота <i>описание задания</i> откроет его также и для всех остальных команд.</p>
+<p>Чуть позже от игры с ботом пришлось отказаться - слишком долго приходят сообщения. Сам бот стал выполнять роль простого <a href="https://bitmessage.org/wiki/Echo_service#Custom_Message">Custom Message эхо-сервиса</a>.</p>
+<h3>Игра с “заклинившим ботом”</h3>
+<p>И все же, от идеи “игры с ботом” отказываться не хотелось, поэтому игра с “заклинившим ботом” встречала участников в .onion сети.</p>
+<p>Игра была простой. При подключении к “заклинившему ботоу” - тот несколько раз отправлял одно и то же слово, после чего разрывал соединение. Участник должен был отправить боту это слово, тогда бот перешлет участнику ссылку на <i>описание задания</i> в вперемешку с “заклинившим словом”:</p>
+<div id="attachment_3628" style="width: 652px" class="wp-caption aligncenter"><a href="/wp-content/uploads/2015/06/image14.png"><img class="wp-image-3628 size-full" src="/wp-content/uploads/2015/06/image14.png" alt="Cookie | URI" width="642" height="70" /></a><p class="wp-caption-text">Cookie | URI</p></div>
+<div id="attachment_3629" style="width: 651px" class="wp-caption aligncenter"><a href="/wp-content/uploads/2015/06/image53.png"><img class="size-full wp-image-3629" src="/wp-content/uploads/2015/06/image53.png" alt="Cookie | URI double2" width="641" height="84" /></a><p class="wp-caption-text">Cookie | URI double2</p></div>
+<div id="attachment_3630" style="width: 670px" class="wp-caption aligncenter"><a href="/wp-content/uploads/2015/06/image22.png"><img class="size-full wp-image-3630" src="/wp-content/uploads/2015/06/image22.png" alt="I want a cookie. Give me a cookie, NOW!" width="660" height="207" /></a><p class="wp-caption-text">NOW!</p></div>
+<h3>Protection</h3>
+<p>По завершению экспериментов, каждый DarkNet сервис расположился в своем контейнере / виртуальной машине. А созданные снапшоты давали возможность быстро вернуть сервис в строй, например, после его взлома одной из команд.</p>
+<h2>За месяц до часа X</h2>
+<p>Обычно к этому моменту уже приходят письма-анкеты от <span style="color: #ff0000;">PT</span>, в которых нужно указать информацию о своем хакспейсе. Затем эта информация публикуется на сайте, в разделе <a href="http://www.phdays.ru/registration/everywhere/#2">PHDays Everywhere</a>.</p>
+<p>Мы уже стали волноваться, т.к. письмо-анкета до сих пор не пришла, и нас не было в списке хакспейсов. Связаться получилось только 5-го мая, и информация о хакспейсе была успешно отправлена <span class="grey">(правда на сайте мы появились только перед самим началом PHDays - после 16 мая)</span>.</p>
+<p>В этом году мы решили провести PHDays Everywhere в большом зале новой библиотеки ОмГТУ, которая чем то напоминает <a href="https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D0%B2%D0%BE%D1%80%D0%BA%D0%B8%D0%BD%D0%B3">коворкинг</a>. Так как это была библиотека, то мы не могли упустить шанс, и сделали Old School geo-квест с участием книг (о нем дальше). А вот делать geo-квесты с IP-камерами мы изначально не планировали, но вскоре это изменилось...</p>
+<h2>За две недели до часа X</h2>
+<p>Для OmskCTF, как и в прошлом году, мы хотели взять задания от <span style="color: #ff0000;">PT</span>, добавить свои задания, и объединить это все в квесты. Наши планы изменило письмо:</p>
+<blockquote>
+<p style="font-size: small;">Условно «оффлайновый» конкурс - соревнования посетителей внутри отдельных площадок между собой. Традиционно предоставим вам материалы с решениями незадолго до PHDays. В этом году <b>заданий будет немного</b>, потому что мы хотели бы сделать основной акцент на онлайновый конкурс.</p>
+<p style="font-size: small;">Онлайновый конкурс: площадки могут участвовать в экономической жизни созданного для PHDays государства United States of Soviet Unions (USSU)...</p>
+</blockquote>
+<p>В этот момент стало понятно, что квесты с IP-камерами все же нужны. Как и в прошлом году, нам одолжили несколько резервных камер, используемых в университете, фирмы ***. В этих квестах предполагалось, что участникам предстоит взломать камеры для получения изображения с них (логин/пасс участником не был известен). Камеры были той же фирмы, что и год назад, но с более новой версией прошивки. За 30 минут поиска уязвимостей мы нашли 0 новых уязвимостей, а старые дыры были залатаны.</p>
+<p>Так как, в этот раз, лежащие на поверхности уязвимости отсутствовали, то можно назвать производителя камер - это был Hikvision, а модель камер в этом году - DS-2CD2032-I.</p>
+<p>Раз простые уязвимости “от производителя” отсутствуют, то добавим свои :)  Время поджимало, поэтому просто сделали аналог прошлогодней уязвимости с возможностью анонимного входа в web-интерфейс камеры.</p>
+<p>Для реализации этой уязвимости достаточно было модифицировать один js файл, и как-нибудь залить его на камеру. Менять оригинальную прошивку камеры не хотелось, поэтому все действия проводились в памяти самой камеры.</p>
+<p>Для начала, мы подключились к камере по telnet/ssh, и осмотрелись. Вскоре поняли, что постоянное хранилище примонтировано в “<strong>/dav/</strong>”. В директории “<strong>/dav/</strong>” располагался скрипт <strong>“initrun.sh</strong>”, который инициализировал систему, и распаковывал файлы из лежащих рядом архивов.</p>
+<p>Теперь нужно было понять какой из архивов содержит файлы web-интерфейса. После беглого осмотра инициализирующего скрипта, архив был найден, им оказался “<strong>IEfile.tar.gz</strong>”. Название архива буквально намекало, что web-интерфейс создавался специально под Internet Explorer, а под остальными браузерами ждите глюков.</p>
+<p>Архив уже нашли, осталось найти способ выгрузить его из камеры, а затем (после правки) загрузить обратно. На одном из <a href="http://www.ipcamtalk.com/showthread.php/162-How-to-hack-5-1-2-firmware-on-China-region-cameras-to-English">форумов</a> использовали для этого комады/бинарники <strong>ftpput</strong> и <strong>ftpget</strong>, присутствующие в прошивке 5.1.2. Однако, на DS-2CD2032-I была более новая версия прошивки, в которой <strong>ftpput</strong> и <strong>ftpget</strong> отсутствовали. На помощь пришел “<strong>/bin/rz</strong>” - ZMODEM <span class="grey">(под win наиболее стабильный клиент - <a href="https://ru.wikipedia.org/wiki/Tera_Term">Tera Term</a>)</span>, при помощи которого можно будет залить измененный “<strong>IEfile.tar.gz</strong>”. А для выгрузки использовался работающий http сервер - нужно было всего-лишь выполнить команду:</p>
+<pre>cp /dav/IEfile.tar.gz /home/doc/</pre>
+<p>и загрузить “http://192.0.0.64/doc/IEfile.tar.gz”.</p>
+<p>В этот момент планы претерпели изменения. Вместо замены оригинального “<strong>IEfile.tar.gz</strong>” - сделали следующее:</p>
+<pre>echo cp -Rf /dav/IEfile_patch/\* /home/ &gt;&gt; /dav/initrun.sh</pre>
+<p>Теперь достаточно записать отдельный измененный файл в “<strong>/dav/IEfile_patch/</strong>”, сохранив при этом относительные пути (из “<strong>IEfile.tar.gz</strong>”). При включении камеры все пропатченные файлы из “<strong>/dav/IEfile_patch/</strong>” заменят собой оригинальные файлы из “<strong>IEfile.tar.gz</strong>”.</p>
+<p>Чтобы вернуть все назад <span class="grey">(а это придется сделать по завершению PHDays)</span> достаточно будет очистить директорию “<strong>/dav/IEfile_patch/</strong>”.</p>
+<h3>Немного про задания с камерами</h3>
+<p>Всего было два задания с камерами: First Eye и Second Eye. В обоих заданиях камеры были спрятаны внутри шкафчика для вещей. Сами шкафчики расположены у входа в библиотеку.</p>
+<h4>Second Eye</h4>
+<p><strong>Изначально задание было простым</strong>:</p>
+<ul>
+<li>Флаг записывается в QR-код, и наклеивается на стенку одного из шкафчиков.</li>
+<li>Камера через дырочки в дверце шкафчика “видит” окружающую обстановку.</li>
+<li>Участник получает IP камеры, и ключи от нескольких шкафчиков. Изначально каждый ключ имеет брелок с номером шкафчика. В этом задании брелки с ключей были сняты.</li>
+<li>Для “захвата флага” участнику нужно было:
+<ol>
+<li>по изображению с камеры <span class="grey">(и полученным ключам)</span> понять где она находится;</li>
+<li>прогуляться до шкафчиков;</li>
+<li>наблюдая за собой на изображении с камеры, найти конкретный шкафчик; перебирая ключи открыть шкафчик;</li>
+<li>считать QR-код.</li>
+</ol>
+</li>
+</ul>
+<p>Так выглядело задание до того, как мы начали изучать камеры в поисках уязвимостей.</p>
+<p>Во время изучения камер, мы заметили, что, при включении ИК-подсветки, с изображения камеры пропадают все надписи на бумаге, сделанные обычной ручкой. При этом камера продолжает “видеть” текст, распечатанный на лазерном принтере черным тонером.</p>
+<p><strong>В этот момент родился новый сценарий задания</strong>:</p>
+<ul>
+<li>Участник получает IP:port камеры и подсказку “if you only look where you can't go, you will miss the riches below”.</li>
+<li>Получив доступ к изображению с камеры, участник наблюдают окружающую обстановку через отверстие в шкафчике:</li>
+</ul>
+<div id="attachment_3631" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364216376161714&amp;oid=112973193951042107011"><img class="wp-image-3631 size-full" src="/wp-content/uploads/2015/06/201_464px.jpg" alt="IP Cam See" width="464" height="309" /></a><p class="wp-caption-text">IP Cam See</p></div>
+<ul>
+<li>Также на OSD камеры выводится подсказка: “librarians have a keys for the secret place - barter appropriate”.</li>
+<li>Участники обменивают что-нибудь на коробку с ключами:</li>
+</ul>
+<div id="attachment_3632" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364213612056482&amp;oid=112973193951042107011"><img class="wp-image-3632 size-full" src="/wp-content/uploads/2015/06/202_464px.jpg" alt="Box + Keys + Secret" width="464" height="309" /></a><p class="wp-caption-text">Box + Keys</p></div>
+<ul>
+<li>Находят шкафчик.</li>
+<li>Перебирает ключи <span class="grey">(всего 9 ключей)</span>.</li>
+<li>Открывают шкафчик, а внутри - печенья с предсказанием.</li>
+<li>Разламывают печеньку - там конец флага: “_now_you_see_me”:</li>
+</ul>
+<div id="attachment_3633" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364215752696946&amp;oid=112973193951042107011"><img class="wp-image-3633 size-full" src="/wp-content/uploads/2015/06/203_464px.jpg" alt="_now_you_see_me" width="464" height="309" /></a><p class="wp-caption-text">End Of Flag</p></div>
+<ul>
+<li>Вспомнив ранее полученные подсказки, и “повертев” коробку от ключей, участник подносит коробку к камере <span class="grey">(“козырьком вверх”, чтобы закрыть свет)</span> и получает вторую часть флага:</li>
+</ul>
+<div id="attachment_3680" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364213767562754&amp;oid=112973193951042107011"><img class="wp-image-3680 size-full" src="/wp-content/uploads/2015/07/204.5_464px.jpg" alt="Malevich's black square + Eye" width="464" height="344" /></a><p class="wp-caption-text">In Box - Malevich's black square || Bottom Box - Eye</p></div>
+<div id="attachment_3638" style="width: 319px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364216422643266&amp;oid=112973193951042107011"><img class="wp-image-3638 size-full" src="/wp-content/uploads/2015/06/206_464px.jpg" alt="True" width="309" height="464" /></a><p class="wp-caption-text">True</p></div>
+<p><strong>Позже сценарий еще раз изменился.</strong> ИК-подсветка засвечивала дверцу, и через отверстие в дверце камера ничего не видела <span class="grey">(отверстие превращалось в черную точку)</span>. Попытка соединить, при помощи цилиндра, объектив камеры и дверцу, чтобы изолировать свечение ИК-подсветки, не увенчалась успехом. Поэтому для участников была добавлена еще одна подсказка: “find red eyes in black holes”. И теперь участникам, для обнаружения местоположения камеры, нужно было заглянуть в шкафчик через отверстия, и увидеть красный свет от ИК-светодиодов.</p>
+<h4>First Eye</h4>
+<p>Флаг также записывается в QR-код, и печатается на специальной конструкции, которая закрепляется на дверце шкафчика:</p>
+<div id="attachment_3639" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364215432433362&amp;oid=112973193951042107011"><img class="wp-image-3639 size-full" src="/wp-content/uploads/2015/06/211_464px.jpg" alt="QR Code" width="464" height="272" /></a><p class="wp-caption-text">Cam See</p></div>
+<p>Конструкция состоит из плоскости для QR-кода, грузиков, лески, ограничителя (закрепленного на леске), и брелка от ключей (закрепленного на конце лески) с номером шкафчика. Еще на 12 шкафчиках закрепляются муляжи (конструкции без QR-кода).</p>
+<p>Участник получает IP камеры.</p>
+<p>Для получения флага участник должен, по изображению с камеры <span class="grey">(внутренностям шкафчика)</span>, понять где она находится; затем подойти к шкафчикам и перебрать лески; если потянуть за леску у нужного шкафчика, то поднимется QR-код:</p>
+<div id="attachment_3640" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364214068275730&amp;oid=112973193951042107011"><img class="wp-image-3640 size-full" src="/wp-content/uploads/2015/06/212_464px.jpg" alt="Outside" width="464" height="309" /></a><p class="wp-caption-text">Outside</p></div>
+<div id="attachment_3641" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364216423138770&amp;oid=112973193951042107011"><img class="wp-image-3641 size-full" src="/wp-content/uploads/2015/06/213_464px.jpg" alt="Malevich's black square" width="464" height="309" /></a><p class="wp-caption-text">Malevich's? Again?</p></div>
+<h2>За неделю до часа X</h2>
+<p>19 мая о нашем хакспейсе упомянули на <a href="http://habrahabr.ru/company/tceh/blog/258223/">habrahabr</a> (Хакатоны и около того), что было приятно видеть, т.к. в разделе <a href="http://www.phdays.ru/registration/everywhere/#2">PHDays Everywhere</a> нас все еще не было.</p>
+<p>Началась подготовка к <strong>Old School geo-квесту</strong>. Для квеста нам понадобились:</p>
+<ol>
+<li>старый сканер <span class="grey">(для которого отсутствует 64bit драйвер для Win, но который работает под *nix - GNU/Linux, OS X)</span>;</li>
+<li>местоположение (адресацию) 8 случайных книг в библиотеке;</li>
+<li>1 книга на английском языке.</li>
+</ol>
+<p>Со старым сканером, который мы планировали использовать, возникли проблемы - куда-то пропал его блок питания. На следующий день нашлась ему замена - старый сканер для которого отсутствовал официальный Win 64bit драйвер. Однако у замены был недостаток - официальный драйвер отсутствовал, но можно было установить 64bit драйвер другой модели, и сканер “заведется”, что могло подпортить Old School'ность квеста.</p>
+<p>Чуть позже собрали задание с участием <strong>git</strong> и <a href="http://githowto.com/ru/removing_commits_from_a_branch">(не)удаленного коммита</a>. Остаток дня провели создавая задание “Master of hash collisions”.</p>
+<p>В “<strong>Master of hash collisions</strong>” мы хотели познакомить участников с внутренностями созданной системы квестов, в которой ссылка на очередное задание квеста открывается после получения флага на текущее задание квеста. Это, примерно, выглядит так:</p>
+<pre>URL<sub>i+1</sub>=AES(message: pre_defined_msg_in_Base64<sub>i+1</sub>, key: SHA3(flag<sub>i</sub>))</pre>
+<p>Изначально мы хотели заменить SHA3 на MD4, и сгенерировать для участников коллизию - 2 флага. Один “псевдо флаг” записывался в комментарий к коду квестовой системы, второй “истинный флаг” - участники должны найти. Также участникам давалось время начала генерации коллизии, и намек на код, генерировавший коллизию.</p>
+<p>В оригинальном варианте код, генерирующий коллизии, использовать было нельзя - генерировались непечатные символы. Поэтому мы засекли 30 минут - если за этот период мы сможем сделать код, генерирующий коллизии, состоящие только из печатных символов (8bit), и сможем решить задачу <span class="grey">(восстановить второе сообщение-флаг)</span> то заданию в текущем виде - быть, иначе его нужно менять.</p>
+<p>В итоге задание пришлось изменить - не получилось избавится от трех непечатных символов в “флагах”:</p>
+<pre>‘ХЈњЙЎ¶B'РРыљ‘;пd5‚Jџ__][__Y__г_Лb_џ-__c_a[_________Я_______</pre>
+<pre>‘ХЈњЙЎ¶В'РРkљ‘;пd5‚Jџ__][__Y__г_Лb_џ-__c_a[_________Я_______</pre>
+<p>В новой версии задания использовался CRC32. В коде также был закомментирован хеш, и появилась проверка на условие “<code>if(flag.len &gt; 9 &amp;&amp; flag.len &lt; 14 )</code>”. В коде турнирной таблицы прописалось более точное условие “<code>if(flag.len == 12)</code>”. А новая подсказка намекала на код для обращения CRC32.</p>
+<p><strong>Остаток недели</strong> прошел менее интересно, и более напряженно. В этом году в последний момент появилось много новых помощников, не знакомых с *trello, и на координацию работы уходило много сил, т.к. единственным способ связи/координации с <i>новичками </i>был телефон. В общем было несколько Scrum-митингов, тестирование связи с Москвой для проведения викторины и телемоста, ..., пока не пришла часть заданий на CTF от <span style="color: #ff0000;">P</span>ositive <span style="color: #ff0000;">T</span>echnologies.</p>
+<p>К этому моменту мы уже поняли как объединить глобальную историю про USSU <span class="grey">(соревнование между площадками)</span> и локальный OmskCTF. Для локального OmskCTF сделали следующую <a href="https://goo.gl/dWtsKF">легенду</a>:</p>
+<blockquote>
+<p style="font-size: small;">Вы – житель омского нано-государства.</p>
+<p style="font-size: small;">Нано-государства – это немногочисленные оставшиеся на планете независимые государства, которые не присоединились к USSU... ваше нано-государство хранит множество секретов, и обладает множеством потайных мест, о существовании которых знают только избранные. Раскрытие каждой из тайн государства - это целый квест.</p>
+<p style="font-size: small;">Ваша задача - раскрыть все тайны вашего государства.</p>
+</blockquote>
+<p>Поэтому в заданиях на локальный CTF от <span style="color: #ff0000;">P</span>ositive <span style="color: #ff0000;">T</span>echnologies важно было содержимое флага, чтобы сам флаг раскрывал какой-нибудь секрет о нано-государствах. Либо чтобы была возможность быстро заменить оригинальный флаг задания на свой флаг. Так оно и вышло.</p>
+<p>В итоге мы получили 5 заданий категории web <span class="grey">(исходники, в основном PHP и Python)</span>. В этих заданиях предполагалось, что участник будет взаимодействовать с удаленным сервером. Чтобы не поднимать свой web-сервер, <span style="color: #ff0000;">P</span>ositive <span style="color: #ff0000;">T</span>echnologies развернули эти задания на своем сервере, и прислали ссылки. Единственным условием использования сервера <span style="color: #ff0000;">PT</span> было - запретить участникам устраивать DoS атаку на него.</p>
+<p><strong>А флаги...</strong> Флаги были в виде случайной Base64 строки. Благодаря тому, что у нас на руках были исходники всех заданий, то заменить флаг было легко, единственное это потребовало бы поднятия своего web-сервера, его тюнинга, закрытия дыр, не предусмотренных заданием, ... В общем мы всегда любили PaaS, и этот случай не стал исключением. Все PHP и Python скрипты были адаптированы для запуска на Google App Engine.</p>
+<p>При адаптации скриптов возникли трудности с одним заданием. Для этого задания требовалось развернуть на сервере <a href="http://habrahabr.ru/post/152653/">Selenium</a>, что уже выходило за рамки PaaS. Было несколько вариантов решения этой проблемы, одним из которых было написание небольшого proxy до сервера <span style="color: #ff0000;">PT</span> с уже развернутым Selenium. На этом варианте и остановились.</p>
+<p>Затем начался процесс стилизации заданий под единый формат, и генерация квестов.</p>
+<h3>Немного про Old School квест</h3>
+<p>Сценариев квеста было несколько. Финальный вариант сценария выглядел так:</p>
+<ul>
+<li>Участник получает подсказку - список книг <span class="grey">(8 существующих книг + 1 несуществующая книга - подсказка)</span>.</li>
+<li>Начинает искать книги <span class="grey">(без помощи библиотекарей, они только могут пояснить адресацию)</span>.</li>
+<li>Находит книгу, забирает закладку с 2D Barcode на одной стороне, и подсказкой на другой стороне.</li>
+<li>По содержимому закладки, становится ясно - чтобы прочитать содержимое - надо воспользоваться сканером библиотекарей.</li>
+<li>Открывает сканет - видит, что там уже наклеено 2 бумажки <span class="grey">(Dead Zone - вверху и еще один код с текстом - внизу)</span>.</li>
+<li>Кладет свою бумажку-закладку посередине.</li>
+<li>Замечает наклеенный на крышку сканера QR-код <span class="grey">(с подписью Driver)</span>, и устанавливает драйвер.</li>
+<li>Драйвер не ставится - нужна старая Windows.</li>
+<li>Запускает виртуалку, ставит драйвер, прокидывает USB внутрь виртуалки.</li>
+<li>Сканирует.</li>
+<li>По тексту на “нижнем коде” - гуглит, и понимает, что нужно скачать PaperBak.</li>
+<li>Считывает информацию в PaperBak.</li>
+<li>PaperBak декодирует только первый (верхний) блок 2D Barcode с бумажки-закладки, нижний блок <span class="grey">(приклеенный листок с еще одним 2D Barcode и с текстом)</span> помечается как не декодированный.</li>
+<li>В графическом редакторе вырезается нижний 2D Barcode, и PaperBak успешно его декодирует.</li>
+<li>Следуя считанным указаниям (нижний 2D Barcode) - просит у библиотекарей “спец-заказ”.</li>
+<li>Книга “спец-заказ” дается на 3 минуты.</li>
+<li>Пользуясь “книжным шифром” (2D Barcode с бумажки-закладки) - начинает расшифровку сообщения.</li>
+<li>За 1 минуту библиотекарь дает подсказку: “Отсканируйте, потом продолжите. И отсканируйте то, что уже просчитали - вдруг ошиблись”.</li>
+<li>В итоге получается строка чем-то похожая на флаг.</li>
+<li>По подсказке в списке книг, и по подсказке считанной PaperBak информации (нижний 2D Barcode) - понимает, что это шифр Цезаря.</li>
+<li>Пользуясь, например, онлайн дешифраторами, определяет, что используется ROT7, и получает флаг.</li>
+</ul>
+<h2>За день до часа X</h2>
+<p>Планы на этот день были грандиозные:</p>
+<ol>
+<li>Небольшая перепланировка библиотеки :) </li>
+<li>Разворачивание оборудования для трансляции докладов, и вывода турнирной таблицы участников OmskCTF на отдельный TV.</li>
+<li>Монтаж устройств для geo-квестов.</li>
+<li>Рассказ библиотекарям про их роль.</li>
+<li>Проверка сетевых настроек для WiFi <span class="grey">(был отдельный VLAN и SSID для трансляции докладов, и отдельный VLAN и SSID для участников CTF)</span>.</li>
+<li>Ожидание звонка от курьера, который должен был привести призы-сувениры.</li>
+<li>Интеграция с Google Spreadsheet задания “Master of hash collisions”.</li>
+<li>Подготовка квестов для всех участников <span class="grey">(разложить по директориям, подключить систему “сбора достижений”)</span>.</li>
+<li>Возможно было что-то еще...</li>
+</ol>
+<p>Можно сказать, что этот день прошел “плавно”. Суета отсутствовала, т.к. 1/3 времени просто были заняты поисками рабочего HDMI кабеля :) </p>
+<p>Смонтировать geo-квесты успели только частично (библиотека начала закрываться). Рассказать библиотекарям про их роль не вышло, т.к. сегодня они взяли выходной. Курьер так и не позвонил...</p>
+<p>А вот тест WiFi прошел отлично. По сравнению с прошлым годом - все работало.</p>
+<p>Этот день закончился где-то в 02:00 - когда мы завершили “распределять” квесты по директориям команд-участников. Это был прогресс - год назад этот же день продлился до 03:00.</p>
+<p>К слову о командах, участники одной команды сообщили, что не смогут прийти, а команды от ОмГТУ так и не было <span class="grey">(25 мая - студенты погрузились в сессию)</span>.</p>
+<p>WiFi работает :)  <span class="grey">(с этой мыслью мы заснули)</span>.</p>
+<h3>Немного про формат проведения CTF</h3>
+<p>Соревнование состоит из заданий, объединенных в несколько квестов. Квесты выдаются последовательно, один за другим, через каждые <b>2 часа</b>. Если одна из команд решила (до истечения двух часов) все задания текущего квеста, то она может попросить открыть через <b>15 минут</b> задания следующего квеста. Задания очередного квеста становятся доступны для всех команд одновременно.</p>
+<p>Квесты состоят из заданий следующих категорий: <b>misc</b>, <b>crypto</b>, <b>stego</b>, <b>web</b>, <b>pwn </b>и <b>geo</b>.</p>
+<p>Участники, для каждого квеста, получают Google Spreadsheets, который, по ответу на текущее задание квеста, генерирует ссылку на следующее задание квеста (ссылка на первое задание - в примечании к ячейки <b>A2</b>).</p>
+<p>Участники должны для каждого из заданий найти “тайну” / “потайное место” (CTF-флаг), имеющий формат “<b>PHD_flag_*</b>”. В случае если ключ верный, команде начисляется 1 балл.</p>
+<p>Про то, как мы определяли победителя написано <a href="https://goo.gl/dWtsKF">здесь</a>.</p>
+<p>Это мало отличалось от того, что было в прошлом году. Основное отличие было в количестве двухчасовых квкстов. В этом году заданий было меньше, из-за этого квестов было всего два. Однако был еще PHD Stock Market.</p>
+<p>Общий Timeline выглядел так:</p>
+<ol>
+<li>старт соревнования – игроки со статусом PHD Stock Market получают первые инструкции от “капитана нано-государства”, остальным участникам команд открывается доступ к первому квесту CTF</li>
+<li> :) </li>
+<li>окончание CTF, игроки PHD Stock Market вводят в курс дела остальных участников своей команды</li>
+<li>конец первого дня – награждение победителей CTF</li>
+<li>второй день – продолжение PHD Stock Market, и укрепление позиции своего нано-государства</li>
+<li>...</li>
+<li>“Государство, заработавшее больше всего <b>публей</b>, становится победителем, и получает призы от Positive Technologies”</li>
+</ol>
+<h2>За два часа до часа X</h2>
+<p>Вспомнив, что в прошлом году в это время мы вспомнили про статью “<a href="http://www.pvsm.ru/game-development/33895">3 дня без сна или как создать крупнейший киберспортивный турнир за Уралом</a>”, и войдя в рекурсию, у нас включился режим “Фигаро” <span class="grey">(вспоминая как кто-то вспомнил как прошел “день до часа X” год назад; кто именно вспомнил, мы уже забыли)</span> :) </p>
+<p>“Вспомнив все” нас, на входе в библиотеку уже ждали студенты-помощники - они помогли с монтажом оборудования для geo-квестов. С этого момента мы разделились:</p>
+<ul>
+<li><strong>одни</strong> пошли донастраивать оборудование для трансляции докладов,</li>
+<li><strong>другие</strong> - подстройкой DSLR под условия освещения,</li>
+<li><strong>третьи</strong> - рассказывать библиотекарям про их роль с помещением закладок в книги (для Old School квеста),</li>
+<li><strong>четвертые</strong> - разносить список участников охранникам,</li>
+<li><strong>пятые</strong> - рассказывали изумленным посетителям библиотеки про PHDays,</li>
+<li><strong>шестые</strong> - остались монтировать гаджеты для geo-квестов.</li>
+</ul>
+<div id="attachment_3642" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364213273735522&amp;oid=112973193951042107011"><img class="wp-image-3642 size-full" src="/wp-content/uploads/2015/06/001_464px.jpg" alt="All Ready" width="464" height="309" /></a><p class="wp-caption-text">All Ready</p></div>
+<p class="note">в реальности нас было примерно 3 человека - на тот момент мы еще не определились с точным числом</p>
+<p>И “секунда в секунду”, как все работы были завершены, пришли первые посетители нашего хакспейса.</p>
+<div id="attachment_3643" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364216685685810&amp;oid=112973193951042107011"><img class="wp-image-3643 size-full" src="/wp-content/uploads/2015/06/002_464px.jpg" alt="Good" width="464" height="309" /></a><p class="wp-caption-text">Good</p></div>
+<h1>OmskCTF — Час X</h1>
+<p>После небольшой вступительной речи <a href="https://google.com/+PavelLozhnikov">проректора по информатизации</a> и организаторов. В личные директории участников не был загружен первый квест. Участников от ОмГТУ так и не было, и нас попросили начать CTF вместе с началом PHD Stock Market.</p>
+<p>Настало время “раздать WiFi”:</p>
+<div id="attachment_3644" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364213496051058&amp;oid=112973193951042107011"><img class="wp-image-3644 size-full" src="/wp-content/uploads/2015/06/030_464px.jpg" alt="Wi-Fi Zone QR-Code" width="464" height="309" /></a><p class="wp-caption-text">Wi-Fi</p></div>
+<p>Через час пришли несколько студентов. Сессия их потрепала, поэтому мы дали им VIP-место - на баблах.</p>
+<div id="attachment_3645" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364213590567330&amp;oid=112973193951042107011"><img class="wp-image-3645 size-full" src="/wp-content/uploads/2015/06/035_464px.jpg" alt="OmSTU Team" width="464" height="309" /></a><p class="wp-caption-text">OmSTU Team on Bubbles</p></div>
+<h2>Час X (дубль 2)</h2>
+<p>В личные директории участников наконец был загружен первый квест, что ознаменовало <strong>начало CTF!</strong> Параллельно началась трансляция докладов.</p>
+<h3>1/2</h3>
+<p>Уже второй год первой задачей первого квеста мы делаем вводной - участники знакомились с <a href="http://www.securitylab.ru/contest/262791.php">форматом</a> <a href="http://lurkmore.to/Rarjpeg">задач</a>.</p>
+<div id="attachment_3495" style="width: 474px" class="wp-caption aligncenter"><img class="wp-image-3495 size-full" src="/wp-content/uploads/2014/06/we-need-to-go-deeper.jpg" alt="we need to go deeper" width="464" height="260" /><p class="wp-caption-text">7zipJpeg</p></div>
+<p>Мы опять планировали тем командам, которые в течение первых 30 минут не распознают формат, дать подсказку. В этот раз все команды затратили на первую задачу менее 30 минут, однако не все из них поняли, что остальные задачи имеют аналогичный формат.</p>
+<p>Параллельно со стартом локального CTF включились игроки со статусом <strong>PHD Stock Market</strong>.</p>
+<div id="attachment_3646" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364214556412994&amp;oid=112973193951042107011"><img class="wp-image-3646 size-full" src="/wp-content/uploads/2015/06/051_464px.jpg" alt="PHD Stock Market Man" width="464" height="309" /></a><p class="wp-caption-text">PHD Stock Market Man</p></div>
+<p>Спустя некоторое время команды добрались до первого geo-квеста с камерами.</p>
+<div id="attachment_3647" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364214453036930&amp;oid=112973193951042107011"><img class="wp-image-3647 size-full" src="/wp-content/uploads/2015/06/092_464px.jpg" alt="First Eye Code" width="464" height="309" /></a><p class="wp-caption-text">First Eye Code</p></div>
+<p>В этот момент стало ясно, что с web у участников дела обстоят не очень, и всем командам была дана подсказка.</p>
+<div id="attachment_3648" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364216191216994&amp;oid=112973193951042107011"><img class="wp-image-3648 size-full" src="/wp-content/uploads/2015/06/083_464px.jpg" alt="In Box" width="464" height="309" /></a><p class="wp-caption-text">Stage 1 - In Box</p></div>
+<div id="attachment_3649" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364214555056450&amp;oid=112973193951042107011"><img class="wp-image-3649 size-full" src="/wp-content/uploads/2015/06/093_464px.jpg" alt="Try" width="464" height="309" /></a><p class="wp-caption-text">Stage 2 - Try</p></div>
+<div id="attachment_3650" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364216576490642&amp;oid=112973193951042107011"><img class="wp-image-3650 size-full" src="/wp-content/uploads/2015/06/084_464px.jpg" alt="Be Happy" width="464" height="309" /></a><p class="wp-caption-text">Stage 3 - Be Happy</p></div>
+<p>В этих квестах была одна уловка – пока одна команда пытается найти нужный шкафчик, другие команды могут просто наблюдать за процессом (через IP-камеру):</p>
+<div id="attachment_3651" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364215918866034&amp;oid=112973193951042107011"><img class="wp-image-3651 size-full" src="/wp-content/uploads/2015/06/094_464px.jpg" alt="I Watching To You" width="464" height="309" /></a><p class="wp-caption-text">Thanks To You ;)</p></div>
+<p>Поэтому “первопроходцам”, нужно было все делать быстро, чтобы остальные команды не успели среагировать, и сфотографировать QR-код.</p>
+<p>Настало время Old School квеста.</p>
+<div id="attachment_3652" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364213872595602&amp;oid=112973193951042107011"><img class="wp-image-3652 size-full" src="/wp-content/uploads/2015/06/111_464px.jpg" alt="Bookmark" width="464" height="309" /></a><p class="wp-caption-text">Scanner guarded by librarians</p></div>
+<div id="attachment_3653" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364215266894402&amp;oid=112973193951042107011"><img class="wp-image-3653 size-full" src="/wp-content/uploads/2015/06/112_464px.jpg" alt="Scanner" width="464" height="309" /></a><p class="wp-caption-text">Old Scanner</p></div>
+<div id="attachment_3655" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364215097512210&amp;oid=112973193951042107011"><img class="wp-image-3655 size-full" src="/wp-content/uploads/2015/06/114_464px.jpg" alt="PaperBak" width="464" height="309" /></a><p class="wp-caption-text">Old OS</p></div>
+<p>К окончанию первого этапа вперед вырвалась команда “<strong>Занято</strong>”.<a href="/wp-content/uploads/2015/06/omskctf-fin-1_2.png"><img class="aligncenter size-full wp-image-3656" src="/wp-content/uploads/2015/06/omskctf-fin-1_2.png" alt="OmskCTF fin 1/2" width="280" height="269" /></a></p>
+<h3>2/2</h3>
+<div id="attachment_3657" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364216890240818&amp;oid=112973193951042107011"><img class="wp-image-3657 size-full" src="/wp-content/uploads/2015/06/140_464px.jpg" alt="ADSL vs GPON" width="464" height="309" /></a><p class="wp-caption-text">ADSL vs GPON, or ...</p></div>
+<p>После постижения таинств работы Git'а и сравнения скорости <a href="https://goo.gl/fgN3xV">ADSL vs GPON</a>, команда “<strong>Занято</strong>” добралась до второго квеста с камерами.</p>
+<div id="attachment_3658" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364214745848882&amp;oid=112973193951042107011"><img class="wp-image-3658 size-full" src="/wp-content/uploads/2015/06/150_464px.jpg" alt="Black Dot" width="464" height="309" /></a><p class="wp-caption-text">I See Black Singularity</p></div>
+<div id="attachment_3659" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364214423342930&amp;oid=112973193951042107011"><img class="wp-image-3659 size-full" src="/wp-content/uploads/2015/06/152_464px.jpg" alt="Linux" width="464" height="327" /></a><p class="wp-caption-text">Where Is My Red Eyes?</p></div>
+<div id="attachment_3660" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364216201568514&amp;oid=112973193951042107011"><img class="wp-image-3660 size-full" src="/wp-content/uploads/2015/06/154_464px.jpg" alt="Fortune cookie" width="464" height="309" /></a><p class="wp-caption-text">Fortune cookie</p></div>
+<p>Печенья с предсказанием оказались настолько вкусные, что некоторые команды не удержались и взяли сразу несколько печенек.</p>
+<div id="attachment_3661" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364216917456338&amp;oid=112973193951042107011"><img class="wp-image-3661 size-full" src="/wp-content/uploads/2015/06/155_464px.jpg" alt="Two Cookie" width="464" height="309" /></a><p class="wp-caption-text">We Need Two Cookie</p></div>
+<p>За 30 минут до окончания CTF, участники дошли до задания “Master of hash collisions”. В этом задании была одна лазейка: можно было расшифровать ссылку на следующее задание при помощи хеша, спрятанного в коде. Система не засчитала бы текущее задание (на “сервере” были добавлены дополнительные проверки), однако команда смогла бы начать выполнять 2 задания одновременно.</p>
+<div id="attachment_3662" style="width: 490px" class="wp-caption aligncenter"><a href="https://ru.wikipedia.org/wiki/%D0%A7%D0%B0%D1%81_%D0%97%D0%B5%D0%BC%D0%BB%D0%B8"><img class="wp-image-3662 size-full" src="/wp-content/uploads/2015/06/Botanigif.gif" alt="Internet Disconnection" width="480" height="322" /></a><p class="wp-caption-text">Internet Disconnection</p></div>
+<p>За 10 минут до окончания, кто-то решил еще раз отметить <a href="https://ru.wikipedia.org/wiki/%D0%A7%D0%B0%D1%81_%D0%97%D0%B5%D0%BC%D0%BB%D0%B8">Час Земли</a>, и закрыл выход в Интернет через WiFi. Однако, команды не растерялись и сами подняли AP на своих смартфонах.</p>
+<p>Спустя 10 минут, сохранив лидерство, команда “<strong>Занято</strong>” заняла первое место в PHD OmskCTF 2015.</p>
+<div id="attachment_3663" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/events/gallery/ckf984nu4pdrcs4ca9asmbor54k?sort=3&amp;uid=112973193951042107011&amp;pid=6154364216558235106&amp;oid=112973193951042107011"><img class="wp-image-3663 size-full" src="/wp-content/uploads/2015/06/302_464px.jpg" alt="The-Winners-is" width="464" height="309" /></a><p class="wp-caption-text">The Winners is Занято</p></div>
+<h2>День второй</h2>
+<p>В этот день мы уже спокойно наслаждались докладами. Было и несколько сюрпризов, связанных с WiFi - перед самым началом телемоста с Москвой (когда ведущие уже объявили о телемосте) <a href="https://market.yandex.ru/product/8368213/reviews?hid=723087">WiFi опять отвалился</a>.</p>
+<h3>Hacker Quiz и завершение PHDays Everywhere V in Omsk</h3>
+<p>Под конец для остались несколько человек на Hacker Quiz <span class="grey">(большинство из них были студенты, пришедшие, после получения очередного зачета)</span>. Участники историю знали плохо, но зато увлекались “социальной инженерией”.</p>
+<div id="attachment_3664" style="width: 403px" class="wp-caption aligncenter"><a href="https://youtu.be/cDphUib5iG4?t=4m35s"><img class="wp-image-3664 size-full" src="/wp-content/uploads/2015/06/image06.jpg" alt="Hacker Quiz" width="393" height="206" /></a><p class="wp-caption-text">Hacker Quiz</p></div>
+<p>Кто победил? Смотрите в <a href="https://broadcast.comdi.com/event/ebuypftnx6km8vcr9515" target="_blank">записи</a>.</p>
+<p class="note">На этом PHDays Everywhere in Omsk завершил свою работу.</p>]]></content><author><name>ZKyl</name></author><category term="ITштуки" /><category term="репортаж" /><category term="события" /><category term="CTF" /><category term="Hacker" /><category term="party" /><category term="PHDays" /><category term="PHDContest" /><category term="конкурс" /><category term="конференции" /><summary type="html"><![CDATA[Это уже второе описание истории про то как несколько людей организовывало PHDays Everywhere in Omsk и OmskCTF. Что получилось сделать в этом году, а также как проходила организация, какие трудности пришлось преодолеть, какие были запланированы активности - в общем, полный отчет о мероприятии - читайте под катом. Несколько ссылок: пресс-релиз мероприятия, событие в G+, VK, Фотки (если их смотреть в режиме слайд-шоу и читать подписи, то получится небольшая история; не забывайте нажимать на зум/лупу на верхней панели - фото загрузится в оригинальном качестве).]]></summary></entry><entry><title type="html">Как мы организовали хакспейс PHDays Everywhere и соревнование CTF в этом году</title><link href="/2014/3486-%D0%BA%D0%B0%D0%BA-%D0%BC%D1%8B-%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D0%BB%D0%B8-%D1%85%D0%B0%D0%BA%D1%81%D0%BF%D0%B5%D0%B9%D1%81-phdays-everywhere-%D0%B8-%D1%81%D0%BE%D1%80/" rel="alternate" type="text/html" title="Как мы организовали хакспейс PHDays Everywhere и соревнование CTF в этом году" /><published>2014-06-02T08:45:01+00:00</published><updated>2014-06-02T17:19:20+00:00</updated><id>/2014/3486-%D0%BA%D0%B0%D0%BA-%D0%BC%D1%8B-%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D0%BB%D0%B8-%D1%85%D0%B0%D0%BA%D1%81%D0%BF%D0%B5%D0%B9%D1%81-phdays-everywhere-%D0%B8-%D1%81%D0%BE%D1%80</id><content type="html" xml:base="/2014/3486-%D0%BA%D0%B0%D0%BA-%D0%BC%D1%8B-%D0%BE%D1%80%D0%B3%D0%B0%D0%BD%D0%B8%D0%B7%D0%BE%D0%B2%D0%B0%D0%BB%D0%B8-%D1%85%D0%B0%D0%BA%D1%81%D0%BF%D0%B5%D0%B9%D1%81-phdays-everywhere-%D0%B8-%D1%81%D0%BE%D1%80/"><![CDATA[<p><img class="aligncenter noborder size-full wp-image-3560" style="margin: -10px -20px 8px -20px;" src="/wp-content/uploads/2014/06/Cicada-OmskCTF-PHDays-4.png" alt="Cicada OmskCTF PHDays 4" width="520" height="215" />Эта история про то как несколько людей организовало PHDays \V Everywhere in Omsk и OmskCTF в этом году.</p>
+<p>Что из этого вышло, а также как проходила организация, какие трудности пришлось преодолеть, какие были запланированы активности - в общем, полный отчет о мероприятии - <strong>читайте под катом</strong>.</p>
+<p><strong>Несколько ссылок</strong>: <a href="http://goo.gl/orqvCI" target="_blank">пресс-релиз</a> мероприятия, событие в <a href="http://goo.gl/EI9H61" target="_blank">G+</a>, <a href="https://vk.com/phdays_omsk" target="_blank">VK</a>, <a href="https://plus.google.com/photos/+asoiu-IT/albums/6018077674461775009?sort=1" target="_blank">Фотки</a> (если их смотреть в режиме слайд-шоу и читать подписи, то получится небольшая история; не забывайте нажимать на зум/лупу на верхней панели - фото загрузится в оригинальном качестве), <a href="http://www.youtube.com/playlist?list=PLEGHtSXRCi3eg6sj4k5iI7SaGc0I2hs3w" target="_blank">Видео</a> (пока не все выложено/обработано).<!--more--></p>
+<p>Мы уже третий год организовываем PHDays Everywhere в Омске, и в отличие от предыдущих лет решили устроить “нулевой день” - OmskCTF.</p>
+<h1>Подготовка</h1>
+<h2>За неделю до часа X</h2>
+<p>Начинаем разгребать список задач из <a href="https://trello.com" target="_blank">Trello</a>.</p>
+<div id="attachment_3488" style="width: 310px" class="wp-caption aligncenter"><a href="/wp-content/uploads/2014/06/trello-PHDays4.png"><img class="size-medium wp-image-3488" src="/wp-content/uploads/2014/06/trello-PHDays4-300x176.png" alt="Trello, PHDays 4" width="300" height="176" /></a><p class="wp-caption-text">Как выглядит Trello сейчас.</p></div>
+<p>Первым делом необходимо было достать IP-Камеры, их мы планировали использовать в паре заданий CTF. И так удачно сложились обстоятельства, что нам одолжили несколько резервных камер, используемых в университете, фирмы ***.</p>
+<p>В этих заданиях предполагалось, что участникам предстоит взломать камеры для получения изображения с них (логин/пасс участником не был известен). Благо большинство оригинальных прошивок IP-Камер уязвимы (<a href="http://habrahabr.ru/post/189674" target="_blank">-1-</a>, <a href="http://www.securitylab.ru/news/439937.php" target="_blank">-2-</a>, <a href="http://www.xakep.ru/post/58252/" target="_blank">-3-</a>, <a href="http://habrahabr.ru/post/168613" target="_blank">-4-</a>), и прошивки полученных камер не стали исключением. Все полученные камеры были одной модели, поэтому мы решили, что достаточно найти уязвимости только у одной из них (как выяснилось позже, зря мы так думали). Поиск уязвимостей продлился недолго, спустя ~30 минут у нас в арсенале уже было несколько уязвимостей (спасибо китайцам за комментарии к коду - они не понадобились), которые помогут участникам соревнования получить картинку с камеры не имея логин/пасс. На самом деле, даже была обнаружена уязвимость, превращающая камеру в высокотехнологичный кирпич, и мы стали опасаться, что кто-нибудь из участников ей воспользуется.</p>
+<p>Уже близился момент развешивания камер по местам, и мы взялись за настройку/проверку остальных камер. Наше удивление не имело границ, когда эксплойт заработал только на части оставшихся камер. Часть камер (напомню, что модель одна и та же) не была уязвима. Через некоторое время мы заметили, что web-интерфейс “неуязвимых” камер более глючный, и в нем отсутствуют некоторые функции, которые есть в уязвимых камерах. И в этот момент мы решили проверить версию прошивки “неуязвимых”. Наши догадки подтвердились, “неуязвимые” имели старую прошивку, а уязвимые - последнюю. Это было странно, и мы погрузились в Интернет, в поисках информации о этих прошивках. В итоге выяснилось, что уязвимости в последней прошивке давно известны, и производитель о них уведомлен, но закрывать их не спешит.</p>
+<p>Интересно то, что уязвимости касаются именно новых функций, появившихся в последней прошивке. Это напоминает картину:</p>
+<p><img src="/wp-content/uploads/2014/06/new-frimware.jpg" alt="hz hz - new frimware" title="new-frimware" width="464" height="234" class="aligncenter size-full wp-image-3576" /></p>
+<p>Мы решили не обновлять прошивку до финальной (банально не хватало времени, и кнопка “выбрать файл прошивки для обновления” не работала ни в одном из используемых браузерах), а для участников придумали другой способ получения логин/пасс.</p>
+<p>Остаток недели прошел менее интересно, в переговорах, планировании, тестировании связи с Москвой для проведения викторины и телемоста, ..., пока не пришла часть заданий на CTF от Positive Technologies. Мы, так же как и в прошлом году, ожидали получить список заданий и ответы на них. В прошлом году, для автоматического зачитывания баллов за флаги, мы использовали простую схему, основанную на Google Формах и Таблицах. В этом году мы хотели применить нашу квестовую систему, в которой ссылка на очередное задание квеста зашифрована ключом, ключ - это найденный флаг от предыдущего задания квеста. Именно поэтому нам важно было получить как сами задания, так и ответы на них (для самостоятельного поиска ответов поджимало время). В этом году пришли только задания + ссылка на сайт для проверки флагов... Это несколько выбило нас из графика, однако просьба выслать нам ответы (флаги) была поддержана организаторами PHDays, и мы получили флаги некоторое время спустя.</p>
+<p>Затем начался процесс стилизации заданий под единый формат, и генерация квестов.</p>
+<h3>Немного про задания с камерами</h3>
+<p><strong>Изначально задания были простыми</strong>:</p>
+<ul>
+<li>Флаг записывается в QR-код, и вешается на стенку в коридоре, на него направляется IP-Камера.</li>
+<li>Участники получают координаты конкретного места + диапазон IP-адресов, в котором находятся камеры.</li>
+<li>Участник может получить флаг двумя способами: прогуляться до места, либо найти нужную IP-Камеру.</li>
+<li>Доступ к камерам можно получить только из одного места <span class="grey">(подключившись к конкретной WiFi точке доступа)</span>.</li>
+</ul>
+<p><strong>Спустя некоторое время задания <em>трансформировались</em></strong>:</p>
+<ul>
+<li>Теперь участник получает IP конкретной камеры, и список мест, где могут находится камеры.</li>
+<li>QR-коды размещаются в каждом таком месте, но теперь QR-код не попадает в поле зрения камеры.</li>
+<li>Задание представляет собой монолит <span class="grey">(все задания с камерами объединились в одно)</span>, а в QR-кодах записан IP следующей камеры.</li>
+<li>Участники теперь должны работать в команде:
+<ol>
+<li>один участник сидит, и наблюдает за камерой;</li>
+<li>другие проходят по местам и “машут в камеру”, пока их не заметит первый участник команды, затем они считывают нужный QR-код.</li>
+</ol>
+</li>
+</ul>
+<p class="note">Однако, в “<em>трансформированном</em>” варианте можно получить флаг, даже не взламывая камеры - достаточно пройтись по указанным местам и перепробовать все флаги.</p>
+<p><strong>Окончательный вариант выглядел следующем образом</strong>:</p>
+<ul>
+<li>Использовались только 2 камеры.</li>
+<li>Участник получает IP первой камеры.</li>
+<li>После получения доступа к изображению с камеры, он также получает список мест <span class="grey">(overlay текст на изображении с камеры)</span>.</li>
+<li>Далее начинается командная работа “в поисках QR”, аналогичная “<em>трансформированному</em>” варианту.</li>
+<li>Теперь во всех QR-кодах записаны валидные <span class="grey">(начинающиеся с ключевого слова)</span> флаги.</li>
+<li>Первое задание завершается по нахождению QR-кода рядом с заданной камерой.</li>
+<li>Во втором задании надо также получить доступ к камере, однако теперь overlay содержит не список мест, а <em>Diff</em> <span class="grey">(2D графический xor двух QR-кодов)</span>.</li>
+<li>Участники, используя список мест, полученный на первом задании, также должны найти нужный QR-код, и, используя <em>Diff</em>, восстановить исходный QR-код, в котором и будет флаг.</li>
+</ul>
+<h2>За день до часа X</h2>
+<p>Вкратце можно описать как: “Фигаро тут, Фигаро там”:</p>
+<ol>
+<li>Именно на этот день была назначена встреча с администраторами по завершению конфигурировании сети для проведения CTF: отдельный vlan, несколько SSID на точке доступа с разными приоритетами <span class="grey">(для организаторов &gt; для участников &gt; для всех остальных)</span>.</li>
+<li>Также в этот день пришли призы-сувениры <span class="grey">(блокноты и ручки)</span> от Positive Technologies.</li>
+<li>В этот день нужно было настроить систему <span class="grey">(установить Flash-плагин к браузеру)</span> для трансляции докладов с PHDays.</li>
+<li>Встретить студентов, которые согласились за 2 дня подготовить <span class="grey">(прибраться и сделать небольшую перепланировку)</span> 2 аудитории к трансляции PHDays.</li>
+<li>Передать списки участников охранникам.</li>
+<li>Подготовить квесты для всех участников <span class="grey">(разложить по директориям, подключить систему “сбора достижений”)</span>.</li>
+<li>Проверить QR-Коды <span class="grey">(наши коменданты любят их отклеивать)</span>.</li>
+<li>Чат-совещание организаторов в 22:00.</li>
+<li>И еще что-то.</li>
+</ol>
+<p>Стоит сказать, что мало что из этого списка прошло гладко (лучше всего прошло получение призов-сувениров от курьера).</p>
+<p>В остальном, администраторам пришлось переконфигурировать сеть для поддержки 70 устройств <span class="grey">(8 команд x 4 человека x 2 устройства + 6 дополнительных устройств)</span>, это не прошло гладко <span class="grey">(были проблемы с ACL, маршрутами, IPv6, ...)</span>. Из-за этого сменились IP у камер, и пришлось перегенерировать связанный с ними квест, что не прошло бесследно <span class="grey">(к чему это привело описано ниже)</span>. Про несколько SSID и приоритеты пришлось забыть. У студентов возникли “срочные дела”. К началу дня не все из участников успели зарегистрироваться, поэтому список охранникам пришлось отправлять в 23:00, и только с этого момента начать “распределять” квесты <span class="grey">(процесс распределения продлился до 3:00)</span>.</p>
+<p>К счастью все QR-коды остались на месте.</p>
+<h3>Немного про формат проведения CTF</h3>
+<p>Соревнование состоит из заданий, объединенных в несколько квестов. Квесты выдаются последовательно, один за другим, через каждые <strong>2 часа</strong>. Если одна из команд решила (до истечения двух часов) все задания текущего квеста, то она может попросить открыть через <strong>15 минут</strong> задания следующего квеста. Задания очередного квеста становятся доступны для всех команд одновременно.</p>
+<p>Квесты состоят из заданий следующих категорий: <strong>misc</strong>, <strong>crypto</strong>, <strong>stego</strong>, <strong>web</strong> и <strong>geo</strong> (IP-Камеры).</p>
+<p>Участники, для каждого квеста, получают Google Spreadsheets, который, по ответу на текущее задание квеста, генерирует ссылку на следующее задание квеста (<span style="font-size: xx-small;">ссылка на первое задание - в примечании к ячейки <strong>A2</strong></span>).</p>
+<p>Участники должны для каждого из заданий найти ключ (флаг), имеющий формат “<strong>PHD_flag_*</strong>”. В случае если ключ верный, команде начисляется 1 балл.</p>
+<p>Про то, как мы определяли победителя написано <a href="http://goo.gl/zlZlqM" target="_blank">здесь</a>.</p>
+<h2>За час до часа X</h2>
+<p>Вспоминая статью “<a href="http://www.pvsm.ru/game-development/33895" target="_blank">3 дня без сна или как создать крупнейший киберспортивный турнир за Уралом</a>”. Так, как нам выделили помещение-коридор, рядом с которым всё это время шел ремонт, то всё “оснащение” помещения пришлось производить в самый последний момент.</p>
+<p>К нашему приходу помещение уже прибрали (спасибо уборщице, в прошлый день цементная пыль была буквально везде, а сейчас все чисто). И мы с несколькими студентами-участниками начали переставлять столы, заносить оборудование, и заносить стулья. Со стульями возникла проблема - они, внезапно, все оказались в цементной пыли, и пришлось быстро их чистить.</p>
+<p>Далее была быстрая проверка работы WiFi, IP-Камер, Интернета. Всё работает, но это продлилось недолго. Через некоторое время пытаемся подключить оставшиеся ноутбуки к WiFi - не подключаются. Пытаемся подключиться со смартфонов - аналогичная картина. Однако все устройства спокойно подключаются к публичному SSID. Ok (думаем мы), Интернет у нас есть, но для доступа к IP-Камерам нужно подключение к ново-созданному SSID. В этот момент приходит администратор, и... Ну, в общем, ничего кардинально не изменилось. Мы сменили пароль на более простой, разблокировали TKIP, и смартфоны смогли подключится, однако доступа к сети не было...</p>
+<div id="attachment_3493" style="width: 283px" class="wp-caption aligncenter"><img class="size-full wp-image-3493 " src="/wp-content/uploads/2014/06/wifi-s-OmskCTF.png" alt="WiFi OmskCTF 2014" width="273" height="310" /><p class="wp-caption-text">WiFi pass</p></div>
+<p>В итоге, решили пока говорить всем, чтобы подключались к публичному SSID.</p>
+<h1>OmskCTF - Час X</h1>
+<p>После небольшой вступительной речи <a href="http://omgtu.ru/general_information/faculties/faculty_of_information_technology_and_computer_systems/deanery_fitiks/staff_of_the_deanery.php" target="_blank">декана нашего факультета</a>, и <a href="https://google.com/+PavelLozhnikov" target="_blank">проректора по информатизации</a>, в личные директории участников был загружен первый квест, что ознаменовало <strong>начало CTF</strong>!</p>
+<h2>1/3</h2>
+<p>Первая задача первого квеста была вводной - участники знакомились с <a href="http://www.securitylab.ru/contest/262791.php" target="_blank">форматом</a> <a href="http://lurkmore.to/Rarjpeg" target="_blank">задач</a>.</p>
+<div id="attachment_3495" style="width: 474px" class="wp-caption aligncenter"><img class="size-full wp-image-3495" src="/wp-content/uploads/2014/06/we-need-to-go-deeper.jpg" alt="we need to go deeper" width="464" height="260" /><p class="wp-caption-text">7zipJpeg</p></div>
+<p>Изначально планировалось тем командам, которые в течение первых 30 минут не распознают формат, дать подсказку. Спустя 30 минут некоторые команды воспользовались этой подсказкой.</p>
+<p>В течение первых двух часов были даны еще несколько подсказок (подсказки получали одновременно все команды). За 15 минут до окончания первого этапа, команда “<strong>CAT_IN_THE_DARK_WOOD</strong>” взяла все флаги первого квеста, и устроила себе кофе-брейк.<img class="aligncenter size-full wp-image-3496" src="/wp-content/uploads/2014/06/OmskCTF-fin-1_3.png" alt="OmskCTF fin 1/3" width="280" height="269" /></p>
+<h2>2/3</h2>
+<p>Первые задачи второго квеста требовали подключения к IP-Камерам, и, следовательно, подключения к другому SSID. Нам повезло, во всех командах нашелся хотя бы 1 человек, оборудование которого смогло успешно подключится к необходимому SSID. Однако и здесь без происшествий не обошлось, crazy-DHCP сервер стал раздавать разным клиентам один и тот же IP!</p>
+<div id="attachment_3498" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/photos/+asoiu-IT/albums/6018077674461775009/6018077673477422914?sort=1&amp;pid=6018077673477422914&amp;oid=112973193951042107011"><img class="size-full wp-image-3498 " src="/wp-content/uploads/2014/06/15_464px.jpg" alt="IP-Camera OmskCTF" width="464" height="309" /></a><p class="wp-caption-text">IP-Camera</p></div>
+<p>Спустя некоторое время выяснилось, что при множественной эксплуатации уязвимости IP-Камер, браузеры клиентов просто зависают. Это пришлось быстро исправлять при помощи нескольких костылей (они настолько ужасные, что описывать их не хочется).</p>
+<div id="attachment_3499" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/photos/+asoiu-IT/albums/6018077674461775009/6018077675554680866?sort=1&amp;pid=6018077675554680866&amp;oid=112973193951042107011"><img class="size-full wp-image-3499 " src="/wp-content/uploads/2014/06/16_464px.jpg" alt="Quiet! OmskCTF" width="464" height="309" /></a><p class="wp-caption-text">Quiet!</p></div>
+<div id="attachment_3500" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/photos/+asoiu-IT/albums/6018077674461775009/6018077674712895250?sort=1&amp;pid=6018077674712895250&amp;oid=112973193951042107011"><img class="size-full wp-image-3500 " src="/wp-content/uploads/2014/06/17_464px.jpg" alt="Go-Go-Go! OmskCTF" width="464" height="309" /></a><p class="wp-caption-text">Go-Go-Go!</p></div>
+<p>Спустя еще некоторое время случилось то, о чем упоминалось в “За день до часа X” - перегенерация не прошла бесследно - флаг на первое задание был случайно изменен на “чистый” флаг от второго задания. Тем не менее, для участников, этот “баг” лишь упростил задание - теперь флаг располагался в ближайшем “возможном месте” от места проведения CTF. И большинство команд, увидев, что первый флаг “подходит”, не стали “махать в камеру”.</p>
+<div id="attachment_3503" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/photos/+asoiu-IT/albums/6018077674461775009/6018077674942655282?sort=1&amp;pid=6018077674942655282&amp;oid=112973193951042107011"><img class="size-full wp-image-3503 " src="/wp-content/uploads/2014/06/18_464px.jpg" alt="QR-Code Snapshot OmskCTF" width="464" height="309" /></a><p class="wp-caption-text">Snapshot</p></div>
+<div id="attachment_3504" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/photos/+asoiu-IT/albums/6018077674461775009/6018077675032821778?sort=1&amp;pid=6018077675032821778&amp;oid=112973193951042107011"><img class="size-full wp-image-3504 " src="/wp-content/uploads/2014/06/19_464px.jpg" alt="QR-Code Snapshot of paradise OmskCTF" width="464" height="309" /></a><p class="wp-caption-text">Snapshot of paradise</p></div>
+<div id="attachment_3505" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/photos/+asoiu-IT/albums/6018077674461775009/6018077675469874034?sort=1&amp;pid=6018077675469874034&amp;oid=112973193951042107011"><img class="size-full wp-image-3505 " src="/wp-content/uploads/2014/06/20_464px.jpg" alt="QR-Code Cicada OmskCTF" width="464" height="309" /></a><p class="wp-caption-text">Cicada QR-Code</p></div>
+<p class="note">Часто, в подобных соревнованиях, эти “баги” делают процесс решения задачи только интереснее. Главное,  чтобы от этих “багов” задачи не становились невыполнимыми.</p>
+<p>Первой командой, которая получила второй флаг второго квеста, была “<strong>hackup</strong>”. Через некоторое время к ним присоединились “<strong>rm -rf</strong>”.</p>
+<h3>Как можно было решить второе задание с камерами</h3>
+<p><strong>Самый быстрый способ</strong> - это взять библиотеку для считывания QR-кода, и добавить в Diff <a href="http://habrahabr.ru/post/127197/" target="_blank">опорные точки</a> (position, alignment, and timing patterns):</p>
+<div style="width: 400px" class="wp-caption aligncenter"><a href="http://en.wikipedia.org/wiki/QR_code"><img class=" " src="/wp-content/uploads/2014/06/400px-QR_Code_Structure_Example_3.svg.png" data-src-old="http://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/QR_Code_Structure_Example_3.svg/400px-QR_Code_Structure_Example_3.svg.png" alt="QR-Code Structure" width="390" height="224" /></a><p class="wp-caption-text">Структура QR-Кода</p></div>
+<p>Далее необходимо немного подправить библиотеку: открываем одновременно 2 изображения (снимок QR-кода и измененный Diff), ..., при чтении данных - читаем их одновременно с двух изображений и делаем xor, ... На выходе получаем искомый флаг.</p>
+<p><strong>Второй способ</strong> - распознать QR-код, и сгенерировать его заново с сохранением исходной версии и формата QR-кода. Затем, в графическом редакторе указанным способом обработать эти изображения. И после чтения полученного QR-кода, получаем искомый флаг.</p>
+<div id="attachment_3509" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/photos/+asoiu-IT/albums/6018077674461775009/6018077673517167186?sort=1&amp;pid=6018077673517167186&amp;oid=112973193951042107011"><img class="size-full wp-image-3509 " src="/wp-content/uploads/2014/06/21_464px.jpg" alt="QR-Code Diff OmskCTF" width="464" height="309" /></a><p class="wp-caption-text">Diff</p></div>
+<p><strong>Самый медленный способ</strong> - используем графический редактор для совмещения кодов. После обработки “указанным способом”, убираем образовавшиеся “границы”:</p>
+<div id="attachment_3510" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/photos/+asoiu-IT/albums/6018077674461775009/6018077675023590818?sort=1&amp;pid=6018077675023590818&amp;oid=112973193951042107011"><img class="size-full wp-image-3510 " src="/wp-content/uploads/2014/06/24_464px.jpg" alt="QR-Code Try to merge OmskCTF" width="464" height="309" /></a><p class="wp-caption-text">Try to merge</p></div>
+<p>Затем считываем код, и получаем искомый флаг.</p>
+<p>Большинство команд вначале пошли вторым способом, но генерировали QR-код без сохранения исходной версии и формата. Поэтому у них этот способ не заработал. Затем они переключились на самый медленный способ.</p>
+<p>Некоторые решили сделать все “вручную”:</p>
+<div id="attachment_3511" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/photos/+asoiu-IT/albums/6018077674461775009/6018077673391479378?sort=1&amp;pid=6018077673391479378&amp;oid=112973193951042107011"><img class="size-full wp-image-3511 " src="/wp-content/uploads/2014/06/23_464px.jpg" alt="QR-Code Binarization OmskCTF" width="464" height="309" /></a><p class="wp-caption-text">Binarization</p></div>
+<p>Прошли 2 часа второго квеста. В этот раз ни одна из команд не достала все флаги за 2 часа. <img class="aligncenter size-full wp-image-3512" src="/wp-content/uploads/2014/06/OmskCTF-fin-2_3.png" alt="OmskCTF fin 2/3" width="280" height="269" /></p>
+<h2>3/3</h2>
+<p>Настало время выдавать задачи третьего квеста. В этот момент часть команд решила разделиться на подгруппы: первая подгруппа дорешивает задачи второго квеста, а вторая начинает проходить третий квест.</p>
+<p>Третий этап длится 3 часа (которые были увеличены на 5 минут, т.к. первый этап длился на 5 мин. меньше из-за вводной части).</p>
+<p>В общем, эти 3 часа прошли спокойно. Самое интересное началось за 10 минут до окончания соревнования.</p>
+<p><img class="aligncenter size-full noborder wp-image-3513" src="/wp-content/uploads/2014/06/00-01-boom.png" alt="00:01" width="180" height="119" />Вначале этих 10 минут в лидеры вырвалась команда “<strong>rm -rf</strong>”, и буквально за минуту до окончания соревнования первенство перешло к команде “<strong>brizz</strong>” (участники которой, решили сохранить анонимность).</p>
+<div id="attachment_3514" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/photos/+asoiu-IT/albums/6018077674461775009/6018077673593748210?sort=1&amp;pid=6018077673593748210&amp;oid=112973193951042107011"><img class="size-full wp-image-3514 " src="/wp-content/uploads/2014/06/32_464px.jpg" alt="The Winners is brizz OmskCTF" width="464" height="348" /></a><p class="wp-caption-text">The Winners is brizz </p></div>
+<p>CTF этого года получился разнообразным, и практически каждая команда была какое-то время в лидерах за эти 7 часов. Все остались довольны:</p>
+<div id="attachment_3516" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/photos/+asoiu-IT/albums/6018077674461775009/6018077675787972962?sort=1&amp;pid=6018077675787972962&amp;oid=112973193951042107011"><img class="size-full wp-image-3516 " src="/wp-content/uploads/2014/06/33_464px.jpg" alt="All world in our hands OmskCTF" width="464" height="348" /></a><p class="wp-caption-text">All world in our hands</p></div>
+<p><a href="http://goo.gl/boeIMV" target="_blank">Финальная турнирная таблица</a> (вкладка Snapshot).</p>
+<h1>PHDays 4 - Час Y</h1>
+<h2>За 2 часа до часа Y</h2>
+<p>Так как в “За день до часа X” встреча со студентами, которые согласились помочь с уборкой помещений, не состоялась, то в этот день решили прийти пораньше. Когда пришли, мы увидели то, что ожидали увидеть: никто без нас не прибрался в помещениях. Поэтому первый час прошел примерно так: тряпку в руки, швабру в ноги, и мыть.</p>
+<div id="attachment_3517" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/photos/+asoiu-IT/albums/6018077674461775009/6018077672455106482?sort=1&amp;pid=6018077672455106482&amp;oid=112973193951042107011"><img class="size-full wp-image-3517 " src="/wp-content/uploads/2014/06/41_464px.jpg" alt="Welcome to PHDays 4" width="464" height="309" /></a><p class="wp-caption-text">Welcome to PHDays</p></div>
+<p>После уборки, мы начали оформлять помещения: развешивать флаги, накрывать стол “с печеньками”, расставлять столы и стулья, развешивать указатели от входа в здание до наших помещений.</p>
+<h2>За 15 минут до часа Y</h2>
+<p>Уже стали приходить первые гости, и настала пора подключится к трансляции PHDays \V.</p>
+<div id="attachment_3518" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/photos/+asoiu-IT/albums/6018077674461775009/6018077674203805714?sort=1&amp;pid=6018077674203805714&amp;oid=112973193951042107011"><img class="size-full wp-image-3518 " src="/wp-content/uploads/2014/06/42_464px.jpg" alt="The door opens PHDays 4" width="464" height="309" /></a><p class="wp-caption-text">The door opens</p></div>
+<p>Здесь нас ждал очередной сюрприз.</p>
+<p class="note">Для трансляции PHDays нужен только браузер+Flash. Изначально в системе, подключенной к проектору отсутствует Flash-плагин (система используется как аналог <a href="http://habrahabr.ru/post/203164" target="_blank">AIRTAME</a>), поэтому в “За день до часа X” этот плагин был установлен.</p>
+<p>Однако, только что открывшаяся страница трансляции, встретила нас предложением установить Flash-плагин. Это могло означать, что в определенный момент, после установки Flash-плагина, пропало питание.</p>
+<p class="note">Все дело в том, что эта <a href="/2013/2793-%D0%B7%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B7%D0%BA%D0%B0-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B-%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8F-%D0%BF%D0%B5%D1%80%D0%B5%D1%85%D0%BE%D0%B4%D0%B0-%D1%81-ew/" target="_blank">система “заморожена”</a>, и после перезагрузки/выключения возвращается в исходное состояние.</p>
+<p>Через 5 минут плагин был установлен, и мы опять попытались открыть страницу трансляции.</p>
+<p class="note">Браузер - IE10</p>
+<p>Теперь нас ждал очередной сюрприз, но уже от фильтра SmartScreen, который заблокировал Flash-плеер на странице. Спустя некоторое время “понижения безопасности браузера” Flash-плеер успешно загрузился, и началась трансляция с залов.</p>
+<div id="attachment_3519" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/photos/+asoiu-IT/albums/6018077674461775009/6018077676518980914?sort=1&amp;pid=6018077676518980914&amp;oid=112973193951042107011"><img class="size-full wp-image-3519 " src="/wp-content/uploads/2014/06/45_464px.jpg" alt="Mmmmm... PHDays 4" width="464" height="309" /></a><p class="wp-caption-text">Mmmmm...</p></div>
+<p>В одном из помещений началась трансляция зала “<a href="http://www.phdays.ru/program/schedule/" target="_blank">Конференц-зал</a>”, а в другом - “<a href="http://www.phdays.ru/program/schedule/" target="_blank">Зала-трансформер</a>”.</p>
+<p>Спустя несколько минут просмотра в HD разрешении, мы поняли, что Intel Atom D525 “не тянет” такой поток (его ядро было полностью загружено), и переключили на SD. Странно, то, что год назад декодирование видео ускорялось на <a href="http://www.sotmarket.ru/product/3q-sign-ion-whitep-525.html" target="_blank">NVIDIA ION 2 GT218</a>, а в этом году - нет. Новый Flash-плеер, или Flash-плагин перестали поддерживать ускорение? Вероятно это так.</p>
+<p>По окончании доклада “<a href="http://live.digitaloctober.ru/embed/2990#time1400652065" target="_blank">Специализированные решения — панацея? Поговорим о MDM, BYOD и проч.</a>” мы показали, как выглядит <a href="http://habrahabr.ru/company/croc/blog/199468" target="_blank">MDM</a> (Mobile Device Management), встроенный в Google Apps, для его администратора. Затем переключились на зал “Пресс-центр”.</p>
+<p>С этого момента начался <a href="https://docs.google.com/document/d/1ai-UNbRIE8YvCLantUDyV_6BcCpdyakf7OZT3zOU-bM/edit?usp=sharing#heading=h.pwk8a7ngwgy0" target="_blank">HackQuest</a>. К сожалению, большинство участников OmskCTF (включая победителей) решило участвовать в нем “из дома”, что по нашему мнению было ошибкой - мы не смогли им помочь.</p>
+<p>Затем мы переключились на доклад “<a href="http://live.digitaloctober.ru/embed/2994#time1400659199" target="_blank">Отдай мне свои данные!</a>” (мы думаем, что это один из тех докладов, которые интереснее смотреть в переводе - диктор был отличным!). К сожалению (или к счастью) при просмотре трансляции было несколько разрывов связи.</p>
+<p>В момент разрыва Дейв показывал снимки кредитных карт, которые пользователи выложили в сеть. Мы решили самостоятельно продолжить его рассказ, и рассказали о произошедших случаях, с наши знакомыми. Случаи были похожими: в смартфоне (Android, iOS) хранились фото кредиток, и в определенный момент их пользователи решили подключить на них свой Google аккаунт. При этом включилась <a href="https://support.google.com/plus/answer/1647509" target="_blank">автозагрузка фото в Google+</a>. На этом моменте все нормально - загруженные фото остаются приватными (их не видят остальные пользователи G+), однако через некоторое время наш пользователь заходит в свой G+ профиль, и, увидев там новые фото, решает написать другу “зацени мои фото”. Тот естественно ничего не видит, т.к. прав нет, и наш пользователь, пытаясь все-таки показать свои шедевры другу, открывает всем пользователям G+ доступ ко всему альбому автозагрузки. Вы же помните, что там были фото кредитки? А вот наш пользователь, похоже, об этом забыл... Причем в G+ существует такая особенность, что если сохранить ссылку на пред-просмотр фотографии, то даже если автор уберет права на её просмотр, эту фотографию можно будет открыть по сохраненной ссылке.</p>
+<p>В ходе своего доклада Дейв также показывал проданные б/у HDD с ценной информацией. К сожалению больше разрывов связи не было, и по окончании его доклада мы принесли “посыпавшийся” HDD (Seagate Barracuda ES.2, который, при наличии <a href="http://forum.ixbt.com/topic.cgi?id=11:39083:21#21" target="_blank">мухи CC</a>, проработал 5 лет) умершего <a href="http://habrahabr.ru/company/rusonyx/blog/214537/#comment_7374561" target="_blank">сервера</a>. И показали, что с такого HDD информацию удалить сложно (при чтении/записи первого Bad-блока HDD блокируется) не имея <a href="http://www.ixbt.com/storage/hddterminator.shtml" target="_blank">электро-магнитного уничтожителя данных</a>, либо не имея <a href="http://habrahabr.ru/post/118338" target="_blank">шредера</a>.</p>
+<p>Также некоторые из наших посетителей небыли знакомы с устройством современных SSD, и мы рассказали, что, при наличии включенного TRIM и <a href="http://fcenter.ru/online/hardarticles/hdd/33225#04" target="_blank">автоматического сборщика мусора</a>, восстановить удаленные файлы - невозможно.</p>
+<h3>Hacker vs Laptop</h3>
+<p>Чуть позже на нашей площадке начался конкурс “hacker vs laptop”.</p>
+<div id="attachment_3520" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/photos/+asoiu-IT/albums/6018077674461775009/6018077675663568146?sort=1&amp;pid=6018077675663568146&amp;oid=112973193951042107011"><img class="size-full wp-image-3520 " src="/wp-content/uploads/2014/06/46_464px.jpg" alt="Who can try to hack PHDays 4" width="464" height="309" /></a><p class="wp-caption-text">Who can try to hack?</p></div>
+<p>Участникам давался ноутбук, задача участника - оставить след в системе в виде программы, запускающийся при загрузке системы, либо в виде программы, запускающийся при открытии папки/диска. Проверка успешного выполнения задания осуществлялась перезагрузкой системы. Правил было несколько: не разбирать ноутбук, и проводить любые действия только после полной загрузки системы.</p>
+<div id="attachment_3521" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/photos/+asoiu-IT/albums/6018077674461775009/6018077675179388962?sort=1&amp;pid=6018077675179388962&amp;oid=112973193951042107011"><img class="size-full wp-image-3521 " src="/wp-content/uploads/2014/06/47_464px.jpg" alt="Our toys PHDays 4" width="464" height="309" /></a><p class="wp-caption-text">Our toys</p></div>
+<p>В конкурсе были и призы, 3 первых человека, которые справятся с задачей - получат ручку от Positive Technologies. А, если никто не справится, то ручки получат “самые упорные”.</p>
+<div id="attachment_3522" style="width: 474px" class="wp-caption aligncenter"><a href="https://plus.google.com/photos/+asoiu-IT/albums/6018077674461775009/6018077674665163570?sort=1&amp;pid=6018077674665163570&amp;oid=112973193951042107011"><img class="size-full wp-image-3522 " src="/wp-content/uploads/2014/06/51_464px.jpg" alt="Hack! PHDays 4" width="464" height="309" /></a><p class="wp-caption-text">Hack!</p></div>
+<p>Конкурс проходил все 2 дня.</p>
+<h3>Hacker Quiz</h3>
+<p>Через некоторое время началась <a href="https://docs.google.com/document/d/1ai-UNbRIE8YvCLantUDyV_6BcCpdyakf7OZT3zOU-bM/edit?usp=sharing#heading=h.2pdbljuksz65" target="_blank">викторина</a> между площадками. Мы соревновались с Москвой и с площадкой из Индии. Здесь комментарии будет мало, т.к. викторина доступна на <a href="http://live.digitaloctober.ru/embed/2993#time1400668350" target="_blank">записи</a>. Единственное, что хотелось бы отметить: жаль, что мы не записали весь процесс с нашей стороны (веб-камера и направленный микрофон всего не покажут).</p>
+<h2>День второй</h2>
+<p>Ко второму дню мы подготовили небольшой сюрприз. Это был мастер-класс о том, как даже небольшие ошибки дизайна (имеется в виду логика работы, а не графический интерфейс), при определенном стечении обстоятельств, могут нивелировать все принятые меры защиты информации. А т.к. в этот день должны были <a href="http://live.digitaloctober.ru/embed/2997#time1400748914" target="_blank">выступать представители Mail.RU</a>, то мы решили посветить свой мастер-класс продуктам Mail.RU. И показали, что классические методы защиты пользователей-паранойков (настройка браузера на автоматическую очистку Cookie при выходе, либо использование режима “инкогнито”) могут не только защитить реквизиты пользователя, но и наоборот - стать причиной их утечки.</p>
+<p>После мастер-класса оставалось еще много времени до выступления Mail.RU, поэтому вернулись к основной программе трансляций PHDays.</p>
+<p style="text-align: center;"><a href="https://plus.google.com/photos/+asoiu-IT/albums/6018077674461775009/6018077674967431058?sort=1&amp;pid=6018077674967431058&amp;oid=112973193951042107011"><img class="aligncenter size-full wp-image-3523" src="/wp-content/uploads/2014/06/52_464px.jpg" alt="Translation PHDays 4" width="464" height="309" /></a></p>
+<h3>Телемост с Москвой</h3>
+<p>Уже третий год телемост проводится с использованием <a href="http://www.webex.com" target="_blank">Cisco WebEx</a>.</p>
+<p class="note">WebEx - это такая “<em>штука</em>”, для работы которой нужен <a href="http://thenextweb.com/insider/2013/01/10/new-java-vulnerability-is-being-exploited-in-the-wild-disabling-java-is-currently-your-only-option/?fromcat=all" target="_blank">дырявый</a> <a href="http://habrahabr.ru/post/171289" target="_blank">плагин</a> Java.</p>
+<p>Обычно мы устанавливаем Java и клиент WebEx только на время проведения мероприятия, после этого они удаляются из системы. С WebEx связана еще одна проблема: на планшетных ПК (<a href="http://www.asus.com/Tablets_Mobile/Eee_Slate_EP121/" target="_blank">ASUS Eee Slate EP121</a>, <a href="http://www.samsung.com/ru/business/business-products/notebook-pc/tablet-pc/XE700T1A-A01RU?subsubtype=series-7" target="_blank">Samsung Series 7 Slate</a>, <a href="http://www.microsoft.com/surface/en-us/products/surface-pro-2" target="_blank">Microsoft Surface Pro</a>, <a href="http://habrahabr.ru/company/samsung/blog/184914" target="_blank">Samsung ATIV Q</a>, ...) под Win8, в которых основными манипуляторами выступает touch-экран и Wacom-перо, невозможно нажать на кнопки в модальных окнах WebEx’а. Поэтому приходится подключать классическую мышку.</p>
+<p>Однако в этом году нас ждал еще один сюрприз. Как было написано в “За неделю до часа X”, мы протестировали связь, и она, как и в предыдущие годы, была хорошей. В этом году, после подключения к телемосту, мы поняли, что не все пройдет гладко - голос ведущих был очень плохого качества (внезапные паузы, высокая степень сжатия потока).</p>
+<div id="attachment_3524" style="width: 474px" class="wp-caption aligncenter"><img class="size-full wp-image-3524" src="/wp-content/uploads/2014/06/tele-brige.jpg" alt="tele-brige PHDays 4" width="464" height="259" /><p class="wp-caption-text">&lt;_&lt;</p></div>
+<p>Однако в Москве нас <a href="http://live.digitaloctober.ru/embed/3001#time1400746525" target="_blank">было слышно нормально</a> (запись телемоста). Из-за такой связи нам было трудно понять когда закончится перевод на английский, и иногда возникали наложения... К тому же некоторые из присутствующих были у нас первый год, и забыв про перевод на английский, выступали с “речью”. Впрочем, смотрите <a href="http://live.digitaloctober.ru/embed/3001#time1400746525" target="_blank">запись</a> 8-O </p>
+<h3>Hacker vs Laptop</h3>
+<p>В этот день конкурс продолжился. За весь прошлый день ни одному из участников не удалось скомпрометировать систему. В этот день активность участников многократно возросла, было применено множество способов “оставить свой след в системе”, но система осталась неприступной. В итоге самые “упорные” участники получили сувениры. Этими участниками стали “ghostilya” и “Shizoid”.</p>
+<h3>Последний доклад</h3>
+<p>Последней трансляцией на нашей площадке стал доклад “<a href="http://live.digitaloctober.ru/embed/2996#time1400760340" target="_blank">Импрессия: не ломай — сделай свой ключ</a>”, в ходе которого было рассказано еще несколько “историй” :) </p>
+<p><img class="aligncenter size-full wp-image-3525" src="/wp-content/uploads/2014/06/Impressioning-Attacks.jpg" alt="Impressioning Attacks PHDays 4" width="296" height="239" /></p>
+<p class="note">На этом PHDays Everywhere in Omsk завершил свою работу. Всем легкого пентеста! И до новых встреч в следующем году на PHDays V.</p>]]></content><author><name>ZKyl</name></author><category term="ITштуки" /><category term="репортаж" /><category term="события" /><category term="CTF" /><category term="Hacker" /><category term="party" /><category term="PHDays" /><category term="PHDContest" /><category term="конкурс" /><category term="конференции" /><summary type="html"><![CDATA[Эта история про то как несколько людей организовало PHDays \V Everywhere in Omsk и OmskCTF в этом году. Что из этого вышло, а также как проходила организация, какие трудности пришлось преодолеть, какие были запланированы активности - в общем, полный отчет о мероприятии - читайте под катом. Несколько ссылок: пресс-релиз мероприятия, событие в G+, VK, Фотки (если их смотреть в режиме слайд-шоу и читать подписи, то получится небольшая история; не забывайте нажимать на зум/лупу на верхней панели - фото загрузится в оригинальном качестве), Видео (пока не все выложено/обработано).]]></summary></entry><entry><title type="html">DevFest Omsk 2013</title><link href="/2013/3249-devfest-omsk-2013/" rel="alternate" type="text/html" title="DevFest Omsk 2013" /><published>2013-12-13T10:19:10+00:00</published><updated>2013-12-13T10:19:10+00:00</updated><id>/2013/3249-devfest-omsk-2013</id><content type="html" xml:base="/2013/3249-devfest-omsk-2013/"><![CDATA[<p>2-3 ноября в Омске состоялось мероприятие, посвященное технологиям Google, - <strong>DevFest 2013</strong>. Такие встречи проходят по <a href="https://developers.google.com/events/devfest/map" target="_blank">всему миру</a> в рамках DevFest сезона. Их проводят участники GDG-сообщества. В нашем городе тоже есть такое сообщество: <a href="http://www.gdgomsk.org/" target="_blank">GDG-Omsk</a>.</p>
+<p>В первый день эксперты в своей области рассказывали о  Google Admob, Google Maps, Android, AngularJS, Google Glass. В перерывах можно было поучаствовать в тестировании приложения "Терапевт", созданного ребятами в GDG-labs, посмотреть Chromebook и Google Glass, сыграть в настольные игры. Закончилось все Ignite (это супер-формат!). Это несколько выступлений за небольшой промежуток времени (одно выступление 5-10 минут).</p>
+<p style="text-align: center;"><a href="http://cs322116.vk.me/v322116796/6baf/a4Wh8vt9t9c.jpg"><img class="aligncenter" src="/wp-content/uploads/2013/12/a4Wh8vt9t9c.jpg" data-src-old="http://cs322116.vk.me/v322116796/6baf/a4Wh8vt9t9c.jpg" alt="" width="249" height="166" /></a></p>
+<p><!--more--></p>
+<p style="text-align: center;"><a href="http://cs411119.vk.me/v411119386/8e49/ASBJ_ACTyIQ.jpg"><img class="aligncenter" src="/wp-content/uploads/2013/12/ASBJ_ACTyIQ.jpg" data-src-old="http://cs411119.vk.me/v411119386/8e49/ASBJ_ACTyIQ.jpg" alt="" width="249" height="166" /></a> <a href="http://cs411119.vk.me/v411119386/8e99/WeUILMjohiU.jpg"><img class="aligncenter" src="/wp-content/uploads/2013/12/WeUILMjohiU.jpg" data-src-old="http://cs411119.vk.me/v411119386/8e99/WeUILMjohiU.jpg" alt="" width="249" height="166" /></a></p>
+<p>Во второй день проходили мастер-классы по разработке приложений на Android и расширений Google Chrome, сама конференция прошла в формате Barcamp. В каждой из трех аудиторий обсуждали только самые интересные темы, так как темы дискуссий выбрали сами участники и докладчиками были сами участники. Одна из аудиторий была полностью посвящена разработке под Android, в другой представляли свои проекты и рассказывали о набирающей популярность игре от Google Ingress, в третьей обсуждали разные технологии. Закончилось все обсуждением предстоящей конференции в Омске HappyDev и проблемой отсутствия девушек-программистов.</p>
+<p style="text-align: center;"><a href="http://cs412717.vk.me/v412717003/4d4f/w0kd8EPXY6g.jpg"><img class="aligncenter" src="/wp-content/uploads/2013/12/w0kd8EPXY6g.jpg" data-src-old="http://cs412717.vk.me/v412717003/4d4f/w0kd8EPXY6g.jpg" alt="" width="249" height="166" /></a> <a href="http://cs322116.vk.me/v322116796/73aa/ThPBnMkB3dA.jpg"><img class="aligncenter" src="/wp-content/uploads/2013/12/ThPBnMkB3dA.jpg" data-src-old="http://cs322116.vk.me/v322116796/73aa/ThPBnMkB3dA.jpg" alt="" width="249" height="166" /></a> <a href="http://cs322116.vk.me/v322116796/733e/txAht826Mn8.jpg"><img class="aligncenter" src="/wp-content/uploads/2013/12/txAht826Mn8.jpg" data-src-old="http://cs322116.vk.me/v322116796/733e/txAht826Mn8.jpg" alt="" width="249" height="166" /></a></p>
+<p>В самом конце состоялся круглый стол, где обсуждали возможности IT-сообщества в Омске.</p>
+<p style="text-align: center;"><a href="http://cs322116.vk.me/v322116796/75c6/a713YvAKkoY.jpg"><img class="aligncenter" src="/wp-content/uploads/2013/12/a713YvAKkoY.jpg" data-src-old="http://cs322116.vk.me/v322116796/75c6/a713YvAKkoY.jpg" alt="" width="461" height="307" /></a></p>
+<p>Судя по <a href="http://bit.ly/gdgomsk_feedback" target="_blank">отзывам</a>, конференция прошла на ура.</p>
+<p>Ребята, сейчас в Омске создалась невероятная IT-атмосфера, позволяющая творить и создавать. Приходите, пробуйте себя и не бойтесь посещать такие мероприятия! <a href="https://www.google.com/calendar/embed?src=YXFjbHNpYmptNTkxamJiazg3NXVpbzlrNDBAZ3JvdXAuY2FsZW5kYXIuZ29vZ2xlLmNvbQ" target="_blank">Календарь Omsk It-events.</a></p>
+<p style="text-align: center;"><a href="http://cs322116.vk.me/v322116796/702f/V_ysp1kj_FM.jpg"><img class="aligncenter" src="/wp-content/uploads/2013/12/V_ysp1kj_FM.jpg" data-src-old="http://cs322116.vk.me/v322116796/702f/V_ysp1kj_FM.jpg" alt="" width="461" height="170" /></a></p>]]></content><author><name>chvetochek</name></author><category term="репортаж" /><category term="Android" /><category term="Chromebook" /><category term="GDG" /><category term="GDG-Omsk" /><category term="Google" /><category term="Google DevFest" /><category term="Google Glass" /><summary type="html"><![CDATA[2-3 ноября в Омске состоялось мероприятие, посвященное технологиям Google, - DevFest 2013. Такие встречи проходят по всему миру в рамках DevFest сезона. Их проводят участники GDG-сообщества. В нашем городе тоже есть такое сообщество: GDG-Omsk. В первый день эксперты в своей области рассказывали о  Google Admob, Google Maps, Android, AngularJS, Google Glass. В перерывах можно было поучаствовать в тестировании приложения "Терапевт", созданного ребятами в GDG-labs, посмотреть Chromebook и Google Glass, сыграть в настольные игры. Закончилось все Ignite (это супер-формат!). Это несколько выступлений за небольшой промежуток времени (одно выступление 5-10 минут).]]></summary></entry><entry><title type="html">УНИК: вкусно, интересно, полезно</title><link href="/2013/3245-%D1%83%D0%BD%D0%B8%D0%BA-%D0%B2%D0%BA%D1%83%D1%81%D0%BD%D0%BE-%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D0%BD%D0%BE-%D0%BF%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D0%BE/" rel="alternate" type="text/html" title="УНИК: вкусно, интересно, полезно" /><published>2013-12-03T06:33:15+00:00</published><updated>2013-12-10T03:34:36+00:00</updated><id>/2013/3245-%D1%83%D0%BD%D0%B8%D0%BA-%D0%B2%D0%BA%D1%83%D1%81%D0%BD%D0%BE-%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D0%BD%D0%BE-%D0%BF%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D0%BE</id><content type="html" xml:base="/2013/3245-%D1%83%D0%BD%D0%B8%D0%BA-%D0%B2%D0%BA%D1%83%D1%81%D0%BD%D0%BE-%D0%B8%D0%BD%D1%82%D0%B5%D1%80%D0%B5%D1%81%D0%BD%D0%BE-%D0%BF%D0%BE%D0%BB%D0%B5%D0%B7%D0%BD%D0%BE/"><![CDATA[<ul>
+<li>Начали слушать аудиокнигу «21 способ управлять временем и удвоить собственную продуктивность» Брайана Трейси, которую мы переслушиваем на УНИКе каждый год. Польза от тайм-менеджмента очевидна. А именно эта аудиокнига хороша тем, что состоит из маленьких главок, каждая из которых длится всего пару минут. А ещё она начитана каким-то брутальным мужиком, который хорошо так пробивает корку мозга и реально мотивирует одним только тембром :) </li>
+<p><a href="/wp-content/uploads/2013/12/Clipboard-1.png"><img src="/wp-content/uploads/2013/12/Clipboard-1.png" alt="" title="TeX" width="317" height="194" class="aligncenter size-full wp-image-3258" /></a><br />
+<!--more--></p>
+<li>Беспроводной HDMI с помощью AIRTAME. Это новинка и самоделка. Вкратце: подсоединяешь к телевизору или проектору (или ещё чему, имеющему HDMI) маленькую примочку, на ноут ставишь спец. софт (поддерживаются разные операционки) – и транслируешь изображение со звуком на телек. Дублирование, расширенный рабочий стол, множественное подключение к одному проектору. А без примочки (с помощью только софта) можно транслировать поток с одного компа на другой. Подробнее и со ссылками и видео – <a href="https://plus.google.com/+ZiroKyl/posts/GUdWKzPQdZU">на странице Е.Р. Васильева</a>.</li>
+<li>Чудеса Microsoft Word, а именно: оформление формул по ГОСТу (стационарная табуляция с выравниванием по правому краю, пропуск строк, запоминание формата в отдельном стиле), как набрать формулу без Редактора формул, от чего перешли к такой теме:</li>
+<li>В идеале надо бы всем <a href="http://ru.wikipedia.org/wiki/TeX">освоить TEX</a>. Потому что многие редакторы его понимают. Но не MS Word. На что поступило следующее возражение: лучше тогда уж пользоваться Редактором формул, указав в его настройках (см. Сервис) копировать формулу <a href="http://ru.wikipedia.org/wiki/MathML">в формате MathML</a>. MathML поддерживается, в том числе, и браузерами. А с этой темы плавно перетекли вот к чему:</li>
+<li>Возможности онлайнового редактора документов Google Drive (Гугл Диска). Дело в том, что эти возможности прилично обогатились. Во-первых, импорт нашего документа MS Word’а прошёл на «отлично» (ну, с маленьким минусом), включая формулу, набранную в Редакторе формул! Во-вторых, впечатляет совместная сетевая работа над одним документом, включая ветки обсуждений для любого комментария. В-третьих, для выделенного текста возможен удобный и расширенный поиск в Интернете, а также автоматический поиск подходящих гиперссылок и источников для цитирования. И другое.</li>
+</ul>
+<p>Спасибо всем, кто был! Приносите новые вкусняшки (и реальные к чаю, и виртуальные для мозгов :)  Заседания клуба в этом семестре – <strong>каждый вторник, 10:00-11:35, ауд. 8-210</strong>.</p>]]></content><author><name>Богатов</name></author><category term="УНИК" /><category term="AIRTAME" /><category term="Google Docs" /><category term="Google Drive" /><category term="HDMI" /><category term="MathML" /><category term="TeX" /><category term="тайм-менеджмент" /><summary type="html"><![CDATA[Начали слушать аудиокнигу «21 способ управлять временем и удвоить собственную продуктивность» Брайана Трейси, которую мы переслушиваем на УНИКе каждый год. Польза от тайм-менеджмента очевидна. А именно эта аудиокнига хороша тем, что состоит из маленьких главок, каждая из которых длится всего пару минут. А ещё она начитана каким-то брутальным мужиком, который хорошо так пробивает корку мозга и реально мотивирует одним только тембром :)]]></summary></entry><entry><title type="html">УНИК: 1 заседание, 2 шоколадки, 3 темы, 4 человека и 5 минут на отчёт…</title><link href="/2013/3186-%D1%83%D0%BD%D0%B8%D0%BA-1-%D0%B7%D0%B0%D1%81%D0%B5%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-2-%D1%88%D0%BE%D0%BA%D0%BE%D0%BB%D0%B0%D0%B4%D0%BA%D0%B8-3-%D1%82%D0%B5%D0%BC%D1%8B-4-%D1%87%D0%B5%D0%BB%D0%BE/" rel="alternate" type="text/html" title="УНИК: 1 заседание, 2 шоколадки, 3 темы, 4 человека и 5 минут на отчёт…" /><published>2013-11-26T07:37:43+00:00</published><updated>2013-11-26T07:37:43+00:00</updated><id>/2013/3186-%D1%83%D0%BD%D0%B8%D0%BA-1-%D0%B7%D0%B0%D1%81%D0%B5%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-2-%D1%88%D0%BE%D0%BA%D0%BE%D0%BB%D0%B0%D0%B4%D0%BA%D0%B8-3-%D1%82%D0%B5%D0%BC%D1%8B-4-%D1%87%D0%B5%D0%BB%D0%BE</id><content type="html" xml:base="/2013/3186-%D1%83%D0%BD%D0%B8%D0%BA-1-%D0%B7%D0%B0%D1%81%D0%B5%D0%B4%D0%B0%D0%BD%D0%B8%D0%B5-2-%D1%88%D0%BE%D0%BA%D0%BE%D0%BB%D0%B0%D0%B4%D0%BA%D0%B8-3-%D1%82%D0%B5%D0%BC%D1%8B-4-%D1%87%D0%B5%D0%BB%D0%BE/"><![CDATA[<p><img class="alignright" title="логотип Raspberry Pi" src="/wp-content/uploads/2013/11/raspberrypi-sticker.png" data-src-old="http://mypi.se/image/cache/data/produktbilder/raspberrypi/RPI-STICKER/raspberrypi-sticker-340x340.jpg" alt="" width="120" height="120" />Конспект на память того, что сегодня было на заседании УНИКа (а те, кто не был, пусть кусают локти):</p>
+<ol>
+<li>Смотрели и обсуждали фотки с очередного <strong>DevFest</strong>'а, который провели Google Development Group Omsk 2-3 ноября в ОмГУ. Это что-то вроде съезда айтишников, интересующихся технологиями Гугла, с приглашением зарубежных гостей в обучающих целях.</li>
+<li>Обсуждали планы НИЛ <strong>ИМСАИТ</strong> (кто не знает, это научно-исследовательская лаборатория «Имитационное моделирование, системный анализ и информационные технологии», которая находится на нашей кафедре, в 8-208, и объединяет сотрудников, аспирантов, магистрантов и студентов кафедры, работающих над её проектами). Рассуждали о том, как в Омске внедрить интеллектуальную информационную систему управления светофорами, подобную тем, которые уже существуют в некоторых мировых мегаполисах, например, в Нью-Йорке.</li>
+<li>Воочию наблюдали чудо – маленькую платку (см. фото), называемую <strong>Raspberry Pi</strong> (поэтому-то вы видите на логотипе малинку), которую Евгений Ринатович подключил к проектору и USB-хабу, подцепил клавиатуру и мышь, воткнул SD-карту и… запустил на ней Линукс! Кто не слышал о таком, <a href="http://ru.wikipedia.org/wiki/Raspberry_Pi">читайте тут</a>. Возник только один вопрос: а зачем Евгению Ринатовичу такая игрушка за <strong>2350 рублей</strong> (плюс USB-хаб за 750 руб. и SD-карта за 420 руб.; информация со свежей накладной из DNS)? Дело, как оказалось, вот в чём. Нам на кафедре в скором будущем придётся подключить USB-ключ, обеспечивающий <a href="http://habrahabr.ru/company/pt/blog/198810/">лицензию для MaxPatrol от Positive Technologies</a>. Работать это ПО будет на виртуальном сервере (Xen). Чтобы заставить виртуалку видеть физическую флешку, существует приспособа USBoverEthernet, делающая из флешки, по сути, IP-флешку, и стоит эта штука около 16000 рублей, если вообще повезёт её достать. Кафедра АСОИУ решила вопрос за 3,5 тыщи %)</li>
+</ol>
+<p><a href="/wp-content/uploads/2013/11/Raspberry-Pi-Connessione-cavi.jpg"><img class="aligncenter size-medium wp-image-3187" title="Raspberry Pi" src="/wp-content/uploads/2013/11/Raspberry-Pi-Connessione-cavi-300x262.jpg" alt="" width="300" height="262" /></a></p>]]></content><author><name>Богатов</name></author><category term="УНИК" /><category term="Google DevFest" /><category term="Raspberry Pi" /><category term="НИЛ ИМСАИТ" /><summary type="html"><![CDATA[Конспект на память того, что сегодня было на заседании УНИКа (а те, кто не был, пусть кусают локти): Смотрели и обсуждали фотки с очередного DevFest'а, который провели Google Development Group Omsk 2-3 ноября в ОмГУ. Это что-то вроде съезда айтишников, интересующихся технологиями Гугла, с приглашением зарубежных гостей в обучающих целях. Обсуждали планы НИЛ ИМСАИТ (кто не знает, это научно-исследовательская лаборатория «Имитационное моделирование, системный анализ и информационные технологии», которая находится на нашей кафедре, в 8-208, и объединяет сотрудников, аспирантов, магистрантов и студентов кафедры, работающих над её проектами). Рассуждали о том, как в Омске внедрить интеллектуальную информационную систему управления светофорами, подобную тем, которые уже существуют в некоторых мировых мегаполисах, например, в Нью-Йорке. Воочию наблюдали чудо – маленькую платку (см. фото), называемую Raspberry Pi (поэтому-то вы видите на логотипе малинку), которую Евгений Ринатович подключил к проектору и USB-хабу, подцепил клавиатуру и мышь, воткнул SD-карту и… запустил на ней Линукс! Кто не слышал о таком, читайте тут. Возник только один вопрос: а зачем Евгению Ринатовичу такая игрушка за 2350 рублей (плюс USB-хаб за 750 руб. и SD-карта за 420 руб.; информация со свежей накладной из DNS)? Дело, как оказалось, вот в чём. Нам на кафедре в скором будущем придётся подключить USB-ключ, обеспечивающий лицензию для MaxPatrol от Positive Technologies. Работать это ПО будет на виртуальном сервере (Xen). Чтобы заставить виртуалку видеть физическую флешку, существует приспособа USBoverEthernet, делающая из флешки, по сути, IP-флешку, и стоит эта штука около 16000 рублей, если вообще повезёт её достать. Кафедра АСОИУ решила вопрос за 3,5 тыщи %)]]></summary></entry><entry><title type="html">Первое место на хакатоне в Москве - омичам!</title><link href="/2013/3127-%D0%BF%D0%B5%D1%80%D0%B2%D0%BE%D0%B5-%D0%BC%D0%B5%D1%81%D1%82%D0%BE-%D0%BD%D0%B0-%D1%85%D0%B0%D0%BA%D0%B0%D1%82%D0%BE%D0%BD%D0%B5-%D0%B2-%D0%BC%D0%BE%D1%81%D0%BA%D0%B2%D0%B5-%D0%BE%D0%BC%D0%B8%D1%87/" rel="alternate" type="text/html" title="Первое место на хакатоне в Москве - омичам!" /><published>2013-11-15T04:29:37+00:00</published><updated>2013-11-15T04:29:37+00:00</updated><id>/2013/3127-%D0%BF%D0%B5%D1%80%D0%B2%D0%BE%D0%B5-%D0%BC%D0%B5%D1%81%D1%82%D0%BE-%D0%BD%D0%B0-%D1%85%D0%B0%D0%BA%D0%B0%D1%82%D0%BE%D0%BD%D0%B5-%D0%B2-%D0%BC%D0%BE%D1%81%D0%BA%D0%B2%D0%B5-%D0%BE%D0%BC%D0%B8%D1%87</id><content type="html" xml:base="/2013/3127-%D0%BF%D0%B5%D1%80%D0%B2%D0%BE%D0%B5-%D0%BC%D0%B5%D1%81%D1%82%D0%BE-%D0%BD%D0%B0-%D1%85%D0%B0%D0%BA%D0%B0%D1%82%D0%BE%D0%BD%D0%B5-%D0%B2-%D0%BC%D0%BE%D1%81%D0%BA%D0%B2%D0%B5-%D0%BE%D0%BC%D0%B8%D1%87/"><![CDATA[<p>Омские программисты, среди которых выпускник нашей кафедры Владислав Коробов, выиграли хакатон по разработке приложений Windows Phone и Windows 8 в Москве. За 48 часов команда омичей сделала музыкальное приложение-«рисовалку» для маленьких детей.<br />
+<a href="/wp-content/uploads/2013/11/46bab560fd206e6902714c95c6cfa6073.jpg"><img class="aligncenter size-full wp-image-3142" src="/wp-content/uploads/2013/11/46bab560fd206e6902714c95c6cfa6073.jpg" alt="" width="364" height="227" /></a><br />
+<!--more--><br />
+9 и 10 ноября в Москве прошел хакатон <span style="text-decoration: underline;"><a href="http://habrahabr.ru/special/microsoft/appsmafia" target="_blank">AppsMafia</a></span>, организованный компаниями ITmozg и Microsoft. Генеральным партнером мероприятия выступил <a href="http://www.inno.msk.ru/" target="_blank">Центр инновационного развития Москвы</a>. За 48 часов около двух сотен программистов должны были разработать приложения для Windows Phone и Windows 8. Всего было заявлено больше 40 проектов из разных городов России. Кроме Москвы были представители из Санкт-Петербурга, Красноярска, Нижнего Новгорода и Омска. В финале жюри рассматривали 31 проект, один из которых был разработан омичами: Владиславом Коробовым, Денисом Визигиным и Александром Кузнецовым из компании <a href="http://vk.com/appsdev" target="_blank">«Лайв Тайпинг»</a>. Их приложение «Music Paint» для детей стало победителем хакатона этого года.</p>
+<p>«Это приложение для маленьких детей до трех лет и их родителей. Ведешь пальцем по экрану определенной краской и скоростью — звучит соответствующая музыка. Таким образом, «рисовалка» не будет наскучивать ребенку быстро. У меня двое детей, и я знаю, что маленький ребенок быстро отвлекается и не в состоянии долго рисовать. Но ему безумно хочется что-то создавать и смотреть реакцию мира на свои действия. Когда ребенок узнает, что если открыть кран, то побежит водичка, он будет делать так 200 раз и кайфовать. Так и в «рисовалке»— ведешь пальчиками, как хочешь, — каляки маляки, а музыка всегда красивая, но это не какие-то оторванные звуки, а скомпанованые мелодии, в которых каналы регулируются по громкости и тональности», — рассказал автор идеи и дизайнер Владислав Коробов.</p>
+<p>Приложение Music Paint  разработано на графическом «движке» Unity, который для ребят оказался новым, и большая часть времени хакатона ушла на его освоение. Программисты работали удаленно, только Александр Кузнецов, который готовил серверную часть, присутствовал на хакатоне очно. Видеодемонстрация работы приложения на компьютере Дениса Визигина, программировавшего для Windows, была снята на телефон, но и она была сорвана из-за проблем с интернетом. Но несмотря на все трудности, жюри дало наивысшую оценку новому приложению, и ребята заняли первое место. Основная цель была выполнена — идея, которая вынашивалась около месяца, проверена, а готовое приложение будет выпущено в 2014 году.</p>
+<p>Для того чтобы усовершенствовать музыкальную часть, программисты передают привет Омской филармонии и ищут композитора, который бы написал мелодии и помог интегрировать музыку в «рисовалку».</p>
+<p style="text-align: right;"><span style="font-size: x-small;"><a href="http://www.classomsk.com/news/1992-omichi-zanjali-pervoe-mesto">По материалам онлайн-журнала «Класс»</a></span></p>
+<p>&nbsp;</p>]]></content><author><name>yurdanova13</name></author><category term="ITштуки" /><category term="поздравляем" /><category term="Windows 8" /><category term="Windows Phone" /><category term="хакатон" /><summary type="html"><![CDATA[Омские программисты, среди которых выпускник нашей кафедры Владислав Коробов, выиграли хакатон по разработке приложений Windows Phone и Windows 8 в Москве. За 48 часов команда омичей сделала музыкальное приложение-«рисовалку» для маленьких детей.]]></summary></entry><entry><title type="html">20 вещей, которые следует знать в 20 лет!</title><link href="/2013/3079-20-%D0%B2%D0%B5%D1%89%D0%B5%D0%B9-%D0%BA%D0%BE%D1%82%D0%BE%D1%80%D1%8B%D0%B5-%D1%81%D0%BB%D0%B5%D0%B4%D1%83%D0%B5%D1%82-%D0%B7%D0%BD%D0%B0%D1%82%D1%8C-%D0%B2-20-%D0%BB%D0%B5%D1%82/" rel="alternate" type="text/html" title="20 вещей, которые следует знать в 20 лет!" /><published>2013-10-26T08:26:09+00:00</published><updated>2014-07-30T14:32:56+00:00</updated><id>/2013/3079-20-%D0%B2%D0%B5%D1%89%D0%B5%D0%B9-%D0%BA%D0%BE%D1%82%D0%BE%D1%80%D1%8B%D0%B5-%D1%81%D0%BB%D0%B5%D0%B4%D1%83%D0%B5%D1%82-%D0%B7%D0%BD%D0%B0%D1%82%D1%8C-%D0%B2-20-%D0%BB%D0%B5%D1%82</id><content type="html" xml:base="/2013/3079-20-%D0%B2%D0%B5%D1%89%D0%B5%D0%B9-%D0%BA%D0%BE%D1%82%D0%BE%D1%80%D1%8B%D0%B5-%D1%81%D0%BB%D0%B5%D0%B4%D1%83%D0%B5%D1%82-%D0%B7%D0%BD%D0%B0%D1%82%D1%8C-%D0%B2-20-%D0%BB%D0%B5%D1%82/"><![CDATA[<h3><em>Американский писатель и бизнес-тренер Жульен Смит дал практичные советы молодым людям, как правильно сориентироваться в этом мире.</em></h3>
+<p>Для того, чтобы с возрастом стать успешным и состоятельным, нужно в 20 лет придерживаться определенных правил и иметь четкое представление о некоторых реалиях современной действительности.<br />
+<a href="/wp-content/uploads/2013/09/8061005-R3L8T8D-380-2013-05-2011.19.452.jpg"><img class="aligncenter size-full wp-image-3085" src="/wp-content/uploads/2013/09/8061005-R3L8T8D-380-2013-05-2011.19.452.jpg" alt="" width="380" height="388" /></a><!--more--></p>
+<p>&nbsp;</p>
+<p><strong>1. Мир пытается оставить тебя тупым.</strong> Начиная от банковских платежей и процентов и заканчивая чудо-диетами — из необразованных людей легче вытрясти деньги и ими проще управлять. Занимайтесь самообразованием столько, сколько можете — для того, чтобы быть богатым, независимым и счастливым.</p>
+<p><strong>2. Не верьте слепо в образовательные институты.</strong> Пока они готовят учебные планы, система устаревает, а иногда и успевает сломаться. Лучше учиться и зарабатывать уважение людей путём лидерства, а не путём следования</p>
+<p><strong>3. Читайте так много, как только можете.</strong> Освойте технику быстрого чтения с высоким уровнем запоминания. Вы вполне можете прочитывать одну книгу в неделю.</p>
+<p><strong>4. Старайтесь постоянно общаться со всеми</strong>. Станьте мастером общения. Учитесь находить в человеке то, что вам нравится в нём, а затем обращайтесь к этой его стороне.</p>
+<p><strong>5. Не теряйте времени на скромность.</strong> Скромность — это вера в то, что ваши эмоции могут стать судьями вашего процесса принятия решения, в то время как верно прямо противоположное.</p>
+<p><strong>6. Если вас что-то неприятно удивляет во время отношений с кем-то</strong>, скорее всего именно от этого вы освободитесь путём их разрыва.</p>
+<p><strong>7. Старайтесь максимально часто общаться с людьми, которые старше вас</strong>. Ценность общения со старшими заключается в том, что система принятия решений ваших сверстников не сильно вам поможет. А старшие к тому же знают всё то, что вы узнаете позже — потому стоит спросить у них.</p>
+<p><strong>8. Ищите людей круче себя</strong> [в том, что вам интересно] и проводите время с ними. Это само по себе важно, но важно и следствие — не пытайтесь быть средненьким в вашей группе, пытайтесь стать лучшим (делайте интересные вещи, будьте честолюбивы, отзывчивы, восприимчивы).</p>
+<p><strong>9. Со временем вы будете становиться всё более консервативными.</strong> Это просто факт. Те, кто окружает вас, создадут нечто вроде пузыря, который будет поддерживать «статус кво» (текущее положение дел). Именно поэтому самые сумасшедшие идеи нужно реализовать СЕЙЧАС. Потом вы станете слишком боязливы. Поверьте мне.</p>
+<p><strong>10. Максимально сократите расходы</strong>. Это позволит вам создать запас для осуществления той самой сумасшедшей идеи, о которой я говорил выше.</p>
+<p><strong>11. Вместо получения статуса с помощью объектов (что даёт только временное его повышение), повышайте его опытом.</strong> Другими словами, поездка в Париж — лучший выбор, нежели новый шкаф. Исследования показывают, что такой выбор повышает уровень удовлетворения, получаемого от жизни.</p>
+<p><strong>12. Если вы живёте в нужде, решите денежную проблему.</strong> Используйте интернет, поскольку он может помочь вам дёшево купить что-то на аукционах. Если сейчас вы живёте от зарплаты до зарплаты, расширьте это период на три недели вместо двух. Затем, когда дела пойдут лучше, можно планировать на месяц, потом на три, шесть и наконец на год вперёд. Цель — достичь момента, когда вы планируете на 5 лет вперёд.</p>
+<p><strong>13. Научитесь проектировать. </strong>Это отлично развивает логику, память и воображение.</p>
+<p><strong>14. Не набирайте лишний вес в молодости.</strong> Ваши гормоны помогут вам с этим поначалу, но не стоит терять эту возможность, поверьте мне.</p>
+<p><strong>15. Научитесь готовить.</strong> Это сильно упростит вашу жизнь, питание перестанет быть обыденным делом, превратится из дорогой необходимости в приятное занятие да и сэкономит ваши средства.</p>
+<p><strong>16. Хорошо высыпайтесь.</strong> Сон и самостоятельное приготовление пищи помогут вам не набрать лишний вес. Если вы думаете «я отосплюсь в могиле» или «я должен ещё много сделать, нет времени для сна», то я вам скажу так — «не выспавшийся вы НЕ ЭФФЕКТИВНЫ», сокращение времени сна вам не поможет.</p>
+<p><strong>17. Заведите себе приложение-записную книжку.</strong> Не доверяйте памяти, встроенной в ваш мозг. Не доводите ситуацию до делания того, что «вам кажется» нужно было бы сделать. Доверяйте только записям.</p>
+<p><strong>18. Поставьте себе большую цель и позвольте случаю помочь вам.</strong> Если же вы не обозначите её, то что-то, конечно, случится, однако если вы её поставите, то случится намного больше.</p>
+<p><strong>19. Станьте специалистом в чём-то одном.</strong> Потратьте 5 лет на дело, а не на шатание вокруг да около. Если вы захотите затем сменить профессию — вперёд. Но выберите что-то.</p>
+<p><strong>20. Не пытайтесь исправить людей</strong>. Лучше найдите тех, кто ещё не испорчен.</p>
+<p><span style="color: #c0c0c0;">Источник: http://www.adme.ru</span></p>]]></content><author><name>yurdanova13</name></author><category term="чтиво" /><category term="советы" /><category term="тайм-менеджмент" /><category term="философия" /><summary type="html"><![CDATA[Американский писатель и бизнес-тренер Жульен Смит дал практичные советы молодым людям, как правильно сориентироваться в этом мире. Для того, чтобы с возрастом стать успешным и состоятельным, нужно в 20 лет придерживаться определенных правил и иметь четкое представление о некоторых реалиях современной действительности.]]></summary></entry><entry><title type="html">Заморозка системы: история перехода с EWF на dVHD</title><link href="/2013/2793-%D0%B7%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B7%D0%BA%D0%B0-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B-%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8F-%D0%BF%D0%B5%D1%80%D0%B5%D1%85%D0%BE%D0%B4%D0%B0-%D1%81-ew/" rel="alternate" type="text/html" title="Заморозка системы: история перехода с EWF на dVHD" /><published>2013-09-19T01:23:23+00:00</published><updated>2016-09-07T10:39:46+00:00</updated><id>/2013/2793-%D0%B7%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B7%D0%BA%D0%B0-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B-%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8F-%D0%BF%D0%B5%D1%80%D0%B5%D1%85%D0%BE%D0%B4%D0%B0-%D1%81-ew</id><content type="html" xml:base="/2013/2793-%D0%B7%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B7%D0%BA%D0%B0-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B-%D0%B8%D1%81%D1%82%D0%BE%D1%80%D0%B8%D1%8F-%D0%BF%D0%B5%D1%80%D0%B5%D1%85%D0%BE%D0%B4%D0%B0-%D1%81-ew/"><![CDATA[<p><img class="alignright size-full wp-image-2962" src="/wp-content/uploads/2013/09/frozendrive.png" alt="dVHD" width="181" height="189" /></p>
+<p class="grey">Продолжение темы про заморозку системы.</p>
+<p>В предыдущей <a href="/2013/2748-%D0%B7%D0%B0%D0%BC%D0%BE%D1%80%D0%BE%D0%B7%D0%BA%D0%B0-%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D1%8B/">статье</a> речь велась о сторонних программах для Windows, которые позволяют "замораживать" состояние системы. Эти программы необходимы, т.к. считается, что Windows не имеет подобных встроенных механизмов.</p>
+<p>Мало кто знает, что помимо версий Windows для простых смертных (Home, Professional, Ultimate, ...), корпоративных  версии (Enterprise), и серверных версий (Windows Server), существуют <a href="http://ru.wikipedia.org/wiki/Windows_Embedded" target="_blank">несколько версий</a> Windows для <a href="http://habrahabr.ru/post/138630/">встраиваемых систем</a> (Embedded). Именно в Windows Embedded присутствует специальный модуль (EWF), который позволяет "заморозить" систему.</p>
+<p class="note">Далее описывается история установки и настройки Windows Embedded Standard 7 с EpicFAIL'оми и счастливым концом.</p>
+<p><!--more--></p>
+<p style="text-align: justify">Недавно пришлось создать одну встроенную систему на базе неттоп'а (Intel Atom, NVIDIA Ion, 2 GB DDR3, SSD 64 GB). Изначально планировалось установить на него GNU/Linux из-за лучшей возможности кастомизации, и возможности "заморозки" системы при использовании специальных файловых систем (<a href="http://ru.wikipedia.org/wiki/Aufs" target="_blank">Aufs</a>, <a href="http://ru.wikipedia.org/wiki/UnionFS" target="_blank">UnionFS</a>). Однако, как всегда, возникли сложности на пути завоевания Linux'ом кремневых сердец. Встраиваемая система состояла не только из неттоп'а, но и из других устройств, разработчики которых написали ПО только для Windows, и, стоит признать, это ПО было написано хорошо. И так, в очередной раз, победила Винда  T_T   .</p>
+<p style="text-align: justify">Благо, что существует Windows Embedded Standard, который позволяет устанавливать только те компоненты системы, которые будут нужны, что важно при использовании SSD малого объема (установленный Windows Embedded Standard 7 занял 3-4GiB, тогда как обычный Windows 7 занимает 8-10 GiB), и содержит <a href="http://habrahabr.ru/company/pt/blog/155135" target="_blank">EWF</a> <span class="grey">(в статье описывается, как перенести модуль EWF из Windows Embedded в обычную Windows)</span>:</p>
+<p class="note"><strong>Расширенный фильтр записи</strong> (<em>Enhanced Write Filter, <strong>EWF</strong></em>) — это дополнительный компонент, использующийся в Windows Embedded. EWF делает дисковый том доступным только для чтения. При этом операции записи, которые выполняются с данными, хранящимися на этом дисковом томе, перенаправляются в его наложение, которое может находиться на другом диске или в памяти компьютера. Windows рассматривает наложение EWF и его дисковый том как единое устройство. При этом фактически на дисковом томе не происходит изменений. Все изменения сохраняются только в наложении EWF. Изменения можно сохранить на дисковый том в любой момент времени.</p>
+<p><strong>Первый EpicFAIL:</strong> спустя несколько дней после установки Windows Embedded Standard <strong>7</strong>, вышла финальная версия Embedded Standard <strong>8</strong>.</p>
+<h2>Процесс включения EWF</h2>
+<p style="text-align: justify"><strong>Во-первых</strong>, для работы всех возможностей EWF нужен специальный загрузчик (он выбирается на этапе установки системы).<br />
+<strong>Во-вторых</strong>, желательно перенести pagefile.sys на другой раздел. И создать отдельный раздел для логов, документов, и остальных часто изменяемых файлов, которые не требуется замораживать. Также надо выполнить еще несколько подготовительных действий перед активацией EWF, однако в этой статье они описываться не будут, ибо, как раз в этот момент и произошел <strong>EpicFAIL</strong>...</p>
+<h2>Main EpicFAIL</h2>
+<p><strong>Несколько фактов:</strong></p>
+<ul>
+<li>Вся информация о тонкой настройке EWF была взята из <a href="http://msdn.microsoft.com/en-us/library/bb521577(v=winembedded.51).aspx" target="_blank">MSDN</a> для Windows Embedded Standard 2009, т.к. без глобального поиска по всему MSDN, раздел про EWF в Windows Embedded Standard 7 не был найден (однако сам модуль EWF присутствует в Windows Embedded Standard 7).</li>
+<li>Как написано в цитате выше, EWF может размещать наложение либо на диске (Disk Mode), либо в RAM. Планировалось использовать Disk Mode, т.к. хоть оперативки и 2 GiB, её все равно мало для планируемого сценария использования.</li>
+</ul>
+<p>При попытке включить <em>EWF Disk Mode</em> выяснилось следующее:</p>
+<p class="error">Windows Embedded Standard 7 only supports EWF RAM and RAM Reg modes. <strong><em>Disk mode</em> is not supported.</strong></p>
+<p> >:)  <span style="float: right"> >:) </span></p>
+<p>Эта строчка приводится в документе: <a href="http://msdn.microsoft.com/en-us/library/ff794295(v=winembedded.60).aspx" target="_blank">Enhanced Write Filter with HORM (Windows Embedded Standard 7 Service Pack 1)</a>. И если описание EWF для Windows Embedded Standard <strong>2009</strong> находится по пути: 
+<pre>Windows Embedded Standard 2009
+ |- Developer Reference 
+  |- Design a Run-Time Image 
+   |- Enhanced Write Filter</pre>
+<p>, то для Windows Embedded Standard <strong>7</strong> этот путь выглядит иначе: 
+<pre>Windows Embedded Standard 7 
+ |- Windows Embedded Standard 7 Technical Reference 
+  |- Embedded Enabling Features Technical Reference 
+   |- Enhanced Write Filter with HORM</pre>
+<h2>Спасение</h2>
+<p style="text-align: justify">Спустя некоторое время блуждания по просторам сети в поисках ответа на вопрос: «На что MS заменила <em>EWF Disk Mode</em>? Не могли же они просто выкинуть эту фитчу. Или же могли<strong>!?</strong>», была найдена замечательная статья: <a href="http://www.elbacom.com/blog/2010/09/disk-mode-write-filter-or-resetting-differential-vhds" target="_blank">"Disk Mode Write Filter or Resetting Differential VHDs"</a> <span class="grey">(bat'ники приведенные в той статье отличаются от bat'ников, приведенных в этой статье)</span>.<br />
+В статье-спасителе предлагается использовать dVHD вместо <em>EWF Disk Mode</em>.</p>
+<p>Начиная с Windows 7, загрузчик ядра системы поддерживает загрузку из VHD файлов (<em>Native VHD boot</em>).
+<p class="note"><strong>Virtual Hard Disk (VHD)</strong> — формат файла, содержащий полную структуру и содержание сходные с жёстким диском. Используется для хранения виртуальных операционных систем, программ и других файлов в одном файле-образе, который можно открыть разными программами виртуализации или виртуальными машинами.</p>
+<h1>EWF -&gt; dVHD</h1>
+<p><strong>Инструкция:</strong></p>
+<ol style="padding-left: 20px">
+<li><strong>Делаем бекап системы</strong>.</li>
+<li>Необходимо очистить систему от EWF:
+<ol>
+<li><a href="http://reboot.pro/topic/16119-testing-windows-embedded-standard-thinpc-7-install-and-boot-from-vhd/?p=145506" target="_blank">отключаем FBWF driver</a>
+<pre>HKLM\SYSTEM\CurrentControlSet\services\fbwf
+"start" = dword:00000004</pre>
+</li>
+<li>читаем раздел «Установка EWF на Windows 7» статьи <a href="http://habrahabr.ru/company/pt/blog/155135" target="_blank">Внедрение Enhanced Write Filter (EWF)</a>, и <strong>делаем всё наоборот</strong>.</li>
+</ol>
+</li>
+<li>Мы будем использовать <em><a href="http://technet.microsoft.com/en-us/library/gg252579(v=WS.10).aspx" target="_blank">dynamically expanding VHD</a></em>, у которых есть одна особенность - при загрузке с них (<em>Native VHD boot</em>), они <a href="http://habrahabr.ru/post/49670/#comment_1298731" target="_blank">"разбухают в размере"</a>. Чтобы предотвратить "разбухание", необходимо внести изменения в реестр (<a href="http://technet.microsoft.com/en-us/library/gg318055(v=ws.10).aspx#sectionSection13" target="_blank">Step 12: Prevent the VHD from expanding to its full size</a>; на русском: <a href="http://gotch.techfaq.ru/archives/526" target="_blank">Ограничение увеличения динамических VHD при загрузке</a>):
+<pre>HKLM\SYSTEM\CurrentControlSet\services\
+ FsDepends\Parameters 
+"VirtualDiskExpandOnMount"=dword:00000004</pre>
+</li>
+<li>Создайте временный (дополнительный) раздел на SSD для временного хранения VHD, либо подключите внешнее хранилище (SSD или HDD). Далее предполагается, что VHD располагается по адресу: 
+<pre><strong>Z:\VHD\PROJECTOR_PC.VHD</strong></pre>
+</li>
+<li>Перенесите системный (<strong>С:\</strong>) раздел на VHD <span class="grey">(самым быстрым способом является <a href="http://blogs.technet.com/b/abeshkov/archive/2009/10/11/3286054.aspx" target="_blank">использование утилиты disk2vhd</a>; я настоятельно рекомендую перезагрузить ПК перед запуском disk2vhd)</span>. Перед этим этапом лучше удалить весь мусор с системного раздела, и <a href="http://habrahabr.ru/post/106684/" target="_blank">оптимизировать загрузку системы</a> (<strong>compact</strong> не используйте!).</li>
+<li>Сгенерируйте новую подпись диска и запишите ее в <strong>MBR</strong> VHD. Это произойдет автоматически при <a href="http://www.thevista.ru/page.php?id=15555" target="_blank">монтировании VHD</a>.</li>
+<li>После монтирования VHD желательно удалить из него первый (100 MiB) раздел (в оснастке <strong>"Управление дисками"</strong> команда <strong>"Удалить том..."</strong>).</li>
+<li>Освободите букву системного диска (<strong>C:</strong>).<br />
+<blockquote>
+<p style="font-size: small">В Windows системному разделу назначается буква диска (<strong>C:</strong>). Это соответствие (раздел - буква диска) сохраняется в реестре. Если не освободить (удалить запись в реестре) букву диска (<strong>C:</strong>), то при загрузке с VHD новому системному разделу (на VHD) будет присвоена новая буква. Смена буквы диска не повлияла бы на работу программ, если бы у всех программистов руки росли из нужного места, но мы живем не в идеальном мире, и часть программ продолжает обращаться к старому системному диску (<strong>C:</strong>).</p>
+</blockquote>
+<p> Чтобы этого избежать нужно освободить букву диска (<strong>C:</strong>):</p>
+<ol>
+<li><a href="http://technet.microsoft.com/ru-ru/library/cc732157.aspx" target="_blank">загрузите куст реестра</a> с VHD:
+<ol>
+<li>откройте редактор реестра (<strong>regedit</strong>);</li>
+<li>выберите раздел '<strong>HKEY_LOCAL_MACHINE</strong>';</li>
+<li>в меню 'Файл' выберите команду 'Загрузить куст';</li>
+<li>откройте файл '<strong>&lt;точка монтирования VHD&gt;:\Windows\System32\SYSTEM</strong>';</li>
+<li>в поле 'Имя раздела' введите '<strong>_temp</strong>';</li>
+</ol>
+</li>
+<li><a href="http://support.microsoft.com/?kbid=223188" target="_blank">удалите букву системного диска</a>:
+<ol>
+<li>откройте '<strong>HKEY_LOCAL_MACHINE\_temp\MountedDevices</strong>';</li>
+<li>удалите или переименуйте '<strong>\DosDevices\C:</strong>';</li>
+</ol>
+</li>
+<li>выгрузите куст:
+<ol>
+<li>выберите раздел '<strong>HKEY_LOCAL_MACHINE\_temp</strong>';</li>
+<li>в меню 'Файл' выберите команду 'Выгрузить куст'.</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>Демонтируем VHD, и <span style="text-decoration: underline">пробуем загрузится</span> с него:
+<ol>
+<li>создайте запись в BCD (действия происходят <strong>в консоли администратора</strong>) <span class="grey">(составлено на основе статей: <a href="http://habrahabr.ru/post/49670" target="_blank"> 1 </a><a href="http://winitpro.ru/index.php/2011/03/18/zagruzka-windows-7-s-virtualnogo-zhyostkogo-diska-vhd/" target="_blank"> 2 </a><a href="http://searchvirtualdesktop.techtarget.com/tip/How-to-build-a-native-boot-VHD-for-Windows-7-in-a-few-simple-steps" target="_blank"> 3 </a>)</span>:
+<ol>
+<li>создаем новую запись на основе существующей записи:
+<pre>bcdedit /copy {current} /d "Windows VHD"</pre>
+<p>BCDEdit вернет <strong>GUID</strong> вновь созданной записи;</li>
+<li>указываем путь к VHD для загрузки (замените GUID на <strong>GUID</strong> из предыдущего этапа):
+<pre>bcdedit /set {GUID} device ^
+vhd=[Z:]\VHD\PROJECTOR_PC.VHD</pre>
+<pre>bcdedit /set {GUID} osdevice ^
+vhd=[Z:]\VHD\PROJECTOR_PC.VHD</pre>
+</li>
+<li>дополнительно, <a href="http://technet.microsoft.com/ru-ru/library/dd799299(v=ws.10).aspx#sectionSection2" target="_blank">для некоторых систем, необходимо включить <em>detecthal</em></a> (не забудете заменить GUID):
+<pre>bcdedit /set {GUID} detecthal on</pre>
+</li>
+</ol>
+</li>
+<li>перезагрузите систему, и, при загрузке, выберите "Windows VHD";</li>
+<li>если загрузка прошла успешно, то при входе в систему, она сообщит о создании временного файла подкачки, а в оснастке "Управление дисками" будет видно, что старый системный раздел поменял букву диска на <strong>D</strong>, а новому (на VHD) присвоена буква диска <strong>C;</strong></li>
+<li>если, что-то пошло не так, то стоит начать паниковать и бить в бубен  :S  <span class="grey">(шутка, у вас всегда есть бекап системы - <em>шаг 1</em>)</span>.</li>
+</ol>
+</li>
+<li>Форматируем старый системный раздел (диск <strong>D</strong>). При этом важно, чтобы ОС послала на SSD команду <a href="http://ru.wikipedia.org/wiki/TRIM#.D0.9E.D1.81.D0.BE.D0.B1.D0.B5.D0.BD.D0.BD.D0.BE.D1.81.D1.82.D0.B8_.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D1.8B_.D1.82.D0.B2.D0.B5.D1.80.D0.B4.D0.BE.D1.82.D0.B5.D0.BB.D1.8C.D0.BD.D1.8B.D1.85_.D0.BD.D0.B0.D0.BA.D0.BE.D0.BF.D0.B8.D1.82.D0.B5.D0.BB.D0.B5.D0.B9" target="_blank">TRIM</a>.<br />
+<blockquote><p style="font-size: small">Как показывают <a href="http://www.nix.ru/computer_hardware_news/hardware_news_viewer.html?id=160084&amp;page=3" target="_blank">тесты</a>, начиная с Windows 7, при быстром форматировании раздела, ОС сама посылает на SSD команду TRIM, и нет необходимости в "ручном" удалении каждого файла для отправки команды TRIM.</p>
+</blockquote>
+<p> Если система поместила на этот раздел временный файл подкачки, и <strong>не дает отформатировать</strong> этот раздел, то создайте файл подкачки на любом другом разделе физического (не VHD) диска.</li>
+<li>Перенесите файл подкачки на диск <strong>D</strong>.</li>
+<li>Перенесите VHD-файл из '<strong>Z:\VHD\PROJECTOR_PC.VHD</strong>' в '<strong>D:\VHD\PROJECTOR_PC.VHD</strong>'. Так как сейчас система загружена с VHD, то, для его переноса, надо:
+<ol>
+<li>создать на диске <strong>D</strong> директорию VHD;</li>
+<li>загрузится с WinPE (подойдет установочный диск Win7 или Win8);</li>
+<li>при появлении окна, предлагающего установить Windows, <a href="http://support.microsoft.com/kb/242380" target="_blank">нажать Shift+F10</a> (откроется консоль);</li>
+<li>определить буквы дисков (для этого можно использовать команду <strong>dir /A</strong>, последовательно перебирая буквы дисков);</li>
+<li>скопировать VHD-файл командой:
+<pre>copy D:\VHD\PROJECTOR_PC.VHD E:\VHD\</pre>
+<p>(замените буквы дисков на свои);</li>
+<li>поменять путь к VHD для загрузки:
+<pre>bcdedit /set {GUID} device ^
+vhd=[E:]\VHD\PROJECTOR_PC.VHD</pre>
+<pre>bcdedit /set {GUID} osdevice ^
+vhd=[E:]\VHD\PROJECTOR_PC.VHD</pre>
+</li>
+<li>пометить BCD запись, как запись по умолчанию:
+<pre>bcdedit /default {GUID}</pre>
+</li>
+<li>перезагрузите систему (закройте консоль, и окно установки Windows).</li>
+</ol>
+</li>
+<li>При успешной загрузке, удалите старый VHD-файл: '<strong>Z:\VHD\PROJECTOR_PC.VHD</strong>'</li>
+<li>Удалим запись исходной системы из BCD:
+<ol>
+<li>определите её {old_GUID} вызвав <strong>bcdedit</strong>;</li>
+<li>удалите запись:
+<pre>bcdedit /delete {old_GUID} /cleanup</pre>
+</li>
+</ol>
+</li>
+<li><strong>Переходим к настройке дифференциальных VHD</strong>:
+<ol>
+<li>создайте две новые записи в BCD (и запишите их GUID: {OverGUID1} для 'Windows VHD 1', и {OverGUID2} для 'Windows VHD 2'):
+<pre>bcdedit /copy {current} /d "Windows VHD 1"
+bcdedit /copy {current} /d "Windows VHD 2"</pre>
+<pre>bcdedit /set {OverGUID1} device ^
+vhd=[D:]\VHD\PROJECTOR_PC_over1.VHD
+bcdedit /set {OverGUID2} device ^
+vhd=[D:]\VHD\PROJECTOR_PC_over2.VHD</pre>
+<pre>bcdedit /set {OverGUID1} osdevice ^
+vhd=[D:]\VHD\PROJECTOR_PC_over1.VHD
+bcdedit /set {OverGUID2} osdevice ^
+vhd=[D:]\VHD\PROJECTOR_PC_over2.VHD</pre>
+</li>
+<li>настроим автоматическое переключение между dVHD при загрузке системы:
+<ol>
+<li>откройте редактор групповых политик (Win+R -&gt; gpedit.msc);</li>
+<li>зайдите в '<strong>Конфигурация компьютера/Конфигурация Windows/Сценарии (запуск/завершение)</strong>';</li>
+<li>откройте пункт 'Автозагрузка';</li>
+<li>нажмите на кнопку 'Показать файлы...';</li>
+<li>скопируйте файл <a href="http://pastebin.com/uTBphAAa" target="_blank">VHD_set_over<strong>.bat</strong></a> в открывшуюся папку, предварительно заменив GUID в строках 10, 11, 22 на свои (в 22-й строке указывается <strong>GUID</strong> основной записи - "Windows VHD");</li>
+<li>добавьте этот <strong>bat</strong>'ник в список автозагрузки в окне 'Свойства: Автозагрузка';</li>
+</ol>
+</li>
+<li>сохраните в корне диска <strong>D bat</strong>'ники, предварительно заменив GUID's: <a href="http://pastebin.com/npBMT3Tu" target="_blank">VHD_first_set_over<strong>.bat</strong></a>, <a href="http://pastebin.com/StrsEpNV" target="_blank">VHD_set_parent<strong>.bat</strong></a> .</li>
+</ol>
+</li>
+</ol>
+<p>Теперь, для <strong>включения</strong> "заморозки" достаточно загрузится с WinPE, и в консоли запустить <strong>VHD_first_set_over.bat</strong> .</p>
+<p>Для <strong>отключения</strong> "заморозки" запустите <strong>VHD_set_parent.bat</strong> .</p>
+<h2>Несколько советов</h2>
+<p style="text-align: justify">Помните, что если суммарный размер VHD+dVHD превысит размер раздела диска, на котором они расположены, то <a href="http://gotch.techfaq.ru/archives/526" target="_blank">система упадет</a>, т.к. ей просто некуда будет записывать новые измененные данные. Для предотвращения этого, можно уменьшить размер системного раздела на VHD.</p>
+<p>Например, установленная и настроенная система (Windows Embedded 7 + необходимые программы) заняла на системном разделе <strong>2.5 GiB</strong>. Система установлена на SSD объемом <strong>64 GiB</strong>. Предположим, что для нормального функционирования системы (в режиме 24/7) нужно не более <strong>13.5 GiB</strong> свободного места на системном разделе. В данном случае целесообразно уменьшить размер системного раздела до <strong>16 GiB</strong> (2.5 + 13.5). В итоге получаем, что максимальный суммарный объем VHD's будет равен: <strong>2.5 (VHD) + 16 (dVHD) = 18.5 GiB</strong>, что, с учетом pagefile.sys (~2 GiB) и остальных системных файлов, будет меньше <strong>64 GiB</strong> (объем SSD), и система никогда не упадет из-за нехватки места для расширения dVHD на SSD.</p>
+<p>Перед заморозкой обновленной системы (на VHD), советую сделать <em><a href="http://bafff.ru/blog/Obsluzhivanie-vhd-faylov-umenshenie-uve/" target="_blank">Compact</a></em>:</p>
+<p class="note" style="text-align: justify"><strong>Compact</strong> - сжатие диска, позволяющее убрать неиспользуемое место в динамических дисках. Как вы знаете, если на динамический диск записать данные, он расширяется. После этого, мы можем удалить эти данные, но размер VHD диска не уменьшится, и в хост системе начнёт неэффективно растрачиваться полезный объём HDD дисков.</p>
+<h1>Ссылки "в тему"</h1>
+<ul>
+<li>Уже упомянутая статья-спаситель: <a href="http://www.elbacom.com/blog/2010/09/disk-mode-write-filter-or-resetting-differential-vhds" target="_blank">“Disk Mode Write Filter” or “Resetting Differential VHDs”</a></li>
+<li><a href="http://gotch.techfaq.ru/archives/115" target="_blank">Использование дифференциальных дисков VHD в Windows 7</a></li>
+<li><a href="http://articles.org.ru/cn/showdetail.php?cid=8495" target="_blank">Как переустановить Windows за 1 минуту</a></li>
+<li>Native VHD Boot: A Walkthrough of Common Scenarios: <a href="http://technet.microsoft.com/en-us/library/gg318055(v=ws.10).aspx" target="_blank">Scenario 3: Performing an Advanced Deployment of Native Boot VHDs</a></li>
+<li><a href="http://blogs.technet.com/b/virtualization/archive/2009/05/14/native-vhd-support-in-windows-7.aspx" target="_blank">Native VHD Support in Windows 7</a> (сравнение скорости работы: VHD vs "Bare Metal")</li>
+<li>Альтернатива: <a href="http://habrahabr.ru/post/176739/" target="_blank">Разработка MiniFilter драйвера</a></li>
+<li><a href="http://habrahabr.ru/post/185172/" target="_blank">Windows на RAM-диске</a> (описаны способы загрузки различных ОС с VHD)</li>
+<li><a href="http://windowsdisklessaoe.wordpress.com/" target="_blank">Windows Diskless with AoE</a> (how to boot Windows Diskless with ATA over Ethernet Protocol)</li>
+</ul>]]></content><author><name>ZKyl</name></author><category term="ITштуки" /><category term="Software" /><category term="чтиво" /><category term="BCD" /><category term="enhanced write filter" /><category term="SSD" /><category term="TRIM" /><category term="tutorial" /><category term="VHD" /><category term="Windows" /><category term="WinPE" /><category term="заморозка системы" /><category term="сисадмин" /><summary type="html"><![CDATA[Продолжение темы про заморозку системы. В предыдущей статье речь велась о сторонних программах для Windows, которые позволяют "замораживать" состояние системы. Эти программы необходимы, т.к. считается, что Windows не имеет подобных встроенных механизмов. Мало кто знает, что помимо версий Windows для простых смертных (Home, Professional, Ultimate, ...), корпоративных  версии (Enterprise), и серверных версий (Windows Server), существуют несколько версий Windows для встраиваемых систем (Embedded). Именно в Windows Embedded присутствует специальный модуль (EWF), который позволяет "заморозить" систему. Далее описывается история установки и настройки Windows Embedded Standard 7 с EpicFAIL'оми и счастливым концом.]]></summary></entry><entry><title type="html">SMS для программистов</title><link href="/2013/2864-sms-%D0%B4%D0%BB%D1%8F-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%81%D1%82%D0%BE%D0%B2/" rel="alternate" type="text/html" title="SMS для программистов" /><published>2013-08-20T03:14:39+00:00</published><updated>2013-11-26T08:30:57+00:00</updated><id>/2013/2864-sms-%D0%B4%D0%BB%D1%8F-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%81%D1%82%D0%BE%D0%B2</id><content type="html" xml:base="/2013/2864-sms-%D0%B4%D0%BB%D1%8F-%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B8%D1%81%D1%82%D0%BE%D0%B2/"><![CDATA[<p><img class="alignright" src="/wp-content/uploads/2013/08/logo-big.png" data-src-old="http://sms.ru/i/logo-big.png?2" alt="" width="200" height="34" />Удивительно, но многие люди не знают о существовании сервиса <a href="http://sms.ru">SMS.RU</a>, который позволяет отправлять бесплатные SMS на телефоны любых* операторов  со своей главной страницы.</p>
+<p>Но это еще не всё, если Вы программист, то Вам доступны такие плюшки как:</p>
+<ul>
+<li><strong>Бесплатные сообщения на собственный номер.</strong></li>
+<li>HTTP API, SMTP API.</li>
+<li>Callback - оповещение скрипта на вашем сервере о статусе сообщений.</li>
+<li>Возможность замены отправителя - в качестве отправителя может использоваться латинское название вашего сайта или компании.</li>
+</ul>
+<p><strong>SMS.RU</strong> очень удобно использовать совместно с Google Apps Script, например, можно легко создать '<a href="http://habrahabr.ru/post/186568" target="_blank">Автоматическое оповещение об изменениях статуса почтовых посылок через SMS</a>'.</p>]]></content><author><name>ZKyl</name></author><category term="ITштуки" /><category term="web-инструменты" /><category term="api" /><category term="Google Apps Script" /><category term="sms" /><summary type="html"><![CDATA[Удивительно, но многие люди не знают о существовании сервиса SMS.RU, который позволяет отправлять бесплатные SMS на телефоны любых* операторов  со своей главной страницы. Но это еще не всё, если Вы программист, то Вам доступны такие плюшки как: Бесплатные сообщения на собственный номер. HTTP API, SMTP API. Callback - оповещение скрипта на вашем сервере о статусе сообщений. Возможность замены отправителя - в качестве отправителя может использоваться латинское название вашего сайта или компании. SMS.RU очень удобно использовать совместно с Google Apps Script, например, можно легко создать 'Автоматическое оповещение об изменениях статуса почтовых посылок через SMS'.]]></summary></entry></feed>

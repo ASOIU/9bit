@@ -59,7 +59,7 @@ wp_comments:
 </ul>
 <p>Еще один важный момент - скорость используемых HDD <span class="grey">(при последовательных операциях доступа к данным)</span> выше скорости сетевого подключения.</p>
 <p style="text-align: justify;">В этом случае узким местом будет сетевое соединение между сервером и switch'ом. Сервер инициирует 4 потока <span class="grey">(по потоку для каждого клиента)</span> передачи данных, которые разделят общую пропускную способность сетевого соединения сервера.</p>
-<p style="text-align: justify;"><strong>В итоге скорость загрузки упадет в 4 раза</strong>, по сравнению со случаем, когда только 1 клиент загружает файл. Чем больше клиентов, тем меньше скорость загрузки у каждого из этих клиентов. Для 30 клиентов и 100 Mbps сети 120 GiB файл будет загружаться минимум 3 дня 13 часов и 54 минуты, т.е. для клиента 100 Mbps превратятся в 3 Mbps <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/sad.gif %}" alt=":(" class="wp-smiley" />  .</p>
+<p style="text-align: justify;"><strong>В итоге скорость загрузки упадет в 4 раза</strong>, по сравнению со случаем, когда только 1 клиент загружает файл. Чем больше клиентов, тем меньше скорость загрузки у каждого из этих клиентов. Для 30 клиентов и 100 Mbps сети 120 GiB файл будет загружаться минимум 3 дня 13 часов и 54 минуты, т.е. для клиента 100 Mbps превратятся в 3 Mbps :(  .</p>
 <p style="text-align: justify;">При этом сервер вынужден несколько раз <span class="grey">(по количеству клиентов)</span> отправлять одну и ту же часть файла в сеть. Последствия этого можно увидеть, сравнив две ситуации <span class="grey">(два граничных условия)</span>:</p>
 <ol>
 <li>Все клиенты запустили загрузку файла в одно и то же время.</li>
@@ -128,7 +128,7 @@ wp_comments:
 <li>загруженный пирами файл не удалялся, а изменялось его содержимое.</li>
 </ol>
 <p class="error">Эти испытания BTSync провалил - синхронизация с сидом так и не начиналась (опция <strong>принудительной синхронизации</strong> была включена).</p>
-<p> <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/sad.gif %}" alt=":-(" class="wp-smiley" />  <span style="float: right;"> <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/sad.gif %}" alt=":-(" class="wp-smiley" />  </span></p>
+<p> :(  <span style="float: right;"> :(  </span></p>
 <p class="note">В повседневном использовании с 1 GiB файлами мне помогала "легкая приостановка" - через контекстное меню “иконки в трее” <em>пира</em> поставить BTSync на паузу, а затем убрать паузу.</p>
 <h1 id="h-3-ringsync">RingSync</h1>
 <p>Во время борьбы с “<strong>особенностями</strong>” BTSync появились несколько мыслей:</p>
@@ -137,7 +137,7 @@ wp_comments:
 <li>нам не нужно отслеживание изменений в файле, т.к. каждый раз его все равно приходится передавать целиком, и источник всегда один - <em>сид</em>;</li>
 <li>следовательно, нет необходимости в отдельном этапе подсчитывания контрольных сумм, и определения “кто из <em>пиров</em> обладает более новой версией файла”;</li>
 <li>у нас всего один файл;</li>
-<li>HDD попросил сделать последовательное чтение/запись файла <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/eek.gif %}" alt="8-O" class="wp-smiley" />  .</li>
+<li>HDD попросил сделать последовательное чтение/запись файла 8-O  .</li>
 </ul>
 <p>С этими мыслями родилась следующая схема:</p>
 <p><a href="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2016/09/RingSync.png %}"><img class="aligncenter wp-image-3718" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2016/09/RingSync.png %}" alt="1 x Seed - switch - N-1 x Peers + 1 x Leech" width="464" height="370" /></a></p>
@@ -166,7 +166,7 @@ wp_comments:
 <p><img class="noborder alignright wp-image-3728 size-full" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2016/09/labtocat.png %}" alt="the Labtocat" width="184" height="196" />RingSync можно <a title="Fork me on GitHub" href="https://github.com/ZiroKyl/RingSync" target="_blank"><strong>форкнуть здесь</strong></a>.<br />
 <a href="https://github.com/ZiroKyl/RingSync/releases" target="_blank">Там же</a> можно скачать уже собранный для Windows 32bit бинарник.</p>
 <p><strong>Q:</strong> Почему именно Windows 32bit?<br />
-<strong>A:</strong> Потому, что я его использовал с WinPE 32bit. К тому же, вместе с RingSync лежит специальный launcher, который облегчает конфигурирование после сетевой загрузки. Launcher считывает конфиг из файла <span class="grey">(одного и того же для всех PC)</span>, и в зависимости от MAC-адреса первого сетевого интерфейса PC, настраивает этот сетевой интерфейс, и запускает RingSync с нужными параметрами. Сейчас launcher завязан на использование <a href="https://ru.wikipedia.org/wiki/Netsh.exe" target="_blank">netsh</a>, поэтому результат кросс-компиляции под <a href="https://golang.org/doc/install/source#environment" target="_blank">не Windows</a> работать не будет. В отличие от launcher, у самого RingSync таких проблем нет <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/smile.gif %}" alt=":-)" class="wp-smiley" /> </p>
+<strong>A:</strong> Потому, что я его использовал с WinPE 32bit. К тому же, вместе с RingSync лежит специальный launcher, который облегчает конфигурирование после сетевой загрузки. Launcher считывает конфиг из файла <span class="grey">(одного и того же для всех PC)</span>, и в зависимости от MAC-адреса первого сетевого интерфейса PC, настраивает этот сетевой интерфейс, и запускает RingSync с нужными параметрами. Сейчас launcher завязан на использование <a href="https://ru.wikipedia.org/wiki/Netsh.exe" target="_blank">netsh</a>, поэтому результат кросс-компиляции под <a href="https://golang.org/doc/install/source#environment" target="_blank">не Windows</a> работать не будет. В отличие от launcher, у самого RingSync таких проблем нет :) </p>
 <p style="text-align: justify;">Опции запуска RingSync приводить не буду - их можно увидеть, просто запустив его без опций. А вот примеры для разных режимов (<em>сид</em>, <em>пир</em>, <em>лич</em>) будут полезны.</p>
 <p><strong>Сид</strong> (слушает порт 5001, ожидает подключения от <em>лича</em>/<em>пира</em> с IP “192.168.0.2”, рассылает содержимое файла “big_file.vhd”):</p>
 <pre>RingSync -mode=seed -port=5001 ^
@@ -218,7 +218,7 @@ switch2{1 Gbps}[<em>пир</em>1, <em>лич</em>, <em>пир</em>3, <em>пир<
 </ol>
 <p style="text-align: justify;">В направлении от switch1 к switch2, общий канал в 1 Gbps делили <strong>4</strong> потока, получая максимум 0.25 Gbps на поток. В обратном направлении получилось 3 потока, соответственно максимум 0.33 Gbps на поток. Самым узким местом стал канал от switch1 к switch2 <span class="grey">(максимальная скорость потока 0.25 Gbps)</span>. В самом узком месте скорость потока в <strong>4 раза</strong> меньше, по сравнению с максимальной скорости в “самом широком месте” (1 Gbps).</p>
 <p><strong>Q:</strong> Как исправить ситуацию?<br />
-<strong>A:</strong> Достаточно строить цепочку примерно так (можно сразу перейти к <strong>TL;DR</strong>) <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/cool.gif %}" alt="8-)" class="wp-smiley" />  :</p>
+<strong>A:</strong> Достаточно строить цепочку примерно так (можно сразу перейти к <strong>TL;DR</strong>) 8)  :</p>
 <ol>
 <li>добавить в цепочку <em>сида</em>;</li>
 <li>взять switch, к которому подключен <em>сид</em>, и добавить в цепочку всех <em>пиров</em> <span class="grey">(в любом порядке)</span>, подключенных к этому switch;</li>

@@ -1,0 +1,44 @@
+<svg width="500px" height="700px" viewBox="0 0 500 700" buffered-rendering="auto" image-rendering="optimizeSpeed" color-interpolation="linearRGB" color-rendering="optimizeSpeed" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs xmlns="http://www.w3.org/2000/svg">
+  <filter id="MyFilter">
+    <feImage xlink:href="please_donate_by_mishierru-d6k2qvu-shadow.png" x="50" y="50" width="400px" height="600px"/>
+    <!-- Быть осторожным при переносе x="50" y="50" в <filter> (<filter x="50" y="50" filterUnits="userSpaceOnUse">) (для улучшения точности позиционирования с включенным filter и без него)
+         может увеличится размер перерисовываемой области (снизится производительность), если разиер svg.viewBox в разы превышает размер image
+     -->
+    <feComponentTransfer>
+      <feFuncA type="linear" slope="0.48" intercept="-.14">
+	<animate attributeName="slope"     to="0.48" begin="pic.mouseout"  dur="0.25s" calcMode="paced" fill="freeze"/>
+	<animate attributeName="intercept" to="-.14" begin="pic.mouseout"  dur="0.25s" calcMode="paced" fill="freeze"/>
+     <!-- чтобы визуально скрыть ускорении анимации в конце (см. диаграмму в файле calc),
+          и более гладкий край градиента (в конце),
+          длительность анимации для mouseover была сокращена:
+      -->
+	<animate attributeName="slope"     to="0.15" begin="pic.mouseover" dur="0.12s" calcMode="paced" fill="freeze"/>
+	<animate attributeName="intercept" to="0"    begin="pic.mouseover" dur="0.12s" calcMode="paced" fill="freeze"/>
+      </feFuncA>
+    </feComponentTransfer>
+    <!-- Прозрачность тени: <feComponentTransfer><feFuncA type="linear" slope="0.2"/></feComponentTransfer> 
+         это преобразование (коэффициенты 0.2 и 0.15; см. "don.svg") было объеденено с предыдущим feComponentTransfer,
+         что увеличело скорость,
+         но отразилось на результате (в положении "mouseout"), т.к. изночально было:
+         с1 = max(min((c0*slope0 + intercept0), 0.0), 1.0);
+         c2 = max(min((c1*slope1 + intercept1), 0.0), 1.0);
+         стало:
+         c2 = max(min((c0*slope0 + intercept0)*slope1, 0.0), 1.0);
+         это не отразилось на нижнюю границу (min; ноль остался нулем), но т.к. верхушка (max) в c1 больше не срезается,
+         то получаем продолжение градиента и более темную область в центре тени.
+         Однако, вся эта "отличающаяся" область скрыта основной картинкй (pic), поэтому отличий не видно.
+     -->
+    <feOffset dx="2" dy="12" result="shadow"/>
+    <feOffset in="SourceGraphic" dx="0" dy="0" result="pic">
+      <animate attributeName="dy" to="-20" begin="pic.mouseover" dur="0.25s" calcMode="paced" fill="freeze"/>
+      <animate attributeName="dy" to="0"   begin="pic.mouseout"  dur="0.25s" calcMode="paced" fill="freeze"/>
+    </feOffset>
+    <feMerge>
+      <feMergeNode in="shadow"/>
+      <feMergeNode in="pic"/>
+    </feMerge>
+  </filter>
+</defs>
+	<image id="pic" xlink:href="please_donate_by_mishierru-d6k2qvu.png" x="50" y="50" width="400px" height="600px" filter="url(#MyFilter)"><title>title</title></image>
+</svg>

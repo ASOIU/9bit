@@ -1,0 +1,15 @@
+<svg width="700px" height="700px" viewBox="0 0 700 700" buffered-rendering="auto" image-rendering="optimizeSpeed" color-interpolation="linearRGB" color-rendering="optimizeSpeed" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs xmlns="http://www.w3.org/2000/svg">
+    <filter id="MyFilter">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="7">
+	<animate attributeName="stdDeviation" attributeType="XML" calcMode="paced" values="7;1;7" begin="pic.mouseover" end="pic.mouseout" dur="0.5s" repeatCount="indefinite"/>
+	<!--<animate attributeName="stdDeviation" attributeType="XML" calcMode="discrete" values="7;5;3;1;1;3;5;7" begin="pic.mouseover" end="pic.mouseout" dur="0.5s" repeatCount="indefinite"/>-->
+	</feGaussianBlur>
+      <feMerge>
+        <feMergeNode/>
+      </feMerge>
+    </filter>
+</defs>
+	<image id="pic" xlink:href="s-src.png" x="50" y="50" width="650px" height="650px" filter="url(#MyFilter)"></image>
+	<!--<script>"use strict";document.documentElement.targetFps=15;</script> использование calcMode="discrete" и values="...;..." дает больший контроль над выводимыми кадрами -->
+</svg>

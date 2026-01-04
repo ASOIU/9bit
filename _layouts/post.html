@@ -112,7 +112,7 @@ layout: default
 							Gravatar API: http://en.gravatar.com/site/implement/images 
 							Server rnd:   https://core.trac.wordpress.org/changeset/31107  ($gravatar_server)
 						{%- endcomment %}
-						<img class="avatar" src="//{{ commentator.gravatar_server_rnd | modulo:3 }}.gravatar.com/avatar/{{ commentator.gravatar_email_hash }}?s=32&d=retro&r=G" alt="{{ comment.author }} avatar" height="32" width="32">
+						<img class="avatar" src="https://{{ commentator.gravatar_server_rnd | modulo:3 }}.gravatar.com/avatar/{{ commentator.gravatar_email_hash }}?s=32&d=retro&r=G" alt="{{ comment.author }} avatar" height="32" width="32">
 						<p>
 							<span itemprop="creator" itemscope itemtype="http://schema.org/Person">
 								<b itemprop="name">{{ commentator.name | escape }}</b>
@@ -164,8 +164,7 @@ layout: default
 					или<br>
 					<a id="comments-plus_not-https_open" href="#comments-plus">жить проще</a>
 					<noscript><br>
-						или<br>
-						<a href="ссылка на iframe" target="_blank">жать сюда</a>, т.к. у тебя отключен JavaScript.
+						(Google+ комментарии больше не работают)
 					</noscript>
 				</div>
 				<div class="comments-plus-intro https">

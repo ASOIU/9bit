@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<!---====== Define ======---<
+ * crdon - Crypto(currency) Donate
+ * cc    - CryptoCurrency
+ * btn   - Button
+ * mpo   - Modal PopOver:
+ **         http://getbootstrap.com/2.3.2/javascript#popovers
+ **         http://scruffles.github.io/BootstrapModalPopover/
+ **         https://web.archive.org/web/20170711101113/https://developer.apple.com/ios/human-interface-guidelines/ui-views/popovers/
+ **        Alignment:
+ ***        bc = Bottom Center
+ ***        bl = Bottom Left
+ ***        br = Bottom Right
+ ***        tc =    Top Center
+ ***        tl =    Top Left
+ ***        tr =    Top Right
+<---------------------------->
+<html lang="ru" Full-version-of-this-FILE="See full version and comments: https://github.com/ASOIU/9bit/blob/master/theme/crypto-currency/example.html">
+<head>
+	<meta charset="UTF-8">
+	<title>CrDon Test</title>
+	<link rel="stylesheet" href="crdon_no-js.css">
+	<link rel="stylesheet" href="crdon.css">
+	<script src="crdon.js"></script>
+</head>
+<body style="padding:100px;" onload="CrDon.init()">
+	
+	<a class="crdon-here crdon_mpo-a-bc" href="bitcoin:13GCXbWHU8byXo3cHmQkKkB8Kw3KrY9y9A">наш Bitcoin кошелек</a>
+	<span>. . . . . . . . . . . . . . . .</span>
+	<a class="crdon-here               " href="bitcoin:1BitcoinEaterAddressDontSendf59kuE">Bitcoin Eater</a>
+	<span>. . . . . . . . . . . . . . . .</span>
+	<a class="crdon-here crdon_btn-off-total-received" href="bitcoin:1111111111111111111114oLvT2">11111111111111111111</a>
+	<span>. . . . . . . . . . . . . . . .</span>
+	<a class="crdon-here crdon_mpo-a-br" href="bitcoin:1CounterpartyXXXXXXXXXXXXXXXUWLpVr?label=Counterparty+XCP+Proof-of-Burn">XCP Proof-of-Burn</a>
+		
+	
+	<!-- https://developer.paciellogroup.com/blog/2012/05/html5-accessibility-chops-hidden-and-aria-hidden/ -->
+	<!-- https://www.w3.org/TR/2017/WD-using-aria-20170504/#h-note6 -->
+	<div style="display:none" hidden><!-- alternative to <template> -->
+		
+		<span id="_template_crdon_btn_">
+			<span class="crdon_holder">
+				<button type="button" aria-expanded="false" aria-controls="" aria-pressed="false"><img src="icons_cc/-bitcoin.png?message=Template-Test"><span>Поддержать</span></button><!--
+			no space - important! --></span><!--
+			no space - important! --><span class="crdon_btn-total-received">...</span>
+		</span>
+		<!-- NOTE: aria-* (WAI-ARIA haven't (yet?) the Popover role)
+			Combobox role:    https://www.w3.org/TR/wai-aria-1.1/#combobox
+			(ARIA 1.0 vs 1.1) https://www.levelaccess.com/differences-aria-1-0-1-1-changes-rolecombobox/
+			
+			->> don't use "aria-haspopup" for not menu-popups!
+			    https://www.levelaccess.com/expanding-the-use-of-the-aria-haspopup-property/
+			    Examples: http://whatsock.com/tsg/Coding%20Arena/ARIA%20Menus/Horizontal%20(Internal%20Content)/demo.htm
+				          http://whatsock.com/tsg/Coding%20Arena/ARIA%20Menus/Variation%20Simulated%20Edit%20With%20Right%20Click/demo.htm
+				          http://whatsock.com/tsg/Coding%20Arena/ARIA%20Menus/Variation%20ARIA%20Tree%20With%20Right%20Click/demo.htm
+				More examples: https://www.levelaccess.com/aria-widget-checklist-screen-reader-testing/
+			    Do not act like GitHub (see "Clone or download" button code): https://github.com/select2/select2
+				Real popup (29. Basic Popup control) uses only "aria-expanded": http://whatsock.com/tsg/Coding%20Arena/Popups/Popup%20(Internal%20Content)/demo.htm
+			
+			aria-expanded: https://www.w3.org/TR/wai-aria/states_and_properties#aria-expanded
+			aria-controls: https://www.w3.org/TR/wai-aria/states_and_properties#aria-controls
+			               https://www.marcozehe.de/2010/02/10/easy-aria-tip-5-aria-expanded-and-aria-controls/
+			!! However ->> http://www.heydonworks.com/article/aria-controls-is-poop
+			
+			Add aria-pressed: https://www.w3.org/TR/wai-aria/states_and_properties#aria-pressed
+			                  https://www.w3.org/TR/wai-aria/roles#button
+			                  https://developer.mozilla.org/en-US/docs/Web/Accessibility/ARIA/ARIA_Techniques/Using_the_button_role#Toggle_buttons
+			
+			And don't forget to update attribute values (see combobox update process below): https://github.com/select2/select2/issues/3144
+			                                             https://github.com/select2/select2/commit/fc43f00b59d139bd4456ee5fbd154965c144aff9
+		-->
+		
+		<div id="_template_crdon_mpo_" class="crdon_mpo-a" aria-hidden="true">
+			<div id="_crdon__mpo_">
+				<label for="_crdon__mpo_wallet_address_">наш Тестовый кошелек</label>
+				<div id="_crdon__mpo_line_wallet_address_">
+					<input type="text" id="_crdon__mpo_wallet_address_" value="test_13GCXbWHU8byXo3cHmQkKkB8Kw3KrY9y9A_test" title="Drag'n'Drop Me" readonly autofocus>
+					<a href="bitcoin:13GCXbWHU8byXo3cHmQkKkB8Kw3KrY9y9A?label=9b.asoiu.com&message=Template-Test__If-you-see-me-Then-code-contain-a-bug__Donation-might-help-in-fixing-this-issue" target="_blank" title="Открыть программу-кошелек для отправки монеток (программа-кошелек должна быть установлена)">
+						<img src="icon_wallet.png" alt="Отправить монетки">
+					</a>
+				</div>
+				<div id="_crdon__mpo_line_wallet_stat_" aria-label="Статистика">
+					<span id="_crdon__mpo_wallet_n_tx_">0<small>поддержало человек</small></span>
+					<span id="_crdon__mpo_wallet_total_received_" class="crdon_mpo-line-wallet-stat-end">0.00<small>монеток</small></span>
+				</div>
+				<span id="_crdon__mpo_qr_code_" aria-haspopup="true" tabindex="0"><img src="qr/13GCXbWHU8byXo3cHmQkKkB8Kw3KrY9y9A.png?message=Template-Test__If-you-see-me-Then-code-contain-a-bug__Donation-might-help-in-fixing-this-issue" alt="QR-код нашего кошелька для приложения на смартфоне"></span>
+				<button type="button" id="_crdon__mpo_close_" aria-label="Закрыть" aria-controls="_crdon__mpo_" title="Возможно, эта штучка закроет это окно. Стоит попробовать.">&times;</button>
+			</div>
+		</div>
+		<!-- NOTE: all test ('src="*?message=*"') images double network requests -->
+		<!-- NOTE: aria-*
+			Using "aria-haspopup" to simulate ":hover" on touch-enabled devices : https://msdn.microsoft.com/en-us/library/jj152135.aspx
+			"aria-label" and "aria-hidden" for close button: https://stackoverflow.com/a/29304412
+			                                                 https://webaccessibility.withgoogle.com/unit?lesson=10&unit=6
+			                                          (test) http://3needs.org/en/testing/code/aria-label-2.html
+			"aria-controls" for close button: http://oaa-accessibility.org/examplep/hideshow2/
+			!! However (yep, again) ->> http://www.heydonworks.com/article/aria-controls-is-poop
+			
+			More examples: http://heydonworks.com/practical_aria_examples/
+		-->
+		
+		<!-- NOTE: if template contain not one (root) node (i.e. contain set of nodes) then use DocumentFragment:
+			<div id="_template_set_of_nodes_">
+				<span>Set</span> of <span>nodes</span>.
+			</div>
+			<p>
+				<span class="t-here">Template me.</span> Lorem ipsum dolor sit amet, consectetur adipiscing elit. <span class="t-here">Template me.</span> Nam a diam sodales, placerat nunc sit amet, tempus sapien. <span class="t-here">Template me.</span>
+			</p>
+			<script>
+				(function(){"use strict";
+					
+					var prepareTemplateFragment = function(template){
+						var fragment = document.createDocumentFragment();
+						
+						template.parentNode.removeChild(template);
+						
+						while(template.firstChild){
+							fragment.appendChild(template.firstChild);
+						}
+						
+						return fragment;
+					};
+					
+	
+					var _T_nodes_ = prepareTemplateFragment(document.querySelectorAll("#_template_set_of_nodes_")[0]);
+					var places    = document.querySelectorAll(".t-here");
+					
+					var i = 0;
+					for(i=places.length;i--;){
+						places[i].parentNode.replaceChild(_T_nodes_.cloneNode(true), places[i]);
+					}
+					
+					/* result:
+						<p>
+							<span>Set</span> of <span>nodes</span>.
+						 Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+							<span>Set</span> of <span>nodes</span>.
+						 Nam a diam sodales, placerat nunc sit amet, tempus sapien. 
+							<span>Set</span> of <span>nodes</span>.
+						</p>
+					*/
+					
+				})();
+			</script>
+		 -->
+		 
+	</div>
+	
+</body>
+</html>
+

@@ -1,0 +1,91 @@
+@charset "utf-8";
+/******:History:*****************\
+ * 2013 http://coinwidget.com   *
+ * 2013 http://scotty.cc        *
+ * 2014 http://www.alvinhkh.com *
+ * 2017 https:/9b.asoiu.com     *
+\********************************/
+
+
+/* == Define ==
+ * crdon - Crypto(currency) Donate
+ * cc    - CryptoCurrency
+ * btn   - Button
+ * mpo   - Modal PopOver:
+ **         http://getbootstrap.com/2.3.2/javascript#popovers
+ **         http://scruffles.github.io/BootstrapModalPopover/
+ **         https://web.archive.org/web/20170711101113/https://developer.apple.com/ios/human-interface-guidelines/ui-views/popovers/
+ **        Alignment:
+ ***        bc = Bottom Center
+ ***        bl = Bottom Left
+ ***        br = Bottom Right
+ ***        tc =    Top Center
+ ***        tl =    Top Left
+ ***        tr =    Top Right
+/*/
+
+#Full_version_of_this_FILE{content:' See full version and comments: https://github.com/ASOIU/9bit/blob/master/theme/crypto-currency/crdon_no-js.css '}
+
+
+/* ============================= Button ============================= */
+a.crdon-here,
+a.crdon-here:before {
+	display: inline-block;
+	vertical-align: middle;
+}
+
+a.crdon-here {
+	border: 1px solid #ccc;
+	border-radius: 2px 2px 2px 2px;
+	padding: 3px 7px 1px 4px;
+	font-family: arial, sans-serif;
+	font-size: 11px;
+	font-weight: bold;
+	color: #444;
+	text-decoration: none;
+	text-shadow: 0px 1px 0px #fff;
+	box-shadow: 1px 1px 4px rgba(0,0,0,0.075),inset 1px 1px 0px rgba(255,255,255,0.8);
+	
+	background: #fafafa;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#fafafa), color-stop(100%,#eeeeee));
+	background: -webkit-linear-gradient(top,  #fafafa 0%,#eeeeee 100%);
+	background: -moz-linear-gradient(top,  #fafafa 0%, #eeeeee 100%);
+	background: -ms-linear-gradient(top,  #fafafa 0%,#eeeeee 100%);
+	background: -o-linear-gradient(top,  #fafafa 0%,#eeeeee 100%);
+	background: linear-gradient(to bottom,  #fafafa 0%,#eeeeee 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fafafa', endColorstr='#eeeeee',GradientType=0 );
+}
+a.crdon-here:hover {
+	background: #f5f5f5;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f5f5f5), color-stop(100%,#e6e6e6));
+	background: -webkit-linear-gradient(top,  #f5f5f5 0%,#e6e6e6 100%);
+	background: -moz-linear-gradient(top,  #f5f5f5 0%, #e6e6e6 100%);
+	background: -ms-linear-gradient(top,  #f5f5f5 0%,#e6e6e6 100%);
+	background: -o-linear-gradient(top,  #f5f5f5 0%,#e6e6e6 100%);
+	background: linear-gradient(to bottom,  #f5f5f5 0%,#e6e6e6 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f5f5f5', endColorstr='#e6e6e6',GradientType=0 );
+}
+a.crdon-here:active {
+	background: #eeeeee;
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#eeeeee), color-stop(100%,#fafafa));
+	background: -webkit-linear-gradient(top,  #eeeeee 0%,#fafafa 100%);
+	background: -moz-linear-gradient(top,  #eeeeee 0%, #fafafa 100%);
+	background: -ms-linear-gradient(top,  #eeeeee 0%,#fafafa 100%);
+	background: -o-linear-gradient(top,  #eeeeee 0%,#fafafa 100%);
+	background: linear-gradient(to bottom,  #eeeeee 0%,#fafafa 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#eeeeee', endColorstr='#fafafa',GradientType=0 );
+	
+	transform: translate(0,0);
+	text-shadow: 0px -1px 0px #fff;
+}
+
+a.crdon-here:before {
+	margin: 0;
+	margin-right: 3px;
+	border: none;
+	padding: 0;
+	line-height: 11px;
+}
+a.crdon-here[href^="bitcoin:"]:before {
+	content: url(icons_cc/-bitcoin.png);
+}

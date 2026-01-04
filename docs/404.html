@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru" Full-version-of-this-FILE="See full version and comments: https://github.com/ASOIU/9bit/blob/master/404.html">
+	<meta charset="UTF-8">
+	<title>Страница не найдена (404), запускаем ~(Телепатический Искусственный Интеллект)&hellip;</title>
+	<script>
+		"use strict";
+		var i = 0;
+
+		var p = location.pathname;
+		i = p.lastIndexOf("/", p.length-2) + 1;
+		var pa = p.substring(0,i);
+		var pb = p.substring(i,p.length);
+		var pbe = "";
+
+		if(p.length <= 1 ) throw "Infinite redirect loop prevented!";
+
+		var s = location.search;
+		var sr = "redirected-from=";
+		i = s.indexOf(sr);
+		if(i != -1){
+			i += sr.length;
+			var sa = s.substring(0,i);
+			var sb = s.substring(i,s.length);
+			if(pb[pb.length-1] != "/") pbe = "/";
+		}else{
+			sa = s + (s ? "&":"?")+sr;
+			sb = "";
+		}
+
+		window.location =
+			location.protocol +"//"+ location.host +
+			pa.replace(/[?#]/g, function(v){return v=="?" ? "%3f":"%23"}) + 
+			sa + 
+			pb.replace(/[&#]/g, function(v){return v=="&" ? "%26":"%23"})+pbe +
+			sb + 
+			location.hash;
+	</script>
+	<h1>Страница не найдена (404)&hellip;</h1>
+	<p>Увы, но это действительно так. Возможно, она переехала на новый адрес.
+	<p>И, Да, в исходниках этой страницы есть ~(Телепатический Искусственный Интеллект), который мог бы Вам помочь, но он не работает без включенного JavaScript&hellip; ;)
+</html>
+

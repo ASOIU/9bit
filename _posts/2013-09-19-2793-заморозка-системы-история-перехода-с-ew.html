@@ -48,7 +48,7 @@ wp_comments:
     date:   2016-09-20 13:51:47 +0000
     author: ZKyl
     content: | 
-             <p>Продолжение статьи наконец вышло (спустя 3 года): <a href="{{ site.url }}{{ site.baseurl }}/2016/3704/ringsync-синхронизируем-на-полной-скорости-с/" rel="nofollow">{{ site.url }}{{ site.baseurl }}/2016/3704/ringsync-синхронизируем-на-полной-скорости-с/</a></p>
+             <p>Продолжение статьи наконец вышло (спустя 3 года): <a href="/2016/3704-ringsync-синхронизируем-на-полной-скорости-с/" rel="nofollow">/2016/3704-ringsync-синхронизируем-на-полной-скорости-с/</a></p>
 ---
 <p><img class="alignright size-full wp-image-2962" src="{{ site.url }}{{ site.baseurl }}{% link /wp-content/uploads/2013/09/frozendrive.png %}" alt="dVHD" width="181" height="189" /></p>
 <p class="grey">Продолжение темы про заморозку системы.</p>
@@ -56,7 +56,7 @@ wp_comments:
 <p>Мало кто знает, что помимо версий Windows для простых смертных (Home, Professional, Ultimate, ...), корпоративных  версии (Enterprise), и серверных версий (Windows Server), существуют <a href="http://ru.wikipedia.org/wiki/Windows_Embedded" target="_blank">несколько версий</a> Windows для <a href="http://habrahabr.ru/post/138630/">встраиваемых систем</a> (Embedded). Именно в Windows Embedded присутствует специальный модуль (EWF), который позволяет "заморозить" систему.</p>
 <p class="note">Далее описывается история установки и настройки Windows Embedded Standard 7 с EpicFAIL'оми и счастливым концом.</p>
 <p><!--more--></p>
-<p style="text-align: justify">Недавно пришлось создать одну встроенную систему на базе неттоп'а (Intel Atom, NVIDIA Ion, 2 GB DDR3, SSD 64 GB). Изначально планировалось установить на него GNU/Linux из-за лучшей возможности кастомизации, и возможности "заморозки" системы при использовании специальных файловых систем (<a href="http://ru.wikipedia.org/wiki/Aufs" target="_blank">Aufs</a>, <a href="http://ru.wikipedia.org/wiki/UnionFS" target="_blank">UnionFS</a>). Однако, как всегда, возникли сложности на пути завоевания Linux'ом кремневых сердец. Встраиваемая система состояла не только из неттоп'а, но и из других устройств, разработчики которых написали ПО только для Windows, и, стоит признать, это ПО было написано хорошо. И так, в очередной раз, победила Винда  <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/cry.gif %}" alt=":cry:" class="wp-smiley" />   .</p>
+<p style="text-align: justify">Недавно пришлось создать одну встроенную систему на базе неттоп'а (Intel Atom, NVIDIA Ion, 2 GB DDR3, SSD 64 GB). Изначально планировалось установить на него GNU/Linux из-за лучшей возможности кастомизации, и возможности "заморозки" системы при использовании специальных файловых систем (<a href="http://ru.wikipedia.org/wiki/Aufs" target="_blank">Aufs</a>, <a href="http://ru.wikipedia.org/wiki/UnionFS" target="_blank">UnionFS</a>). Однако, как всегда, возникли сложности на пути завоевания Linux'ом кремневых сердец. Встраиваемая система состояла не только из неттоп'а, но и из других устройств, разработчики которых написали ПО только для Windows, и, стоит признать, это ПО было написано хорошо. И так, в очередной раз, победила Винда  T_T   .</p>
 <p style="text-align: justify">Благо, что существует Windows Embedded Standard, который позволяет устанавливать только те компоненты системы, которые будут нужны, что важно при использовании SSD малого объема (установленный Windows Embedded Standard 7 занял 3-4GiB, тогда как обычный Windows 7 занимает 8-10 GiB), и содержит <a href="http://habrahabr.ru/company/pt/blog/155135" target="_blank">EWF</a> <span class="grey">(в статье описывается, как перенести модуль EWF из Windows Embedded в обычную Windows)</span>:</p>
 <p class="note"><strong>Расширенный фильтр записи</strong> (<em>Enhanced Write Filter, <strong>EWF</strong></em>) — это дополнительный компонент, использующийся в Windows Embedded. EWF делает дисковый том доступным только для чтения. При этом операции записи, которые выполняются с данными, хранящимися на этом дисковом томе, перенаправляются в его наложение, которое может находиться на другом диске или в памяти компьютера. Windows рассматривает наложение EWF и его дисковый том как единое устройство. При этом фактически на дисковом томе не происходит изменений. Все изменения сохраняются только в наложении EWF. Изменения можно сохранить на дисковый том в любой момент времени.</p>
 <p><strong>Первый EpicFAIL:</strong> спустя несколько дней после установки Windows Embedded Standard <strong>7</strong>, вышла финальная версия Embedded Standard <strong>8</strong>.</p>
@@ -71,7 +71,7 @@ wp_comments:
 </ul>
 <p>При попытке включить <em>EWF Disk Mode</em> выяснилось следующее:</p>
 <p class="error">Windows Embedded Standard 7 only supports EWF RAM and RAM Reg modes. <strong><em>Disk mode</em> is not supported.</strong></p>
-<p> <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/evil.gif %}" alt=":evil:" class="wp-smiley" />  <span style="float: right"> <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/evil.gif %}" alt=":evil:" class="wp-smiley" /> </span></p>
+<p> >:)  <span style="float: right"> >:) </span></p>
 <p>Эта строчка приводится в документе: <a href="http://msdn.microsoft.com/en-us/library/ff794295(v=winembedded.60).aspx" target="_blank">Enhanced Write Filter with HORM (Windows Embedded Standard 7 Service Pack 1)</a>. И если описание EWF для Windows Embedded Standard <strong>2009</strong> находится по пути: 
 <pre>Windows Embedded Standard 2009
  |- Developer Reference 
@@ -160,7 +160,7 @@ vhd=[Z:]\VHD\PROJECTOR_PC.VHD</pre>
 </li>
 <li>перезагрузите систему, и, при загрузке, выберите "Windows VHD";</li>
 <li>если загрузка прошла успешно, то при входе в систему, она сообщит о создании временного файла подкачки, а в оснастке "Управление дисками" будет видно, что старый системный раздел поменял букву диска на <strong>D</strong>, а новому (на VHD) присвоена буква диска <strong>C;</strong></li>
-<li>если, что-то пошло не так, то стоит начать паниковать и бить в бубен  <img src="{{ site.url }}{{ site.baseurl }}{% link /theme/)/confused.gif %}" alt=":-?" class="wp-smiley" />  <span class="grey">(шутка, у вас всегда есть бекап системы - <em>шаг 1</em>)</span>.</li>
+<li>если, что-то пошло не так, то стоит начать паниковать и бить в бубен  :S  <span class="grey">(шутка, у вас всегда есть бекап системы - <em>шаг 1</em>)</span>.</li>
 </ol>
 </li>
 <li>Форматируем старый системный раздел (диск <strong>D</strong>). При этом важно, чтобы ОС послала на SSD команду <a href="http://ru.wikipedia.org/wiki/TRIM#.D0.9E.D1.81.D0.BE.D0.B1.D0.B5.D0.BD.D0.BD.D0.BE.D1.81.D1.82.D0.B8_.D1.80.D0.B0.D0.B1.D0.BE.D1.82.D1.8B_.D1.82.D0.B2.D0.B5.D1.80.D0.B4.D0.BE.D1.82.D0.B5.D0.BB.D1.8C.D0.BD.D1.8B.D1.85_.D0.BD.D0.B0.D0.BA.D0.BE.D0.BF.D0.B8.D1.82.D0.B5.D0.BB.D0.B5.D0.B9" target="_blank">TRIM</a>.<br />

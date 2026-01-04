@@ -2,7 +2,8 @@ source 'https://rubygems.org'
 
 require 'json'
 require 'open-uri'
-versions = JSON.parse(open('https://pages.github.com/versions.json').read)
+require 'net/http'
+versions = JSON.parse(Net::HTTP.get(::URI.parse('https://pages.github.com/versions.json')))
 
 # http://jekyllrb.com/docs/github-pages/#deploying-jekyll-to-github-pages
 # https://help.github.com/articles/setting-up-your-github-pages-site-locally-with-jekyll/#step-2-install-jekyll-using-bundler

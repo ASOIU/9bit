@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?FullVersionOfThisFILE description="See-full-version-and-comments" uri="https://github.com/ASOIU/9bit/blob/master/theme/support-us/support-us.svg"?>
+<svg width="194px" height="278px" viewBox="0 0 194 278" role="group" buffered-rendering="auto" image-rendering="optimizeSpeed" color-rendering="optimizeSpeed" color-interpolation-filters="sRGB" xmlns="http://www.w3.org/2000/svg" version="1.2" baseProfile="tiny" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+	<filter id="AmbientOcclusionShadow" x="0" y="0" filterUnits="userSpaceOnUse">
+		<feImage id="pic-shadow" xlink:href="by-mishierru-at-deviantart-dot-com_shadow.png" width="194px" height="278px"/>
+		<feComponentTransfer>
+			<feFuncA type="linear" slope="0.48" intercept="-.14">
+				<animate attributeName="slope"     to="0.48" begin="down.begin"  dur="0.25s" calcMode="paced" fill="freeze"/>
+				<animate attributeName="intercept" to="-.14" begin="down.begin"  dur="0.25s" calcMode="paced" fill="freeze"/>
+				<animate attributeName="slope"     to="0.15" begin="up.begin" dur="0.12s" calcMode="paced" fill="freeze"/>
+				<animate attributeName="intercept" to="0"    begin="up.begin" dur="0.12s" calcMode="paced" fill="freeze"/>
+			</feFuncA>
+		</feComponentTransfer>
+		<feOffset dx="1" dy="5" result="shadow"/>
+		<feOffset in="SourceGraphic" dx="0" dy="0" result="pic">
+			<animate id="up"   attributeName="dy" to="-14" begin="pic.mouseover; pic.focusin"  dur="0.25s" calcMode="paced" fill="freeze"/>
+			<animate id="down" attributeName="dy" to="0"   begin="pic.mouseout;  pic.focusout" dur="0.25s" calcMode="paced" fill="freeze"/>
+		</feOffset>
+		<feMerge>
+			<feMergeNode in="shadow"/>
+			<feMergeNode in="pic"/>
+		</feMerge>
+	</filter>
+</defs>
+	<image id="pic" xlink:href="by-mishierru-at-deviantart-dot-com.png" x="12" y="12" width="170px" height="254px" filter="url(#AmbientOcclusionShadow)" role="button" cursor="pointer" focusable="true" tabindex="0"><title>Нажми на меня</title></image>
+<script>//<![CDATA[
+"use strict";
+(function(){
+	var imgs = [
+		{ offset:12, width:170, height:254, name:"by-mishierru-at-deviantart-dot-com" },
+		{ offset:13, width:200, height:157, name:"cookies" },
+		{ offset:14, width:225, height:275, name:"wanted_bitcoin-grant-at-freepik-dot-com" },
+		{ offset:14, width:210, height:125, name:"books" },
+		{ offset:14, width:225, height:292, name:"you-at-the-library-of-congress" }
+	];
+	var img = imgs[((Math.random()*imgs.length)|0)%imgs.length];
+
+	var _root_       = document.documentElement;
+	var _pic_        = document.querySelectorAll("#pic")[0];
+	var _pic_shadow_ = document.querySelectorAll("#pic-shadow")[0];
+
+	_pic_.href.baseVal = img.name + ".png";
+	_pic_.width .baseVal.valueInSpecifiedUnits = img.width;
+	_pic_.height.baseVal.valueInSpecifiedUnits = img.height;
+	_pic_.x     .baseVal.valueInSpecifiedUnits = img.offset;
+	_pic_.y     .baseVal.valueInSpecifiedUnits = img.offset;
+
+	var imgShadowWidth  = img.width  + img.offset*2;
+	var imgShadowHeight = img.height + img.offset*2;
+
+	_pic_shadow_.href.baseVal = img.name + "_shadow.png";
+	_pic_shadow_.width .baseVal.valueInSpecifiedUnits = imgShadowWidth;
+	_pic_shadow_.height.baseVal.valueInSpecifiedUnits = imgShadowHeight;
+
+	_root_.viewBox.baseVal.width  = imgShadowWidth;
+	_root_.viewBox.baseVal.height = imgShadowHeight;
+	_root_.width .baseVal.valueInSpecifiedUnits = imgShadowWidth;
+	_root_.height.baseVal.valueInSpecifiedUnits = imgShadowHeight;
+
+	_pic_.onclick = function(){
+		this.onclick = null;
+
+		var _parentWnd = window.parent;
+		var parentDoc  = _parentWnd.document;
+		var parentHead = parentDoc.head || parentDoc.querySelectorAll("head")[0];
+
+		var _content_ = parentDoc.querySelectorAll("#_support-us_content_")[0];
+
+		var CrDonCSS  = parentDoc.createElement("link");
+		CrDonCSS.rel  = "stylesheet";
+		CrDonCSS.href = "/theme/crypto-currency/crdon.css";
+
+		var CrDonJS = parentDoc.createElement("script");
+		CrDonJS.src = "/theme/crypto-currency/crdon.js";
+
+		var GhBtnCSS  = parentDoc.createElement("link");
+		GhBtnCSS.rel  = "stylesheet";
+		GhBtnCSS.href = "/theme/github-button/gh-btn.css";
+
+		var GhBtnJS = parentDoc.createElement("script");
+		GhBtnJS.src = "/theme/github-button/gh-btn.js";
+
+		_content_.parentNode.removeChild(_content_);
+		parentHead.appendChild(CrDonCSS);
+		parentHead.appendChild(GhBtnCSS);
+		parentHead.appendChild(CrDonJS);
+		parentHead.appendChild(GhBtnJS);
+		window.frameElement.outerHTML = _content_.firstChild.data; //here window.parent == null
+
+		if(_parentWnd.CrDon) _parentWnd.setTimeout(function(){_parentWnd.CrDon.init(); },0); // safe call w/o try...catch
+		else CrDonJS.onload = function(){ this.onload = null; _parentWnd.CrDon.init(); };
+
+		if(_parentWnd.GhBtn) _parentWnd.setTimeout(function(){_parentWnd.GhBtn.init(); },0); // safe call w/o try...catch
+		else GhBtnJS.onload = function(){ this.onload = null; _parentWnd.GhBtn.init(); };
+
+		parentDoc = parentHead = _content_ = CrDonCSS = CrDonJS = GhBtnCSS = GhBtnJS = null; //:-)
+	};
+
+	imgs = img = _root_ = _pic_ = _pic_shadow_ = imgShadowWidth = imgShadowHeight = null; //:-)
+})();
+//]]></script>
+</svg>
+
