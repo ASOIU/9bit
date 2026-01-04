@@ -154,3 +154,9 @@ bundle exec jekyll serve --port 4001
 ### Changes not reflecting
 
 Jekyll sometimes needs restart for `_config.yml` changes. Stop server and run again.
+
+---
+
+## See also
+
+- [WordPress XML → Jekyll exporter](https://github.com/ASOIU/9bit/tree/xmlwp2jekyll) (Go)
