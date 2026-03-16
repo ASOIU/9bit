@@ -218,10 +218,6 @@ iframe#comments-g-plus{margin:0;border:none;width:527px;height:252px;overflow:hi
 /* Tag Cloud */
 .tag-cloud{word-wrap:break-word;overflow-wrap:break-word/*;word-break:break-all*/}
 
-/* Donate / Support us */
-#sidebar > .support-us { text-align:center; color:#7C7C7C; }
-#sidebar > .support-us > .ambient-occlusion-shadow-effect_demo-pics { margin-top:-20px; }
-
 /***** FOOTER *****/
 #footer{background:url(img/footer-l.png) no-repeat left top,url(img/footer-r.png) no-repeat right top, url(img/footer-bg.gif) repeat-x 0 0 #21221C;clear:both;color:#A9B095;font-size:0.85em;height:46px;margin:0 auto 80px;padding:10px 8px 5px;width:944px}
 #footer ul li{display:inline}

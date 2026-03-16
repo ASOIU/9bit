@@ -124,5 +124,8 @@ exclude:
   - 'test.crt' # `bundle exec jekyll serve` + `bundle exec jekyll serve --skip-initial-build --no-watch --port 443 --ssl-key test.key --ssl-cert test.crt` ; setcap CAP_NET_BIND_SERVICE for ruby (`which ruby2.4`)
   - 'Gemfile'
   - 'Gemfile.lock'
+  - 'Dockerfile'
+  - 'docker-compose.yml'
+  - 'Makefile'
 
 
